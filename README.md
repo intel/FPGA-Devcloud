@@ -622,9 +622,11 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Left click on **Hardware Setup…** and then select the **JTAG Settings** tab.
 
+  ![download_programmer](https://user-images.githubusercontent.com/56968566/67718852-dde52e00-f98d-11e9-9c06-39ac5c61aa5d.png)![run_admin](https://user-images.githubusercontent.com/56968566/67718870-eccbe080-f98d-11e9-83b8-1a7738f3f018.png)
+
 - [ ] Click on **Configure Local JTAG Server...**
 
-- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.
+- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.![hardware_setup](https://user-images.githubusercontent.com/56968566/67718930-0f5df980-f98e-11e9-92ce-21c5476c11b2.png)
 
 - [ ] On your local PC terminal, type in the following command to tunnel from the DevCloud to your local USB: **Note: the last parameter points to the node 138. For server consistency, you need to adjust this to the node number you are currently using to connect to the Devcloud.**
 
@@ -641,7 +643,11 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] On the X2Go app and Quartus Prime Lite window, launch the programmer by selecting **Tools** > **Programmer**. 
 
+  ![configure_JTAG](https://user-images.githubusercontent.com/56968566/67718964-20a70600-f98e-11e9-99ac-d897ffa295cd.png)
+
 - [ ] Left click on **Hardware Setup,** select the **JTAG Settings** tab, and **Add Server**.
+
+  ![JTAG_password](https://user-images.githubusercontent.com/56968566/67718986-2a306e00-f98e-11e9-9d06-24ccc2173801.png)
 
 - [ ] Enter in the following information: 
 
@@ -651,6 +657,8 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Select **OK**, and you should see the localhost on the list of JTAG servers.
 
+  ![add_server_JTAG](https://user-images.githubusercontent.com/56968566/67719028-3d433e00-f98e-11e9-8c3d-fcaf6cec4aba.png)
+
 - [ ] Click on the **Hardware settings tab,** double click on the **localhost:13090**, and that should now be your selected USB blaster download connection. 
 
 - [ ] Make sure localhost:13090 shows up as your currently selected hardware and that the connection status is OK.
@@ -658,7 +666,10 @@ If the USB Blaster is not configured, complete the following steps:
   ### 16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
 
   - [ ] Select the .sof file to be downloaded to the FPGA. 
+  
   - [ ] Click **OK** and click **Start**. The progress bar should show 100% (Successful) and turn green. If it fails the first time, click **Start** a second time. 
+  
+    ![100_succesful](https://user-images.githubusercontent.com/56968566/67719042-446a4c00-f98e-11e9-994f-2bcb55469fd0.png)
 
 
 
