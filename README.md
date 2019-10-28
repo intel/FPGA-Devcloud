@@ -113,7 +113,7 @@ This is a work in progress and not documented yet.
 
 1. Launch MobaXterm using the installer. You should see the following:
 
-![image2019-6-11_10-41-5](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_10-41-5.png)
+![](C:\Users\scabanda\Documents\GitHub\FPGA-Devcloud\figures\download_programmer.png)
 
 2. Left click: **"Start local terminal"**. Within this console you can see your local PC based files using standard Linux operating system commands (ls, cd, vi and etc.). 
 
