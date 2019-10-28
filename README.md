@@ -1,24 +1,61 @@
 # Public Devcloud Access Instructions
 
-[TOC]
+Last updated: 10/28/2019 8:45AM- [Public Devcloud Access Instructions](#public-devcloud-access-instructions)
+  * [1.0 Introduction](#10-introduction)
+  * [2.0 Getting an Account](#20-getting-an-account)
+  * [3.0 Access from your PC using Putty](#30-access-from-your-pc-using-putty)
+  * [4.0 Access from your PC via MobaXterm or from Linux Terminal](#40-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
+    + [4.1 Install MobaXterm](#41-install-mobaxterm)
+    + [4.2 Open Local Terminal](#42-open-local-terminal)
+    + [4.3 Downloading an SSH key](#43-downloading-an-ssh-key)
+  * [5.0 Access to the Devcloud from within the Intel firewall](#50-access-to-the-devcloud-from-within-the-intel-firewall)
+    + [5.1 Add SOcket CAT Package](#51-add-socket-cat-package)
+    + [5.2  Preparing Configuration file](#52--preparing-configuration-file)
+    + [5.3 Add Tunnel for Display](#53-add-tunnel-for-display)
+  * [6.0 Accessing high powered servers running FPGA development software](#60-accessing-high-powered-servers-running-fpga-development-software)
+    + [6.1 Understanding available resources](#61-understanding-available-resources)
+  * [7.0 Loading and launching X2Go](#70-loading-and-launching-x2go)
+  * [8.0 Quartus Access and Setup](#80-quartus-access-and-setup)
+  * [9.0 Transferring Files to the Devcloud](#90-transferring-files-to-the-devcloud)
+    + [9.1 Transferring Files to the Devcloud with SCP](#91-transferring-files-to-the-devcloud-with-scp)
+    + [9.2 Using MobaXterm to Transfer Files](#92-using-mobaxterm-to-transfer-files)
+    + [9.3 Using WinSCP to Transfer Files](#93-using-winscp-to-transfer-files)
+  * [10.0 Job Control on the X2GO Window](#100-job-control-on-the-x2go-window)
+    + [10.1 Searching for Free Nodes](#101-searching-for-free-nodes)
+    + [10.2 Submitting Jobs for a Specified Walltime](#102-submitting-jobs-for-a-specified-walltime)
+    + [10.3 Report Status for Jobs Running on the Devcloud](#103-report-status-for-jobs-running-on-the-devcloud)
+    + [10.4 Deleting Jobs on the Devcloud](#104-deleting-jobs-on-the-devcloud)
+  * [11.0 Launching Quartus](#110-launching-quartus)
+  * [12.0 Launching the HLS compiler](#120-launching-the-hls-compiler)
+  * [13.0 Launching the OpenCL compiler](#130-launching-the-opencl-compiler)
+  * [14.0 Communicating to the PAC card](#140-communicating-to-the-pac-card)
+  * [15.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#150-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
+  * [16.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#160-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
+    + [16.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#161-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
+    + [16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#162-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
+  * [17.0 Timeouts and Disk Space](#170-timeouts-and-disk-space)
+  * [18.0 Revision Table](#180-revision-table)
+
+
+
 
 ## 1.0 Introduction
 
-Welcome to the FPGA Cloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Jupyter notebook, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
+Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Jupyter notebook, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
 
 **Assumptions on cloud access:** This user guide assumes you have a basic understanding of the UNIX operating system and can use an editor such as vi or emacs. The guide assumes you know what Quartus development tools are. You don't necessarily need to be an expert on the Quartus toolset to follow these instructions. Once up and running on the FPGA Cloud you will be able to learn more about Quartus FPGA development flows.
 
 This process, while not difficult, it will take time to execute through all the steps. Please allow at least 60-90 mins of time to complete this process. To allow you to move through quicker, our suggestion is to print out these instructions for ease of reference. Note that in several sections of this document, the instructions differ whether you are inside the Intel firewall, or outside. Please be cognizant of whether you are logging in from within Intel or outside Intel and the appropriate instruction method to use.
 
-
-
 ## 2.0 Getting an Account
 
-**To get account access, please go to this link: https://software.intel.com/en-us/devcloud/FPGA/sign-up**
+**To get account access, please go to this link: **
+
+**https://software.intel.com/en-us/devcloud/FPGA/sign-up**
 
 Please use this cloud website landing page to submit a request to access the FPGA Cloud.
 
-Once signed up,  look for an email from Intel AI devcloud which can take 24 to 48 hrs to respond.  Info for all configuration and license acquisition methods are in the instruction link provided. This is an example of the resulting email which will be sent to you:
+Once signed up,  look for an email from Intel AI devcloud which can take **24 to 48 hrs** to respond.  Info for all configuration and license acquisition methods are in the instruction link provided. This is an example of the resulting email which will be sent to you:
 
 ```
 Dear "user name",
@@ -46,14 +83,12 @@ Intel AI DevCloud Team
 
 
 
-
-
 Once you have an account / email received you are ready to start the process to setup our account within the cloud.
 
 There are different Methods of Terminal connections. There are a few options you can select in choosing which Terminal application tool you would like to use:
 
-1. [From a PC using Putty](#3.0-access-from-your-pc-using-putty)
-2. [From a PC using Mobaxterm (which mimics the behavior of Linux)](#4.0-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) 
+1. [From a PC using Putty](#30-access-from-your-pc-using-putty)
+2. [From a PC using Mobaxterm (which mimics the behavior of Linux)](#40-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
 3. From a Linux console (either a native Linux machine or client Linux machine)
 
 
@@ -70,7 +105,7 @@ This is a work in progress and not documented yet.
 
 ### 4.1 Install MobaXterm
 
-1. Download the mobaxterm free edition: https://mobaxterm.mobatek.net/download-home-edition.html Note: get the installer edition, not the portable edition. (The installer edition will enable you to save login profiles.) . Download zipfile, open it and click on the msi file to install Mobaxterm.
+1. Download the MobaXterm free edition: https://mobaxterm.mobatek.net/download-home-edition.html Note: get the installer edition, not the portable edition. (The installer edition will enable you to save login profiles.) . Download zipfile, open it and click on the msi file to install Mobaxterm.
 
    ![image2019-6-13_9-20-11](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-13_9-20-11.png)
 
@@ -82,11 +117,13 @@ This is a work in progress and not documented yet.
 
 2. Left click: **"Start local terminal"**. Within this console you can see your local PC based files using standard Linux operating system commands (ls, cd, vi and etc.). 
 
-   If you are on the Intel network and can't login, be sure to disable your VPN and use connectivity outside Intel's firewall (for example using Employee Hotspot at an Intel campus). The welcome email link will only work outside of Intel firewall. Separate instructions for login inside the Intel firewall are below. Navigate around with cd (change directory) and ls (list) you will recognize your Windows folders and files accessible through a UNIX interface. Return to home by typing cd.
+   If you are on the Intel network and can't login, be sure to disable your VPN and use connectivity outside Intel's firewall (for example using Employee Hotspot at an Intel campus). The welcome email link will only work outside of Intel firewall. Separate instructions for login inside the Intel firewall are below. Navigate around with cd (change directory) and ls (list) you will recognize your Windows folders and files accessible through a UNIX interface. 
+   
+   Return to home by typing cd.
 
-![image2019-6-11_10-44-6](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_10-44-6.png)
+image2019-6-11_10-44-6
 
-### 4.3 Downloading ssh key
+### 4.3 Downloading an SSH key
 
 **For the MobaXterm flow, native LINUX flow or macOS, click on the link Linux or macOS and follow the steps as stated in the welcome email.**
 
@@ -99,37 +136,42 @@ To start the process:
 
 ![image2019-6-11_10-25-59](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_10-25-59.png)
 
-6. After clicking “SSH key for Linux/macOS”, you will get instructions on accessing a UNIX key file. 
+6. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
 
-7. Click the button "SSH Key for Linux/macOS.
+7. Click the button "SSH Key for Linux/macOS."
 
 8. In your mobaxterm terminal, check if you have a .ssh directory. cd; ls -a; Look for the .ssh directory. If it doesn't exist, mkdir .ssh; Copy the devcloud-access-key to your .ssh directory: 
 
-   For example: 
+   For example: <preparation image>
 
-   <u>**If you are within the Intel firewall, skip the following section and resume called: Access to the devcloud from within the Intel firewall.**</u> 
 
-![image2019-7-30_15-24-0](C:\Users\scabanda\Pictures\Camera Roll\image2019-7-30_15-24-0.png)
+Should mobaxterm fail to launch after working for a period of time, we have seen a few cases requiring a reinstall. Prior to removal and re-install, copy the folder Mobaxterm from your Documents directory to a new name. Under the directory Mobaxterm/home you will have the .ssh folder and .bashrc file. Reinstall Mobaxterm and copy these files over to the new install if you have customized these files.
+
+<u>**If you are within the Intel firewall, skip the following section and continue to "5.0 Access to the devcloud from within the Intel firewall.**</u>
 
 ![image2019-7-30_15-21-4](C:\Users\scabanda\Pictures\Camera Roll\image2019-7-30_15-21-4.png)
 
 ![image2019-7-30_15-22-8](C:\Users\scabanda\Pictures\Camera Roll\image2019-7-30_15-22-8.png)
 
-Note that in the above instructions, if you don't have a .ssh folder, type mkdir ~/.ssh . UNIX will not show the hidden .ssh folder leading dot folder naming with the standard ls command, you will need to type ls -a.
+Note that in the above instructions, if you don't have a .ssh folder, type **mkdir ~/.ssh** 
+
+UNIX will not show the hidden .ssh folder leading dot folder naming with the standard ls command, you will need to type ls -a.
 
 After typing ssh c009, continue to follow these instructions:
 
 ## 5.0 Access to the Devcloud from within the Intel firewall
 
-### 5.1 Add socat package (SOcket CAT)
+### 5.1 Add SOcket CAT Package
 
 1. You will need to modify your Mobaxterm setup. Go to the packages icon and left-click.
 
    ![image2019-6-20_16-30-32](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-30-32.png)
 
+   Your next step you will see the MobApt package manager for MobaXterm:
+
 2. ![image2019-6-20_16-32-5](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-32-5.png)
 
-3. Install the socat package. This will take approximately 9 minutes to install.
+3. Install the **socat package**. This will take approximately 9 minutes to install.
 
 ### 5.2  Preparing Configuration file
 
@@ -163,13 +205,11 @@ You will now be logged in:
 ### 5.3 Add Tunnel for Display
 
 1. Refer to section 6 of the instructions to login to a high power compute node. Then return to this section.
-2. Open a second tab on Mobaxterm and type:
+2. ***Note: n137 can be replaced with other available nodes. Adjust names and paths according to your own setup.*** Open a second tab on Mobaxterm and type:
 
 ```
 ssh -L 4002:s001-n137:22 colfax-intel
 ```
-
-*Note: n137 can be replaced with other available nodes. Adjust names and paths according to your own setup.* 
 
 ![image2019-6-20_16-48-50](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-48-50.png)
 
@@ -196,7 +236,7 @@ ssh -L 4002:s001-n137:22 colfax-intel
 You will get a listing of free and busy nodes that connect to PAC cards. 
 
 ```
-pbsnodes -l free 
+pbsnodes -l free 	# lists all free nodes (only nodes 130-139 run x2go)
 ```
 
 If there is a free node, when you execute this command you will be logged in to a new machine within a minute or so. If no machine is available you will be placed in a queue.
@@ -226,17 +266,11 @@ You need to be cognizant of which Mobaxterm tab and machine you are typing in so
 
 To download X2Go, navigate to this link on your PC browser: https://wiki.x2go.org/doku.php/download:start
 
-Grab the MS version – click where the cursor is in the screenshot below (mswin):
+Grab the **MS Windows version** – click where the cursor is in the screenshot below <u>**(mswin)**</u>:
 
 ![image2019-6-11_11-36-33](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-36-33.png)
 
-Go through the install steps for the mswin X2Go Client.
-
-On an Intel provided PC, to allow X2Go to work, you need to temporarily shut off the McAfee security firewall by following this step:
-
-Prior to port remapping, go to the McAfee app which is this icon in the tray ![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-6-11_11-37-49.png?version=1&modificationDate=1560278269953&api=v2) and Disable Endpoint Security Firewall. This step is unique to Intel supplied PCs.
-
-![image2019-6-11_11-44-43](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-44-43.png)
+Go through the install steps for the mswin X2Go Client and accept all.
 
 On your MobaXterm window, open a second session tab by clicking on the "+" as shown below:![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-6-11_11-45-47.png?version=1&modificationDate=1560278748317&api=v2)
 
@@ -282,19 +316,39 @@ Upon gaining access to the windowing system,  right click within in the desktop 
 
 Your GUI ready environment should similar to the following image:![image2019-6-13_10-51-59](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-13_10-51-59.png)
 
+To change the font sizing of the Desktop files in **Desktop Settings** under the **Icons** tab. Select “**Use custom font size**” and change it to 5 or to your font size preference.
+
+![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-10-2_8-15-45.png?version=1&modificationDate=1570029345450&api=v2)![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-2_8-15-50.png?version=1&modificationDate=1570029349957&api=v2)
+
 ## 8.0 Quartus Access and Setup
 
-From a terminal that is logged in to the devcloud, type cp /glob/development-tools/versions/intelFPGA_lite/quartus_setup.sh ~
+From a terminal that is logged in to the devcloud, type the following: 
+
+```
+cp /glob/development-tools/versions/intelFPGA_lite/quartus_setup.sh ~
+```
 
 This setup script has everything you need to setup environment variables and paths to the Intel FPGA development tools. There are some variables that need to be edited inside the script to give you access to either Quartus Prime Pro or Quartus Prime Lite, HLS, OpenCL, or Acceleration Stack.
 
-Set those variables according to you desired setup, and source quartus_setup.sh (note: ~/quartus_setup.sh as an executable does not work, you must source this file) . Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts.
+Set those variables according to you desired setup, and source quartus_setup.sh (note: ~/quartus_setup.sh as an executable does not work, you must source this file) . Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "source ~/quartus_setup.sh" command to the end of the .bashrc file.** 
 
+If the Quartus font appears too zoomed in, as shown below, complete the following:
 
+Under the Tools tab on the Main Bar, select Options. In the General Category, select “Fonts” and change the text size to 6.
 
-## 9.0 Transfer Files to the Devcloud
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-2_8-16-46.png?version=1&modificationDate=1570029406047&api=v2)![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-2_8-16-51.png?version=1&modificationDate=1570029410833&api=v2)  
 
-Refer to the login instructions welcome page on file transfer to/from c009.
+## 9.0 Transferring Files to the Devcloud 
+
+**There are three different ways to Tranfer Files to the DevCloud:** 
+
+1. [From a Local PC to DevCloud Server in X2Go Terminal (9.1)](#91-transferring-files-to-the-devcloud-with-scp)
+2. [MobaXterm User Session (9.2)](#92-Using-MobaXterm-to-Transfer-Files)
+3. [WinSCP Application (9.3)](#93-Using-WinSCP-to-Transfer-Files)
+
+### 9.1 Transferring Files to the Devcloud with SCP 
+
+Refer to the login instructions welcome page on file transfer to/from c009. **Use the local terminal on your PC to transfer files. Note: If on Intel firewall, replace c009 with colfax-intel.**
 
 Transferring Files from your localnode terminal. Your prompt on mobaxterm would be of the form: /home/mobaxterm (localnode)
 
@@ -316,47 +370,143 @@ scp /drives/c/User/llandis/Documents/file.txt c009:/home/u27224
 
 *Note: If on the Intel firewall, replace **c009** with **colfax-intel**.*
 
+### 9.2 Using MobaXterm to Transfer Files
+
+MobaXterm can be used to transfer files to and from your local PC to the Devcloud server.
+
+<u>**To setup this feature, make sure that you have completed all the steps to connect to the DevCloud.**</u>
+
+1. In the main toolbar of MobaXterm, click the **Session** button. ![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-16_14-40-51.png?version=1&modificationDate=1571262051460&api=v2)
+2. Select **SSH**. ![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-10-16_14-41-20.png?version=1&modificationDate=1571262080530&api=v2)
+3. Enter the following information:
+   1. Remote host: **localhost**
+   2. Specify username: **u<number>**
+   3. Port: **4002**
+      ![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-16_14-43-6.png?version=1&modificationDate=1571262186550&api=v2)
+4. Under **Advanced SSH settings** > Select **Use Private Key** and search for the private key you used when you setup your DevCloud log-in. 
+5. Click **OK**. 
+6. If a new tab does not open, double-click on the side window **localhost (u#)**
+   ![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-10-16_14-47-25.png?version=1&modificationDate=1571262445260&api=v2)
+
+The localhost user directory tool can be re-opened and closed as necessary to transfer files. Files can be transferred by dragging and dropping into the side-bar that displays the contents of the user saved in the DevCloud directory. 
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-16_14-49-12.png?version=1&modificationDate=1571262552610&api=v2)
+
+
+
+### 9.3 Using WinSCP to Transfer Files
+
+Download WinSCP: https://winscp.net/eng/download.php
+
+Click on the “Download WinSCP” Button and Install onto PC. Download with default setup: **Typical installation (recommended)** and **Commander User Interface Style**.
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-16.png?version=1&modificationDate=1569969316613&api=v2)
+
+
+
+When you open WinSCP you should get a screen like this:
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-29.png?version=1&modificationDate=1569969329877&api=v2)
+
+Click on the button “**Advanced…**”
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-43.png?version=1&modificationDate=1569969343400&api=v2)
+
+Open the “**Authentication**” Tab under “**SSH**”
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-56.png?version=1&modificationDate=1569969356497&api=v2)
+
+Click on the **“…”** box top open a dialog box
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-3.png?version=1&modificationDate=1569969363827&api=v2)
+
+Navigate to where your devcloud access key is located. Select the options box on the bottom right that says, “Putty Private Key Files” and switch it to “All Files”. Select your devcloud key .txt file.
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-17.png?version=1&modificationDate=1569969377253&api=v2)
+
+This new window should open asking if you would like to convert the SSH private key to PuTTY format. Press OK to this. Then press Save in the new window that opens. Then OK once more.
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-39.png?version=1&modificationDate=1569969399717&api=v2)
+
+Press **OK** and return to the original screen.
+
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-47.png?version=1&modificationDate=1569969408057&api=v2)
+
+Fill in the following information:
+
+Host name: Type in “localhost”
+
+Port number: Type in 4002
+
+User name: Type in the user name that was assigned to you
+
+ ![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-55.png?version=1&modificationDate=1569969416027&api=v2)
+
+Press **Save** to save all the information you just inputted for next time, and then press **OK**
+
+Press **Login**
+
+
+
+Note: When re-using WinSCP to transfer files, re-open the application and **Login**. A new window will pop-up. Click **Update** and you should be able to access and transfer your DevCloud files on the server again. 
+
+
+
 ## 10.0 Job Control on the X2GO Window
+
+This section provides information on how to terminate jobs on the DevCloud. 
 
 ### 10.1 Searching for Free Nodes
 
 You might need to terminate jobs on the devcloud.  To see what nodes are tied up, from the headnode, type the following: 
 
 ```
-pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
+psbnodes -s v-qsvr-fpga | grep -B 4 fpga
 ```
 
-### 10.2 Report Status for Jobs Running on the Devcloud
+### 10.2 Submitting Jobs for a Specified Walltime
 
-Another technique is to type:
+A user will be kicked off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours), type the following after qsub-ing into a specified node:
+
+```
+qsub -l walltime=<insert-time> 'command/bash file to be executed'
+qsub -l walltime=12:00:00 walltime.sh		# example of a file to be executed
+-------------------------------= walltime.sh ------------------------------
+# begin walltime.sh
+sleep 11h											# sleep command equivalent to a quartus compilation file requiring 11 hours of compilation
+													# alternatively, sleep 11h would be quartus_sh commands (i.e. quartus_sh --flow main.v) 	
+echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, output "job success" to walltime_log.txt
+```
+
+### 10.3 Report Status for Jobs Running on the Devcloud
+
+To report the status of your jobs running on the DevCloud is to type the following:
 
 ```
 qstat -s batch@v-qsvr-fpga
+qstat -u u30330 		#change the username according to your id	
+qstat -f <job id> 		# 390965 is an example of a job id - (qstat -f 390965)
 ```
 
-This will report status of your jobs running on the devcloud. 
+### 10.4 Deleting Jobs on the Devcloud
 
-### 10.3 Deleting Jobs on the Devcloud
-
-Jobs can be terminated with:
+Jobs can be terminated with the following command: 
 
 ```
-qdel  -s batch@v-qsvr-fpga <jobid>
+qdel -s batch@v-qsvr-fpga <job-id>
 ```
 
-Another technique is from the headnode, type 
+**This is not recommended** but it is a another technique to delete a job from the headnode. Type the following and look for the qsub commands:
 
 ```
 ps -auxw 
 ```
 
-and look for the qsub commands. Then use 
+Free up the node with the following command: 
 
 ```
-kill <job ID>
+kill <job-id>
 ```
-
-to free up the node, however this technique is not recommended.
 
 
 
@@ -392,20 +542,142 @@ To view serial number for a particular SYSFS entry (what does this mean)
 hexdump -C /sys/class/fpga/intel-fpga-dev.2/intel-fpga-fme.2/intel-pac-hssi.?.auto/hssi_mgmt/eeprom
 ```
 
-Note when running the Acceleration Stack Commands that communicate with the PAC Card, you will need python 2 in your search path. 
+Note when running the Acceleration Stack Commands that communicate with the PAC Card, you will need python 2 in your search path. When initially creating your account, the /etc/skel/.bash_profile file is copied from the headnode to your account. This file specifies python3 first in the path. Switch your ~/.bash_profile to select python2 in your path within this file.
 
-When initially creating your account, the /etc/skel/.bash_profile file is copied from the headnode to your account. This file specifies python3 first in the path. 
+**Another method to see available cards:**
 
-Switch your ~/.bash_profile to select python2 in your path within this file.
+```
+lspci | grep accel
+```
 
-This link to the acceleration hub is an excellent resource for further information:
+View the various available cards and select a free one.
 
-https://www.intel.com/content/www/us/en/programmable/solutions/acceleration-hub/acceleration-stack.html
+![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-5_7-48-17.png?version=1&modificationDate=1570286897493&api=v2)
 
-## 15.0 Compiling on the Devcloud and Downloading to a Local DE10-Lite Board
+**To download a green bit stream (.gbs):**
 
-Node n138 has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image2019-8-27_14-40-46](C:\Users\scabanda\Pictures\Camera Roll\image2019-8-27_14-40-46.png)
+```
+fpgaconf -B 0x3b hello.gbs
+```
 
-## **16.0 Timeouts / Disk Space**
+This link to the acceleration hub is an excellent resource for further information: https://www.intel.com/content/www/us/en/programmable/solutions/acceleration-hub/acceleration-stack.html .
+
+## 15.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
+
+Node **n138** has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image2019-8-27_14-40-46](C:\Users\scabanda\Pictures\Camera Roll\image2019-8-27_14-40-46.png)
+
+If the USB Blaster is not configured, complete the following steps: 
+
+- [ ] To download your completed FPGA design into the local device, connect the USB Blaster cable between your PC USB port and the USB Blaster port on your development kit. If you are not using the DE10-Lite, you may have to plug the kit into power using a wall adapter. Upon plugging in your device, you should see flashing LEDs and 7-segment displays counting in hexadecimal, or other lit up LEDs and 7-segments depending on previous projects that have been downloaded to the development kit. 
+
+*<u>**Note: The lights and switches controlled on the DevCloud connected server kit cannot be controlled unless system console or another form of instrumentation is used.*</u>**
+
+- [ ] To use the USB Blaster to program your device, you need to install the USB Blaster driver. To begin, open your Device Manager by hitting the Windows Key and typing Device Manager. Click the appropriate tile labeled Device Manager that appears.
+
+- [ ] Navigate to the Other Devices section of the Device Manager and expand the section below. 
+
+  <insert device manager> 
+
+- [ ] Right click the USB Blaster device and select **Update Driver Software**.
+
+- [ ] Choose to browse your computer for driver software and navigate to the path shown below.
+
+- [ ] <insert image>
+
+- [ ] Click on **Next** and the driver for the USB Blaster should be installed.
+
+
+
+## 16.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board
+
+[16.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#161-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
+
+[16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#162-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
+
+### 16.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster
+
+- [ ] On your PC, launch the Quartus Programmer. Search **Programmer** in the File Explorer. 
+
+- [ ] If you don’t have the Programmer on your PC, download it from this link: http://fpgasoftware.intel.com/18.1/?edition=lite&download_manager=dlm3&platform=windows
+
+- [ ] Select **Additional Software** and download the **Quartus Prime Programmer** and **Tools**. 
+
+- [ ] Follow the login prompts, download, and install the Programmer. 
+
+- [ ] or Intel Employees within the Firewall, in the File Explorer Search window, search ''**Programmer**'', and select **Run as administrator**. For other users, you can open the Programmer (Quartus Prime 18.1) normally. 
+
+- [ ] Select **Yes** if a yellow window will pop-up asking if you to allow app changes from an unknown publisher. 
+
+- [ ] The Programmer window should then pop-up.  
+
+- [ ] Left click on **Hardware Setup…** and then select the **JTAG Settings** tab.
+
+- [ ] Click on **Configure Local JTAG Server...**
+
+- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.
+
+- [ ] On your local PC terminal, type in the following command to tunnel from the DevCloud to your local USB: **Note: the last parameter points to the node 138. For server consistency, you need to adjust this to the node number you are currently using to connect to the Devcloud.**
+
+  ```
+  ssh -tR 13090:localhost:1309 colfax-intel "ssh -t -R 13090:localhost:13090 s001-n138"
+  ```
+
+- [ ] Ignore the messages: 
+
+  ```
+  stty: standard input: Inappropriate ioctl for device
+  X11 forwarding request failed on channel 0
+  ```
+
+- [ ] On the X2Go app and Quartus Prime Lite window, launch the programmer by selecting **Tools** > **Programmer**. 
+
+- [ ] Left click on **Hardware Setup,** select the **JTAG Settings** tab, and **Add Server**.
+
+- [ ] Enter in the following information: 
+
+  Server name: **localhost:13090**
+
+  Server password: (password you set up for your PC local JTAG server)
+
+- [ ] Select **OK**, and you should see the localhost on the list of JTAG servers.
+
+- [ ] Click on the **Hardware settings tab,** double click on the **localhost:13090**, and that should now be your selected USB blaster download connection. 
+
+- [ ] Make sure localhost:13090 shows up as your currently selected hardware and that the connection status is OK.
+
+  ### 16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
+
+  - [ ] Select the .sof file to be downloaded to the FPGA. 
+  - [ ] Click **OK** and click **Start**. The progress bar should show 100% (Successful) and turn green. If it fails the first time, click **Start** a second time. 
+
+
+
+## 17.0 Timeouts and Disk Space
 
 Your session will timeout after four hours since login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
+
+
+
+## 18.0 Revision Table
+
+| Rev  | Owner            | Date       | Notes                                                        |
+| :--- | :--------------- | :--------- | :----------------------------------------------------------- |
+| 1.0  | Larry Landis     | 4/30/2019  | Initial Release                                              |
+| 1.1  | Larry Landis     | 6/4/2019   | Edits based on more info                                     |
+| 1.2  | Ray Schouten     | 6/6/2019   | Added Host Key Verification Error messages                   |
+| 1.3  | Ray Schouten     | 6/11/2019  | Added all screenshots and SCP command info                   |
+| 1.4  | Larry Landis     | 6/12/2019  | Intro and some changes to query available machines           |
+| 1.5  | Ray Schouten     | 6/13/2019  | Added more screenshots, corrected cmds, changed font to be clear |
+| 1.6  | Terry Barrette   | 6/14/2019  | Updated Instructions with more compete steps and format      |
+| 1.7  | Larry Landis     | 6/18/2019  | Add instructions for login within Intel firewall             |
+| 1.8  | Ray Schouten     | 7/1/2019   | Change formats for consistency                               |
+| 1.9  | Dustin Henderson | 8/19/2019  | Minor formatting changes                                     |
+| 1.10 | Larry Landis     | 8/26/2019  | Details of compute nodes                                     |
+| 1.11 | Larry Landis     | 9/4/2019   | Time and Space, python paths                                 |
+| 1.12 | Larry Landis     | 9/12/2019  | Clarify Intel login versus outside firewall login            |
+| 1.13 | Rony Schutz      | 10/1/2019  | Added WinSCP instructions to 9.1                             |
+| 1.14 | Shawnna Cabanday | 10/2/2019  | Added X2GO Instructions on font size settings to 7.0 and Quartus Prime font size settings to 8.0 |
+| 1.15 | Larry Landis     | 10/5/2019  | Find PCIe cards with lspci                                   |
+| 1.16 | Shawnna Cabanday | 10/9/2019  | Added additional information in Section 9.1: WinSCP instructions |
+| 1.17 | Shawnna Cabanday | 10/16/2019 | Added Section 9.2: MobaXterm SCP instructions, updated SCP command from PC to Devcloud, updating qsub job control information, added table of contents, updated .bashrc sourcing information |
+| 1.18 | Shawnna Cabanday | 10/22/2019 | Updated USB blaster and tunneling sections, converted Intel Wiki Page to GitHub md file (Typora) |
