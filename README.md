@@ -52,8 +52,8 @@ Once you have an account / email received you are ready to start the process to 
 
 There are different Methods of Terminal connections. There are a few options you can select in choosing which Terminal application tool you would like to use:
 
-1. [From a PC using Putty](#access-from-your-pc-using-putty)
-2. [From a PC using Mobaxterm (which mimics the behavior of Linux)](#access-from-your-pc-via-mobaxterm-or-from-linux-terminal) 
+1. [From a PC using Putty](#3.0-access-from-your-pc-using-putty)
+2. [From a PC using Mobaxterm (which mimics the behavior of Linux)](#4.0-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) 
 3. From a Linux console (either a native Linux machine or client Linux machine)
 
 
