@@ -107,7 +107,7 @@ This is a work in progress and not documented yet.
 
 1. Download the MobaXterm free edition: https://mobaxterm.mobatek.net/download-home-edition.html Note: get the installer edition, not the portable edition. (The installer edition will enable you to save login profiles.) . Download zipfile, open it and click on the msi file to install Mobaxterm.
 
-   ![image2019-6-13_9-20-11](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-13_9-20-11.png)
+   ![mobaxterm_edition.png](https://github.com/intel/FPGA-Devcloud/blob/shawnnacab-access-instructions-patch-1/mobaxterm_edition.png)
 
 ### 4.2 Open Local Terminal 
 
