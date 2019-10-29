@@ -107,13 +107,13 @@ This is a work in progress and not documented yet.
 
 1. Download the MobaXterm free edition: https://mobaxterm.mobatek.net/download-home-edition.html Note: get the installer edition, not the portable edition. (The installer edition will enable you to save login profiles.) . Download zipfile, open it and click on the msi file to install Mobaxterm.
 
-   ![mobaxterm_edition.png](https://github.com/intel/FPGA-Devcloud/blob/shawnnacab-access-instructions-patch-1/mobaxterm_edition.png)
+   ![mobaxterm_edition](https://user-images.githubusercontent.com/56968566/67715527-3fee6500-f987-11e9-8961-6c0a38163bfc.png)
 
 ### 4.2 Open Local Terminal 
 
 1. Launch MobaXterm using the installer. You should see the following:
 
-![](C:\Users\scabanda\Documents\GitHub\FPGA-Devcloud\figures\download_programmer.png)
+![mobaxterm_window](https://user-images.githubusercontent.com/56968566/67715801-c5721500-f987-11e9-95e0-bdf9f76b7f43.png)
 
 2. Left click: **"Start local terminal"**. Within this console you can see your local PC based files using standard Linux operating system commands (ls, cd, vi and etc.). 
 
@@ -121,7 +121,7 @@ This is a work in progress and not documented yet.
    
    Return to home by typing cd.
 
-image2019-6-11_10-44-6
+![mobaxterm_terminal](https://user-images.githubusercontent.com/56968566/67715875-e76b9780-f987-11e9-9c4a-9eb48fb06915.png)
 
 ### 4.3 Downloading an SSH key
 
@@ -134,7 +134,7 @@ To start the process:
 3. You will then come to a new screen asking to select "Learn" or "Connect", please select "Connect".
 4. The following page will then be displayed. Click on “Linux* or MAC OS” under the "Connect with a Terminal" button.
 
-![image2019-6-11_10-25-59](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_10-25-59.png)
+![ssh_key_access](https://user-images.githubusercontent.com/56968566/67715899-f3eff000-f987-11e9-9b1c-5ad2ba2a96ea.png)
 
 6. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
 
@@ -142,18 +142,21 @@ To start the process:
 
 8. In your mobaxterm terminal, check if you have a .ssh directory. cd; ls -a; Look for the .ssh directory. If it doesn't exist, mkdir .ssh; Copy the devcloud-access-key to your .ssh directory: 
 
-   For example: <preparation image>
+   For example: ![preparation](https://user-images.githubusercontent.com/56968566/67715925-01a57580-f988-11e9-8d12-4d73dc29c9de.png)
 
 
 Should mobaxterm fail to launch after working for a period of time, we have seen a few cases requiring a reinstall. Prior to removal and re-install, copy the folder Mobaxterm from your Documents directory to a new name. Under the directory Mobaxterm/home you will have the .ssh folder and .bashrc file. Reinstall Mobaxterm and copy these files over to the new install if you have customized these files.
 
 <u>**If you are within the Intel firewall, skip the following section and continue to "5.0 Access to the devcloud from within the Intel firewall.**</u>
 
-![image2019-7-30_15-21-4](C:\Users\scabanda\Pictures\Camera Roll\image2019-7-30_15-21-4.png)
+![connection](https://user-images.githubusercontent.com/56968566/67715963-14b84580-f988-11e9-9a8e-9d81c32abccf.png)
+![transferring_files](https://user-images.githubusercontent.com/56968566/67715967-16820900-f988-11e9-9319-e409e893b81e.png)
 
-![image2019-7-30_15-22-8](C:\Users\scabanda\Pictures\Camera Roll\image2019-7-30_15-22-8.png)
+Note that in the above instructions, if you don't have a .ssh folder, type 
 
-Note that in the above instructions, if you don't have a .ssh folder, type **mkdir ~/.ssh** 
+```
+mkdir ~/.ssh 
+```
 
 UNIX will not show the hidden .ssh folder leading dot folder naming with the standard ls command, you will need to type ls -a.
 
@@ -165,11 +168,11 @@ After typing ssh c009, continue to follow these instructions:
 
 1. You will need to modify your Mobaxterm setup. Go to the packages icon and left-click.
 
-   ![image2019-6-20_16-30-32](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-30-32.png)
+   ![packages_icon](https://user-images.githubusercontent.com/56968566/67716101-6234b280-f988-11e9-972a-7c13370e1adc.png)
 
    Your next step you will see the MobApt package manager for MobaXterm:
 
-2. ![image2019-6-20_16-32-5](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-32-5.png)
+   ![socat](https://user-images.githubusercontent.com/56968566/67716113-6b258400-f988-11e9-828a-83c74b051b91.png)
 
 3. Install the **socat package**. This will take approximately 9 minutes to install.
 
@@ -200,7 +203,7 @@ ssh colfax-intel
 
 You will now be logged in:
 
-![image2019-6-20_16-40-32](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-40-32.png)
+![step1](https://user-images.githubusercontent.com/56968566/67716160-885a5280-f988-11e9-8e8e-bee5b0bf2a21.png)
 
 ### 5.3 Add Tunnel for Display
 
@@ -211,7 +214,7 @@ You will now be logged in:
 ssh -L 4002:s001-n137:22 colfax-intel
 ```
 
-![image2019-6-20_16-48-50](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-20_16-48-50.png)
+![step2](https://user-images.githubusercontent.com/56968566/67716181-9314e780-f988-11e9-9bb3-2954946864c0.png)
 
 3. Follow the instructions on step 6 to find available compute nodes and on to step 7 to gain access to X2Go and work in a graphics enabled environment.
 
@@ -268,57 +271,57 @@ To download X2Go, navigate to this link on your PC browser: https://wiki.x2go.or
 
 Grab the **MS Windows version** – click where the cursor is in the screenshot below <u>**(mswin)**</u>:
 
-![image2019-6-11_11-36-33](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-36-33.png)
+![launching_x2go](https://user-images.githubusercontent.com/56968566/67716221-a6c04e00-f988-11e9-97a6-bae636d8732b.png)
 
 Go through the install steps for the mswin X2Go Client and accept all.
 
-On your MobaXterm window, open a second session tab by clicking on the "+" as shown below:![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-6-11_11-45-47.png?version=1&modificationDate=1560278748317&api=v2)
+On your MobaXterm window, open a second session tab by clicking on the "+" as shown below:![extra_tab](https://user-images.githubusercontent.com/56968566/67716260-b2ac1000-f988-11e9-8e44-945391aa8555.png)
 
 This tab will a launch terminal running UNIX commands on your local machine.
 
 To open the port for graphics usage, in the new terminal with your PC host name prompt type. Note that you will need to match or replace the hostname n137 listed below with the machine name that was allocated to you. If you are on the Intel firewall, replace c009 with colfax-intel.
 
-![image2019-6-18_22-51-22](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-18_22-51-22.png)
+![graphics_usage](https://user-images.githubusercontent.com/56968566/67716435-0a4a7b80-f989-11e9-82bd-456aec75cb6b.png)
 
 Launch the x2go application on your PC. Set up the new session with the following settings substituting the Login field <uxxxx> with your own assigned user name and the path to the RSA/DSA key for ssh connection. Note this is the same key referenced for Mobaxterm connection that enables ssh c009.
 
+![x2go_session_preferences](https://user-images.githubusercontent.com/56968566/67716674-8218a600-f989-11e9-8303-2dffc22f09b5.png)
 
-
-![image2019-6-11_11-48-57](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-48-57.png)
-
-The input/output screen has a setting for the display size which can be adjusted depending on your screen size. If you desire a different screen size adjust the parameters on this panel accordingly.![image2019-6-11_11-50-46](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-50-46.png)
+The input/output screen has a setting for the display size which can be adjusted depending on your screen size. If you desire a different screen size adjust the parameters on this panel accordingly.![x2go_session_size](https://user-images.githubusercontent.com/56968566/67716702-8c3aa480-f989-11e9-9575-d28c218bc225.png)
 
 To launch the application, hit **OK** to save the settings and then click on the puffy icon New session to launch a graphics session.
 
-![image2019-6-11_11-55-25](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-55-25.png)
+![x2go_launch_puffy](https://user-images.githubusercontent.com/56968566/67716724-95c40c80-f989-11e9-94a8-8b1029e5e70f.png)
 
 After a minute or so, you should see the X2GO screen, be patient. While waiting for X2GO to launch you will see a screen that looks like this:
 
-![image2019-6-12_23-29-25](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-12_23-29-25.png)
+![x2go_loading](https://user-images.githubusercontent.com/56968566/67716770-a5435580-f989-11e9-987a-07b0ff0f3808.png)
 
 You might get the following message If you previously logged into a different machine:
 
-![image2019-6-11_14-21-28](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_14-21-28.png)
+![host_key_verification_terminate](https://user-images.githubusercontent.com/56968566/67716812-b55b3500-f989-11e9-8c60-9c0eaaee2172.png)
 
 Enter **No**
+
+![host_key_verification_update](https://user-images.githubusercontent.com/56968566/67716830-bee49d00-f989-11e9-86b4-5aee8f792b5e.png)
 
 Then another dialog box will appear, enter **Yes**,
 
 You will see a window that looks like the following.
 
-![image2019-6-13_10-51-13](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-13_10-51-13.png)
+![x2go_desktop](https://user-images.githubusercontent.com/56968566/67716843-c60bab00-f989-11e9-9d99-2fbbdcfce6d9.png)
 
 Should X2GO fail to launch, check that you ran the tunneling command on Mobaxterm on your local host. Make sure that the firewall is turned off per steps described above.
 
 Upon gaining access to the windowing system,  right click within in the desktop and select “Open Terminal Here”.
 
-![image2019-6-11_11-52-1](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-11_11-52-1.png)
+![open_terminal](https://user-images.githubusercontent.com/56968566/67716892-dfacf280-f989-11e9-9d36-6e6c895c363e.png)
 
-Your GUI ready environment should similar to the following image:![image2019-6-13_10-51-59](C:\Users\scabanda\Pictures\Camera Roll\image2019-6-13_10-51-59.png)
+Your GUI ready environment should  be similar to the following image:![x2go_terminal_window](https://user-images.githubusercontent.com/56968566/67716915-efc4d200-f989-11e9-93ee-1726923a0a93.png)
 
 To change the font sizing of the Desktop files in **Desktop Settings** under the **Icons** tab. Select “**Use custom font size**” and change it to 5 or to your font size preference.
 
-![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-10-2_8-15-45.png?version=1&modificationDate=1570029345450&api=v2)![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-2_8-15-50.png?version=1&modificationDate=1570029349957&api=v2)
+<img src="https://user-images.githubusercontent.com/56968566/67716947-03703880-f98a-11e9-9b5f-e3b2b7eb79ad.png" alt="x2go_change_font" style="zoom: 80%;" />![x2go_fontsize](https://user-images.githubusercontent.com/56968566/67717026-27cc1500-f98a-11e9-9b01-f98c9a1a2d83.png)
 
 ## 8.0 Quartus Access and Setup
 
@@ -336,7 +339,8 @@ If the Quartus font appears too zoomed in, as shown below, complete the followin
 
 Under the Tools tab on the Main Bar, select Options. In the General Category, select “Fonts” and change the text size to 6.
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-2_8-16-46.png?version=1&modificationDate=1570029406047&api=v2)![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-2_8-16-51.png?version=1&modificationDate=1570029410833&api=v2)  
+![quartus_options](https://user-images.githubusercontent.com/56968566/67717114-55b15980-f98a-11e9-857e-8c8f5d572d51.png)
+![quartus_fontsize](https://user-images.githubusercontent.com/56968566/67717117-5649f000-f98a-11e9-92fe-2864e3d9b155.png)
 
 ## 9.0 Transferring Files to the Devcloud 
 
@@ -376,21 +380,21 @@ MobaXterm can be used to transfer files to and from your local PC to the Devclou
 
 <u>**To setup this feature, make sure that you have completed all the steps to connect to the DevCloud.**</u>
 
-1. In the main toolbar of MobaXterm, click the **Session** button. ![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-16_14-40-51.png?version=1&modificationDate=1571262051460&api=v2)
-2. Select **SSH**. ![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-10-16_14-41-20.png?version=1&modificationDate=1571262080530&api=v2)
+1. In the main toolbar of MobaXterm, click the **Session** button. ![mobaxterm_new_session](https://user-images.githubusercontent.com/56968566/67717144-65c93900-f98a-11e9-870b-784e76806a7f.png)
+2. Select **SSH**. ![mobaxterm_ssh](https://user-images.githubusercontent.com/56968566/67717168-6d88dd80-f98a-11e9-987a-3d226b109886.png)
 3. Enter the following information:
    1. Remote host: **localhost**
    2. Specify username: **u<number>**
    3. Port: **4002**
-      ![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-16_14-43-6.png?version=1&modificationDate=1571262186550&api=v2)
+      ![basic_ssh_settings](https://user-images.githubusercontent.com/56968566/67717191-7a0d3600-f98a-11e9-9326-0a25d0354e99.png)
 4. Under **Advanced SSH settings** > Select **Use Private Key** and search for the private key you used when you setup your DevCloud log-in. 
 5. Click **OK**. 
 6. If a new tab does not open, double-click on the side window **localhost (u#)**
-   ![img](https://wiki.ith.intel.com/download/thumbnails/1307283437/image2019-10-16_14-47-25.png?version=1&modificationDate=1571262445260&api=v2)
+   ![localhost_user_session](https://user-images.githubusercontent.com/56968566/67717217-82657100-f98a-11e9-8e15-30a98a73741e.png)
 
 The localhost user directory tool can be re-opened and closed as necessary to transfer files. Files can be transferred by dragging and dropping into the side-bar that displays the contents of the user saved in the DevCloud directory. 
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-16_14-49-12.png?version=1&modificationDate=1571262552610&api=v2)
+![mobaxterm_filemanagment](https://user-images.githubusercontent.com/56968566/67717267-9b6e2200-f98a-11e9-8c2c-64e8376fd2da.png)
 
 
 
@@ -400,37 +404,37 @@ Download WinSCP: https://winscp.net/eng/download.php
 
 Click on the “Download WinSCP” Button and Install onto PC. Download with default setup: **Typical installation (recommended)** and **Commander User Interface Style**.
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-16.png?version=1&modificationDate=1569969316613&api=v2)
+![winscp_download](https://user-images.githubusercontent.com/56968566/67717718-7ded8800-f98b-11e9-8bfa-ef0ea0d71070.png)
 
 
 
 When you open WinSCP you should get a screen like this:
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-29.png?version=1&modificationDate=1569969329877&api=v2)
+![winscp_open_window](https://user-images.githubusercontent.com/56968566/67717741-8a71e080-f98b-11e9-9ccb-ecc7ba91e9cf.png)
 
 Click on the button “**Advanced…**”
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-43.png?version=1&modificationDate=1569969343400&api=v2)
+![winscp_advanced](https://user-images.githubusercontent.com/56968566/67717752-8f369480-f98b-11e9-913e-965213997e4d.png)
 
 Open the “**Authentication**” Tab under “**SSH**”
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-35-56.png?version=1&modificationDate=1569969356497&api=v2)
+![authentication_ssh](https://user-images.githubusercontent.com/56968566/67717764-965da280-f98b-11e9-8623-3692b5509b8e.png)
 
 Click on the **“…”** box top open a dialog box
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-3.png?version=1&modificationDate=1569969363827&api=v2)
+![browse_for_sshkey](https://user-images.githubusercontent.com/56968566/67717776-9c538380-f98b-11e9-90a4-3cbf01043f88.png)
 
 Navigate to where your devcloud access key is located. Select the options box on the bottom right that says, “Putty Private Key Files” and switch it to “All Files”. Select your devcloud key .txt file.
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-17.png?version=1&modificationDate=1569969377253&api=v2)
+![putty_private_key_files](https://user-images.githubusercontent.com/56968566/67717790-a37a9180-f98b-11e9-8bed-4af4fbb5df50.png)
 
 This new window should open asking if you would like to convert the SSH private key to PuTTY format. Press OK to this. Then press Save in the new window that opens. Then OK once more.
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-39.png?version=1&modificationDate=1569969399717&api=v2)
+![convert-to-private-key](https://user-images.githubusercontent.com/56968566/67717841-bab97f00-f98b-11e9-8614-b2c897606bd5.png)
 
 Press **OK** and return to the original screen.
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-47.png?version=1&modificationDate=1569969408057&api=v2)
+![type-in-localhost-information](https://user-images.githubusercontent.com/56968566/67717855-be4d0600-f98b-11e9-97cc-ba3044551548.png)
 
 Fill in the following information:
 
@@ -440,7 +444,7 @@ Port number: Type in 4002
 
 User name: Type in the user name that was assigned to you
 
- ![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-1_15-36-55.png?version=1&modificationDate=1569969416027&api=v2)
+![devcloud_information](https://user-images.githubusercontent.com/56968566/67717896-d3c23000-f98b-11e9-8a7a-3f3bc28a6223.png)
 
 Press **Save** to save all the information you just inputted for next time, and then press **OK**
 
@@ -552,7 +556,7 @@ lspci | grep accel
 
 View the various available cards and select a free one.
 
-![img](https://wiki.ith.intel.com/download/attachments/1307283437/image2019-10-5_7-48-17.png?version=1&modificationDate=1570286897493&api=v2)
+![lspci_grep](https://user-images.githubusercontent.com/56968566/67717938-ee94a480-f98b-11e9-9209-5acf76a3ec9b.png)
 
 **To download a green bit stream (.gbs):**
 
@@ -564,7 +568,7 @@ This link to the acceleration hub is an excellent resource for further informati
 
 ## 15.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
 
-Node **n138** has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image2019-8-27_14-40-46](C:\Users\scabanda\Pictures\Camera Roll\image2019-8-27_14-40-46.png)
+Node **n138** has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![devcloud_to_local_board](https://user-images.githubusercontent.com/56968566/67718023-26035100-f98c-11e9-81b2-63e24a51ef3c.png)
 
 If the USB Blaster is not configured, complete the following steps: 
 
@@ -576,13 +580,13 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Navigate to the Other Devices section of the Device Manager and expand the section below. 
 
-  <insert device manager> 
+  ![device_manager](https://user-images.githubusercontent.com/56968566/67718301-be99d100-f98c-11e9-8e24-a04edfa7f1ea.png)
 
 - [ ] Right click the USB Blaster device and select **Update Driver Software**.
 
 - [ ] Choose to browse your computer for driver software and navigate to the path shown below.
 
-- [ ] <insert image>
+  ![browse_driver_software](https://user-images.githubusercontent.com/56968566/67718364-da9d7280-f98c-11e9-9677-ed7d9a3a39b9.png)
 
 - [ ] Click on **Next** and the driver for the USB Blaster should be installed.
 
@@ -598,13 +602,19 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] On your PC, launch the Quartus Programmer. Search **Programmer** in the File Explorer. 
 
+  ![programmer](https://user-images.githubusercontent.com/56968566/67718453-01f43f80-f98d-11e9-9745-3f596993ced4.png)
+
 - [ ] If you don’t have the Programmer on your PC, download it from this link: http://fpgasoftware.intel.com/18.1/?edition=lite&download_manager=dlm3&platform=windows
 
-- [ ] Select **Additional Software** and download the **Quartus Prime Programmer** and **Tools**. 
+- [ ] Select **Additional Software** and download the **Quartus Prime Programmer** and **Tools**.
+
+  ![download_programmer_intel](https://user-images.githubusercontent.com/56968566/67718603-55ff2400-f98d-11e9-9343-0e499609f487.png) 
 
 - [ ] Follow the login prompts, download, and install the Programmer. 
 
-- [ ] or Intel Employees within the Firewall, in the File Explorer Search window, search ''**Programmer**'', and select **Run as administrator**. For other users, you can open the Programmer (Quartus Prime 18.1) normally. 
+- [ ] For Intel Employees within the Firewall, in the File Explorer Search window, search ''**Programmer**'', and select **Run as administrator**. For other users, you can open the Programmer (Quartus Prime 18.1) normally. 
+
+  ![programmer](https://user-images.githubusercontent.com/56968566/67718645-64e5d680-f98d-11e9-9987-ea2d1ea6344c.png)
 
 - [ ] Select **Yes** if a yellow window will pop-up asking if you to allow app changes from an unknown publisher. 
 
@@ -612,9 +622,11 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Left click on **Hardware Setup…** and then select the **JTAG Settings** tab.
 
+  ![download_programmer](https://user-images.githubusercontent.com/56968566/67718852-dde52e00-f98d-11e9-9c06-39ac5c61aa5d.png)![run_admin](https://user-images.githubusercontent.com/56968566/67718870-eccbe080-f98d-11e9-83b8-1a7738f3f018.png)
+
 - [ ] Click on **Configure Local JTAG Server...**
 
-- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.
+- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.![hardware_setup](https://user-images.githubusercontent.com/56968566/67718930-0f5df980-f98e-11e9-92ce-21c5476c11b2.png)
 
 - [ ] On your local PC terminal, type in the following command to tunnel from the DevCloud to your local USB: **Note: the last parameter points to the node 138. For server consistency, you need to adjust this to the node number you are currently using to connect to the Devcloud.**
 
@@ -631,7 +643,11 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] On the X2Go app and Quartus Prime Lite window, launch the programmer by selecting **Tools** > **Programmer**. 
 
+  ![configure_JTAG](https://user-images.githubusercontent.com/56968566/67718964-20a70600-f98e-11e9-99ac-d897ffa295cd.png)
+
 - [ ] Left click on **Hardware Setup,** select the **JTAG Settings** tab, and **Add Server**.
+
+  ![JTAG_password](https://user-images.githubusercontent.com/56968566/67718986-2a306e00-f98e-11e9-9d06-24ccc2173801.png)
 
 - [ ] Enter in the following information: 
 
@@ -641,6 +657,8 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Select **OK**, and you should see the localhost on the list of JTAG servers.
 
+  ![add_server_JTAG](https://user-images.githubusercontent.com/56968566/67719028-3d433e00-f98e-11e9-8c3d-fcaf6cec4aba.png)
+
 - [ ] Click on the **Hardware settings tab,** double click on the **localhost:13090**, and that should now be your selected USB blaster download connection. 
 
 - [ ] Make sure localhost:13090 shows up as your currently selected hardware and that the connection status is OK.
@@ -648,7 +666,10 @@ If the USB Blaster is not configured, complete the following steps:
   ### 16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
 
   - [ ] Select the .sof file to be downloaded to the FPGA. 
+  
   - [ ] Click **OK** and click **Start**. The progress bar should show 100% (Successful) and turn green. If it fails the first time, click **Start** a second time. 
+  
+    ![100_succesful](https://user-images.githubusercontent.com/56968566/67719042-446a4c00-f98e-11e9-994f-2bcb55469fd0.png)
 
 
 
