@@ -24,16 +24,16 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 ## General GitHub Devcloud Rules
 
-2. Create a new branch for every new feature
+1. Create a new branch for every new feature
    - Every time you start working on something new (workshop, quickstart guide, read-me tutorial), create a new Git branch that you can push to the main branch
    - **DO NOT MAKE EDITS ON THE MASTER BRANCH** - This can cause potential merge conflicts.
    - For instance, if you are creating a new instruction section on the Public Devcloud Access Instructions md file, do the following:
      - Create a dedicated branch for this new feature
      - Give it a meaningful name (e.g. *contact-me-section*)
      - Commit all the code to that specific branch
-3. Always get the most recent changes on GitHub pulled to your local repository 
+2. Always get the most recent changes on GitHub pulled to your local repository 
    - A lot of edits will be made from one user to another. To get the most recent changes on different branches, always pull from the GitHub before starting to make new changes to your local repository. 
-4. Use Pull Requests to merge code to Master branch
+3. Use Pull Requests to merge code to Master branch
    - Every repository has a master branch by default. **Never push changes immediately to the master branch. **Ensure that no merge conflicts will occur or data will be lost before pushing.
    - Use feature branches described in step 1 and open a new pull request to merge the feature branch code with the master branch code. 
    - After your code has been reviewed, tested, and approved, your reviewers will give you a thumbs up for you to merge the Pull Request, or they will directly merge your pull request. 
