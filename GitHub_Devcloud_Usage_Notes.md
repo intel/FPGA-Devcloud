@@ -34,7 +34,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 2. Always get the most recent changes on GitHub pulled to your local repository 
    - A lot of edits will be made from one user to another. To get the most recent changes on different branches, always pull from the GitHub before starting to make new changes to your local repository. 
 3. Use Pull Requests to merge code to Master branch
-   - Every repository has a master branch by default. **Never push changes immediately to the master branch. **Ensure that no merge conflicts will occur or data will be lost before pushing.
+   - Every repository has a master branch by default. **Never push changes immediately to the master branch. Ensure that no merge conflicts will occur or data will be lost before pushing.**
    - Use feature branches described in step 1 and open a new pull request to merge the feature branch code with the master branch code. 
    - After your code has been reviewed, tested, and approved, your reviewers will give you a thumbs up for you to merge the Pull Request, or they will directly merge your pull request. 
 
