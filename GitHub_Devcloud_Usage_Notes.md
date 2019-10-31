@@ -9,18 +9,17 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 **If you don't know what the GitHub Flow is**, click this link: https://guides.github.com/introduction/flow/
 
 - [GitHub Devcloud Instructions](#github-devcloud-instructions)
-  * [General GitHub Devcloud Rules](#general-github-devcloud-rules)
-  * [Installing GitBash Linux](#installing-gitbash-linux)
-  * [Installing GitHub Desktop GUI](#installing-github-desktop-gui)
-  * [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
-  * [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
-  * [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
-  * [Adding a File to a Repository](#adding-a-file-to-a-repository)
-  * [Creating a New Branch](#creating-a-new-branch)
-  * [Moving from Branch to Branch](#moving-from-branch-to-branch)
-  * [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
-  * [Get latest changes on GitHub back to your Computer](#get-latest-changes-on-github-back-to-your-computer)
-
+  - [General GitHub Devcloud Rules](#general-github-devcloud-rules)
+  - [Installing GitBash Linux](#installing-gitbash-linux)
+  - [Installing GitHub Desktop GUI](#installing-github-desktop-gui)
+  - [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
+  - [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
+  - [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
+  - [Adding a File to a Repository](#adding-a-file-to-a-repository)
+  - [Creating a New Branch](#creating-a-new-branch)
+  - [Moving from Branch to Branch](#moving-from-branch-to-branch)
+  - [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
+  - [Get latest changes on GitHub back to your Computer](#get-latest-changes-on-github-back-to-your-computer)
 
 ## General GitHub Devcloud Rules
 
@@ -53,7 +52,6 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 **Git for Mac:** https://git-scm.com/download/mac
 
 - [ ] Open the Git executable file and begin installation. 
-
   - [ ] Install **Git Bash** **Here**, **Git GUI Here** optional
 - [ ] **Use Git and optional Unix tools from the Windows Command Prompt**
   - [ ] Checkout Windows-style, commit Unix-style line endings
@@ -249,4 +247,26 @@ git log					   # see all the new commits
 ```
 
 
+
+## Opening Files from MobaXterm Command Line
+
+### Typora
+
+If Typora is set as the default markdown editor, then in cmd.exe, input `.md` file path directly would open target markdown file. 
+
+**In MobaXterm: `open example.md`** 
+
+To set Typora as the default markdown editor you have to do following:
+
+1. Select one of your markdown files
+2. Open context menu and choose
+   - *Properties* and then click on *Change* buttong, as shown in **Figure 1**
+   - *Open with -> Choose another app*, as shown in **Figure 2**
+3. Choose *Typora* or *Typora Launcher* in **How do you want to open this file?** and set a checkmark for *Always use this app to open .md files.*
+
+**Figure 1 - File properties window**
+![Figure 1 - Open Properties of Markdown file](https://support.typora.io/media/use-from-shell/Snip20180704_1.png)
+
+**Figure 2 - Application chooser window**
+![Figure 2 - Applicaiton chooser](https://support.typora.io/media/use-from-shell/Snip20180704_2.png)
 
