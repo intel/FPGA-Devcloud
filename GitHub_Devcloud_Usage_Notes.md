@@ -197,9 +197,12 @@ This procedure assumes you've already:
 3. Execute the following commands: 
 
 ```
-git add *							# adds file to local repo and stages for commit
+git add *						# adds file to local repo and stages for commit
+git status 						# check status of added files
 git commit -m "message"			# commits tracked changes, prepares to push
-git push origin your-branch-name	# pushes changes in local repo up to remote repo
+git status 						# check status of commits
+git push 						# pushes changes in local repo up to remote repo branch
+git status						# check status after push
 ```
 
 See the following link for more information: https://help.github.com/en/articles/adding-a-file-to-a-repository-using-the-command-line
