@@ -677,9 +677,23 @@ If the USB Blaster is not configured, complete the following steps:
 
 Your session will timeout after four hours since login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
 
+## 18.0 Determining Memory Availability and CPU Count and Speed
+
+Enter the following in a Devcloud Terminal to determine memory availability: 
+
+```
+dmesg | grep Memory
+```
+
+Enter the following in a Devcloud Terminal to determine CPU Count and Speed:
+
+```
+lscpu
+```
 
 
-## 18.0 Revision Table
+
+## 19.0 Revision Table
 
 | Rev  | Owner            | Date       | Notes                                                        |
 | :--- | :--------------- | :--------- | :----------------------------------------------------------- |
