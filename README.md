@@ -677,6 +677,12 @@ If the USB Blaster is not configured, complete the following steps:
 
 Your session will timeout after four hours since login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
 
+If you find that you are kicked off the Devcloud due to short bursts of inactivity, this can be attributed to your PC display going to sleep. Complete the following steps to avoid session time-out:
+
+1. In the Windows search bar, search "**Display settings**." 
+2. Select in the side-bar **Power & Sleep**. 
+3. Under **Screen**, change both settings to **Never**. 
+
 ## 18.0 Determining Memory Availability and CPU Count and Speed
 
 Enter the following in a Devcloud Terminal to determine memory availability: 
