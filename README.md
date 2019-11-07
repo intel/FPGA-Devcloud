@@ -244,10 +244,6 @@ pbsnodes -l free 	# lists all free nodes (only nodes 130-139 run x2go)
 
 If there is a free node, when you execute this command you will be logged in to a new machine within a minute or so. If no machine is available you will be placed in a queue.
 
-```
-qsub -q batch@v-qsvr-fpga -I
-```
-
 To login to a specific machine:
 
 ```
