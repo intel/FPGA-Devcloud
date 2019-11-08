@@ -1,4 +1,4 @@
-# GitHub Devcloud Instructions 
+# GitHub Devcloud Developer Instructions 
 
 **Git** is the open source distributed version control system that facilitates GitHub activities on your laptop or desktop. This mark down summarizes commonly used Git command line instructions for quick reference to use on the Devcloud GitHub repository. 
 
