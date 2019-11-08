@@ -4,9 +4,13 @@
 
 ## General GitHub Devcloud Rules
 
-1. Always get the most recent changes on GitHub pulled to your local repository 
+1. First, complete the setup steps for installing GitBash and user login. 
 
-   - A lot of edits will be made from one user to another. To get the most recent changes on different branches, always pull from the GitHub before starting to make new changes to your local repository. 
+2. Then, [git clone]("Clone-Remote-FPGA-Devcloud-Repository") to copy what you want from the remote repository onto your local PC. 
+
+3. Finally, always get the most recent changes on GitHub pulled to your local repository when re-opening GitHub FPGA Devcloud material. 
+
+   - A lot of edits will be made from one user to another. To get the most recent changes on different branches, always [git pull](#Pull-latest-changes-on-GitHub-back-to-your-Computer) from the GitHub before starting to make new changes to your local repository. 
 
    
 
@@ -47,6 +51,8 @@
    
 
 ## Generating a new SSH Key in MobaXterm
+
+**Note: If you are not connected to the Intel wifi or within the firewall, please disregard this section.**
 
 **If you cannot push or pull to GitHub FPGA Devcloud repository and you are connected to the Intel wifi, you need to setup an SSH key.** 
 
@@ -130,9 +136,15 @@ ProxyCommand socat STDIO SOCKS4:proxy-us.intel.com:%h:%p,socksport=1080
   not provide shell access.
   ```
 
-## Clone Entire Remote FPGA-Devcloud Repository
 
-Complete the following command to clone the entire remote FPGA-Devcloud Repository to your local PC. 
+
+## Clone Remote FPGA-Devcloud Repository
+
+**Clone** is used to retrieve a remote repository copy. **Pull**, which is mentioned [here](#Pull-latest-changes-on-GitHub-back-to-your-Computer), is used to retrieve the newest set of updates on the remote repository. Git clone is used for just downloading exactly what is currently working on the remote server repository and saving it in your machine's folder where that project is placed. 
+
+
+
+Complete the following command to clone the remote FPGA-Devcloud Repository to your local PC. 
 
 ```
 git clone git@github.com:intel/FPGA-Devcloud.git
@@ -140,19 +152,29 @@ git clone git@github.com:intel/FPGA-Devcloud.git
 
 
 
-## Clone Single Branch (Single Care Package) from FPGA-Devcloud Repository
+## Clone Quickstart Source Packages from FPGA-Devcloud Repository
 
-Complete the following command to clone a single branch from the FPGA-Devcloud Repository. 
+Complete the following command to clone a single branch from the FPGA-Devcloud Repository. This will copy a folder containing all the necessary source files for a specified quick start guide, such as RTL, Embedded Nios Platform Designer, HLS, OpenCL, OpenVino, etc. 
 
 ```
 git clone -b <branch> <remote_repo>
 git clone -b my-branch git@github.com:intel/FPGA-Devcloud.git
 ```
 
-### 1.  RTL Quickstart Guide Package
+
+
+## Examples of Cloning a Specific Quickstart Source Package 
+
+### 1.  RTL Quickstart Guide
 
 ```
-git clone -b RTL-quickstartgit@github.com:intel/FPGA-Devcloud.git
+git clone -b RTL-quickstart git@github.com:intel/FPGA-Devcloud.git
+```
+
+### 2.  Embedded Nios (Platform Designer) Quickstart Guide
+
+```
+git clone -b EmbeddedNios-quickstart git@github.com:intel/FPGA-Devcloud.git
 ```
 
 
@@ -160,17 +182,21 @@ git clone -b RTL-quickstartgit@github.com:intel/FPGA-Devcloud.git
 ## Moving from Branch to Branch
 
 ```
+git branch -a								# list all remote and local repositories
 git checkout branch-you-want-to-move-to		# move to the branch you want
 ```
 
 
 
-## Get latest changes on GitHub back to your Computer
+## Pull latest changes on GitHub back to your Computer
+
+**Git Pull** is used to retrieve the newest set of updates on the remote repository.
 
 In order to get the most recent changes that you or others have merged on GitHub, execute the following:
 
 ```
 git pull origin master     # when working on the master branch
+git pull				   # entire remote repository
 git log					   # see all the new commits
 ```
 
@@ -184,25 +210,3 @@ git log					   # see all the new commits
 open 'README.md'
 open 'User_Pull_Directions.md'
 ```
-
-
-
-### Setting up Typora for Open Command
-
-If Typora is set as the default markdown editor, then in cmd.exe, input `.md` file path directly would open target markdown file. 
-
-
-
-To set Typora as the default markdown editor you have to do following:
-
-1. Select one of your markdown files
-2. Open context menu and choose
-   - *Properties* and then click on *Change* buttong, as shown in **Figure 1**
-   - *Open with -> Choose another app*, as shown in **Figure 2**
-3. Choose *Typora* or *Typora Launcher* in **How do you want to open this file?** and set a checkmark for *Always use this app to open .md files.*
-
-**Figure 1 - File properties window**
-![Figure 1 - Open Properties of Markdown file](https://support.typora.io/media/use-from-shell/Snip20180704_1.png)
-
-**Figure 2 - Application chooser window**
-![Figure 2 - Applicaiton chooser](https://support.typora.io/media/use-from-shell/Snip20180704_2.png)
