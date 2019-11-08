@@ -1,6 +1,6 @@
 # Public Devcloud Access Instructions
 
-Last updated: 10/28/2019 8:45AM- [Public Devcloud Access Instructions](#public-devcloud-access-instructions)
+- [Public Devcloud Access Instructions](#public-devcloud-access-instructions)
   * [1.0 Introduction](#10-introduction)
   * [2.0 Getting an Account](#20-getting-an-account)
   * [3.0 Access from your PC using Putty](#30-access-from-your-pc-using-putty)
@@ -34,7 +34,8 @@ Last updated: 10/28/2019 8:45AM- [Public Devcloud Access Instructions](#public-d
     + [16.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#161-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
     + [16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#162-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
   * [17.0 Timeouts and Disk Space](#170-timeouts-and-disk-space)
-  * [18.0 Revision Table](#180-revision-table)
+  * [18.0 Determining Memory Availability and CPU Count and Speed](#180-determining-memory-availability-and-cpu-count-and-speed)
+  * [19.0 Devcloud Editors](#190-devcloud-editors)
 
 
 
@@ -695,26 +696,13 @@ lscpu
 
 
 
-## 19.0 Revision Table
+## 19.0 Devcloud Editors 
 
-| Rev  | Owner            | Date       | Notes                                                        |
-| :--- | :--------------- | :--------- | :----------------------------------------------------------- |
-| 1.0  | Larry Landis     | 4/30/2019  | Initial Release                                              |
-| 1.1  | Larry Landis     | 6/4/2019   | Edits based on more info                                     |
-| 1.2  | Ray Schouten     | 6/6/2019   | Added Host Key Verification Error messages                   |
-| 1.3  | Ray Schouten     | 6/11/2019  | Added all screenshots and SCP command info                   |
-| 1.4  | Larry Landis     | 6/12/2019  | Intro and some changes to query available machines           |
-| 1.5  | Ray Schouten     | 6/13/2019  | Added more screenshots, corrected cmds, changed font to be clear |
-| 1.6  | Terry Barrette   | 6/14/2019  | Updated Instructions with more compete steps and format      |
-| 1.7  | Larry Landis     | 6/18/2019  | Add instructions for login within Intel firewall             |
-| 1.8  | Ray Schouten     | 7/1/2019   | Change formats for consistency                               |
-| 1.9  | Dustin Henderson | 8/19/2019  | Minor formatting changes                                     |
-| 1.10 | Larry Landis     | 8/26/2019  | Details of compute nodes                                     |
-| 1.11 | Larry Landis     | 9/4/2019   | Time and Space, python paths                                 |
-| 1.12 | Larry Landis     | 9/12/2019  | Clarify Intel login versus outside firewall login            |
-| 1.13 | Rony Schutz      | 10/1/2019  | Added WinSCP instructions to 9.1                             |
-| 1.14 | Shawnna Cabanday | 10/2/2019  | Added X2GO Instructions on font size settings to 7.0 and Quartus Prime font size settings to 8.0 |
-| 1.15 | Larry Landis     | 10/5/2019  | Find PCIe cards with lspci                                   |
-| 1.16 | Shawnna Cabanday | 10/9/2019  | Added additional information in Section 9.1: WinSCP instructions |
-| 1.17 | Shawnna Cabanday | 10/16/2019 | Added Section 9.2: MobaXterm SCP instructions, updated SCP command from PC to Devcloud, updating qsub job control information, added table of contents, updated .bashrc sourcing information |
-| 1.18 | Shawnna Cabanday | 10/22/2019 | Updated USB blaster and tunneling sections, converted Intel Wiki Page to GitHub md file (Typora) |
+There are three available editors in the Devcloud terminal: 
+
+1. [Gedit](https://help.gnome.org/users/gedit/stable/)
+2. [Vi](https://www.washington.edu/computing/unix/vi.html)
+3. [Emacs](https://www.digitalocean.com/community/tutorials/how-to-use-the-emacs-editor-in-linux)
+
+For tutorials on how to use the editors listed above, click the hyperlinks to be redirected to a quick read tutorial site. 
+
