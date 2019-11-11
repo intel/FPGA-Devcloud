@@ -21,7 +21,7 @@
       Quickstart Guides
     </a>
     <span> | </span>
-    <!-- <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/FAQ#FAQ"> -->
+    <!-- <a href="https://github.com/trainyard/choo-cli"> -->
     <!--   CLI -->
     <!-- </a> -->
     <!-- <span> | </span> -->
