@@ -21,11 +21,11 @@
       Quickstart Guides
     </a>
     <span> | </span>
-    <!-- <a href="https://github.com/trainyard/choo-cli"> -->
+    <!-- <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/FAQ#FAQ"> -->
     <!--   CLI -->
     <!-- </a> -->
     <!-- <span> | </span> -->
-    <a href="https://github.com/choojs/choo/blob/master/.github/CONTRIBUTING.md">
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/FAQ#faq">
       FAQ
     </a>
     <span> | </span>
