@@ -38,9 +38,9 @@
 
 ## Contents
 
-1. RTL Development Quickstart Guide
-2. Embedded Nios Quickstart Guide
-3. Acceleration Stack Quickstart Guide
+1. [RTL Development Quickstart Guide](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_DE_board_Quickstart)
+2. [Embedded Nios Quickstart Guide](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/EmbeddedNios_DE_board_Quickstart)
+3. Acceleration Stack Quickstart Guide(https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/Acceleration_Stack_Quickstart)
 
 
 
