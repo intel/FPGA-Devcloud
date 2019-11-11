@@ -25,7 +25,7 @@
     <!--   CLI -->
     <!-- </a> -->
     <!-- <span> | </span> -->
-    <a href="https://github.com/choojs/choo/blob/master/.github/CONTRIBUTING.md">
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/FAQ#faq">
       FAQ
     </a>
     <span> | </span>
