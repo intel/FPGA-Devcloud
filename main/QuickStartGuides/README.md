@@ -13,11 +13,11 @@
       Website
     </a>
     <span> | </span>
-    <a href="https://github.com/choojs/choo-handbook">
-      Devcloud Access Instructions
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#public-devcloud-access-instructions">
+      Public Devcloud Access Instructions
     </a>
     <span> | </span>
-    <a href="https://github.com/YerkoPalma/awesome-choo">
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides#Contents">
       Quickstart Guides
     </a>
     <span> | </span>
@@ -29,11 +29,12 @@
       FAQ
     </a>
     <span> | </span>
-    <a href="https://www.reddit.com/r/choojs/">
+    <a href="https://forums.intel.com/s/">
       Contact Us
     </a>
   </h3>
 </div>
+
 
 ## Contents
 
@@ -46,4 +47,3 @@
 ## Support
 
 Our team monitors the community forum Monday through Friday, 9:00 a.m. - 5:00 p.m., Pacific daylight time. [Get Help](https://forums.intel.com/s/)
-
