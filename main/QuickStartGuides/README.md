@@ -13,11 +13,11 @@
       Website
     </a>
     <span> | </span>
-    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#public-devcloud-access-instructions">
-      Public Devcloud Access Instructions
+    <a href="https://github.com/choojs/choo-handbook">
+      Devcloud Access Instructions
     </a>
     <span> | </span>
-    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides#Contents">
+    <a href="https://github.com/YerkoPalma/awesome-choo">
       Quickstart Guides
     </a>
     <span> | </span>
@@ -29,11 +29,17 @@
       FAQ
     </a>
     <span> | </span>
-    <a href="https://forums.intel.com/s/">
+    <a href="https://www.reddit.com/r/choojs/">
       Contact Us
     </a>
   </h3>
 </div>
+
+## Contents
+
+1. RTL Development Quickstart Guide
+2. Embedded Nios Quickstart Guide
+3. Acceleration Stack Quickstart Guide
 
 
 
