@@ -1,4 +1,4 @@
-# GitHub Devcloud Instructions 
+# GitHub Devcloud Developer Instructions 
 
 **Git** is the open source distributed version control system that facilitates GitHub activities on your laptop or desktop. This mark down summarizes commonly used Git command line instructions for quick reference to use on the Devcloud GitHub repository. 
 
@@ -25,15 +25,15 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 1. Create a new branch for every new feature
    - Every time you start working on something new (workshop, quickstart guide, read-me tutorial), create a new Git branch that you can push to the main branch
-   - **DO NOT MAKE EDITS ON THE MASTER BRANCH** - This can cause potential merge conflicts.
+   - **Try not to make edits on the master branch** - This can cause potential merge conflicts if we all edit multiple documents at the same time. 
    - For instance, if you are creating a new instruction section on the Public Devcloud Access Instructions md file, do the following:
      - Create a dedicated branch for this new feature
      - Give it a meaningful name (e.g. *contact-me-section*)
      - Commit all the code to that specific branch
 2. Always get the most recent changes on GitHub pulled to your local repository 
-   - A lot of edits will be made from one user to another. To get the most recent changes on different branches, always pull from the GitHub before starting to make new changes to your local repository. 
+   - A lot of edits will be made from one user to another. To get the most recent changes on different branches, always [git pull](#Pull-latest-changes-on-GitHub-back-to-your-Computer) from the GitHub before starting to make new changes to your local repository. 
 3. Use Pull Requests to merge code to Master branch
-   - Every repository has a master branch by default. **Never push changes immediately to the master branch. Ensure that no merge conflicts will occur or data will be lost before pushing.**
+   - Every repository has a master branch by default. **Avoid pushing changes immediately to the master branch. Ensure that no merge conflicts will occur or data will be lost before pushing.**
    - Use feature branches described in step 1 and open a new pull request to merge the feature branch code with the master branch code. 
    - After your code has been reviewed, tested, and approved, your reviewers will give you a thumbs up for you to merge the Pull Request, or they will directly merge your pull request. 
 
@@ -58,19 +58,6 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 - [ ] Use MinTTY 
   - [ ] Click **Install**
 - [ ] Once you complete the Git Setup Wizard > **Launch Git Bash**
-
-
-
-## Installing GitHub Desktop (GUI)
-
-If you prefer using a GUI, GitHub Desktop is a tool that allows you to interact with GitHub from the desktop. GitHub Desktop supports everything that GitBash does including: attributing commits with collaborators, checking out branches with pull requests, pushing to remote Git repositories, and more. 
-
-**<u>Click the following link to download GitHub Desktop:</u>**
-
-https://desktop.github.com/ (Windows or macOS)
-
-- [ ] When prompted, click **Run**.
-- [ ] Allow the installation to download and install. 
 
 
 
@@ -181,6 +168,56 @@ ProxyCommand socat STDIO SOCKS4:proxy-us.intel.com:%h:%p,socksport=1080
 
 
 
+## Clone Remote FPGA-Devcloud Repository
+
+**Git Clone** is used to retrieve a remote repository copy. **Git Pull**, which is mentioned [here](#Pull-latest-changes-on-GitHub-back-to-your-Computer), is used to retrieve the newest set of updates on the remote repository. Git clone is used for just downloading exactly what is currently working on the remote server repository and saving it in your machine's folder where that project is placed. 
+
+
+
+Complete the following command to clone the remote FPGA-Devcloud Repository to your local PC. 
+
+```
+git clone git@github.com:intel/FPGA-Devcloud.git
+```
+
+
+
+## Clone Quickstart Source Packages from FPGA-Devcloud Repository
+
+Complete the following command to clone a single branch from the FPGA-Devcloud Repository. This will copy a folder containing all the necessary source files for a specified quick start guide, such as RTL, Embedded Nios Platform Designer, HLS, OpenCL, OpenVino, etc. 
+
+```
+git clone -b <branch> <remote_repo>
+git clone -b my-branch git@github.com:intel/FPGA-Devcloud.git
+```
+
+
+
+## Examples of Cloning a Specific Quickstart Source Package 
+
+### 1.  RTL Quickstart Guide
+
+```
+git clone -b RTL-quickstart git@github.com:intel/FPGA-Devcloud.git
+```
+
+### 2.  Embedded Nios (Platform Designer) Quickstart Guide
+
+```
+git clone -b EmbeddedNios-quickstart git@github.com:intel/FPGA-Devcloud.git
+```
+
+
+
+## Moving from Branch to Branch
+
+```
+git branch -a								# list all remote and local repositories
+git checkout branch-you-want-to-move-to		# move to the branch you want
+```
+
+
+
 ## Adding a File to a Repository
 
 You can upload an existing file to a GitHub repository using the command line. 
@@ -220,12 +257,6 @@ git checkout -b new-branch			# move to new branch
 git branch							# lists all local branches in the current repo
 ```
 
-## Moving from Branch to Branch
-
-```
-git checkout branch-you-want-to-move-to		# move to the branch you want
-```
-
 
 
 ## Pushing a Branch to Master GitHub Repository
@@ -240,12 +271,15 @@ git push origin master	# pushes changes in local repo up to master branch
 
 
 
-## Get latest changes on GitHub back to your Computer
+## Pull latest changes on GitHub back to your Computer
+
+**Git Pull** is used to retrieve the newest set of updates on the remote repository.
 
 In order to get the most recent changes that you or others have merged on GitHub, execute the following:
 
 ```
 git pull origin master     # when working on the master branch
+git pull				   # entire remote repository
 git log					   # see all the new commits
 ```
 
@@ -253,11 +287,18 @@ git log					   # see all the new commits
 
 ## Opening Files from MobaXterm Command Line
 
+**In MobaXterm:** `open <filename>` 
+
+Examples: 
+
+```
+open 'README.md'
+open 'User_Pull_Directions.md'
+```
+
 ### Typora
 
 If Typora is set as the default markdown editor, then in cmd.exe, input `.md` file path directly would open target markdown file. 
-
-**In MobaXterm: `open example.md`** 
 
 To set Typora as the default markdown editor you have to do following:
 

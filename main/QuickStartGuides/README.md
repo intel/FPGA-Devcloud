@@ -36,8 +36,14 @@
 </div>
 
 
+## Contents
+
+1. [RTL Development Quickstart Guide](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_DE_board_Quickstart)
+2. [Embedded Nios Quickstart Guide](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/EmbeddedNios_DE_board_Quickstart)
+3. [Acceleration Stack Quickstart Guide](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/Acceleration_Stack_Quickstart)
+
+
 
 ## Support
 
 Our team monitors the community forum Monday through Friday, 9:00 a.m. - 5:00 p.m., Pacific daylight time. [Get Help](https://forums.intel.com/s/)
-
