@@ -55,7 +55,7 @@ Before pasting though, you must run the command “:set paste” and then paste.
  
 
 ```
-login()
+devcloud_login()
 {
         red=$'\e[1;31m'
         blu=$'\e[1;34m'
@@ -67,14 +67,19 @@ login()
         pbsnodes |grep -B 1 "state = free"| grep -T '13[0-9]' | grep -o '...$'
         echo
         echo --------------------------------------------------------------------------------------
-        printf "%s\n" "${blu}Nodes 137-139 Arria 10 Cards... Node 189 Stratix 10${end}         "
-        pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$'
-        pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free"| grep -B 1 '189' | grep -o '...$'
-
+        printf "%s\n" "${blu}Nodes with Arria 10${end}         "
+        pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$'
+        printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
+        pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -B 1 '189' | grep -o '...$'
         echo --------------------------------------------------------------------------------------
         echo
-        echo What node would you like to use? Insert \#130-139, or 189
-        read node
+        echo What node would you like to use?
+        read -e node
+        until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ]
+        do
+                echo Please input an available node number:
+                read -e node
+        done
         echo
         echo --------------------------------------------------------------------------------------
         printf "%s\n" "${blu}Please copy and paste the following text in a new mobaxterm terminal: ${end} "
