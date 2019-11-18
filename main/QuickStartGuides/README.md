@@ -40,7 +40,7 @@
 
 1. [RTL Development Quickstart Guide (Max 10 De-10 Lite)](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_DE_board_Quickstart)
 2. [Embedded Nios II System Quickstart Guide (Max 10 De-10 Lite)](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/EmbeddedNios_DE_board_Quickstart)
-3. [Acceleration Stack Quickstart Guide (Arria 10/Stratix 10 PAC)](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/Acceleration_Stack_Quickstart)
+3. [Acceleration Stack Quickstart Guide (Arria 10/Stratix 10 PAC Cards)](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/Acceleration_Stack_Quickstart)
 
 
 
