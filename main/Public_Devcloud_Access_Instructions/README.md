@@ -691,6 +691,12 @@ Enter the following in a Devcloud Terminal to determine CPU Count and Speed:
 lscpu
 ```
 
+When launching the qsub command, you can request additional memory: 
+Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
+
+```
+-l h_vmem=10G
+```
 
 
 ## 19.0 Devcloud Editors 
