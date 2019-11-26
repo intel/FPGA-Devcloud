@@ -34,11 +34,8 @@
     + [16.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#161-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
     + [16.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#162-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
   * [17.0 Timeouts and Disk Space](#170-timeouts-and-disk-space)
-  * [18.0 Determining Memory Availability and CPU Count and Speed](#180-determining-memory-availability-and-cpu-count-and-speed)
+  * [18.0 Determining and Allocating Memory Availability and CPU Count and Speed](#180-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
   * [19.0 Devcloud Editors](#190-devcloud-editors)
-
-
-
 
 ## 1.0 Introduction
 
