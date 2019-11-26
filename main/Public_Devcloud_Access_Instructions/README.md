@@ -248,6 +248,10 @@ To login to a specific machine:
 qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n137:ppn=2 (for 137 through 139)
 qsub -l nodes=s001-n130:ppn=2 (for 130 through 136)
 ```
+When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
+```
+-l h_vmem=10G
+```
 
 Once you have completed this step, you have a high power machine available for powerful computing jobs. You only have a console available but no graphics available. Note that mobaxterm has multiple tabs has three possibilities of where to be logged in: 
 
