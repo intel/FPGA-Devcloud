@@ -14,7 +14,7 @@
     </a>
     <span> | </span>
     <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#public-devcloud-access-instructions">
-      Public Devcloud Access Instructions
+      Devcloud Access Instructions
     </a>
     <span> | </span>
     <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides#Contents">
