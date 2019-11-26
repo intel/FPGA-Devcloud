@@ -680,7 +680,7 @@ If you find that you are kicked off the Devcloud due to short bursts of inactivi
 2. Select in the side-bar **Power & Sleep**. 
 3. Under **Screen**, change both settings to **Never**. 
 
-## 18.0 Determining Memory Availability and CPU Count and Speed
+## 18.0 Determining and Allocating Memory Availability and CPU Count and Speed
 
 Enter the following in a Devcloud Terminal to determine memory availability: 
 
