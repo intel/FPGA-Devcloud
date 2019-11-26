@@ -285,7 +285,12 @@ Launch the x2go application on your PC. Set up the new session with the followin
 
 ![x2go_session_preferences](https://user-images.githubusercontent.com/56968566/67716674-8218a600-f989-11e9-8303-2dffc22f09b5.png)
 
-The input/output screen has a setting for the display size which can be adjusted depending on your screen size. If you desire a different screen size adjust the parameters on this panel accordingly.![x2go_session_size](https://user-images.githubusercontent.com/56968566/67716702-8c3aa480-f989-11e9-9575-d28c218bc225.png)
+The input/output screen has a setting for the display size which can be adjusted depending on your screen size. If you desire a different screen size adjust the parameters on this panel accordingly. To determine what DPI to use for your monitor, type the following command in a MobaXterm terminal: 
+```
+xdpyinfo | grep dot
+```
+
+![x2go_session_size](https://user-images.githubusercontent.com/56968566/67716702-8c3aa480-f989-11e9-9575-d28c218bc225.png)
 
 To launch the application, hit **OK** to save the settings and then click on the puffy icon New session to launch a graphics session.
 
