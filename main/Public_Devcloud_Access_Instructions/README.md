@@ -294,6 +294,8 @@ ssh -L 4002:s001-n137:22 colfax-intel
 
 ![step2](https://user-images.githubusercontent.com/56968566/67716181-9314e780-f988-11e9-9bb3-2954946864c0.png)
 
+Refer to this link for a script to assist in logging into the FPGA devcloud: https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions/LoginScript
+
 ## 5.0 Loading and launching X2Go
 
 To download X2Go, navigate to this link on your PC browser: https://wiki.x2go.org/doku.php/download:start
