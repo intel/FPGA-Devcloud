@@ -1510,6 +1510,14 @@ There are three available editors in the Devcloud terminal:
 
 For tutorials on how to use the editors listed above, click the hyperlinks to be redirected to a quick read tutorial site. 
 
+## 19.0 Determining which version of the OS is running on a node:
+
+cat /etc/os-release
+
+## 20.0 Determining how much memory exists on a compute node:
+
+dmesg | grep Memory:
+
 END OF INTEL EMPLOYEE DEVCLOUD ACCESS INSTRUCTIONS
 
 ------
