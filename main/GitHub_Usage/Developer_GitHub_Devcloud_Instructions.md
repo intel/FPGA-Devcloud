@@ -176,7 +176,7 @@ ProxyCommand socat STDIO SOCKS4:proxy-us.intel.com:%h:%p,socksport=1080
 
 ## Clone Remote FPGA-Devcloud Repository
 
-**Git Clone** is used to retrieve a remote repository copy. **Git Pull**, which is mentioned [here](#Pull-latest-changes-on-GitHub-back-to-your-Computer), is used to retrieve the newest set of updates on the remote repository. Git clone is used for just downloading exactly what is currently working on the remote server repository and saving it in your machine's folder where that project is placed. 
+**Git Clone** is used to duplicate a remote repository copy onto your local PC. **Git Pull**, which is mentioned [here](#Pull-latest-changes-on-GitHub-back-to-your-Computer), is used to retrieve the newest set of updates on the remote repository. Git clone is used for just downloading exactly what is currently working on the remote server repository and saving it in your machine's folder where that project is placed. 
 
 
 
