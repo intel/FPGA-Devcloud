@@ -292,6 +292,7 @@ git log					   # see all the new commits
 
 
 ## Opening Files from MobaXterm Command Line
+You must be on a localnode terminal to open files. 
 
 **In MobaXterm:** `open <filename>` 
 
