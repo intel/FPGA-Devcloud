@@ -10,7 +10,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 [GitHub Devcloud Developer Instructions](#github-devcloud-developer-instructions)
   * [General GitHub Devcloud Rules](#general-github-devcloud-rules)
-  * [Installing GitBash (Linux)](#installing-gitbash--linux-)
+  * [Installing GitBash](#installing-gitbash)
   * [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
   * [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
   * [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
@@ -45,7 +45,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 
 
-## Installing GitBash (Linux)
+## Installing GitBash 
 
 **Git** for Windows provides a BASH emulation used to run Git from the command line. *NIX users should feel right at home, as the BASH emulation behaves just like the "git" command in LINUX and UNIX environments. 
 
