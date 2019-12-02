@@ -18,7 +18,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
   * [Cloning a Single Branch from the FPGA-Devcloud Repository](#cloning-a-single-branch-from-the-fpga-devcloud-repository)
   * [Examples of Cloning a Specific Quickstart Source Package](#examples-of-cloning-a-specific-quickstart-source-package)
     + [1.  RTL Quickstart Guide](#1--rtl-quickstart-guide)
-    + [2.  Embedded Nios (Platform Designer) Quickstart Guide](#2--embedded-nios--platform-designer--quickstart-guide)
+    + [2.  Embedded Nios Quickstart Guide](#2--embedded-nios--platform-designer--quickstart-guide)
   * [Moving from Branch to Branch](#moving-from-branch-to-branch)
   * [Adding a File to a Repository](#adding-a-file-to-a-repository)
   * [Creating a New Branch](#creating-a-new-branch)
@@ -207,7 +207,7 @@ git clone -b my-branch git@github.com:intel/FPGA-Devcloud.git
 git clone -b RTL-quickstart git@github.com:intel/FPGA-Devcloud.git
 ```
 
-### 2.  Embedded Nios (Platform Designer) Quickstart Guide
+### 2.  Embedded Nios Quickstart Guide
 
 ```
 git clone -b EmbeddedNios-quickstart git@github.com:intel/FPGA-Devcloud.git
