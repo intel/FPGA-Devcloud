@@ -268,14 +268,14 @@ You cannot log into the Intel Devcloud if you are within the Intel firewall. Thi
 Host colfax-intel-proxy
 User guest
 hostname cluster.colfaxresearch.com
-IdentityFile ~/.ssh/colfax-access-key-30330.txt
+IdentityFile ~/.ssh/devcloud-access-key-30330.txt
 ProxyCommand socat STDIO SOCKS4:proxy-us.intel.com:%h:%p,socksport=1080
 
 Host colfax-intel-proxy-shell colfax-intel
 #replace with your own user name
 User u12345 
 hostname devcloud
-IdentityFile ~/.ssh/colfax-access-key-30330.txt
+IdentityFile ~/.ssh/devcloud-access-key-30330.txt
 ProxyCommand ssh -T colfax-intel-proxy
 ```
 
