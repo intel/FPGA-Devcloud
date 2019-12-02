@@ -199,12 +199,12 @@ To start the process:
 
    If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
 
-   12. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
+   10. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
-       ```
-       chmod 600 ~/.ssh/devcloud-access-key-u30330.txt
-       chmod 600 ~/.ssh/config
-       ```
+   ```
+   chmod 600 ~/.ssh/devcloud-access-key-u30330.txt
+   chmod 600 ~/.ssh/config
+   ```
 
 
 
@@ -444,9 +444,9 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 **There are three different ways to Transfer Files to the Devcloud:** 
 
-1. [From a Local PC to DevCloud Server in X2Go Terminal (9.1)](#81-transferring-files-to-the-devcloud-with-scp)
-2. [MobaXterm User Session (9.2)](#82-Using-MobaXterm-to-Transfer-Files)
-3. [WinSCP Application (9.3)](#83-Using-WinSCP-to-Transfer-Files)
+1. [From a Local PC to DevCloud Server in X2Go Terminal (8.1)](#81-transferring-files-to-the-devcloud-with-scp)
+2. [MobaXterm User Session (8.2)](#82-Using-MobaXterm-to-Transfer-Files)
+3. [WinSCP Application (8.3)](#83-Using-WinSCP-to-Transfer-Files)
 
 ### 8.1 Transferring Files to the Devcloud with SCP 
 
@@ -482,7 +482,7 @@ MobaXterm can be used to transfer files to and from your local PC to the Devclou
 2. Select **SSH**. ![mobaxterm_ssh](https://user-images.githubusercontent.com/56968566/67717168-6d88dd80-f98a-11e9-987a-3d226b109886.png)
 3. Enter the following information:
    1. Remote host: **localhost**
-   2. Specify username: **u<number>**
+   2. Specify username: u12345 (edit to your username)
    3. Port: **4002**
       ![image](https://user-images.githubusercontent.com/56968566/69988244-1da3b600-14f6-11ea-8276-39ae5e70ef7d.png)
 4. Under **Advanced SSH settings** > Select **Use Private Key** and search for the private key you used when you setup your DevCloud log-in. 
@@ -522,7 +522,7 @@ Click on the **“…”** box top open a dialog box
 
 ![browse_for_sshkey](https://user-images.githubusercontent.com/56968566/67717776-9c538380-f98b-11e9-90a4-3cbf01043f88.png)
 
-Navigate to where your Devcloud access key is located. Select the options box on the bottom right that says, “Putty Private Key Files” and switch it to “All Files”. Select your Devcloud key .txt file.
+Navigate to where your Devcloud access key is located in the folder .ssh. Select the options box on the bottom right that says, “Putty Private Key Files” and switch it to “All Files”. Select your Devcloud key .txt file.
 
 ![putty_private_key_files](https://user-images.githubusercontent.com/56968566/67717790-a37a9180-f98b-11e9-8bed-4af4fbb5df50.png)
 
@@ -784,7 +784,7 @@ If you find that you are kicked off the Devcloud due to short bursts of inactivi
 Enter the following in a Devcloud Terminal to determine memory availability: 
 
 ```
-dmesg | grep Memory
+dmesg | grep Memory:
 ```
 
 Enter the following in a Devcloud Terminal to determine CPU Count and Speed:
