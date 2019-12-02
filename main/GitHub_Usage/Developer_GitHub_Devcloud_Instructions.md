@@ -9,24 +9,23 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 **If you don't know what the GitHub Flow is**, click this link: https://guides.github.com/introduction/flow/
 
 [GitHub Devcloud Developer Instructions](#github-devcloud-developer-instructions)
-
-* [General GitHub Devcloud Rules](#general-github-devcloud-rules)
-* [Installing GitBash (Linux)](#installing-gitbash--linux-)
-* [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
-* [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
-* [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
-* [Clone Remote FPGA-Devcloud Repository](#clone-remote-fpga-devcloud-repository)
-* [Cloning a Single Branch from the FPGA-Devcloud Repository](#cloning-a-single-branch-from-the-fpga-devcloud-repository)
-* [Examples of Cloning a Specific Quickstart Source Package](#examples-of-cloning-a-specific-quickstart-source-package)
-  + [1.  RTL Quickstart Guide](#1--rtl-quickstart-guide)
-  + [2.  Embedded Nios (Platform Designer) Quickstart Guide](#2--embedded-nios--platform-designer--quickstart-guide)
-* [Moving from Branch to Branch](#moving-from-branch-to-branch)
-* [Adding a File to a Repository](#adding-a-file-to-a-repository)
-* [Creating a New Branch](#creating-a-new-branch)
-* [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
-* [Pull latest changes on GitHub back to your Computer](#pull-latest-changes-on-github-back-to-your-computer)
-* [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
-  + [Typora](#typora)
+  * [General GitHub Devcloud Rules](#general-github-devcloud-rules)
+  * [Installing GitBash](#installing-gitbash)
+  * [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
+  * [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
+  * [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
+  * [Clone Remote FPGA-Devcloud Repository](#clone-remote-fpga-devcloud-repository)
+  * [Cloning a Single Branch from the FPGA-Devcloud Repository](#cloning-a-single-branch-from-the-fpga-devcloud-repository)
+  * [Examples of Cloning a Specific Quickstart Source Package](#examples-of-cloning-a-specific-quickstart-source-package)
+    + [1.  RTL Quickstart Guide](#1--rtl-quickstart-guide)
+    + [2.  Embedded Nios Quickstart Guide](#2--embedded-nios--platform-designer--quickstart-guide)
+  * [Moving from Branch to Branch](#moving-from-branch-to-branch)
+  * [Adding a File to a Repository](#adding-a-file-to-a-repository)
+  * [Creating a New Branch](#creating-a-new-branch)
+  * [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
+  * [Pull latest changes on GitHub back to your Computer](#pull-latest-changes-on-github-back-to-your-computer)
+  * [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
+    + [Typora](#typora)
 
 ## General GitHub Devcloud Rules
 
@@ -46,7 +45,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 
 
-## Installing GitBash (Linux)
+## Installing GitBash 
 
 **Git** for Windows provides a BASH emulation used to run Git from the command line. *NIX users should feel right at home, as the BASH emulation behaves just like the "git" command in LINUX and UNIX environments. 
 
@@ -177,7 +176,7 @@ ProxyCommand socat STDIO SOCKS4:proxy-us.intel.com:%h:%p,socksport=1080
 
 ## Clone Remote FPGA-Devcloud Repository
 
-**Git Clone** is used to retrieve a remote repository copy. **Git Pull**, which is mentioned [here](#Pull-latest-changes-on-GitHub-back-to-your-Computer), is used to retrieve the newest set of updates on the remote repository. Git clone is used for just downloading exactly what is currently working on the remote server repository and saving it in your machine's folder where that project is placed. 
+**Git Clone** is used to duplicate a remote repository copy onto your local PC. **Git Pull**, which is mentioned [here](#Pull-latest-changes-on-GitHub-back-to-your-Computer), is used to retrieve the newest set of updates on the remote repository. Git clone is used for just downloading exactly what is currently working on the remote server repository and saving it in your machine's folder where that project is placed. 
 
 
 
@@ -208,7 +207,7 @@ git clone -b my-branch git@github.com:intel/FPGA-Devcloud.git
 git clone -b RTL-quickstart git@github.com:intel/FPGA-Devcloud.git
 ```
 
-### 2.  Embedded Nios (Platform Designer) Quickstart Guide
+### 2.  Embedded Nios Quickstart Guide
 
 ```
 git clone -b EmbeddedNios-quickstart git@github.com:intel/FPGA-Devcloud.git
@@ -293,6 +292,7 @@ git log					   # see all the new commits
 
 
 ## Opening Files from MobaXterm Command Line
+You must be on a localnode terminal to open files. 
 
 **In MobaXterm:** `open <filename>` 
 
