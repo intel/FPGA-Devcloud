@@ -590,7 +590,7 @@ qstat -f <job id> 		# 390965 is an example of a job id - (qstat -f 390965)
 
 ### 9.4 Deleting Jobs on the Devcloud
 
-Jobs can be terminated with the following command when nodes are hanging with inactive jobs: 
+Jobs can be terminated with the following command when nodes are hanging with stalled jobs: 
 
 ```
 qdel -s batch@v-qsvr-fpga <job-id>
