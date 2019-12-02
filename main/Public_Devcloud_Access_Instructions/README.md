@@ -377,7 +377,7 @@ The input/output screen has a setting for the display size which can be adjusted
 xdpyinfo | grep dot
 ```
 
-![1575314431559](C:\Users\scabanda\AppData\Roaming\Typora\typora-user-images\1575314431559.png)
+![image](https://user-images.githubusercontent.com/56968566/70001690-c8c26880-1512-11ea-8bc7-75d7900044b9.png)
 
 To launch the application, hit **OK** to save the settings and then click on the **New Session** icon to launch a graphics session.
 
