@@ -8,18 +8,25 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 **If you don't know what the GitHub Flow is**, click this link: https://guides.github.com/introduction/flow/
 
-- [GitHub Devcloud Instructions](#github-devcloud-instructions)
-  - [General GitHub Devcloud Rules](#general-github-devcloud-rules)
-  - [Installing GitBash Linux](#installing-gitbash-linux)
-  - [Installing GitHub Desktop GUI](#installing-github-desktop-gui)
-  - [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
-  - [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
-  - [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
-  - [Adding a File to a Repository](#adding-a-file-to-a-repository)
-  - [Creating a New Branch](#creating-a-new-branch)
-  - [Moving from Branch to Branch](#moving-from-branch-to-branch)
-  - [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
-  - [Get latest changes on GitHub back to your Computer](#get-latest-changes-on-github-back-to-your-computer)
+[GitHub Devcloud Developer Instructions](#github-devcloud-developer-instructions)
+
+* [General GitHub Devcloud Rules](#general-github-devcloud-rules)
+* [Installing GitBash (Linux)](#installing-gitbash--linux-)
+* [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
+* [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
+* [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
+* [Clone Remote FPGA-Devcloud Repository](#clone-remote-fpga-devcloud-repository)
+* [Cloning a Single Branch from the FPGA-Devcloud Repository](#cloning-a-single-branch-from-the-fpga-devcloud-repository)
+* [Examples of Cloning a Specific Quickstart Source Package](#examples-of-cloning-a-specific-quickstart-source-package)
+  + [1.  RTL Quickstart Guide](#1--rtl-quickstart-guide)
+  + [2.  Embedded Nios (Platform Designer) Quickstart Guide](#2--embedded-nios--platform-designer--quickstart-guide)
+* [Moving from Branch to Branch](#moving-from-branch-to-branch)
+* [Adding a File to a Repository](#adding-a-file-to-a-repository)
+* [Creating a New Branch](#creating-a-new-branch)
+* [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
+* [Pull latest changes on GitHub back to your Computer](#pull-latest-changes-on-github-back-to-your-computer)
+* [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
+  + [Typora](#typora)
 
 ## General GitHub Devcloud Rules
 
@@ -182,7 +189,7 @@ git clone git@github.com:intel/FPGA-Devcloud.git
 
 
 
-## Clone Quickstart Source Packages from FPGA-Devcloud Repository
+## Cloning a Single Branch from the FPGA-Devcloud Repository
 
 Complete the following command to clone a single branch from the FPGA-Devcloud Repository. This will copy a folder containing all the necessary source files for a specified quick start guide, such as RTL, Embedded Nios Platform Designer, HLS, OpenCL, OpenVino, etc. 
 
@@ -212,7 +219,7 @@ git clone -b EmbeddedNios-quickstart git@github.com:intel/FPGA-Devcloud.git
 ## Moving from Branch to Branch
 
 ```
-git branch -a								# list all remote and local repositories
+git branch -a					 # list all remote and local repositories
 git checkout branch-you-want-to-move-to		# move to the branch you want
 ```
 
@@ -238,7 +245,7 @@ git add *						# adds file to local repo and stages for commit
 git status 						# check status of added files
 git commit -m "message"			# commits tracked changes, prepares to push
 git status 						# check status of commits
-git push 						# pushes changes in local repo up to remote repo branch
+git push 				# pushes changes in local repo up to remote repo branch
 git status						# check status after push
 ```
 
@@ -254,7 +261,7 @@ To create a new branch from an existing branch in a local repository execute the
 
 ```
 git checkout -b new-branch			# move to new branch
-git branch							# lists all local branches in the current repo
+git branch						# lists all local branches in the current repo
 ```
 
 
@@ -298,13 +305,13 @@ open 'User_Pull_Directions.md'
 
 ### Typora
 
-If Typora is set as the default markdown editor, then in cmd.exe, input `.md` file path directly would open target markdown file. 
+If Typora is set as the default markdown editor, then in cmd.exe, input `.md` file path directly would open target markdown file. Click [here](https://www.typora.io/) to download Typora. 
 
 To set Typora as the default markdown editor you have to do following:
 
 1. Select one of your markdown files
 2. Open context menu and choose
-   - *Properties* and then click on *Change* buttong, as shown in **Figure 1**
+   - *Properties* and then click on *Change* button, as shown in **Figure 1**
    - *Open with -> Choose another app*, as shown in **Figure 2**
 3. Choose *Typora* or *Typora Launcher* in **How do you want to open this file?** and set a checkmark for *Always use this app to open .md files.*
 
