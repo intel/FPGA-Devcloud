@@ -39,44 +39,45 @@
 
 # Devcloud Access Instructions
 
-- [Devcloud Access Instructions](#devcloud-access-instructions)
-  - [1.0 Introduction](#10-introduction)
-  - [2.0 Getting an Account](#20-getting-an-account)
-  - [3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
-    - [3.1 Install MobaXterm](#31-install-mobaxterm)
-    - [3.2 Open Local Terminal](#32-open-local-terminal)
-    - [3.3 Downloading an SSH key](#33-downloading-an-ssh-key)
-  - [4.0 Connection to Devcloud](#40-connection-to-devcloud)
-  - [Public User](#public-user)
-  - [User Inside Intel Firewall](#user-inside-intel-firewall)
-    - [4.1 Add SOcket CAT Package](#41-add-socket-cat-package)
-    - [4.2  Preparing Configuration file](#42--preparing-configuration-file)
-  - [5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)
-    - [5.1 Understanding available resources](#51-understanding-available-resources)
-  - [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
-    - [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
-  - [7.0 Quartus Access and Setup](#70-quartus-access-and-setup)
-  - [8.0 Transferring Files to the Devcloud](#80-transferring-files-to-the-devcloud)
-    - [8.1 Transferring Files to the Devcloud with SCP](#81-transferring-files-to-the-devcloud-with-scp)
-    - [8.2 Using MobaXterm to Transfer Files](#82-using-mobaxterm-to-transfer-files)
-    - [8.3 Using WinSCP to Transfer Files](#83-using-winscp-to-transfer-files)
-  - [9.0 Job Control on the X2GO Window](#90-job-control-on-the-x2go-window)
-    - [9.1 Searching for Free Nodes](#91-searching-for-free-nodes)
-    - [9.2 Submitting Jobs for a Specified Walltime](#92-submitting-jobs-for-a-specified-walltime)
-    - [9.3 Report Status for Jobs Running on the Devcloud](#93-report-status-for-jobs-running-on-the-devcloud)
-    - [9.4 Deleting Jobs on the Devcloud](#94-deleting-jobs-on-the-devcloud)
-  - [10.0 Launching Quartus](#100-launching-quartus)
-  - [11.0 Launching the HLS compiler](#110-launching-the-hls-compiler)
-  - [12.0 Launching the OpenCL compiler](#120-launching-the-opencl-compiler)
-  - [13.0 Communicating to the PAC card](#130-communicating-to-the-pac-card)
-  - [14.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#140-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
-  - [15.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#150-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
-    - [15.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#151-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
-    - [15.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#152-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
-  - [16.0 Timeouts and Disk Space](#160-timeouts-and-disk-space)
-  - [17.0 Determining and Allocating Memory Availability and CPU Count and Speed](#170-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
-  - [18.0 Devcloud Editors](#180-devcloud-editors)
-  - [19.0 Determining which version of the OS is running on a Node](#190-determining-which-version-of-the-os-is-running-on-a-node)
+- - [Devcloud Access Instructions](#devcloud-access-instructions)
+    * [1.0 Introduction](#10-introduction)
+    * [2.0 Getting an Account](#20-getting-an-account)
+      + [Connection Methods](#connection-methods)
+    * [3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
+      + [3.1 Install MobaXterm](#31-install-mobaxterm)
+      + [3.2 Open Local Terminal](#32-open-local-terminal)
+      + [3.3 Downloading an SSH key](#33-downloading-an-ssh-key)
+    * [4.0 Connection to Devcloud](#40-connection-to-devcloud)
+      + [Public User](#public-user)
+      + [User Inside Intel Firewall](#user-inside-intel-firewall)
+      + [4.1 Add SOcket CAT Package](#41-add-socket-cat-package)
+      + [4.2  Preparing Configuration file](#42--preparing-configuration-file)
+    * [5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)
+      + [5.1 Understanding available resources](#51-understanding-available-resources)
+    * [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
+      + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
+    * [7.0 Quartus Access and Setup](#70-quartus-access-and-setup)
+    * [8.0 Transferring Files to the Devcloud](#80-transferring-files-to-the-devcloud)
+      + [8.1 Transferring Files to the Devcloud with SCP](#81-transferring-files-to-the-devcloud-with-scp)
+      + [8.2 Using MobaXterm to Transfer Files](#82-using-mobaxterm-to-transfer-files)
+      + [8.3 Using WinSCP to Transfer Files](#83-using-winscp-to-transfer-files)
+    * [9.0 Job Control on the X2GO Window](#90-job-control-on-the-x2go-window)
+      + [9.1 Searching for Free Nodes](#91-searching-for-free-nodes)
+      + [9.2 Submitting Jobs for a Specified Walltime](#92-submitting-jobs-for-a-specified-walltime)
+      + [9.3 Report Status for Jobs Running on the Devcloud](#93-report-status-for-jobs-running-on-the-devcloud)
+      + [9.4 Deleting Jobs on the Devcloud](#94-deleting-jobs-on-the-devcloud)
+    * [10.0 Launching Quartus](#100-launching-quartus)
+    * [11.0 Launching the HLS compiler](#110-launching-the-hls-compiler)
+    * [12.0 Launching the OpenCL compiler](#120-launching-the-opencl-compiler)
+    * [13.0 Communicating to the PAC card](#130-communicating-to-the-pac-card)
+    * [14.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#140-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
+    * [15.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#150-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
+      + [15.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#151-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
+      + [15.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#152-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
+    * [16.0 Timeouts and Disk Space](#160-timeouts-and-disk-space)
+    * [17.0 Determining and Allocating Memory Availability and CPU Count and Speed](#170-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
+    * [18.0 Devcloud Editors](#180-devcloud-editors)
+    * [19.0 Determining which version of the OS is running on a Node](#190-determining-which-version-of-the-os-is-running-on-a-node)
 
 ## 1.0 Introduction
 
@@ -118,7 +119,7 @@ Sincerely,
 Intel AI DevCloud Team
 ```
 
-## Connection Methods
+### Connection Methods
 
 Once you have an account / email received you are ready to start the process to setup our account within the cloud.
 
@@ -212,7 +213,7 @@ To start the process:
 
 ## 4.0 Connection to Devcloud
 
-## Public User
+### Public User
 
 After the preparation steps above, you should be able to log in to your login node in the Intel Devcloud without a password. 
 
@@ -238,7 +239,7 @@ Next time you log in, you will only need to type ```ssh devcloud ```
 
 Click [here](#50-Connecting-to-Servers-Running-FPGA-Development-Software) to skip to the next step. 
 
-## User Inside Intel Firewall
+### User Inside Intel Firewall
 
 You cannot log into the Intel Devcloud if you are within the Intel firewall. This section contains the tunneling commands and MobaXterm modifications needed to bypass the firewall to connect to the Devcloud. 
 
