@@ -124,9 +124,9 @@ Once you have an account / email received you are ready to start the process to 
 
 There are different methods of terminal connections. Listed below are a few options you can select in choosing which Terminal application tool you would like to use:
 
-1. [Windows with Mobaxterm (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
-2. [Windows with PuTTy](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows/)
-3. [Windows with Cygwin](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows-cygwin/)
+1. [Windows with Mobaxterm (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) (recommended)
+2. [Windows with Cygwin](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows-cygwin/)
+3. [Windows with PuTTy](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows/)
 4. [Linux or macOS (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
 
 
