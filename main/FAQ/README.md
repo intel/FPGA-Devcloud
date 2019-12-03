@@ -35,9 +35,3 @@
   </h3>
 </div>
 
-
-
-## Support
-
-Our team monitors the community forum Monday through Friday, 9:00 a.m. - 5:00 p.m., Pacific daylight time. [Get Help](https://forums.intel.com/s/)
-
