@@ -13,7 +13,7 @@
       Website
     </a>
     <span> | </span>
-    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#public-devcloud-access-instructions">
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#devcloud-access-instructions">
       Devcloud Access Instructions
     </a>
     <span> | </span>
