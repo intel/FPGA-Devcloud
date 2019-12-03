@@ -184,7 +184,7 @@ To start the process:
 
    ```
    mkdir -p ~/.ssh
-   mv ~/Downloads/devcloud-access-key-30330.txt ~/.ssh/
+   mv ~/Downloads/devcloud-access-key-12345.txt ~/.ssh/
    ```
 
 9. Add the following lines to files ~/.ssh/config:
@@ -193,8 +193,8 @@ To start the process:
    Host devcloud 
    #replace with your own user name
    User u12345
-   IdentityFile ~/.ssh/devcloud-access-key-30330.txt
-   ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-30330.txt guest@devcloud.intel.com
+   IdentityFile ~/.ssh/devcloud-access-key-12345.txt
+   ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-12345.txt guest@devcloud.intel.com
    ```
 
    If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
@@ -202,7 +202,7 @@ To start the process:
    10. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
    ```
-   chmod 600 ~/.ssh/devcloud-access-key-u30330.txt
+   chmod 600 ~/.ssh/devcloud-access-key-u12345.txt
    chmod 600 ~/.ssh/config
    ```
 
@@ -268,14 +268,14 @@ You cannot log into the Intel Devcloud if you are within the Intel firewall. Thi
 Host colfax-intel-proxy
 User guest
 hostname cluster.colfaxresearch.com
-IdentityFile ~/.ssh/devcloud-access-key-30330.txt
+IdentityFile ~/.ssh/devcloud-access-key-12345.txt
 ProxyCommand socat STDIO SOCKS4:proxy-us.intel.com:%h:%p,socksport=1080
 
 Host colfax-intel-proxy-shell colfax-intel
 #replace with your own user name
 User u12345 
 hostname devcloud
-IdentityFile ~/.ssh/devcloud-access-key-30330.txt
+IdentityFile ~/.ssh/devcloud-access-key-12345.txt
 ProxyCommand ssh -T colfax-intel-proxy
 ```
 
