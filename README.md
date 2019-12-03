@@ -13,7 +13,7 @@
       Website
     </a>
     <span> | </span>
-    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#devcloud-access-instructions">
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions#devcloud-access-instructions">
       Devcloud Access Instructions
     </a>
     <span> | </span>
@@ -43,7 +43,7 @@
         </h3>
 </div>
 
-For instructions on how to connect to the Devcloud, click on **[Devcloud Access Instructions](https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#devcloud-access-instructions)**. 
+For instructions on how to connect to the Devcloud, click on **[Devcloud Access Instructions](https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions#devcloud-access-instructions)**. 
 
 For access to quick, hands-on guides that will get you started on key features of Intel FPGA Devcloud technology, click on [**Quickstart Guides**](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides#Contents).
 
