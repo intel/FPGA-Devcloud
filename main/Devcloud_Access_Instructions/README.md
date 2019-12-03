@@ -41,6 +41,8 @@
 
 # Devcloud Access Instructions
 
+<details>
+  <summary>Click to expand Table of Contents</summary>
 - [Devcloud Access Instructions](#devcloud-access-instructions)
   * [1.0 Introduction](#10-introduction)
   * [2.0 Getting an Account](#20-getting-an-account)
@@ -79,6 +81,7 @@
   * [17.0 Determining and Allocating Memory Availability and CPU Count and Speed](#170-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
   * [18.0 Devcloud Editors](#180-devcloud-editors)
   * [19.0 Determining which version of the OS is running on a Node](#190-determining-which-version-of-the-os-is-running-on-a-node)
+</details>
 
 ## 1.0 Introduction
 
