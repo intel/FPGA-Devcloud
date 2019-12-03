@@ -86,6 +86,8 @@ Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with I
 
 ## 2.0 Getting an Account
 
+If you already have a Devcloud account, click [here](#connection-methods) to skip to the next step. 
+
 **Please use this cloud website landing page to submit a request to access the FPGA Cloud:**
 
 **https://software.intel.com/en-us/devcloud/FPGA/sign-up**
@@ -116,7 +118,7 @@ Sincerely,
 Intel AI DevCloud Team
 ```
 
-
+## Connection Methods
 
 Once you have an account / email received you are ready to start the process to setup our account within the cloud.
 
