@@ -309,11 +309,11 @@ You will get a listing of free and busy nodes that connect to PAC cards.
 
 If there is a free node, when you execute this command you will be logged in to a new machine within a minute or so. If no machine is available, you will be placed in a queue.
 
-To login to a specific machine:
+To login to a specific machine, execute one of the following commands:
 
 ```
-qsub -l nodes=s001-n130:ppn=2                         # (for 130 through 136)
-qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n137:ppn=2 # (for 137 through 139)
+qsub -l nodes=s001-n130:ppn=2                         # (for s001-n130 through s001-n136)
+qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n137:ppn=2 # (for s001-n137 through s001-n139, and s001-n189)
 ```
 When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
 ```
