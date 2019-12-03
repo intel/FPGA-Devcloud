@@ -35,9 +35,19 @@
   </h3>
 </div>
 
+------
 
 
-## Support
+<div align="center">
+    <h3><strong>Welcome to the Intel FPGA Devcloud GitHub!
+        </h3>
+</div>
 
-Our team monitors the community forum Monday through Friday, 9:00 a.m. - 5:00 p.m., Pacific daylight time. [Get Help](https://forums.intel.com/s/)
+For instructions on how to connect to the Devcloud, click on **[Devcloud Access Instructions](https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#devcloud-access-instructions)**. 
+
+For access to quick, hands-on guides that will get you started on key features of Intel FPGA Devcloud technology, click on [**Quickstart Guides**](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides#Contents).
+
+For answers to commonly asked questions, click [**FAQ**](https://github.com/intel/FPGA-Devcloud/tree/master/main/FAQ#faq).
+
+------
 
