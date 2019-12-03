@@ -37,14 +37,6 @@
 
 ------
 
-<details>
-  <summary>Click to expand Table of Contents</summary><p>
-<!-- the above p cannot start right at the beginning of the line and is mandatory for everything else to work -->
-	
-	[Devcloud Access Instructions](#devcloud-access-instructions)
-  </p>
-</details>
-
 # Devcloud Access Instructions
 
 - [Devcloud Access Instructions](#devcloud-access-instructions)
