@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <img width="1000" alt="intel-fpga-devcloud" src="https://user-images.githubusercontent.com/56968566/68611681-86f05600-046f-11ea-8d12-f5259d60e7da.png">
 
 <div align="center">
@@ -19,7 +13,7 @@
       Website
     </a>
     <span> | </span>
-    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Public_Devcloud_Access_Instructions#devcloud-access-instructions">
+    <a href="https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions#devcloud-access-instructions">
       Devcloud Access Instructions
     </a>
     <span> | </span>
