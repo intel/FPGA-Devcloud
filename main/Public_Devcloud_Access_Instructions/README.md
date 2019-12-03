@@ -367,7 +367,7 @@ ssh -L 4002:s001-n137:22 colfax-intel		# Inside Intel Firewall Example
 
 Launch the x2go application on your PC. Set up the new session with the following settings substituting the Login field <uxxxx> with your own assigned user name and the path to the RSA/DSA key for ssh connection. This is the same key referenced for MobaXterm connection that enables ssh devcloud.
 
-![image](https://user-images.githubusercontent.com/56968566/69987371-4034cf80-14f4-11ea-8ed6-55b9f59cb15a.png)
+![image](https://user-images.githubusercontent.com/56968566/70007979-1943c100-1527-11ea-8cc0-685a5b50cfcb.png)
 
 
 
@@ -388,17 +388,23 @@ After a minute or so, you should see the X2GO screen, be patient. While waiting 
 
 ![image](https://user-images.githubusercontent.com/56968566/69988847-4c6e5c00-14f7-11ea-8804-6394099a3b85.png)
 
+![image](https://user-images.githubusercontent.com/56968566/70008081-5314c780-1527-11ea-8c47-ad27b69222d7.png)
+
+Click **Yes** when the following window pops up. 
+
+
+
 You might get the following message if you previously logged into a different machine:
 
 ![host_key_verification_terminate](https://user-images.githubusercontent.com/56968566/67716812-b55b3500-f989-11e9-8c60-9c0eaaee2172.png)
 
-Enter **No**
+Enter **No**.
 
 ![host_key_verification_update](https://user-images.githubusercontent.com/56968566/67716830-bee49d00-f989-11e9-86b4-5aee8f792b5e.png)
 
 Then another dialog box will appear, enter **Yes**,
 
-You will see a window that looks like the following.
+You will see a window that looks like the following. If a window opens up, click **Default**.
 
 ![x2go_desktop](https://user-images.githubusercontent.com/56968566/67716843-c60bab00-f989-11e9-9d99-2fbbdcfce6d9.png)
 
