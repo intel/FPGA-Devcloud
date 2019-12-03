@@ -234,7 +234,7 @@ Connection to login-1 closed.
 
 Next time you log in, you will only need to type ```ssh devcloud ```
 
-Click [here](#5.0-Connecting-to-Servers-Running-FPGA-Development-Software) to skip to the next step. 
+Click [here](#50-Connecting-to-Servers-Running-FPGA-Development-Software) to skip to the next step. 
 
 ## User Inside Intel Firewall
 
