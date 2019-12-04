@@ -39,9 +39,9 @@
 
 To download a quickstart guide, click the links below to be redirected to the download page and then click **Download**. You will download a .zip file containing the guide and additional design files. 
 
-1. [RTL Quickstart Guide](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/RTL_DE_board_Quickstart/RTL_Quickstart_source_files.zip)
-2. [Embedded Nios II Quickstart Guide](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/EmbeddedNios_DE_board_Quickstart/NiosDevcloud.zip)
-3. [Acceleration Stack Quickstart Guides](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/Acceleration_Stack_Quickstart/AccelerationStack.zip)
+1. [Verilog Quickstart Guide on Max 10 De10-Lite Development Board](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/RTL_DE_board_Quickstart/RTL_Quickstart_source_files.zip)
+2. [Embedded Nios II Platform Designer Quickstart Guide on Max 10 De10-Lite Development Board](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/EmbeddedNios_DE_board_Quickstart/NiosDevcloud.zip)
+3. [Acceleration Stack Quickstart Guides on Intel PAC Cards](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/Acceleration_Stack_Quickstart/AccelerationStack.zip)
    - [Arria 10](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/Acceleration_Stack_Quickstart/Acceleration_Stack_Arria10_QuickStart.pdf)
    - [Stratix 10](https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/Acceleration_Stack_Quickstart/Acceleration_Stack_Stratix10_QuickStart.pdf)
 
