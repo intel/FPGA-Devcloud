@@ -61,6 +61,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
   - [ ] Install **Git Bash** **Here**, **Git GUI Here** optional
 - [ ] **Use Git and optional Unix tools from the Windows Command Prompt**
   - [ ] Checkout Windows-style, commit Unix-style line endings
+- [ ] Default on next couple of setting windows.  
 - [ ] Use MinTTY 
   - [ ] Click **Install**
 - [ ] Once you complete the Git Setup Wizard > **Launch Git Bash**
