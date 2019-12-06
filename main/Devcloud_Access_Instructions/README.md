@@ -568,7 +568,7 @@ psbnodes -s v-qsvr-fpga | grep -B 4 fpga
 
 ### 9.2 Submitting Jobs for a Specified Walltime
 
-A user will be kicked off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours), type the following after qsub-ing into a specified node:
+A user will be kicked off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours). Nodes n130-n136 can increase walltime up to 24 hours and nodes n137-n139 and 189 can be increased up to a maximum of 48 hours. Type the following after qsub-ing into a specified node:
 
 ```
 qsub -l walltime=<insert-time> 'command/bash file to be executed'
