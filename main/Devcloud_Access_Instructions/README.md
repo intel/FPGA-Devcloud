@@ -586,19 +586,30 @@ To report the status of your jobs running on the DevCloud is to type the followi
 
 ```
 qstat -s batch@v-qsvr-fpga
-qstat -u u12345 		#change the username according to your id	
-qstat -f <job id> 		# 390965 is an example of a job id - (qstat -f 390965)
 ```
+
+The result will be of the form:
+
+`v-qsvr-fpga.aidevcloud:`
+                                                                                  `Req'd       Req'd       Elap`
+`Job ID                  Username    Queue    Jobname          SessID  NDS   TSK   Memory      Time    S   Time`
+
+----------------------- ----------- -------- ---------------- ------ ----- ------ --------- --------- - ---------
+`2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02`
+
+
 
 ### 9.4 Deleting Jobs on the Devcloud
 
 Jobs can be terminated with the following command when nodes are hanging with stalled jobs: 
 
 ```
-qdel -s batch@v-qsvr-fpga <job-id>
+qdel 2390.v-qsvr-fpga.aidevcloud
 ```
 
-**This is not recommended** but it is a another technique to delete a job from the headnode if a node is hanging. Type the following and look for the qsub commands:
+Note the suffix for the qstat command is .aidev however to kill the job with qdel you need to append .aidevcloud .
+
+This is not recommended** but it is a another technique to delete a job from the headnode if a node is hanging. Type the following and look for the qsub commands:
 
 ```
 ps -auxw 
