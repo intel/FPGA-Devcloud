@@ -429,9 +429,19 @@ From a terminal that is logged in to the devcloud, type the following:
 cp /glob/development-tools/versions/intelFPGA_lite/quartus_setup.sh ~
 ```
 
-This script has what you need to setup environment variables and paths to the Intel FPGA development tools. There are some variables that need to be edited inside the script to give you access to either Quartus Prime Pro or Quartus Prime Lite, HLS, OpenCL, or Acceleration Stack.
+This script has what you need to setup environment variables and paths to the Intel FPGA development tools. There are some variables that need to be edited inside the script to give you access to either Quartus Prime Pro, Quartus Prime Standard or Quartus Prime Lite.
 
-Set those variables according to you desired setup, and ```source quartus_setup.sh``` (note: ```~/quartus_setup.sh``` as an executable does not work, you must ```source``` this file) . Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/quartus_setup.sh```" command to the end of the .bashrc file.** 
+Set those variables according to you desired setup, and ```source quartus_setup.sh``` (note: ```~/quartus_setup.sh``` as an executable does not work, you must ```source``` this file) . Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/quartus_setup.sh```" command to the end of the .bashrc file.** Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Do this instead on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10.
+
+For Arria 10 development stack: source /opt/a10/inteldevstack/init_env.sh
+
+For Arria 10 runtime stack: source /opt/a10/intelrtestack/init_env.sh
+
+For Stratix 10 development stack: source /opt/intel inteldevstack/init_env.sh
+
+
+
+
 
 If the Quartus font appears too zoomed in, as shown below, complete the following:
 
