@@ -257,7 +257,7 @@ You cannot log into the Intel Devcloud if you are within the Intel firewall. Thi
 
 ### 4.2  Preparing Configuration file
 
-1. Append these additional entries into your config file:
+1. Append these additional entries into your config file: 
 
 ```
 Host colfax-intel-proxy
