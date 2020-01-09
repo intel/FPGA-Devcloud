@@ -121,7 +121,7 @@ Intel AI DevCloud Team
 
 ### Connection Methods
 
-Once you have an account / email received you are ready to start the process to setup our account within the cloud.
+Once you have an account / email received you are ready to start the process to setup our account within the cloud. 
 
 There are different methods of terminal connections. Listed below are a few options you can select in choosing which Terminal application tool you would like to use:
 
