@@ -50,4 +50,4 @@ For access to quick, hands-on guides that will get you started on key features o
 For answers to commonly asked questions, click [**FAQ**](https://github.com/intel/FPGA-Devcloud/tree/master/main/FAQ#faq).
 
 ------
-
+![image](https://user-images.githubusercontent.com/55601103/72108847-4e42f080-32e9-11ea-9e02-77ab818a3292.png)
