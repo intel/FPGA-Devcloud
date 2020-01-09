@@ -121,7 +121,7 @@ The example folder has been copied into the DEMO folder, allowing us a more work
 
 If successful you should get an output like below. It should show **success**.
 
-
+![image](https://user-images.githubusercontent.com/55601103/72095397-3e1d1800-32cd-11ea-8f63-3d1d70ac13a2.png)
 
 Figure 1: Successful Acceleration Card Programming
 
