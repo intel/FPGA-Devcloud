@@ -133,6 +133,6 @@ List the revision history for the application note.
 
 | Name        | Date      | Changes                                                 |
 | ----------- | --------- | ------------------------------------------------------- |
-| Rony Schutz | 11/4/2019 | Initial Release of Acceleration   Card QuickStart Guide |
+| Rony Schutz | 11/5/2019 | Initial Release of Acceleration   Card QuickStart Guide |
 
  
