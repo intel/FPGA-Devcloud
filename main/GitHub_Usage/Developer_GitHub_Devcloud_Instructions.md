@@ -43,7 +43,41 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
    - Use feature branches described in step 1 and open a new pull request to merge the feature branch code with the master branch code. 
    - After your code has been reviewed, tested, and approved, your reviewers will give you a thumbs up for you to merge the Pull Request, or they will directly merge your pull request. 
 
+## GitHub Desktop
 
+<u>**Click the following link to download GitHub Desktop to your Local PC:**</u>
+
+**GitHub Desktop Link:** https://desktop.github.com/
+
+- [ ] Go through the installation process
+- [ ] Log in to your GitHub, by inputting your username and password
+
+#### Setup the Proxy
+
+To be able to connect to the Intel Wi-Fi and use GitHub Desktop, you need to first set up the proxy links.
+
+- [ ] Go to C:\Users\@username **(Replace @username with your PC username)**
+- [ ] There will be a **.gitconfig** file. If there isn't, create one
+  - [ ] Right click this file and choose to open it with notepad, or alternative text editor
+- [ ] Append the following to the text at the very bottom
+
+```
+[http]
+        proxy = http://proxy-chain.intel.com:911
+[https]
+        proxy = https://proxy-chain.intel.com:912
+[ftp]
+        proxy = ftp://proxy-chain.intel.com:911
+```
+
+- [ ] Save and close the file
+
+#### Set Up Repository
+
+- [ ] Now inside GitHub Desktop choose the Intel FPGA-Devcloud Repository, or search for it
+- [ ] Click the clone button
+
+You can now use GitHub Desktop to view, edit, and control the GitHub in a more visual method.
 
 ## Installing GitBash 
 
