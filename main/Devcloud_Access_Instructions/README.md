@@ -135,6 +135,7 @@ There are different methods of terminal connections. Listed below are a few opti
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
 **MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment. If you are already running a native Linux or client running Linux, you don't need to load MobaXterm.
+**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment. If you are already running a native Linux or client running Linux, you don't need to load MobaXterm. 
 
 ### 3.1 Install MobaXterm
 
