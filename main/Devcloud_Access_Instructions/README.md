@@ -423,10 +423,10 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 ## 7.0 Quartus Access and Setup
 
-From a terminal that is logged in to the devcloud, to get Quartus Access and Setup you can source the bash scripts manually.
+From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually.
 For example by doing something like:
 ```
-source /glob/development-tools/versions/intelFPGA_lite/init_quartus.sh 
+source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
 ```
 or you can copy a bash script called devcloudLoginToolSetup under the folder LoginScripts and then source that script by typing:
 ```
@@ -436,15 +436,15 @@ Now to setup quartus run the tools_setup command that was just sourced from the 
 ```
 tools_setup
 ```
-This will let you setup the correct version of quartus or development stack or runtime stack or openCL or HLS.
 
+This script has what you need to setup environment variables and paths to the Intel FPGA development tools.
+
+Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/devcloudLoginToolSetup```" command to the end of the .bashrc file.** 
+
+Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Instead do the commands below manually on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10. or run:
 ```
-cp /glob/development-tools/versions/intelFPGA_lite/quartus_setup.sh ~
+tools_setup
 ```
-
-This script has what you need to setup environment variables and paths to the Intel FPGA development tools. There are some variables that need to be edited inside the script to give you access to either Quartus Prime Pro, Quartus Prime Standard or Quartus Prime Lite.
-
-Set those variables according to you desired setup, and ```source quartus_setup.sh``` (note: ```~/quartus_setup.sh``` as an executable does not work, you must ```source``` this file) . Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/quartus_setup.sh```" command to the end of the .bashrc file.** Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Do this instead on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10.
 
 For Arria 10 development stack: source /opt/a10/inteldevstack/init_env.sh
 
