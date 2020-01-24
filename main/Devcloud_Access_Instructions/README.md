@@ -423,7 +423,20 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 ## 7.0 Quartus Access and Setup
 
-From a terminal that is logged in to the devcloud, type the following: 
+From a terminal that is logged in to the devcloud, to get Quartus Access and Setup you can source the bash scripts manually.
+For example by doing something like:
+```
+source /glob/development-tools/versions/intelFPGA_lite/init_quartus.sh 
+```
+or you can copy a bash script called devcloudLoginToolSetup under the folder LoginScripts and then source that script by typing:
+```
+source devcloudLoginToolSetup
+```
+Now to setup quartus run the tools_setup command that was just sourced from the devcloudLoginToolSetup by typing:
+```
+tools_setup
+```
+This will let you setup the correct version of quartus or development stack or runtime stack or openCL or HLS.
 
 ```
 cp /glob/development-tools/versions/intelFPGA_lite/quartus_setup.sh ~
