@@ -428,7 +428,7 @@ For example by doing something like:
 ```
 source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
 ```
-or you can copy a bash script called devcloudLoginToolSetup under the folder LoginScripts and then source that script by typing:
+or you can copy a bash script called devcloudLoginToolSetup that is found in the folder LoginScripts and copy it into your devcloud then source that script by typing:
 ```
 source devcloudLoginToolSetup
 ```
