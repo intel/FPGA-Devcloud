@@ -44,7 +44,7 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                 echo
@@ -72,7 +72,7 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                 echo
@@ -100,7 +100,7 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                 echo
@@ -125,8 +125,8 @@ devcloud_login()
             # availableNodes+=($availableNodesStratix)
             # echo ${availableNodes}
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" )
-            echo ${availableNode[@]}
-            echo ${availableNode[2]}
+            echo ${availableNodes[@]}
+            echo ${availableNodes[2]}
             echo "                               Showing available nodes below:                          "
             echo --------------------------------------------------------------------------------------
             printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
@@ -144,7 +144,8 @@ devcloud_login()
             echo -n "Node: "
             read -e node
 
-            until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ]
+            #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
+            until  [[ " ${availableNodes[@]} " =~ " ${node} " ]] #this checks that user input is an available node
             do
                 printf "%s\n" "${red}Please input an available node number: ${end}"
                 echo -n "Node: "
@@ -163,7 +164,7 @@ devcloud_login()
                 then
                     echo
                     echo --------------------------------------------------------------------------------------
-                    printf "%s\n" "${blu}Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
                     printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                     echo
@@ -173,7 +174,7 @@ devcloud_login()
                 else
                     echo
                     echo --------------------------------------------------------------------------------------
-                    printf "%s\n" "${blu}Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
                     printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                     echo
@@ -637,7 +638,6 @@ tools_setup()
     else
         echo "printing else statement for sourcing cases"
     fi
-
 
 }
 
