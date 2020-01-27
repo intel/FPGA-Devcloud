@@ -444,13 +444,22 @@ Feel free to adjust your .bashrc and other associated scripts to source quartus_
 
 Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Instead do the commands below manually on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10. 
 
-For Arria 10 development stack: source /opt/a10/inteldevstack/init_env.sh
+For Arria 10 development stack: 
+```
+source /opt/a10/inteldevstack/init_env.sh
+```
 
-For Arria 10 runtime stack: source /opt/a10/intelrtestack/init_env.sh
+For Arria 10 runtime stack: 
+```
+source /opt/a10/intelrtestack/init_env.sh
+```
 
-For Stratix 10 development stack: source /opt/intel inteldevstack/init_env.sh
+For Stratix 10 development stack: 
+```
+source /opt/intel inteldevstack/init_env.sh
+```
 
-or instead of running the commands above manually, run:
+Instead of running the commands above manually, run:
 ```
 tools_setup
 ```
