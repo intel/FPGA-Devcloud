@@ -429,8 +429,8 @@ For example by doing something like:
 ```
 source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
 ```
-Or you can copy a bash script called devcloudLoginToolSetup.sh that is found in the folder LoginScripts and copy it into your devcloud.
-To copy the devcloudLoginToolSetup.sh script from outside a firewall to your devcloud use the curl command(curl -o filename raw-github-link-to-specific-file:
+Or you can copy a bash script called devcloudLoginToolSetup.sh that is found in this github's folder called LoginScripts and copy it into your devcloud.
+To copy the devcloudLoginToolSetup.sh script from outside a firewall to your devcloud use the curl command(curl -o filename raw-github-link-to-file):
 ```
 curl -o devcloudLoginToolSetup.sh https://raw.githubusercontent.com/intel/FPGA-Devcloud/master/main/Devcloud_Access_Instructions/LoginScript/devcloudLoginToolSetup.sh
 ```
