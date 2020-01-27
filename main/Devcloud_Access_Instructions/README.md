@@ -456,10 +456,10 @@ source /opt/a10/intelrtestack/init_env.sh
 
 For Stratix 10 development stack: 
 ```
-source /opt/intel inteldevstack/init_env.sh
+source /opt/intel/inteldevstack/init_env.sh
 ```
 
-Instead of running the commands above manually, run:
+Instead of running the commands above manually, to source automatically run:
 ```
 tools_setup
 ```
