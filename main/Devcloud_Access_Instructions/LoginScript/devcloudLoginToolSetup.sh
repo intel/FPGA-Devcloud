@@ -639,18 +639,5 @@ tools_setup()
     fi
 
 
-
-    #ask user if they would like to source another tool
-    # echo "${blu}Enter 1 to source another tool ${end}"
-    # echo
-    # echo -n "Number: "  
-    # read -e last_number
-    # if [ $last_number -eq 1 ];
-    # then
-    #     tools_setup
-    # else
-    #     echo "script done"
-    # fi
-    echo "script done"
 }
 
