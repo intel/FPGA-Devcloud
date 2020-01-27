@@ -57,6 +57,7 @@
     * [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
       + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
     * [7.0 Quartus Access and Setup](#70-quartus-access-and-setup)
+      + [7.1 Quartus Font Setup](#71-quartus-font-setup)
     * [8.0 Transferring Files to the Devcloud](#80-transferring-files-to-the-devcloud)
       + [8.1 Transferring Files to the Devcloud with SCP](#81-transferring-files-to-the-devcloud-with-scp)
       + [8.2 Using MobaXterm to Transfer Files](#82-using-mobaxterm-to-transfer-files)
@@ -428,23 +429,20 @@ For example by doing something like:
 ```
 source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
 ```
-or you can copy a bash script called devcloudLoginToolSetup that is found in the folder LoginScripts and copy it into your devcloud then source that script by typing:
+or you can copy a bash script called devcloudLoginToolSetup.sh that is found in the folder LoginScripts and copy it into your devcloud then source that script by typing:
 ```
-source devcloudLoginToolSetup
+source devcloudLoginToolSetup.sh
 ```
-Now to setup quartus run the tools_setup command that was just sourced from the devcloudLoginToolSetup by typing:
+Now to setup quartus run the tools_setup command that was just sourced from the devcloudLoginToolSetup.sh by typing:
 ```
 tools_setup
 ```
 
 This script has what you need to setup environment variables and paths to the Intel FPGA development tools.
 
-Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/devcloudLoginToolSetup```" command to the end of the .bashrc file.** 
+Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/devcloudLoginToolSetup.sh```" command to the end of the .bashrc file.** 
 
-Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Instead do the commands below manually on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10. or run:
-```
-tools_setup
-```
+Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Instead do the commands below manually on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10. 
 
 For Arria 10 development stack: source /opt/a10/inteldevstack/init_env.sh
 
@@ -452,9 +450,12 @@ For Arria 10 runtime stack: source /opt/a10/intelrtestack/init_env.sh
 
 For Stratix 10 development stack: source /opt/intel inteldevstack/init_env.sh
 
+or instead of running the commands above manually, run:
+```
+tools_setup
+```
 
-
-
+### 7.1 Quartus Font Setup
 
 If the Quartus font appears too zoomed in, as shown below, complete the following:
 
