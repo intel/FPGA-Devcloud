@@ -125,8 +125,8 @@ devcloud_login()
             # availableNodes+=($availableNodesStratix)
             # echo ${availableNodes}
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" )
-            echo ${availableNodes[@]}
-            echo ${availableNodes[2]}
+            #echo ${availableNodes[@]}
+            #echo ${availableNodes[2]}
             echo "                               Showing available nodes below:                          "
             echo --------------------------------------------------------------------------------------
             printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
