@@ -8,43 +8,6 @@ Below are the instructions to the Devcloud login script. The picture below shows
 
 Figure 1: Login Script Running
 
-The script is located inside the .bashrc, and looks as follows:
-
-![bashrc](https://user-images.githubusercontent.com/55601103/68438976-ce7a9780-017a-11ea-98ff-b71a0fa6f5e3.png)
-
-Figure 2: Login Script inside .bashrc
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
 
  
 
