@@ -144,8 +144,8 @@ devcloud_login()
             echo -n "Node: "
             read -e node
 
-            #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
-            until  [[ " ${availableNodes[@]} " =~ " ${node} " ]] #this checks that user input is an available node
+             
+            until  [[ ${availableNodes[@]} =~ ${node} ]] #this checks that user input is an available node
             do
                 printf "%s\n" "${red}Please input an available node number: ${end}"
                 echo -n "Node: "
