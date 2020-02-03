@@ -48,11 +48,15 @@ Figure 2: Login Script inside .bashrc
 
  
 
-Below is the script, which you can copy and paste into the .bashrc.
+You can source the script in your .bashrc by including these two lines inside the .bashrc:
+```
+if [ -f ~/devcloudLoginToolSetup.sh ]; then
+    source ~/devcloudLoginToolSetup.sh
+fi
 
-Before pasting though, you must run the command “:set paste” and then paste. If not it will auto-indent and change the formatting of the script. 
-
+```
  
+Below is the script. 
 
 ```
 
@@ -200,9 +204,8 @@ devcloud_login()
             echo
             echo -n "Node: "
             read -e node
-
-            #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
-            until  [[ " ${availableNodes[@]} " =~ " ${node} " ]] #this checks that user input is an available node
+ 
+            until  [[ ${availableNodes[@]} =~ ${node} ]] #this checks that user input is an available node
             do
                 printf "%s\n" "${red}Please input an available node number: ${end}"
                 echo -n "Node: "
