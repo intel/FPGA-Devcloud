@@ -291,13 +291,23 @@ You will now be logged in:
 
 ### 5.1 Understanding available resources
 
-You are now logged in to machine called login-l (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful server.  
+You are now logged in to machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful server.  
 
-The following nodes can run Quartus, OpenCL and HLS: n130-n139.
+The following nodes can run Quartus, OpenCL compile and HLS: n130-n139. 
 
-The following nodes can run OPAE connectivity to PAC Cards: n137-n139.
+The following nodes can run Arria 10 OPAE connectivity to PAC Cards: n137-n139. For Stratix 10: n189.
 
-There are a total of 12 Arria 10 PAC Cards, 4 each on n137, n138 and n139. 
+There are a total of 12 Arria 10 PAC Cards, 4 each on n137, n138 and n139. there are two Stratix 10 PAC cards on n189.
+
+There are a series of detailed Linux commands shown below should you want know the intricate details of how to connect to available compute nodes. We also offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Add this script to your .bashrc login script with the following command added to your script:
+
+if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
+    source /data/intel_fpga/devcloudLoginToolSetup.sh
+fi
+
+Run devcloud_login and follow the instructions to connect the appropriate compute node. Script details are here: https://github.com/intel/FPGA-Devcloud/blob/master/main/Devcloud_Access_Instructions/LoginScript/README.md .
+
+Should you want more details on available compute resources and query what is available, continue with the instructions below.
 
 To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and computenode. The computenode is a high power machine for running compilations - a subset host PAC cards: n137, n138 and n139. 
 
@@ -425,28 +435,20 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 ## 7.0 Quartus Access and Setup
 
 From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually.
-For example by doing something like:
+
+For example :
+
 ```
 source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
 ```
-Or you can copy a bash script called devcloudLoginToolSetup.sh that is found in this github's folder called LoginScripts and copy it into your devcloud.
-To copy the devcloudLoginToolSetup.sh script from outside a firewall to your devcloud use the curl command(curl -o filename raw-github-link-to-file):
-```
-curl -o devcloudLoginToolSetup.sh https://raw.githubusercontent.com/intel/FPGA-Devcloud/master/main/Devcloud_Access_Instructions/LoginScript/devcloudLoginToolSetup.sh
-```
+Section 5 of this README mentioned sourcing the script devcloudLoginToolSetup.sh. This script includes a function called tools_setup.
 
-then source that script by typing:
-```
-source devcloudLoginToolSetup.sh
-```
-Now to setup quartus run the tools_setup command that was just sourced from the devcloudLoginToolSetup.sh by typing:
+To set up Quartus, run the tools_setup command that was just sourced from the devcloudLoginToolSetup.sh by typing:
 ```
 tools_setup
 ```
 
 This script has what you need to setup environment variables and paths to the Intel FPGA development tools.
-
-Feel free to adjust your .bashrc and other associated scripts to source quartus_setup.sh inside those startup scripts. **Append the "```source ~/devcloudLoginToolSetup.sh```" command to the end of the .bashrc file.** 
 
 Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Instead do the commands below manually on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10. 
 
