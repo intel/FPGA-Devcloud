@@ -23,6 +23,7 @@ Below is the script.
 
 ```
 
+
 devcloud_login()
 {
     red=$'\e[1;31m'
@@ -167,7 +168,8 @@ devcloud_login()
             echo
             echo -n "Node: "
             read -e node
- 
+
+            #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
             until  [[ ${availableNodes[@]} =~ ${node} ]] #this checks that user input is an available node
             do
                 printf "%s\n" "${red}Please input an available node number: ${end}"
@@ -225,9 +227,6 @@ tools_setup()
     QUARTUS_LITE_VERSIONS=("18.1")
     QUARTUS_STANDARD_VERSIONS=("18.1")
     QUARTUS_PRO_VERSIONS=("17.1" "18.1" "19.2" "19.3")
-    # QUARTUS_LITE_VERSIONS="18.1"
-    # QUARTUS_STANDARD_VERSIONS="18.1"
-    # QUARTUS_PRO_VERSIONS="17.1 18.1 19.1 19.3"
 
     #defined paths
     GLOB_INTELFPGA_PRO="/glob/development-tools/versions/intelFPGA_pro"
@@ -236,6 +235,7 @@ tools_setup()
     QUARTUS_PATHS=($GLOB_INTELFPGA_LITE $GLOB_INTELFPGA_STANDARD $GLOB_INTELFPGA_PRO)
     OPT_INTEL="/opt/intel"
     OPT_INTEL_2="/opt/intel/2.0.1"
+    GLOB_FPGASUPPORTSTACK="/glob/development-tools/versions/fpgasupportstack"
 
     echo
     printf "%s\n" "${blu}Which tool would you like to source? Please select a number from the list below: ${end}"
@@ -243,12 +243,9 @@ tools_setup()
     echo "1) Quartus Prime Lite"
     echo "2) Quartus Prime Standard"
     echo "3) Quartus Prime Pro"
-    echo "4) OpenCL"
-    echo "5) HLS"
-    echo "6) Arria 10 Development Stack (only if on n137, n138, n139)"
-    echo "7) Arria 10 RunTime Environment (only if on n137, n138, n139)"
-    echo "8) Stratix 10 Development Stack (only if on n189)"
-    echo "9) Stratix 10 RunTime Environment (only if on n189)"
+    echo "4) HLS"
+    echo "5) Arria 10 Development Stack (only if on n137, n138, n139), OpenCL on all nodes"
+    echo "6) Stratix 10 Development Stack (only if on n189), OpenCL on all nodes"
     echo
     echo -n "Number: "  
     read -e number
@@ -381,59 +378,7 @@ tools_setup()
         else
             echo "${red}Something went wrong sourcing the pro version ${end}"
         fi
-    elif [ $number -eq 4 ]; #case for OpenCL
-    then
-        len=${#QUARTUS_PRO_VERSIONS[@]}
-        if [ $len -eq 0 ];
-        then
-            echo "${red}Something went wrong, does not support any quartus pro versions ${end}"
-        elif [ $len -eq 1 ];
-        then
-            export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/hld
-
-            #source the one version of quartus
-            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh"
-            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh
-
-            #source the one version of OpenCL
-            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/hls/init_opencl.sh"
-            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/hls/init_opencl.sh
-
-            echo
-        elif [ $len -gt 1 ];
-        then
-            #ask which verison of openCL
-            echo "${blu}which openCL version would you like to source?${end}"
-            for (( i=0; i<${len}; i++ ));
-            do
-                echo "${i} ) ${QUARTUS_PRO_VERSIONS[$i]}"
-            done
-            echo
-            #echo "length of array is ${len}"
-            echo -n "2nd Number: "  
-            read -e second_number
-            until [ $len -gt $second_number ];
-            do
-                printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "2nd Number: "
-                read -e second_number
-            done
-
-            export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[$second_number]}/hld
-
-            #source quartus
-            echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
-            source $INTELFPGAOCLSDKROOT/../init_quartus.sh
-
-            #source opencl
-            echo "sourcing $INTELFPGAOCLSDKROOT/init_opencl.sh"
-            source $INTELFPGAOCLSDKROOT/init_opencl.sh
-        
-        else
-            echo "something went wrong with sourcing openCL"
-        fi
-
-    elif [ $number -eq 5 ]; #case for HLS
+    elif [ $number -eq 4 ]; #case for HLS
     then
         
         #ask which quartus version
@@ -609,60 +554,40 @@ tools_setup()
             echo "something went wrong with case statements for hls"
         fi
 
-    elif [ $number -eq 6 ]; #case for arria 10 development stack
+    elif [ $number -eq 5 ]; #case for arria 10 development stack
     then
         #need to check if on correct node only on 137,138,139
         temp_string="$(echo $HOSTNAME | grep -o -E '13[7-9]')"
         if [ -n temp_string ]; #if len of temp_string is greater than zero
         then
-            echo "sourcing /opt/a10/inteldevstack/init_env.sh"
-            #source command
-            source /opt/a10/inteldevstack/init_env.sh
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/init_env.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/init_env.sh
             echo
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
         else
             echo "Not on a node 137-139. You need to be on a node 137-139 to run Arria Development Stack"
         fi
-    elif [ $number -eq 7 ]; #case for arria 10 RunTime environment
+    elif [ $number -eq 6 ]; #case for stratix 10 development stack
     then
-        #need to check if on correct node only on 137 138 139
+        #need to check if on correct node only on 137,138,139
         temp_string="$(echo $HOSTNAME | grep -o -E '13[7-9]')"
         if [ -n temp_string ]; #if len of temp_string is greater than zero
-        then 
-            echo "sourcing /opt/a10/intelrtestack/init_env.sh"
-            #source command
-            source /opt/a10/intelrtestack/init_env.sh
-            echo
-        else
-            echo "Not on a node 137-139. You need to be on a node 137-139 to run Arria RunTime Environment"
-        fi
-    elif [ $number -eq 8 ]; #case for stratix 10 development stack
-    then
-        temp_string="$(echo $HOSTNAME | grep -o -E '189')"
-        if [ -n $temp_string ];
         then
-            echo "sourcing $OPT_INTEL_2/inteldevstack/init_env.sh"
-            source $OPT_INTEL_2/inteldevstack/init_env.sh
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh"
+            source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh
             echo
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
         else
-            echo "you are not on node 189. You need 189 to run Stratix Development Stack"
-        fi
-    elif [ $number -eq 9 ]; #case for stratix 10 RunTime environment
-    then
-        #need to check if on correct node only on 189
-        temp_string="$(echo $HOSTNAME | grep -o -E '189')"
-        if [ -n $temp_string ];
-        then
-            echo "sourcing $OPT_INTEL_2/intelrtestack/init_env.sh"
-            source $OPT_INTEL_2/intelrtestack/init_env.sh
-            echo
-        else
-            echo "you are not on node 189. You need 189 to run Stratix RunTime Environment"
+            echo "Not on a node 137-139. You need to be on a node 137-139 to run Stratix 10 Development Stack"
         fi
     else
         echo "printing else statement for sourcing cases"
     fi
 
 }
+
 
 
 
