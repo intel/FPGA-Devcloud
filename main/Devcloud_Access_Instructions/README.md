@@ -441,9 +441,9 @@ For example :
 ```
 source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
 ```
-Section 5 of this README mentioned sourcing the script devcloudLoginToolSetup.sh. This script includes a function called tools_setup.
+The devcloudLoginToolSetup.sh script should have been sourced in your ~/.bashrc mentioned in the LoginScript folder. The devcloudLoginToolSetup.sh script includes a function called tools_setup.
 
-To set up Quartus, run the tools_setup command that was just sourced from the devcloudLoginToolSetup.sh by typing:
+To set up Quartus, run the tools_setup command shown below.
 ```
 tools_setup
 ```
