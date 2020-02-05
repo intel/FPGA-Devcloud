@@ -11,14 +11,13 @@ Figure 1: Login Script Running
 
  
 
-You can source the script in your .bashrc by including these two lines inside the .bashrc:
+Source the script in your ~/.bashrc by including these two lines inside the .bashrc:
 ```
 if [ -f ~/data/intel_fpga/devcloudLoginToolSetup.sh ]; then
     . ~/data/intel_fpga/devcloudLoginToolSetup.sh
 fi
-
-
 ```
+
  
 
 
