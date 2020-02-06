@@ -44,9 +44,13 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
+                echo
+                printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                echo
+                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
                 echo
                 echo --------------------------------------------------------------------------------------
                 echo
@@ -72,10 +76,13 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                 echo
+                printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                echo
+                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
                 echo --------------------------------------------------------------------------------------
                 echo
                 qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n"$node":ppn=2
@@ -100,10 +107,13 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                 echo
+                printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                echo
+                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
                 echo --------------------------------------------------------------------------------------
                 echo
                 qsub -I -l nodes=s001-n"$node":ppn=2
@@ -164,20 +174,26 @@ devcloud_login()
                 then
                     echo
                     echo --------------------------------------------------------------------------------------
-                    printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
                     printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                     echo
+                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
                     qsub -I -l nodes=s001-n"$node":ppn=2
                 else
                     echo
                     echo --------------------------------------------------------------------------------------
-                    printf "%s\n" "${blu}For X2GO tunneling access. Please copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
                     printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
                     echo
+                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
                     qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n"$node":ppn=2
@@ -188,7 +204,6 @@ devcloud_login()
         fi
     fi
 }
-
 
 
 
