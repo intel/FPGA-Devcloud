@@ -5,6 +5,10 @@ devcloud_login()
     blu=$'\e[1;34m'
     end=$'\e[0m'
 
+    noHardwareNodes=("s005-n006" "s001-n043" "s001-n044" "s001-n130" "s001-n131" "s001-n132" "s001-n133" "s001-n134" "s001-n135" "s001-n136")
+    arria10Nodes=("s001-n137" "s001-n138" "s001-n139")
+    stratix10Nodes=("s001-n189")
+    allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
     echo
     printf "%s\n" "${blu}What are you trying to use the Devcloud for? Please select a number from the list below: ${end}"
     echo
@@ -31,7 +35,9 @@ devcloud_login()
         then
             #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
             #node=$(head -n 1 nodes.txt)
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$')
+            IFS="|"
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -E "${arria10Nodes[*]}" | grep -o '...$')
+            unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
                 echo
@@ -63,7 +69,9 @@ devcloud_login()
     then
         if [ -z $currentNode ]; 
         then
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -B 1 '189' | grep -o '...$')
+            IFS="|"
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -E "${stratix10Nodes[*]}" | grep -o '...$')
+            unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
                 echo
@@ -94,7 +102,10 @@ devcloud_login()
     then
         if [ -z $currentNode ]; 
         then
-            readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
+            IFS="|"
+            # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
+            readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -E "${noHardwareNodes[*]}" | grep -o '...$')
+            unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
                 echo
@@ -125,28 +136,34 @@ devcloud_login()
     then
         if [ -z $currentNode ]; 
         then
-
-            readarray availableNodesNohardware < <(pbsnodes |grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
-            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$')
-            readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -B 1 '189' | grep -o '...$')
+            IFS="|"
+            readarray availableNodesNohardware < <(pbsnodes | grep -B 1 "state = free" | grep -E "${noHardwareNodes[*]}" | grep -o '...$')
+            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -E "${arria10Nodes[*]}" | grep -o '...$')
+            readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -E "${stratix10Nodes[*]}" | grep -o '...$')
+            unset IFS
             # availableNodes=() #initialize the empty array
             # availableNodes+=($availableNodesNohardware) #append an
             # availableNodes+=($availableNodesArria)
             # availableNodes+=($availableNodesStratix)
             # echo ${availableNodes}
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" )
-            #echo ${availableNodes[@]}
+            echo ${availableNodes[@]}
             #echo ${availableNodes[2]}
             echo "                               Showing available nodes below:                          "
             echo --------------------------------------------------------------------------------------
             printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
-            pbsnodes |grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
+            IFS="|"
+            # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
+            pbsnodes | grep -B 1 "state = free" | grep -E "${noHardwareNodes[*]}" | grep -o '...$'
+            unset IFS
             echo
             echo --------------------------------------------------------------------------------------
             printf "%s\n" "${blu}Nodes with Arria 10${end}         "
-            pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$'
+            IFS="|"
+            pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -E "${arria10Nodes[*]}" | grep -o '...$'
             printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
-            pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -B 1 '189' | grep -o '...$'
+            pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -E "${stratix10Nodes[*]}" | grep -o '...$'
+            unset IFS
             echo --------------------------------------------------------------------------------------
             echo
             echo What node would you like to use?
@@ -204,6 +221,7 @@ devcloud_login()
         fi
     fi
 }
+
 
 
 
