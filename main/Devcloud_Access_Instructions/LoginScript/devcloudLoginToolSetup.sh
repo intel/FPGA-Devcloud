@@ -201,7 +201,7 @@ devcloud_login()
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
-                    qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
+                    qsub -I -l nodes="$node":ppn=2
                 else
                     echo
                     echo --------------------------------------------------------------------------------------
@@ -214,7 +214,7 @@ devcloud_login()
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
-                    qsub -I -l nodes="$node":ppn=2
+                    qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
                 fi
             fi
         else
