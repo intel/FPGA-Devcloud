@@ -5,8 +5,8 @@ devcloud_login()
     blu=$'\e[1;34m'
     end=$'\e[0m'
 
-    noHardwareNodes=("s005-n006" "s001-n043" "s001-n044" "s001-n130" "s001-n131" "s001-n132" "s001-n133" "s001-n134" "s001-n135" "s001-n136")
-    arria10Nodes=("s001-n137" "s001-n138" "s001-n139")
+    noHardwareNodes=("s001-n043" "s001-n044") #"s001-n130" "s001-n131" "s001-n132" "s001-n133" "s001-n134" "s001-n135" "s001-n136")
+    arria10Nodes=("s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
     stratix10Nodes=("s001-n189")
     allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
     echo
@@ -36,7 +36,7 @@ devcloud_login()
             #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
             #node=$(head -n 1 nodes.txt)
             IFS="|"
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -E "${arria10Nodes[*]}" | grep -o '...$')
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -52,15 +52,15 @@ devcloud_login()
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
-                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                 echo
                 printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
-                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                 echo
                 echo --------------------------------------------------------------------------------------
                 echo
-                qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n"$node":ppn=2
+                qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
@@ -70,7 +70,7 @@ devcloud_login()
         if [ -z $currentNode ]; 
         then
             IFS="|"
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -E "${stratix10Nodes[*]}" | grep -o '...$')
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -86,14 +86,14 @@ devcloud_login()
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
-                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                 echo
                 printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
-                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                 echo --------------------------------------------------------------------------------------
                 echo
-                qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n"$node":ppn=2
+                qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
@@ -104,7 +104,7 @@ devcloud_login()
         then
             IFS="|"
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
-            readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -E "${noHardwareNodes[*]}" | grep -o '...$')
+            readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -120,11 +120,11 @@ devcloud_login()
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
-                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                 echo
                 printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
-                printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                 echo --------------------------------------------------------------------------------------
                 echo
                 qsub -I -l nodes=s001-n"$node":ppn=2
@@ -137,9 +137,9 @@ devcloud_login()
         if [ -z $currentNode ]; 
         then
             IFS="|"
-            readarray availableNodesNohardware < <(pbsnodes | grep -B 1 "state = free" | grep -E "${noHardwareNodes[*]}" | grep -o '...$')
-            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -E "${arria10Nodes[*]}" | grep -o '...$')
-            readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -E "${stratix10Nodes[*]}" | grep -o '...$')
+            readarray availableNodesNohardware < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
             # availableNodes=() #initialize the empty array
             # availableNodes+=($availableNodesNohardware) #append an
@@ -154,15 +154,15 @@ devcloud_login()
             printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
             IFS="|"
             # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
-            pbsnodes | grep -B 1 "state = free" | grep -E "${noHardwareNodes[*]}" | grep -o '...$'
+            pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
             unset IFS
             echo
             echo --------------------------------------------------------------------------------------
             printf "%s\n" "${blu}Nodes with Arria 10${end}         "
             IFS="|"
-            pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -E "${arria10Nodes[*]}" | grep -o '...$'
+            pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
             printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
-            pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -E "${stratix10Nodes[*]}" | grep -o '...$'
+            pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
             unset IFS
             echo --------------------------------------------------------------------------------------
             echo
@@ -172,7 +172,7 @@ devcloud_login()
             read -e node
 
             #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
-            until  [[ ${availableNodes[@]} =~ ${node} ]] #this checks that user input is an available node
+            until  [[ ${availableNodes[@]} =~ ${node} && ${#node} -eq 9 ]] #this checks that user input is an available node and node has length of 9
             do
                 printf "%s\n" "${red}Please input an available node number: ${end}"
                 echo -n "Node: "
@@ -193,11 +193,11 @@ devcloud_login()
                     echo --------------------------------------------------------------------------------------
                     printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
-                    printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                     echo
                     printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
-                    printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
                     qsub -I -l nodes=s001-n"$node":ppn=2
@@ -206,14 +206,14 @@ devcloud_login()
                     echo --------------------------------------------------------------------------------------
                     printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
-                    printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 colfax-intel${end} "
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                     echo
                     printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel wifi, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
-                    printf  "%s\n" "${blu}ssh -L 4002:s001-n"$node":22 devcloud${end} "
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
-                    qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n"$node":ppn=2
+                    qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
                 fi
             fi
         else
