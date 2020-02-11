@@ -149,35 +149,6 @@ devcloud_login()
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" )
             #echo ${availableNodes[@]}
             #echo ${availableNodes[2]}
-            echo "                               Showing available nodes below:                          "
-            echo --------------------------------------------------------------------------------------
-            printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
-            IFS="|"
-            # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
-            pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
-            unset IFS
-            echo --------------------------------------------------------------------------------------
-            printf "%s\n" "${blu}Nodes with Arria 10${end}         "
-            IFS="|"
-            pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
-            printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
-            pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
-            unset IFS
-            echo --------------------------------------------------------------------------------------
-            echo
-            echo What node would you like to use?
-            echo
-            echo -n "Node: "
-            read -e node
-
-            #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
-            until  [[ ${availableNodes[@]} =~ ${node} && ${#node} -eq 9 ]] #this checks that user input is an available node and node has length of 9
-            do
-                printf "%s\n" "${red}Please input an available node number: ${end}"
-                echo -n "Node: "
-                read -e node
-            done
-
             if [ ${#availableNodes[@]} == 0  ];
             then
                 echo
@@ -186,8 +157,38 @@ devcloud_login()
                 printf "%s\n" "${red}No available nodes. Try again later. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
             else
-                nodeNumber="$(echo $node | grep -o '...$')"
-                if [ $nodeNumber -lt 136 ];
+                echo "                               Showing available nodes below:                          "
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
+                IFS="|"
+                # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
+                pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
+                unset IFS
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Arria 10${end}         "
+                IFS="|"
+                pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
+                printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
+                pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
+                unset IFS
+                echo --------------------------------------------------------------------------------------
+                echo
+                echo What node would you like to use?
+                echo
+                echo -n "Node: "
+                read -e node
+
+                #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
+                until  [[ ${availableNodes[@]} =~ ${node} && ${#node} -eq 9 ]] #this checks that user input is an available node and node has length of 9
+                do
+                    printf "%s\n" "${red}Please input an available node number: ${end}"
+                    echo -n "Node: "
+                    read -e node
+                done
+                #nodeNumber="$(echo $node | grep -o '...$')"
+                #find out if the nodeNumber is on the fpga queue to know which qsub command to call
+                is_in_fpga_queue="$(pbsnodes -s v-qsvr-fpga | grep -B 4 fpga | grep -o $node )"
+                if [ -z is_in_fpga_queue ]; #if is_in_fpga_queue is empty then it is not on the fpga queue
                 then
                     echo
                     echo --------------------------------------------------------------------------------------
@@ -200,7 +201,7 @@ devcloud_login()
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
-                    qsub -I -l nodes="$node":ppn=2
+                    qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
                 else
                     echo
                     echo --------------------------------------------------------------------------------------
@@ -213,7 +214,7 @@ devcloud_login()
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
-                    qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
+                    qsub -I -l nodes="$node":ppn=2
                 fi
             fi
         else
