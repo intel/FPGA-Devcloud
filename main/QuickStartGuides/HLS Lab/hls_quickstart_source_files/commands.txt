@@ -1,0 +1,37 @@
+i++ -march=x86-64 floorsqrt.cpp -o emulation
+
+emulation.exe
+
+i++ -ghdl -march=MAX10 floorsqrt.cpp -o cosimulation
+
+cosimulation.exe
+
+vsim cosimulation.prj/verification/vsim.wlf &
+
+do wave.do
+
+cd cosimulation.prj/quartus
+
+quartus quartus_compile.qpf &
+
+cd ../reports/
+
+pwd
+
+C:\Users\username\Downloads\hls_quickstart_source_files\cosimulation.prj\reports\report.html
+
+cd ../../	
+
+quartus_sh --restore -output floorsqrt_restored floorsqrt.qar
+
+cd floorsqrt_restored
+
+quartus top.qpf &
+
+c:\users\username\downloads\hls_quickstart_source_files\cosimulation.prj\components\sqrt
+
+C:\Users\username\Downloads\hls_quickstart_source_files\floorsqrt_restored\nios_setup_v2.sopcinfo
+
+C:\Users\username\Downloads\hls_quickstart_source_files\cosimulation.prj\components\sqrt 
+
+C:\Users\username\Downloads\hls_quickstart_source_files\floorsqrt_avalon_program.c
