@@ -434,44 +434,15 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 ## 7.0 Quartus Access and Setup
 
-From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually.
+From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually.  To get the appropriate paths, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh and manually copy and paste the paths and environment variable settings for your desired tool flow.
 
-For example :
+We highly recommend to include the lines in your ~/.bashrc script to simplify tool access:
 
-```
-source /glob/development-tools/versions/intelFPGA_lite/18.1/init_quartus.sh 
-```
-The devcloudLoginToolSetup.sh script should have been sourced in your ~/.bashrc mentioned in the LoginScript folder. The devcloudLoginToolSetup.sh script includes a function called tools_setup.
+if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
+    source /data/intel_fpga/devcloudLoginToolSetup.sh
+fi
 
-To set up Quartus, run the tools_setup command shown below.
-```
-tools_setup
-```
-
-This script has what you need to setup environment variables and paths to the Intel FPGA development tools.
-
-Note if you want to run the acceleration stack or OpenCL tools, do not source quartus_setup.sh. Instead do the commands below manually on the appropriate compute node: n137-n139 for Arria 10, and n189 for Stratix 10. 
-
-For Arria 10 development stack: 
-```
-source /opt/a10/inteldevstack/init_env.sh
-```
-
-For Arria 10 runtime stack: 
-```
-source /opt/a10/intelrtestack/init_env.sh
-```
-
-For Stratix 10 development stack: 
-```
-source /opt/intel/inteldevstack/init_env.sh
-```
-
-Instead of running the commands above manually, to source automatically run:
-```
-tools_setup
-```
-
+Follow the instructions after invoking the tools_setup function.
 ### 7.1 Quartus Font Setup
 
 If the Quartus font appears too zoomed in, as shown below, complete the following:
