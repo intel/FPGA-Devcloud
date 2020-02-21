@@ -555,7 +555,7 @@ tools_setup()
                 #source opencl
                 echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                 source $INTELFPGAOCLSDKROOT/init_hls.sh
-            
+                export PATH=/glob/intel-python/python2/bin:${PATH}
             else
                 echo "something went wrong with sourcing hls for quartus pro"
             fi
@@ -574,6 +574,9 @@ tools_setup()
             echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
+	    echo
+            echo "Putting python2 in the search path - required for Arria 10 development stack"
+            export PATH=/glob/intel-python/python2/bin:${PATH}
         else
             echo "Not on a node 137-139. You need to be on a node 137-139 to run Arria Development Stack"
         fi
@@ -586,8 +589,10 @@ tools_setup()
             echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh"
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh
             echo
-            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
-            source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh"
+            source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh
+            echo "Putting python2 in the search path - required for Stratix 10 development stack"
+            export PATH=/glob/intel-python/python2/bin:${PATH}
         else
             echo "Not on a node 137-139. You need to be on a node 137-139 to run Stratix 10 Development Stack"
         fi
