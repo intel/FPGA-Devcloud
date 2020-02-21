@@ -439,7 +439,9 @@ From a terminal that is logged in to the devcloud, to get Quartus Access and Qua
 We highly recommend to include the lines in your ~/.bashrc script to simplify tool access:
 
 if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
-    source /data/intel_fpga/devcloudLoginToolSetup.sh
+
+​    source /data/intel_fpga/devcloudLoginToolSetup.sh
+
 fi
 
 Follow the instructions after invoking the tools_setup function.
