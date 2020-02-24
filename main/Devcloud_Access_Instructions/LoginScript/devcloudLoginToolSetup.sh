@@ -591,8 +591,8 @@ tools_setup()
             echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh
-            echo "Putting python2 in the search path - required for Stratix 10 development stack"
-            export PATH=/glob/intel-python/python2/bin:${PATH}
+            echo "Putting python2 in the search path - required for Stratix 10 2.0.1 development stack"
+            export PATH=/glob/intel-python/python3/bin:${PATH}
         else
             echo "Not on a node 137-139. You need to be on a node 137-139 to run Stratix 10 Development Stack"
         fi
