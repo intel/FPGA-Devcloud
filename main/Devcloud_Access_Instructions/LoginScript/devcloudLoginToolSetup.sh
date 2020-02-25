@@ -1,11 +1,22 @@
 
+#############################
+#                           #
+#   Latest Edit             #
+#                           #
+# -Feb 25 2020              # 
+#                           #
+#                           #
+#                           #
+#                           #
+#############################
+
 devcloud_login()
 {
     red=$'\e[1;31m'
     blu=$'\e[1;34m'
     end=$'\e[0m'
 
-    noHardwareNodes=("s001-n043" "s001-n044") #"s001-n130" "s001-n131" "s001-n132" "s001-n133" "s001-n134" "s001-n135" "s001-n136")
+    noHardwareNodes=("s001-n043" "s001-n044") 
     arria10Nodes=("s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
     stratix10Nodes=("s001-n189")
     allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
@@ -27,7 +38,9 @@ devcloud_login()
         read -e number
     done
 
-    currentNode="$(echo $HOSTNAME | grep -o -E '13[0-9]')"
+    IFS="|"
+    currentNode="$(echo $HOSTNAME | grep -o -E "${allNodes[*]}")"
+    unset IFS
 
     if [ $number -eq 1  ]; 
     then
@@ -232,6 +245,11 @@ tools_setup()
     red=$'\e[1;31m'
     blu=$'\e[1;34m'
     end=$'\e[0m'
+
+    noHardwareNodes=("s001-n043" "s001-n044") #"s001-n130" "s001-n131" "s001-n132" "s001-n133" "s001-n134" "s001-n135" "s001-n136")
+    arria10Nodes=("s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
+    stratix10Nodes=("s001-n189")
+    allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
 
     QUARTUS_LITE_VERSIONS=("18.1")
     QUARTUS_STANDARD_VERSIONS=("18.1")
@@ -566,39 +584,41 @@ tools_setup()
     elif [ $number -eq 5 ]; #case for arria 10 development stack
     then
         #need to check if on correct node only on 137,138,139
-        temp_string="$(echo $HOSTNAME | grep -o -E '13[7-9]')"
-        if [ -n temp_string ]; #if len of temp_string is greater than zero
+        IFS="|"
+        temp_string="$(echo $HOSTNAME | grep -o -E "${arria10Nodes[*]}")"
+        unset IFS
+        if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; #this checks that user input is an available node and node has length of 9
         then
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/init_env.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/init_env.sh
             echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
-	    echo
+            echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
-            echo "Not on a node 137-139. You need to be on a node 137-139 to run Arria Development Stack"
+            echo "Not on an Arria10 node. You need to be on an Arria10 node to run Arria Development Stack"
         fi
     elif [ $number -eq 6 ]; #case for stratix 10 development stack
     then
-        #need to check if on correct node only on 137,138,139
-        temp_string="$(echo $HOSTNAME | grep -o -E '13[7-9]')"
-        if [ -n temp_string ]; #if len of temp_string is greater than zero
+        IFS="|"
+        temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10Nodes[*]}")"
+        unset IFS
+        if [[ ${stratix10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]];
         then
             echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh"
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh
             echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh
-            echo "Putting python2 in the search path - required for Stratix 10 2.0.1 development stack"
-            export PATH=/glob/intel-python/python3/bin:${PATH}
+            echo "Putting python2 in the search path - required for Stratix 10 development stack"
+            export PATH=/glob/intel-python/python2/bin:${PATH}
         else
-            echo "Not on a node 137-139. You need to be on a node 137-139 to run Stratix 10 Development Stack"
+            echo "Not on a stratix10 node. You need to be on a stratix 10 node to run Stratix 10 Development Stack"
         fi
     else
         echo "printing else statement for sourcing cases"
     fi
 
 }
-
