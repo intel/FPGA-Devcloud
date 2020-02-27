@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Feb 25 2020              # 
+# -Feb 26 2020              #
 #                           #
 #                           #
 #                           #
@@ -15,9 +15,11 @@ devcloud_login()
     red=$'\e[1;31m'
     blu=$'\e[1;34m'
     end=$'\e[0m'
-
-    noHardwareNodes=("s001-n043" "s001-n044") 
-    arria10Nodes=("s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
+# 20 more noHardware nodes expected 3/3/2020
+    noHardwareNodes=("s005-n005" "s005-n006" "s005-n007" "s005-n008")
+# 5  more arria10Nodes expected date TBD
+    arria10Nodes=("s001-n137" "s001-n138" "s001-n139")
+# 1 more stratix10Nodes expected date TBD
     stratix10Nodes=("s001-n189")
     allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
     echo
@@ -28,7 +30,7 @@ devcloud_login()
     echo "3) Compilation Only"
     echo "4) Enter Specific Node Number"
     echo
-    echo -n "Number: "  
+    echo -n "Number: "
     read -e number
 
     until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ]
@@ -42,7 +44,7 @@ devcloud_login()
     currentNode="$(echo $HOSTNAME | grep -o -E "${allNodes[*]}")"
     unset IFS
 
-    if [ $number -eq 1  ]; 
+    if [ $number -eq 1  ];
     then
         if [ -z $currentNode ]; #if current node is empty
         then
@@ -78,9 +80,9 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 2 ]; 
+    elif [ $number -eq 2 ];
     then
-        if [ -z $currentNode ]; 
+        if [ -z $currentNode ];
         then
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
@@ -111,13 +113,13 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 3 ]; 
+    elif [ $number -eq 3 ];
     then
-        if [ -z $currentNode ]; 
+        if [ -z $currentNode ];
         then
             IFS="|"
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
-            readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -147,10 +149,10 @@ devcloud_login()
         fi
     elif [ $number -eq 4 ];
     then
-        if [ -z $currentNode ]; 
+        if [ -z $currentNode ];
         then
             IFS="|"
-            readarray availableNodesNohardware < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
@@ -175,7 +177,7 @@ devcloud_login()
                 printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
                 IFS="|"
                 # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
-                pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
+                pbsnodes -s v-qsvr-fpga| grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
                 unset IFS
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Arria 10${end}         "
@@ -191,7 +193,7 @@ devcloud_login()
                 echo -n "Node: "
                 read -e node
 
-                #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ] 
+                #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ]
                 until  [[ ${availableNodes[@]} =~ ${node} && ${#node} -eq 9 ]] #this checks that user input is an available node and node has length of 9
                 do
                     printf "%s\n" "${red}Please input an available node number: ${end}"
@@ -274,7 +276,7 @@ tools_setup()
     echo "5) Arria 10 Development Stack (only if on n137, n138, n139), OpenCL on all nodes"
     echo "6) Stratix 10 Development Stack (only if on n189), OpenCL on all nodes"
     echo
-    echo -n "Number: "  
+    echo -n "Number: "
     read -e number
 
     until [ "$number" -lt 10 ] && [ "$number" -gt 0 ]
@@ -285,7 +287,7 @@ tools_setup()
     done
 
 
-    if [ $number -eq 1  ]; 
+    if [ $number -eq 1  ];
     then
         len=${#QUARTUS_LITE_VERSIONS[@]}
         if [ $len -eq 0 ];
@@ -309,7 +311,7 @@ tools_setup()
                 # let i++
             done
             echo
-            echo -n "2nd Number: "  
+            echo -n "2nd Number: "
             read -e second_number
             until [ $len -gt $second_number ];
             do
@@ -349,7 +351,7 @@ tools_setup()
                 # let i++
             done
             echo
-            echo -n "2nd Number: "  
+            echo -n "2nd Number: "
             read -e second_number
             until [ $len -gt $second_number ];
             do
@@ -390,7 +392,7 @@ tools_setup()
             done
             echo
             #echo "length of array is ${len}"
-            echo -n "2nd Number: "  
+            echo -n "2nd Number: "
             read -e second_number
             until [ $len -gt $second_number ];
             do
@@ -407,7 +409,7 @@ tools_setup()
         fi
     elif [ $number -eq 4 ]; #case for HLS
     then
-        
+
         #ask which quartus version
         echo "${blu}which quartus version would you like?${end}"
         echo "1) Quartus Prime Standard"
@@ -415,7 +417,7 @@ tools_setup()
         echo "3) Quartus Prime Pro"
         echo
         #echo "length of array is ${len}"
-        echo -n "Number: "  
+        echo -n "Number: "
         read -e qnumber
         until [ "$qnumber" -lt 4 ] && [ "$number" -gt 0 ]
         do
@@ -453,7 +455,7 @@ tools_setup()
                 done
                 echo
                 #echo "length of array is ${len}"
-                echo -n "2nd Number: "  
+                echo -n "2nd Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
                 do
@@ -471,7 +473,7 @@ tools_setup()
                 #source opencl
                 echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                 source $INTELFPGAOCLSDKROOT/init_hls.sh
-            
+
             else
                 echo "something went wrong with sourcing hls for quartus lite"
             fi
@@ -504,7 +506,7 @@ tools_setup()
                 done
                 echo
                 #echo "length of array is ${len}"
-                echo -n "2nd Number: "  
+                echo -n "2nd Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
                 do
@@ -522,7 +524,7 @@ tools_setup()
                 #source opencl
                 echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                 source $INTELFPGAOCLSDKROOT/init_hls.sh
-            
+
             else
                 echo "something went wrong with sourcing hls for quartus lite"
             fi
@@ -555,7 +557,7 @@ tools_setup()
                 done
                 echo
                 #echo "length of array is ${len}"
-                echo -n "2nd Number: "  
+                echo -n "2nd Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
                 do
@@ -622,3 +624,4 @@ tools_setup()
     fi
 
 }
+
