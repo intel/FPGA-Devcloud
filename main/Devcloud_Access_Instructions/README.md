@@ -359,7 +359,7 @@ This tab will a launch terminal running UNIX commands on your local machine.
 
 ### 6.1 Opening Port for Graphics Usage in X2Go
 
-To open the port for graphics usage, enter the command below. Note: Replace the hostname n137 listed below with the machine. 
+To open the port for graphics usage, use the devcloud_login function (sec 5.1) and copy and paste the appropriate ssh command shown as an output from this function. Examples of this command are shown below based on inside and outside the Intel firewall.
 
 ```
 ssh -L 4002:s001-n137:22 devcloud			# Public User Example
