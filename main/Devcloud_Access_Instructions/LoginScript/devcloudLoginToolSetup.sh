@@ -3,25 +3,31 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Feb 26 2020              #
+# -Mar 2 2020               #
 #                           #
 #                           #
 #                           #
 #                           #
 #############################
 
+
+
+#global variables
+red=$'\e[1;31m'
+blu=$'\e[1;34m'
+end=$'\e[0m'
+# 20 more noHardware nodes expected 3/3/2020
+noHardwareNodes=("s005-n005" "s005-n006" "s005-n007" "s005-n008")
+# 5  more arria10Nodes expected date TBD
+arria10Nodes=("s001-n137" "s001-n138" "s001-n139")
+# 1 more stratix10Nodes expected date TBD
+stratix10Nodes=("s001-n189")
+allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
+
+
+
 devcloud_login()
 {
-    red=$'\e[1;31m'
-    blu=$'\e[1;34m'
-    end=$'\e[0m'
-# 20 more noHardware nodes expected 3/3/2020
-    noHardwareNodes=("s005-n005" "s005-n006" "s005-n007" "s005-n008")
-# 5  more arria10Nodes expected date TBD
-    arria10Nodes=("s001-n137" "s001-n138" "s001-n139")
-# 1 more stratix10Nodes expected date TBD
-    stratix10Nodes=("s001-n189")
-    allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
     echo
     printf "%s\n" "${blu}What are you trying to use the Devcloud for? Please select a number from the list below: ${end}"
     echo
@@ -244,18 +250,9 @@ devcloud_login()
 
 tools_setup()
 {
-    red=$'\e[1;31m'
-    blu=$'\e[1;34m'
-    end=$'\e[0m'
-
-    noHardwareNodes=("s001-n043" "s001-n044") #"s001-n130" "s001-n131" "s001-n132" "s001-n133" "s001-n134" "s001-n135" "s001-n136")
-    arria10Nodes=("s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
-    stratix10Nodes=("s001-n189")
-    allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
-
-    QUARTUS_LITE_VERSIONS=("18.1")
-    QUARTUS_STANDARD_VERSIONS=("18.1")
-    QUARTUS_PRO_VERSIONS=("17.1" "18.1" "19.2" "19.3")
+    QUARTUS_LITE_RELEASE=("18.1")
+    QUARTUS_STANDARD_RELEASE=("18.1")
+    QUARTUS_PRO_RELEASE=("17.1" "18.1" "19.2" "19.3")
 
     #defined paths
     GLOB_INTELFPGA_PRO="/glob/development-tools/versions/intelFPGA_pro"
@@ -289,26 +286,22 @@ tools_setup()
 
     if [ $number -eq 1  ];
     then
-        len=${#QUARTUS_LITE_VERSIONS[@]}
+        len=${#QUARTUS_LITE_RELEASE[@]}
         if [ $len -eq 0 ];
         then
-            echo "${red}Something went wrong, does not support any quartus Lite versions ${end}"
+            echo "${red}Something went wrong, does not support any quartus Lite releases ${end}"
         elif [ $len -eq 1 ];
         then
-            #source the one version
-            echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[0]}/init_quartus.sh"
-            source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[0]}/init_quartus.sh
+            #source the one release
+            echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
+            source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}which quartus Lite version would you like to source?${end}"
-            # let i=1
-            # for version in $QUARTUS_LITE_VERSIONS
+            echo "${blu}which quartus Lite release would you like to source?${end}"
             for (( i=0; i<${len}; i++ ));
             do
-                # echo "${i} ) ${version}"
-                echo "${i} ) ${QUARTUS_LITE_VERSIONS[$i]}"
-                # let i++
+                echo "${i} ) ${QUARTUS_LITE_RELEASE[$i]}"
             done
             echo
             echo -n "2nd Number: "
@@ -319,36 +312,32 @@ tools_setup()
                 echo -n "2nd Number: "
                 read -e second_number
             done
-            echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[$second_number]}/init_quartus.sh"
+            echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh"
             #source depending on what second_number they chose
-            source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[$second_number]}/init_quartus.sh
+            source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh
             echo
         else
-            echo "${red}Something went wrong sourcing the lite version ${end}"
+            echo "${red}Something went wrong sourcing the lite release ${end}"
         fi
 
     elif [ $number -eq 2 ];
     then
-        len=${#QUARTUS_STANDARD_VERSIONS[@]}
+        len=${#QUARTUS_STANDARD_RELEASE[@]}
         if [ $len -eq 0 ];
         then
-            echo "${red}Something went wrong, does not support any quartus standard versions ${end}"
+            echo "${red}Something went wrong, does not support any quartus standard releases ${end}"
         elif [ $len -eq 1 ];
         then
-            echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/init_quartus.sh"
-            #source the one version
-            source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/init_quartus.sh
+            echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
+            #source the one release
+            source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}which quartus standard version would you like to source?${end}"
-            # let i=1
-            # for version in $QUARTUS_LITE_VERSIONS
+            echo "${blu}which quartus standard release would you like to source?${end}"
             for (( i=0; i<${len}; i++ ));
             do
-                # echo "${i} ) ${version}"
-                echo "${i} ) ${QUARTUS_STANDARD_VERSIONS[$i]}"
-                # let i++
+                echo "${i} ) ${QUARTUS_STANDARD_RELEASE[$i]}"
             done
             echo
             echo -n "2nd Number: "
@@ -359,36 +348,32 @@ tools_setup()
                 echo -n "2nd Number: "
                 read -e second_number
             done
-            echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[$second_number]}/init_quartus.sh"
+            echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh"
             #source depending on what second_number they chose
-            source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[$second_number]}/init_quartus.sh
+            source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh
             echo
         else
-            echo "${red}Something went wrong sourcing the standard version ${end}"
+            echo "${red}Something went wrong sourcing the standard release ${end}"
         fi
 
     elif [ $number -eq 3 ];
     then
-        len=${#QUARTUS_PRO_VERSIONS[@]}
+        len=${#QUARTUS_PRO_RELEASE[@]}
         if [ $len -eq 0 ];
         then
-            echo "${red}Something went wrong, does not support any quartus pro versions ${end}"
+            echo "${red}Something went wrong, does not support any quartus pro releases ${end}"
         elif [ $len -eq 1 ];
         then
-            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh"
-            #source the one version
-            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh
+            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
+            #source the one release
+            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}which quartus pro version would you like to source?${end}"
-            # let i=1
-            # for version in $QUARTUS_LITE_VERSIONS
+            echo "${blu}which quartus pro release would you like to source?${end}"
             for (( i=0; i<${len}; i++ ));
             do
-                # echo "${i} ) ${version}"
-                echo "${i} ) ${QUARTUS_PRO_VERSIONS[$i]}"
-                # let i++
+                echo "${i} ) ${QUARTUS_PRO_RELEASE[$i]}"
             done
             echo
             #echo "length of array is ${len}"
@@ -400,18 +385,18 @@ tools_setup()
                 echo -n "2nd Number: "
                 read -e second_number
             done
-            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[$second_number]}/init_quartus.sh"
+            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh"
             #source depending on what second_number they chose
-            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[$second_number]}/init_quartus.sh
+            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh
             echo
         else
-            echo "${red}Something went wrong sourcing the pro version ${end}"
+            echo "${red}Something went wrong sourcing the pro release ${end}"
         fi
     elif [ $number -eq 4 ]; #case for HLS
     then
 
-        #ask which quartus version
-        echo "${blu}which quartus version would you like?${end}"
+        #ask which quartus release
+        echo "${blu}which quartus edition would you like?${end}"
         echo "1) Quartus Prime Standard"
         echo "2) Quartus Prime Lite"
         echo "3) Quartus Prime Pro"
@@ -428,33 +413,32 @@ tools_setup()
 
         if [ $qnumber -eq 1 ]; #case for quartus STANDARD
         then
-            len=${#QUARTUS_STANDARD_VERSIONS[@]}
+            len=${#QUARTUS_STANDARD_RELEASE[@]}
             if [ $len -eq 0 ];
             then
-                echo "${red}Something went wrong, does not support any quartus standard versions ${end}"
+                echo "${red}Something went wrong, does not support any quartus standard releases ${end}"
             elif [ $len -eq 1 ];
             then
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/hls
+                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls
 
-                #source the one version of quartus
-                echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/init_quartus.sh"
-                source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/init_quartus.sh
+                #source the one release of quartus
+                echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
+                source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
 
-                #source the one version of OpenCL
-                echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/hls/init_hls.sh"
-                source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_VERSIONS[0]}/hls/init_hls.sh
+                #source the one release of OpenCL
+                echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh"
+                source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh
 
                 echo
             elif [ $len -gt 1 ];
             then
                 #ask which verison of openCL
-                echo "${blu}which openCL version would you like to source?${end}"
+                echo "${blu}which quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
-                    echo "${i} ) ${QUARTUS_LITE_VERSIONS[$i]}"
+                    echo "${i} ) ${QUARTUS_STANDARD_RELEASE[$i]}"
                 done
                 echo
-                #echo "length of array is ${len}"
                 echo -n "2nd Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
@@ -464,7 +448,7 @@ tools_setup()
                     read -e second_number
                 done
 
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[$second_number]}/hls
+                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/hls
 
                 #source quartus
                 echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
@@ -479,30 +463,30 @@ tools_setup()
             fi
         elif [ $qnumber -eq 2 ]; #case for quartus LITE
         then
-            len=${#QUARTUS_LITE_VERSIONS[@]}
+            len=${#QUARTUS_LITE_RELEASE[@]}
             if [ $len -eq 0 ];
             then
-                echo "${red}Something went wrong, does not support any quartus lite versions ${end}"
+                echo "${red}Something went wrong, does not support any quartus lite releases ${end}"
             elif [ $len -eq 1 ];
             then
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[0]}/hls
+                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls
 
-                #source the one version of quartus
-                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[0]}/init_quartus.sh"
-                source $GLOB_INTELFPGA_LITE/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh
+                #source the one release of quartus
+                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
+                source $GLOB_INTELFPGA_LITE/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
 
-                #source the one version of OpenCL
-                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[0]}/hls/init_hls.sh"
-                source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[0]}/hls/init_hls.sh
+                #source the one release of OpenCL
+                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh"
+                source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh
 
                 echo
             elif [ $len -gt 1 ];
             then
                 #ask which verison of openCL
-                echo "${blu}which openCL version would you like to source?${end}"
+                echo "${blu}which quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
-                    echo "${i} ) ${QUARTUS_LITE_VERSIONS[$i]}"
+                    echo "${i} ) ${QUARTUS_LITE_RELEASE[$i]}"
                 done
                 echo
                 #echo "length of array is ${len}"
@@ -515,7 +499,7 @@ tools_setup()
                     read -e second_number
                 done
 
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_VERSIONS[$second_number]}/hls
+                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/hls
 
                 #source quartus
                 echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
@@ -530,30 +514,30 @@ tools_setup()
             fi
         elif [ $qnumber -eq 3 ]; #case for quartus PRO
         then
-            len=${#QUARTUS_PRO_VERSIONS[@]}
+            len=${#QUARTUS_PRO_RELEASE[@]}
             if [ $len -eq 0 ];
             then
-                echo "${red}Something went wrong, does not support any quartus pro versions ${end}"
+                echo "${red}Something went wrong, does not support any quartus pro releases ${end}"
             elif [ $len -eq 1 ];
             then
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/hls
+                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls
 
-                #source the one version of quartus
-                echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh"
-                source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/init_quartus.sh
+                #source the one release of quartus
+                echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
+                source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
 
-                #source the one version of OpenCL
-                echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/hls/init_hls.sh"
-                source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[0]}/hls/init_hls.sh
+                #source the one release of OpenCL
+                echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh"
+                source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh
 
                 echo
             elif [ $len -gt 1 ];
             then
                 #ask which verison of openCL
-                echo "${blu}which openCL version would you like to source?${end}"
+                echo "${blu}which quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
-                    echo "${i} ) ${QUARTUS_PRO_VERSIONS[$i]}"
+                    echo "${i} ) ${QUARTUS_PRO_RELEASE[$i]}"
                 done
                 echo
                 #echo "length of array is ${len}"
@@ -566,7 +550,7 @@ tools_setup()
                     read -e second_number
                 done
 
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_VERSIONS[$second_number]}/hls
+                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/hls
 
                 #source quartus
                 echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
