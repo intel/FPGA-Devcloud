@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 2 2020               #
+# -Mar 10 2020              #
 #                           #
 #                           #
 #                           #
@@ -16,10 +16,8 @@
 red=$'\e[1;31m'
 blu=$'\e[1;34m'
 end=$'\e[0m'
-# 20 more noHardware nodes expected 3/3/2020
-noHardwareNodes=("s005-n005" "s005-n006" "s005-n007" "s005-n008")
-# 5  more arria10Nodes expected date TBD
-arria10Nodes=("s001-n137" "s001-n138" "s001-n139")
+noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
+arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
 # 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
@@ -270,8 +268,8 @@ tools_setup()
     echo "2) Quartus Prime Standard"
     echo "3) Quartus Prime Pro"
     echo "4) HLS"
-    echo "5) Arria 10 Development Stack (only if on n137, n138, n139), OpenCL on all nodes"
-    echo "6) Stratix 10 Development Stack (only if on n189), OpenCL on all nodes"
+    echo "5) Arria 10 Development Stack + OpenCL"
+    echo "6) Stratix 10 Development Stack + OpenCL"
     echo
     echo -n "Number: "
     read -e number
