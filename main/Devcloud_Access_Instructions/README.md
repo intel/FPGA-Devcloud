@@ -242,7 +242,7 @@ Click [here](#50-Connecting-to-Servers-Running-FPGA-Development-Software) to ski
 
 ### User Inside Intel Firewall
 
-You cannot log into the Intel Devcloud if you are within the Intel firewall. This section contains the tunneling commands and MobaXterm modifications needed to bypass the firewall to connect to the Devcloud. 
+You cannot log into the Intel Devcloud through the above steps if you are within the Intel firewall. This section contains the tunneling commands and MobaXterm modifications needed to bypass the firewall to connect to the Devcloud. 
 
 ### 4.1 Add SOcket CAT Package
 
@@ -293,11 +293,9 @@ You will now be logged in:
 
 You are now logged in to machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful server.  
 
-The following nodes can run Quartus, OpenCL compile and HLS: n130-n139. 
+Some nodes can run Quartus, OpenCL emulation and compile and HLS compile and compile. The nodes change over time as we grow server capacity.
 
-The following nodes can run Arria 10 OPAE connectivity to PAC Cards: n137-n139. For Stratix 10: n189.
-
-There are a total of 12 Arria 10 PAC Cards, 4 each on n137, n138 and n139. there are two Stratix 10 PAC cards on n189.
+Some nodes can connect to machines with the above capabilities and also are directly connected to Arria 10 and Stratix 10 PAC cards.
 
 There are a series of detailed Linux commands shown below should you want know the intricate details of how to connect to available compute nodes. We also offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Add this script to your .bashrc login script with the following command added to your script:
 
@@ -309,11 +307,11 @@ Run devcloud_login and follow the instructions to connect the appropriate comput
 
 Should you want more details on available compute resources and query what is available, continue with the instructions below.
 
-To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and computenode. The computenode is a high power machine for running compilations - a subset host PAC cards: n137, n138 and n139. 
+To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and computenode. The computenode is a high power machine for running compilations . 
 
 ```
 pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
-pbsnodes -l free 	# lists all free nodes (only nodes 130-139 run x2go)
+pbsnodes -l free 	# lists all free nodes
 ```
 
 You will get a listing of free and busy nodes that connect to PAC cards. 
@@ -323,8 +321,7 @@ If there is a free node, when you execute this command you will be logged in to 
 To login to a specific machine, execute one of the following commands:
 
 ```
-qsub -l nodes=s001-n130:ppn=2                         # (for s001-n130 through s001-n136)
-qsub -q batch@v-qsvr-fpga -I -l nodes=s001-n137:ppn=2 # (for s001-n137 through s001-n139, and s001-n189)
+qsub -q batch@v-qsvr-fpga -I -l nodes=s00X-nXXX:ppn=2 # (for nodes with attached PAC cards, substitute with appropriate server numbers).
 ```
 When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
 ```
@@ -335,7 +332,7 @@ Now you have a high power machine available for powerful computing jobs. You onl
 
 - Local Machine (eg. llandis-MOBL)
 - devcloud login-l login server
-- compute server (eg n137)
+- compute server
 
 Be cognizant of which Mobaxterm tab and machine you are typing in.
 
@@ -649,11 +646,11 @@ The version you launch (Lite vs Pro) is dependent on the environment variables y
 
 ## 11.0 Launching the HLS compiler
 
-If you specify HLS=:"TRUE" in the quartus_setup.sh setup script you will be able to access the HLS compiler, i++. The simplest test would be i++ hello_world.cpp. 
+Use the tools_setup script to setup search paths and follow the online documentation.
 
 ## 12.0 Launching the OpenCL compiler
 
-If you specify OPENCL=:"TRUE" in the tool setup script you will be able to access the OpenCL compiler, aoc. (Needs update for acceleration stack and connectivity to A10 PAC card)
+Use the tools_setup script to setup search paths and follow the online documentation.
 
 ## 13.0 Communicating to the PAC card 
 
@@ -669,7 +666,7 @@ To view serial number for a particular SYSFS entry (what does this mean)
 hexdump -C /sys/class/fpga/intel-fpga-dev.2/intel-fpga-fme.2/intel-pac-hssi.?.auto/hssi_mgmt/eeprom
 ```
 
-Note when running the Acceleration Stack Commands that communicate with the PAC Card, you will need python 2 in your search path. When initially creating your account, the /etc/skel/.bash_profile file is copied from the headnode to your account. This file specifies python3 first in the path. Switch your ~/.bash_profile to select python2 in your path within this file.
+Note when running the Acceleration Stack Commands that communicate with the PAC Card, you will need python 2 in your search path. When initially creating your account, the /etc/skel/.bash_profile file is copied from the headnode to your account. This file specifies python3 first in the path. Switch your ~/.bash_profile to select python2 in your path within this file. Note the tools_setup command will do this for you.
 
 **Another method to see available cards:**
 
