@@ -291,13 +291,13 @@ You will now be logged in:
 
 ### 5.1 Understanding available resources
 
-You are now logged in to machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful server.  
+You are now logged in to machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.  
 
-Some nodes can run Quartus, OpenCL emulation and compile and HLS compile and compile. The nodes change over time as we grow server capacity.
+Some nodes can run Quartus, OpenCL emulation and compile and HLS emulation, simulation and compile. The node capacity grows with additional servers periodically added.
 
 Some nodes can connect to machines with the above capabilities and also are directly connected to Arria 10 and Stratix 10 PAC cards.
 
-There are a series of detailed Linux commands shown below should you want know the intricate details of how to connect to available compute nodes. We also offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Add this script to your .bashrc login script with the following command added to your script:
+There are a series of detailed Linux commands shown below should you want know the intricate details of how to connect to available compute nodes. To facilitate connectivity without understanding some of the details on the Linux OS, we offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Add this script to your .bashrc login script with the following command added to your script:
 
 if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
     source /data/intel_fpga/devcloudLoginToolSetup.sh
@@ -311,7 +311,7 @@ To query if free nodes are available run the below command on the login server (
 
 ```
 pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
-pbsnodes -l free 	# lists all free nodes
+pbsnodes -l free -s v-qsvr-fpga	# lists all free nodes that host PAC cards
 ```
 
 You will get a listing of free and busy nodes that connect to PAC cards. 
@@ -321,7 +321,7 @@ If there is a free node, when you execute this command you will be logged in to 
 To login to a specific machine, execute one of the following commands:
 
 ```
-qsub -q batch@v-qsvr-fpga -I -l nodes=s00X-nXXX:ppn=2 # (for nodes with attached PAC cards, substitute with appropriate server numbers).
+qsub -q batch@v-qsvr-fpga -I -l nodes=s00X-nXXX:ppn=2 # (for nodes with attached PAC cards, substitute with appropriate server numbers). Compute only nodes do not require -s v-qsvr-fpga
 ```
 When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
 ```
@@ -330,9 +330,9 @@ When launching the qsub command, you can request additional memory with the foll
 
 Now you have a high power machine available for powerful computing jobs. You only have a console available but no graphics available. Note: MobaXterm has multiple tabs and three possibilities of where to be logged in: 
 
-- Local Machine (eg. llandis-MOBL)
-- devcloud login-l login server
-- compute server
+- Local Machine, your PC (eg. llandis-MOBL)
+- devcloud eg login-2 login server
+- compute server eg s001-n137
 
 Be cognizant of which Mobaxterm tab and machine you are typing in.
 
@@ -352,7 +352,7 @@ Go through the install steps for the mswin X2Go Client and accept all.
 
 Repoen the MobaXterm window, open a second session tab by clicking on the "+" as shown below:![image](https://user-images.githubusercontent.com/56968566/69987433-5b074400-14f4-11ea-9046-eb3d39ca0f69.png)
 
-This tab will a launch terminal running UNIX commands on your local machine.
+This tab will a launch terminal running UNIX commands on your local machine. Note that you first need to be logged in to the compute server (use devcloud_login) prior to opening the graphics port as shown in the step below.
 
 ### 6.1 Opening Port for Graphics Usage in X2Go
 
@@ -431,7 +431,9 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 ## 7.0 Quartus Access and Setup
 
-From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually.  To get the appropriate paths, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh and manually copy and paste the paths and environment variable settings for your desired tool flow.
+From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the tools_setup function. This function will guide you through query of what compile workload you want to run.
+
+Should you want to source setup scripts manually, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh and manually copy and paste the paths and environment variable settings for your desired tool flow.
 
 We highly recommend to include the lines in your ~/.bashrc script to simplify tool access:
 
@@ -565,21 +567,13 @@ Note: When re-using WinSCP to transfer files, re-open the application and **Logi
 
 
 
-## 9.0 Job Control on the X2GO Window
+## 9.0 Job Control
 
 This section provides information on how to terminate jobs on the Devcloud. 
 
-### 9.1 Searching for Free Nodes
+### 9.1 Submitting Jobs for a Specified Walltime
 
-You might need to terminate jobs on the Devcloud.  To see what nodes are tied up, from the headnode, type the following: 
-
-```
-psbnodes -s v-qsvr-fpga | grep -B 4 fpga
-```
-
-### 9.2 Submitting Jobs for a Specified Walltime
-
-A user will be kicked off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours). Nodes n130-n136 can increase walltime up to 24 hours and nodes n137-n139 and 189 can be increased up to a maximum of 48 hours. Type the following after qsub-ing into a specified node:
+A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours). Nodes n130-n136 can increase walltime up to 24 hours and nodes n137-n139 and 189 can be increased up to a maximum of 48 hours. Type the following after qsub-ing into a specified node:
 
 ```
 qsub -l walltime=<insert-time> 'command/bash file to be executed'
@@ -591,7 +585,7 @@ sleep 11h											# sleep command equivalent to a quartus compilation file req
 echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, output "job success" to walltime_log.txt
 ```
 
-### 9.3 Report Status for Jobs Running on the Devcloud
+### 9.2 Report Status for Jobs Running on the Devcloud
 
 To report the status of your jobs running on the DevCloud is to type the following:
 
@@ -610,7 +604,7 @@ The result will be of the form:
 
 
 
-### 9.4 Deleting Jobs on the Devcloud
+### 9.3 Deleting Jobs on the Devcloud
 
 Jobs can be terminated with the following command when nodes are hanging with stalled jobs: 
 
@@ -629,7 +623,7 @@ ps -auxw
 Free up the node with the following command: 
 
 ```
-kill <job-id>
+kill -9 <job-id>
 ```
 
 
@@ -646,29 +640,15 @@ The version you launch (Lite vs Pro) is dependent on the environment variables y
 
 ## 11.0 Launching the HLS compiler
 
-Use the tools_setup script to setup search paths and follow the online documentation.
+Use the tools_setup script to setup search paths and follow the online documentation to run the i++ HLS compiler.
 
 ## 12.0 Launching the OpenCL compiler
 
-Use the tools_setup script to setup search paths and follow the online documentation.
+Use the tools_setup script to setup search paths and follow the online documentation to run the aocl compiler.
 
 ## 13.0 Communicating to the PAC card 
 
-To list all SYSFS entries in a multi-PAC system (explain)
-
-```
-ls -l /sys/class/fpga/intel-fpga-dev.?/device
-```
-
-To view serial number for a particular SYSFS entry (what does this mean)
-
-```
-hexdump -C /sys/class/fpga/intel-fpga-dev.2/intel-fpga-fme.2/intel-pac-hssi.?.auto/hssi_mgmt/eeprom
-```
-
-Note when running the Acceleration Stack Commands that communicate with the PAC Card, you will need python 2 in your search path. When initially creating your account, the /etc/skel/.bash_profile file is copied from the headnode to your account. This file specifies python3 first in the path. Switch your ~/.bash_profile to select python2 in your path within this file. Note the tools_setup command will do this for you.
-
-**Another method to see available cards:**
+To see available PAC cards:
 
 ```
 lspci | grep accel
@@ -678,7 +658,7 @@ View the various available cards and select a free one.
 
 ![image](https://user-images.githubusercontent.com/56968566/69988599-cc47f680-14f6-11ea-8e28-8a4ba3a3a217.png)
 
-**To download a green bit stream (.gbs):*
+**To download a green bit stream (.gbs) for an RTL acceleration functional unit (AFU):*
 
 ```
 fpgaconf -B 0x3b hello.gbs
@@ -688,7 +668,7 @@ This link to the acceleration hub is an excellent resource for further informati
 
 ## 14.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
 
-Node **n138** has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image](https://user-images.githubusercontent.com/56968566/69988508-a1f63900-14f6-11ea-8fd3-cfb688faedc7.png)
+Node s001-n138 has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image](https://user-images.githubusercontent.com/56968566/69988508-a1f63900-14f6-11ea-8fd3-cfb688faedc7.png)
 
 If the USB Blaster is not configured, complete the following steps: 
 
@@ -795,7 +775,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 ## 16.0 Timeouts and Disk Space
 
-Your session will timeout after four hours since login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
+Your session will timeout after six hours after login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
 
 If you find that you are kicked off the Devcloud due to short bursts of inactivity, this can be attributed to your PC display going to sleep. Complete the following steps to avoid session time-out:
 
@@ -825,9 +805,9 @@ Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20G
 ```
 
 
-## 18.0 Devcloud Editors 
+## 18.0 Devcloud Text Editors 
 
-There are three available editors in the Devcloud terminal: 
+cat There are three available editors in the Devcloud terminal: 
 
 1. [Gedit](https://help.gnome.org/users/gedit/stable/)
 2. [Vi](https://www.washington.edu/computing/unix/vi.html)
