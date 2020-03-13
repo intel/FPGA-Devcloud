@@ -1,12 +1,16 @@
 
 
-# Acceleration Stack on the Arria 10 QuickStart Guide
+# Acceleration Stack on the Arria 10 Demonstration - programming the green bit stream (.gbs) into 
 
  
 
 ## 1       Introduction
 
-This lab is a QuickStart reference on using the acceleration stack with the Arria 10 on the Intel Devcloud. The Devcloud is equipped with multiple acceleration cards, that users can use by logging into the Devcloud and running the commands inside this QuickStart guide.
+The best resource for learning the acceleration stack applications is the Acceleration Hub Quickstart guide: https://www.intel.com/content/www/us/en/programmable/documentation/iyu1522005567196.html
+
+Note that the sudo commands listed in the above guide will not work due to users not having access to root privilege to run sudo.
+
+This demonstration will step the user through steps to load a .gbs (green bit stream) file to a PAC card and run the host code application that communicates between the CPU and Arria 10 PAC Card on the devcloud.
 
 
 
@@ -14,68 +18,34 @@ This lab is a QuickStart reference on using the acceleration stack with the Arri
 
 This lab assumes the following:
 
-- Prior FPGA knowledge
+- Basic FPGA knowledge
 - Prior terminal command knowledge
 - Intel Devcloud registration and SSH key set up
-- MobaXterm installed and set up
-
-If any of the above assumptions are incorrect, please refer to the relevant set up guides
+- MobaXterm installed and set up, X2Go optional
 
 
 
-## 3       Requirements
+## 3       Walkthrough
 
-#### 3.1            Hardware Requirements
+#### 3.1            Initial Setup
 
-When logged in to the head node, you must log into the correct compute node to use the Arria 10 Acceleration cards. The nodes that allow Arria 10 usage thus far are nodes 137, 138, and 139. Please assure you are in the correct node if you encounter any issues.
+Run the devcloud_login script and connect to an Arria 10 capable node.
 
-There is only a certain amount of acceleration cards per compute node, so if one node is full, please use another node, or wait for the current job on the node to be completed. 
+Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option.
 
-#### 3.2            Software Requirements
+Make a directory in our root folder called **DEMO**. To do this type into the terminal:
 
-Please make sure you have all relevant software set up including MobaXterm and have successfully been able to login to a compute node. This QuickStart guide is terminal command heavy, so if you do not understand what a terminal command does, please refer to a prior guide, or look at the “man” page for that specific terminal 
-
-
-
-## 4       Walkthrough
-
-#### 4.1            Initial Setup
-
-The first step is locating the environment setup script, and the folder containing the demo of the acceleration card in use. We will be running the script, and copying the folder containing the demo to a more workable directory.
-
-- Open MobaXterm, and login to the appropriate compute node. In this case choose the Arria 10 PAC Card programming.
-
-- To run the environment setup script, we are going to source the file.
-
-- Type into the terminal:
-
-  ```bash
-  source /opt/a10/intelrtestack/init_env.sh
-  ```
-
-  This will set up the environment variables we need.
-
-- Next we will look for the folder containing the demo. Type into the terminal:
-
-  ```bash
-  cd /opt/a10/intelrtestack/a10_gx_pac_ias_1_2_pv/hw/samples
-  ```
-
-  This folder contains multiple examples. In this case we will be using the example **hello_intr_afu**.
-
-- We will make a directory in our root folder called **DEMO**. To do this type into the terminal:
-
-  ```bash
-  mkdir ~/DEMO
-  ```
+```bash
+mkdir ~/DEMO
+```
 
 - We will then copy the example folder into this DEMO folder. Type this into the terminal:
 
   ```bash
-  cp -r hello_intr_afu ~/DEMO
+  cp -r $OPAE_PLATFORM_ROOT/hw/samples/hello_intr_afu ~/DEMO
   ```
 
-- We will then move into that folder and begin working inside the folder. First we move into the bin folder. To do this type into the terminal:
+- We will then move into that folder and begin working inside the folder. First change directory into the bin folder.
 
   ```bash
   cd ~/DEMO/hello_intr_afu/bin
@@ -97,7 +67,7 @@ The example folder has been copied into the DEMO folder, allowing us a more work
   fpgaconf -B 0x3b hello_intr_afu.gbs
   ```
 
-- We then need to run the code to display onto the terminal screen our final design. To do this we need to first switch directories into the software folder. Do this by typing into the terminal:
+- This step will take about 15 seconds. We then need to run the code to display onto the terminal screen our final design. To do this we need to first switch directories into the software folder. Do this by typing into the terminal:
 
   ```bash
   cd ../sw
@@ -131,8 +101,9 @@ Figure 1: Successful Acceleration Card Programming
 
 List the revision history for the application note.
 
-| Name        | Date      | Changes                                                 |
-| ----------- | --------- | ------------------------------------------------------- |
-| Rony Schutz | 11/5/2019 | Initial Release of Acceleration   Card QuickStart Guide |
+| Name         | Date      | Changes                                                      |
+| ------------ | --------- | ------------------------------------------------------------ |
+| Rony Schutz  | 11/5/2019 | Initial Release of Acceleration   Card QuickStart Guide      |
+| Larry Landis | 3/13/2020 | Changed to demo, and added some specific devcloud instructions |
 
  
