@@ -205,6 +205,7 @@ devcloud_login()
                 echo
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
+                echo --------------------------------------------------------------------------------------
                 #pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
                 #unset IFS
                 node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
