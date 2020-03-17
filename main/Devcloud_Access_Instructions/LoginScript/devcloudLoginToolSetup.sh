@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 10 2020              #
+# -Mar 16 2020              #
 #                           #
 #                           #
 #                           #
@@ -56,6 +56,8 @@ devcloud_login()
             #node=$(head -n 1 nodes.txt)
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
+            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -90,6 +92,8 @@ devcloud_login()
         then
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -124,6 +128,8 @@ devcloud_login()
             IFS="|"
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
+            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -157,15 +163,19 @@ devcloud_login()
         then
             IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
             # availableNodes=() #initialize the empty array
             # availableNodes+=($availableNodesNohardware) #append an
             # availableNodes+=($availableNodesArria)
             # availableNodes+=($availableNodesStratix)
             # echo ${availableNodes}
-            availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" )
+            availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" \
+                "${availableNodesNohardware_on_temp_server[@]}" "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}")
             #echo ${availableNodes[@]}
             #echo ${availableNodes[2]}
             if [ ${#availableNodes[@]} == 0  ];
@@ -179,18 +189,27 @@ devcloud_login()
                 echo "                               Showing available nodes below:                          "
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
-                IFS="|"
+                #IFS="|"
                 # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
-                pbsnodes -s v-qsvr-fpga| grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
-                unset IFS
+                #pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
+                node_no_hardware_str=$(echo ${availableNodesNohardware[@]} ${availableNodesNohardware_on_temp_server[@]})
+                printf "${red}$node_no_hardware_str${end}"
+                #unset IFS
+                echo 
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Arria 10${end}         "
-                IFS="|"
-                pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
-                printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
-                pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
-                unset IFS
+                #IFS="|"
+                #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
+                node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
+                printf "${red}$node_arria10_str${end}"
+                echo
                 echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
+                echo --------------------------------------------------------------------------------------
+                #pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
+                #unset IFS
+                node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+                printf "${red}$node_stratix_str${end}"
                 echo
                 echo What node would you like to use?
                 echo

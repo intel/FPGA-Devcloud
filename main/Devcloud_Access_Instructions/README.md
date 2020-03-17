@@ -513,6 +513,8 @@ The localhost user directory tool can be re-opened and closed as necessary to tr
 
 ### 8.3 Using WinSCP to Transfer Files
 
+To have WinSCP working, please have a tunnel open connected to X2GO. This should be done by having a new mobaxterm tab open and connecting to X2GO through an SSH tunnel to the node selected.
+
 Download WinSCP: https://winscp.net/eng/download.php
 
 Click on the “Download WinSCP” Button and Install onto PC. Download with default setup: **Typical installation (recommended)** and **Commander User Interface Style**.
