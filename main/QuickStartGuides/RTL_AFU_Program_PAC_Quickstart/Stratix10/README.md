@@ -1,12 +1,30 @@
 
 
-# Acceleration Stack on the Stratix 10 QuickStart Guide
+# Stratix 10 PAC: RTL AFU Compilation and Programming on the FPGA devcloud using the Stratix10 Devstack version 2.0.1
 
  
 
 ## 1       Introduction
 
-This lab is a QuickStart reference on using the acceleration stack with the Stratix 10 on the Intel Devcloud. The Devcloud is equipped with multiple acceleration cards, that users can use by logging into the Devcloud and running the commands inside this QuickStart guide.
+If you have not used the D5005 Stratix 10  PAC card refer to this Quickstart Guide.
+
+https://www.intel.com/content/www/us/en/programmable/documentation/edj1542148561811.html#cxu1542149035471
+
+The best resource for learning about the RTL and driver functionality is from this document: 
+
+https://www.intel.com/content/www/us/en/programmable/documentation/iwl1547157036746.html
+
+The RTL function is a DMA engine that moves data between the host CPU and FPGA over the CCIP (cache coherent interface) .
+
+This demonstration will step the user through the following steps:
+
+1. Select appropriate compute node machine on the FPGA devcloud
+2. Load the appropriate tools
+3. Copy over the sample design
+4. Compile the sample design - this runs the Quartus compiler "under the hood"
+5. Download the FPGA bitstream to the PAC card
+6. Compile the application software using the gcc C compiler
+7. Run the application software on the host and show that the host and FPGA interact to solve heterogenous workloads.
 
 
 
@@ -14,93 +32,79 @@ This lab is a QuickStart reference on using the acceleration stack with the Stra
 
 This lab assumes the following:
 
-- Prior FPGA knowledge
-- Prior terminal command knowledge
+- Basic FPGA knowledge
 - Intel Devcloud registration and SSH key set up
-- MobaXterm installed and set up
-
-If any of the above assumptions are incorrect, please refer to the relevant set up guides
+- MobaXterm installed and set up, X2Go optional
 
 
 
-## 3       Requirements
+## 3       Walkthrough
 
-#### 3.1            Hardware Requirements
+#### 3.1            Initial Setup
 
-When logged in to the head node, you must log into the correct compute node to use the Stratix 10 Acceleration cards. The nodes that allow Stratix 10 usage thus far is node 189. Please assure you are in the correct node if you encounter any issues.
+Run the devcloud_login function and connect to an Stratix 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-There is only a certain amount of acceleration cards per compute node, so if one node is full, please use another node, or wait for the current job on the node to be completed. 
+![image-20200316172635297](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200316172635297.png)
 
-#### 3.2            Software Requirements
-
-Please make sure you have all relevant software set up including MobaXterm and have successfully been able to login to a compute node. This QuickStart guide is terminal command heavy, so if you do not understand what a terminal command does, please refer to a prior guide, or look at the “man” page for that specific terminal 
+Select option 2 or option 4 and connect to an Stratix 10 ready compute node.
 
 
 
-## 4       Walkthrough
+Once on this node, run tools_setup. Select the Stratix 10 Development Stack + OpenCL option.
 
-#### 4.1            Initial Setup
+Make a directory in your root folder called DMA_AFU. To do this change directory to the appropriate location and type into the terminal:
 
-The first step is locating the environment setup script, and the folder containing the demo of the acceleration card in use. We will be running the script, and copying the folder containing the demo to a more workable directory.
+```bash
+mkdir S10_RTL_AFU
+```
 
-- Open MobaXterm, and login to the appropriate compute node. In this case choose the Stratix 10 PAC Card programming.
+We will then copy the example folder into his DEMO folder. Type this into the terminal:
 
-- To run the environment setup script, we are going to source the file.
+```bash
+cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu S10_RTL_AFU
+```
 
-- Type into the terminal:
+#### 3.2 Compiling RTL code into an FPGA bitstream
 
-  ```bash
-  source /opt/intel/inteldevstack/init_env.sh
-  ```
+Prior to compilation, you typically simulate your design. This is accomplished using the Modelsim-SE simulator which is not currently supported on the FPGA devcloud. Should you need to simulate the design, please export to your own enterprise.
 
-  This will set up the environment variables we need.
+We will then cd into that folder and begin working inside the folder. First change directory into the bin folder. Then run the compilation command
 
-- Next we will look for the folder containing the demo. Type into the terminal:
+```bash
+cd S10_RTL_AFU/dma_afu
+afu_synth_setup --source hw/rtl/filelist.txt build_synth
+cd build_synth
+$OPAE_PLATFORM_ROOT/bin/run.sh
+```
 
-  ```bash
-  cd /opt/intel/inteldevstack/d5005_ias_2_0_b339/hw/samples
-  ```
+These steps will take approximately 60 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu_unsigned.gbs .
 
-  This folder contains multiple examples. In this case we will be using the example **hello_intr_afu**.
 
-- We will make a directory in our root folder called **DEMO**. To do this type into the terminal:
 
-  ```bash
-  mkdir ~/DEMO
-  ```
+#### 3.3 Downloading the bit stream into the PAC card
 
-- We will then copy the example folder into this DEMO folder. Type this into the terminal:
+Next we will be looking for an available acceleration card, program it, compile the host C code and run the software program to display on the terminal.
 
-  ```bash
-  cp -r hello_intr_afu ~/DEMO
-  ```
-
-- We will then move into that folder and begin working inside the folder. First we move into the bin folder. To do this type into the terminal:
-
-  ```bash
-  cd ~/DEMO/hello_intr_afu/bin
-  ```
-
-#### 4.2            Running the Program
-
-The example folder has been copied into the DEMO folder, allowing us a more workable directory. Inside this folder, we will be looking for an available acceleration card, programming it, and running the software program to display into the terminal.
-
-- To see what pci accelerator cards are available we type the following into the terminal:
+- To see what PCI accelerator cards are available, we type the following into the terminal:
 
   ```bash
   lspci | grep accel
   ```
 
-- We will then run the code onto the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command:
+- We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 2.0.1 of the devstack tools. Do not use this command if you are accessing the 2.0 version of the Stratix 10 devstack tools.
 
   ```bash
-  fpgaconf -B 0x3b hello_intr_afu.gbs
+  fpgasupdate ../bin/dma_afu_unsigned.gbs 3b:00.0
   ```
 
-- We then need to run the code to display onto the terminal screen our final design. To do this we need to first switch directories into the software folder. Do this by typing into the terminal:
+- This step will take about 15 seconds. 
+
+#### 3.4 Compiling the host software
+
+- We then need to compile and run the C host code to display on to the terminal screen. This will demonstrate the interaction of CPU host and FPGA PAC card. To do this, we need to first switch directories into the software folder. Do this by typing into the terminal:
 
   ```bash
-  cd ../sw
+  cd sw
   ```
 
 - We then need to **make clean** to remove old files and start fresh. And make the code to build the program.
@@ -113,26 +117,30 @@ The example folder has been copied into the DEMO folder, allowing us a more work
   make
   ```
 
-- To run the final program, we jut run the script
+- To run the host program, we launch the executable
 
   ```bash
-  ./hello_intr_afu
+  ./fpga_dma_test -s 104857600 -p 1048576 -r mtom
   ```
 
-If successful you should get an output like below. It should show **success**.
+If successful, you should see an output as shown below.
 
-![image](https://user-images.githubusercontent.com/55601103/72097182-a3263d00-32d0-11ea-8e6d-9439f89c05b6.png)
-
-Figure 1: Successful Acceleration Card Programming
+![image-20200317153013460](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200317153013460.png)
 
    
+
+This last step completes very quickly. If you go to the directory: $OPAE_PLATFORM_ROOT/hw/samples you will find other samples that you can try out using similar steps.
 
 ## 6       Document Revision History
 
 List the revision history for the application note.
 
-| Name        | Date      | Changes                                               |
-| ----------- | --------- | ----------------------------------------------------- |
-| Rony Schutz | 11/4/2019 | Initial Release of Acceleration Card QuickStart Guide |
+| Name         | Date      | Changes                                                   |
+| ------------ | --------- | --------------------------------------------------------- |
+| Rony Schutz  | 11/5/2019 | Initial Release of Acceleration   Card QuickStart Guide   |
+| Larry Landis | 3/13/2020 | Changed to demo, and added specific devcloud instructions |
+| Larry Landis | 3/17/2020 | Fixed Stratix 10 specific steps                           |
+
+
 
  
