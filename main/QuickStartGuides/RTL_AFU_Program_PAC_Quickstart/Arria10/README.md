@@ -54,7 +54,7 @@ Make a directory in your root folder called DMA_AFU. To do this change directory
 mkdir A10_RTL_AFU
 ```
 
-- We will then copy the example folder into his DEMO folder. Type this into the terminal:
+- We will then copy the example folder into this DEMO folder. Type this into the terminal:
 
   ```bash
   cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu A10_RTL_AFU
