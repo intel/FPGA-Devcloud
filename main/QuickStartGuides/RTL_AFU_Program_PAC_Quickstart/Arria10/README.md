@@ -6,6 +6,10 @@
 
 ## 1       Introduction
 
+If you are new to the Arria 10 PAC card, check out this quick start guide:
+
+https://www.intel.com/content/www/us/en/programmable/documentation/iyu1522005567196.html
+
 The best resource for learning about the RTL and driver functionality is from this document: 
 
 https://www.intel.com/content/www/us/en/programmable/documentation/tmv1511227122034.html
