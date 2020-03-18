@@ -44,7 +44,7 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an Stratix 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image-20200316172635297](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200316172635297.png)
+![image-20200316172635297](https://user-images.githubusercontent.com/59750149/77004891-17a6d900-691d-11ea-8b3f-433673cc4962.png)
 
 Select option 2 or option 4 and connect to an Stratix 10 ready compute node.
 
@@ -125,7 +125,7 @@ Next we will be looking for an available acceleration card, program it, compile 
 
 If successful, you should see an output as shown below.
 
-![image-20200317153013460](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200317153013460.png)
+![image-20200317153013460](https://user-images.githubusercontent.com/59750149/77005409-fb576c00-691d-11ea-9ac3-68ef69067bc1.png)
 
    
 
