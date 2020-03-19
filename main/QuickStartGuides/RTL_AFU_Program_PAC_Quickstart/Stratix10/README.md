@@ -58,7 +58,7 @@ Make a directory in your root folder called DMA_AFU. To do this change directory
 mkdir S10_RTL_AFU
 ```
 
-We will then copy the example folder into his DEMO folder. Type this into the terminal:
+We will then copy the example folder into this DEMO folder. Type this into the terminal:
 
 ```bash
 cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu S10_RTL_AFU
@@ -104,7 +104,7 @@ Next we will be looking for an available acceleration card, program it, compile 
 - We then need to compile and run the C host code to display on to the terminal screen. This will demonstrate the interaction of CPU host and FPGA PAC card. To do this, we need to first switch directories into the software folder. Do this by typing into the terminal:
 
   ```bash
-  cd sw
+  cd ../sw
   ```
 
 - We then need to **make clean** to remove old files and start fresh. And make the code to build the program.
