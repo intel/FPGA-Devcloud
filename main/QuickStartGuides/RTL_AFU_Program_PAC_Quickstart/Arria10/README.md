@@ -75,7 +75,7 @@ cd build_synth
 $OPAE_PLATFORM_ROOT/bin/run.sh
 ```
 
-This step will take approximately 40 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu.gbs .
+This step will take approximately 40 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu.gbs . Note if you compile your own gbs, it will be located in the build_synth directory.
 
 
 
@@ -92,7 +92,7 @@ Next we will be looking for an available acceleration card, program it, compile 
 - We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 1.2 of the devstack tools. Do not use this command if you are accessing the 1.2.1 version of the Arria 10 devstack tools.
 
   ```bash
-  fpgaconf -B 0x3b bin/dma_afu.gbs
+  fpgaconf -B 0x3b dma_afu.gbs
   ```
 
 - This step will take about 15 seconds. 
