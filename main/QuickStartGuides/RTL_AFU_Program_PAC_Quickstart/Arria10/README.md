@@ -71,6 +71,8 @@ Prior to compilation, you typically simulate your design. This is accomplished u
 ```bash
 cd A10_RTL_AFU/dma_afu
 afu_synth_setup --source hw/rtl/filelist.txt build_synth
+cd build_synth
+$OPAE_PLATFORM_ROOT/bin/run.sh
 ```
 
 This step will take approximately 40 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu.gbs .
