@@ -89,7 +89,7 @@ Next we will be looking for an available acceleration card, program it, compile 
   lspci | grep accel
   ```
 
-- We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 1.2 of the devstack tools. Do not use this command if you are accessing the 1.2.1 version of the Arria 10 devstack tools.
+- We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 1.2 of the devstack tools. Do not use this command if you are accessing the 1.2.1 version of the Arria 10 devstack tools. Note if you did not compiled your own gbs, then the precompiled gbs will be located in the bin directory ( ../bin/dma_afu.gbs ).
 
   ```bash
   fpgaconf -B 0x3b dma_afu.gbs
