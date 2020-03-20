@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 16 2020              #
+# -Mar 19 2020              #
 #                           #
 #                           #
 #                           #
@@ -169,6 +169,9 @@ devcloud_login()
             readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
+            let number_of_available_no_hardware_nodes=${#availableNodesNohardware[@]}+${#availableNodesNohardware_on_temp_server[@]}
+            let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
+            let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
             # availableNodes=() #initialize the empty array
             # availableNodes+=($availableNodesNohardware) #append an
             # availableNodes+=($availableNodesArria)
@@ -186,9 +189,9 @@ devcloud_login()
                 printf "%s\n" "${red}No available nodes. Try again later. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
             else
-                echo "                               Showing available nodes below:                          "
+                echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with no attached hardware:${end}          "
+                printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)           "
                 #IFS="|"
                 # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
                 #pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
@@ -197,19 +200,20 @@ devcloud_login()
                 #unset IFS
                 echo 
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10${end}         "
+                printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)         "
                 #IFS="|"
                 #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
                 node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
                 printf "${red}$node_arria10_str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Stratix 10${end}         "
-                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)          "
                 #pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
                 #unset IFS
                 node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
                 printf "${red}$node_stratix_str${end}"
+                echo
+                echo --------------------------------------------------------------------------------------
                 echo
                 echo What node would you like to use?
                 echo
