@@ -66,7 +66,7 @@ mkdir A10_RTL_AFU
 
 #### 3.2 Compiling RTL code into an FPGA bitstream
 
-Prior to compilation, you typically simulate your design. This is accomplished using the Modelsim-SE simulator which is not currently supported on the FPGA devcloud. Should you need to simulate the design, please export to your own enterprise.We will then cd into that folder and begin working inside the folder. First change directory into the bin folder. Then run the compilation command
+Prior to compilation, you typically simulate your design. This is accomplished using the Modelsim-SE simulator which is not currently supported on the FPGA devcloud. Should you need to simulate the design, please export to your own enterprise. We will then first cd into the dma_afu folder and begin working inside this folder. Then change directory into the build_synth folder. Finally, run the compilation command.
 
 ```bash
 cd A10_RTL_AFU/dma_afu
