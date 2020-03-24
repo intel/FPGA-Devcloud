@@ -131,7 +131,7 @@ If successful, you should see an output as shown below.
 
 This last step completes very quickly. If you go to the directory: $OPAE_PLATFORM_ROOT/hw/samples you will find other samples that you can try out using similar steps.
 
-## 6       Document Revision History
+## 4       Document Revision History
 
 List the revision history for the application note.
 
