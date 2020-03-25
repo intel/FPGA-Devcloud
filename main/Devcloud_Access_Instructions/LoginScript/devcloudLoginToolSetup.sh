@@ -628,6 +628,13 @@ tools_setup()
                 source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
                 echo
             fi
+            if [ $number -eq 1 ];
+            then
+                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/intelFPGA_pro/hld/init_opencl.sh"
+                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/intelFPGA_pro/hld/init_opencl.sh
+                echo
+            fi
+
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
