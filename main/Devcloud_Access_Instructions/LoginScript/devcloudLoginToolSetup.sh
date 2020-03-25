@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 19 2020              #
+# -Mar 25 2020              #
 #                           #
 #                           #
 #                           #
@@ -26,6 +26,13 @@ allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
 
 devcloud_login()
 {
+    # initial check to see if user is logged into a node already
+    if [ $HOSTNAME != "login-2" ];
+    then
+        echo "Your hostname is not login-2. You are probably already logged into a node. Exit node in order to log into another node."
+        return 1
+    fi
+
     echo
     printf "%s\n" "${blu}What are you trying to use the Devcloud for? Please select a number from the list below: ${end}"
     echo
@@ -283,6 +290,8 @@ tools_setup()
     OPT_INTEL="/opt/intel"
     OPT_INTEL_2="/opt/intel/2.0.1"
     GLOB_FPGASUPPORTSTACK="/glob/development-tools/versions/fpgasupportstack"
+
+    ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 
     echo
     printf "%s\n" "${blu}Which tool would you like to source? Please select a number from the list below: ${end}"
@@ -558,10 +567,9 @@ tools_setup()
                 echo "${blu}which quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
-                    echo "${i} ) ${QUARTUS_PRO_RELEASE[$i]}"
+                    echo "${i}) ${QUARTUS_PRO_RELEASE[$i]}"
                 done
                 echo
-                #echo "length of array is ${len}"
                 echo -n "2nd Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
@@ -596,12 +604,30 @@ tools_setup()
         unset IFS
         if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; #this checks that user input is an available node and node has length of 9
         then
-            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/init_env.sh"
-            source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/init_env.sh
+            # ask which version of a10 devstack
+            echo "${blu}which a10 devstack release would you like to source?${end}"
+            for (( i=0; i<${#ARRIA10DEVSTACK_RELEASE[@]}; i++));
+            do
+                echo "${i}) ${ARRIA10DEVSTACK_RELEASE[$i]}"
+            done
             echo
-            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
-            source $GLOB_FPGASUPPORTSTACK/a10/1.2/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
+            echo -n "Number: "
+            read -e number
+            until [ ${#ARRIA10DEVSTACK_RELEASE[@]} -gt $number ];
+            do
+                printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
+                echo -n "Number: "
+                read -e number
+            done
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/init_env.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/init_env.sh
             echo
+            if [ $number -eq 0 ];
+            then
+                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
+                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
+                echo
+            fi
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
