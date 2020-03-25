@@ -49,41 +49,17 @@ mkdir DEMO
   cp -r /opt/a10/inteldevstack/a10_gx_pac_ias_1_2_pv/opencl DEMO
   ```
 
+
+
+#### 3.2            Running Emulation flow
+
 We need to direct the OpenCL Root to the correct root. To do this type into the terminal:
 
 ```bash
 export ALTERAOCLSDKROOT=$INTELFPGAOCLSDKROOT/
 ```
 
-
-
-#### 3.2            Running a Hello World Sample
-
-Now that the environment variables and paths have been set up, we can now run a sample and begin to utilize OpenCL. 
-
-- First lets move into that folder by typing into the terminal:
-
-  ```bash
-  cd ~/DEMO/opencl/
-  ```
-
-- Then we can start running the example. To load the kernel onto the device run the following in the terminal:
-
-  ```bash
-  aocl program acl0 hello_world.aocx
-  ```
-
-- We then need to create a new directory to unpack the example into. Type into the terminal:
-
-  ```bash
-  mkdir exm_opencl_hello_world_x64_linux
-  ```
-
-- Then we move into that directory by typing the following command:
-
-  ```bash
-  cd exm_opencl_hello_world_x64_linux
-  ```
+Prior to running the emulation compile, first we need to unpack the project copied and then cd into the unpacked hello_world folder. Finally, create the bin folder, then run the compilation command.
 
 - Now we unpack the the example by typing into the terminal:
 
@@ -97,22 +73,63 @@ Now that the environment variables and paths have been set up, we can now run a 
   cd hello_world
   ```
 
-- Now we want to build the example.
+- Now we build bin folder; used to save emulation compile output file.
 
   ```bash
   make
   ```
 
-- Now we need to copy the aocx file into the bin folder. 
+* Run the emulation compile command by executing the following:
 
   ```bash
-  cp ~/DEMO/opencl/hello_world.aocx ./bin/
+  aoc -march=emulator -v device/hello_world.cl -o bin/hello_world.aocx
   ```
 
-- To run the hello_world OpenCL example we type the following:
+To run the emulation flow:
+
+```bash
+env CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 bin/host
+```
+
+To run the compilation flow:
+
+```bash
+aoc --list-boards
+aoc -v --board pac_a10 device/hello_world.cl -o bin/hello_world.aocx
+```
+
+Note this can run on a A10 machine or compile only machine.
+
+
+
+#### 3.3            Running a Hello World Sample
+
+Now that the environment variables and paths have been set up, we can now run a sample and begin to utilize OpenCL. 
+
+- First lets cd into bin and run:
+
+  ```
+  cd bin;aocl diagnose
+  ```
+
+  Note this can only be  run exclusively on an A10 PAC enabled machine.
+
+- Then we can start running the example. To load the kernel onto the device run the following in the terminal:
 
   ```bash
-  ./bin/host
+  aocl program acl0 hello_world.aocx
+  ```
+
+- Check if everything is good on that card
+
+  ```bash
+  aocl diagnose ac10
+  ```
+
+- To run the hello_world OpenCL host code example on the CPU that interacts with the OpenCL kernel we type the following:
+
+  ```bash
+  ./host
   ```
 
   
