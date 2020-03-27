@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 25 2020              #
+# -Mar 27 2020              #
 #                           #
 #                           #
 #                           #
@@ -18,8 +18,9 @@ blu=$'\e[1;34m'
 end=$'\e[0m'
 noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
+arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 # 1 more stratix10Nodes expected date TBD
-stratix10Nodes=("s001-n189")
+stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
 
 
@@ -34,12 +35,13 @@ devcloud_login()
     fi
 
     echo
-    printf "%s\n" "${blu}What are you trying to use the Devcloud for? Please select a number from the list below: ${end}"
+    printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
     echo
     echo "1) Arria 10 PAC Card Programming"
-    echo "2) Stratix 10 PAC Card Programming"
-    echo "3) Compilation Only"
-    echo "4) Enter Specific Node Number"
+    echo "2) Arria 10 OneAPI"
+    echo "3) Stratix 10 PAC Card Programming"
+    echo "4) Compilation Only"
+    echo "5) Enter Specific Node Number"
     echo
     echo -n "Number: "
     read -e number
@@ -62,8 +64,8 @@ devcloud_login()
             #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
             #node=$(head -n 1 nodes.txt)
             IFS="|"
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
-            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
@@ -88,18 +90,19 @@ devcloud_login()
                 echo
                 echo --------------------------------------------------------------------------------------
                 echo
+                echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                 qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 2 ];
+    elif [ $number -eq 2  ];
     then
-        if [ -z $currentNode ];
+        if [ -z $currentNode ]; #if current node is empty
         then
             IFS="|"
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
-            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
@@ -114,15 +117,17 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                 echo
                 printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
+                echo
                 echo --------------------------------------------------------------------------------------
                 echo
+                echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                 qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
         else
@@ -133,9 +138,8 @@ devcloud_login()
         if [ -z $currentNode ];
         then
             IFS="|"
-            # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free"| grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
@@ -159,7 +163,8 @@ devcloud_login()
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                 echo --------------------------------------------------------------------------------------
                 echo
-                qsub -I -l nodes="$node":ppn=2
+                echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
+                qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
@@ -169,10 +174,47 @@ devcloud_login()
         if [ -z $currentNode ];
         then
             IFS="|"
+            # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
+            unset IFS
+            if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
+            then
+                echo
+                echo
+                printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
+                printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
+                printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
+                devcloud_login
+            else
+                node=(${availableNodes[0]})
+                echo
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                echo
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
+                echo
+                printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                echo
+                printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
+                echo --------------------------------------------------------------------------------------
+                echo
+                echo "running: qsub -I -l nodes="$node":ppn=2"
+                qsub -I -l nodes="$node":ppn=2
+            fi
+        else
+            printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
+        fi
+    elif [ $number -eq 5 ];
+    then
+        if [ -z $currentNode ];
+        then
+            IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
-            readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
@@ -234,10 +276,10 @@ devcloud_login()
                     echo -n "Node: "
                     read -e node
                 done
-                #nodeNumber="$(echo $node | grep -o '...$')"
-                #find out if the nodeNumber is on the fpga queue to know which qsub command to call
+
+                # find out if the nodeNumber is on the fpga queue to know which qsub command to call
                 is_in_fpga_queue="$(pbsnodes -s v-qsvr-fpga | grep -B 4 fpga | grep -o $node )"
-                if [ -z is_in_fpga_queue ]; #if is_in_fpga_queue is empty then it is not on the fpga queue
+                if [ -z is_in_fpga_queue ];  # if is_in_fpga_queue is empty then it is not on the fpga queue
                 then
                     echo
                     echo --------------------------------------------------------------------------------------
@@ -250,6 +292,7 @@ devcloud_login()
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
+                    echo "running: qsub -I -l nodes="$node":ppn=2"
                     qsub -I -l nodes="$node":ppn=2
                 else
                     echo
@@ -263,6 +306,7 @@ devcloud_login()
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
                     echo --------------------------------------------------------------------------------------
                     echo
+                    echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                     qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
                 fi
             fi
@@ -294,7 +338,7 @@ tools_setup()
     ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 
     echo
-    printf "%s\n" "${blu}Which tool would you like to source? Please select a number from the list below: ${end}"
+    printf "%s\n" "${blu}Which tool would you like to source?${end}"
     echo
     echo "1) Quartus Prime Lite"
     echo "2) Quartus Prime Standard"
@@ -322,28 +366,28 @@ tools_setup()
             echo "${red}Something went wrong, does not support any quartus Lite releases ${end}"
         elif [ $len -eq 1 ];
         then
-            #source the one release
+            # source the one release
             echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
             source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}which quartus Lite release would you like to source?${end}"
+            echo "${blu}Which Quartus Prime Lite release would you like to source?${end}"
             for (( i=0; i<${len}; i++ ));
             do
-                echo "${i} ) ${QUARTUS_LITE_RELEASE[$i]}"
+                echo "${i}) ${QUARTUS_LITE_RELEASE[$i]}"
             done
             echo
-            echo -n "2nd Number: "
+            echo -n "Number: "
             read -e second_number
             until [ $len -gt $second_number ];
             do
                 printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "2nd Number: "
+                echo -n "Number: "
                 read -e second_number
             done
             echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh"
-            #source depending on what second_number they chose
+            # source depending on what second_number they chose
             source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh
             echo
         else
@@ -364,18 +408,18 @@ tools_setup()
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}which quartus standard release would you like to source?${end}"
+            echo "${blu}Which Quartus Prime Standard release would you like to source?${end}"
             for (( i=0; i<${len}; i++ ));
             do
-                echo "${i} ) ${QUARTUS_STANDARD_RELEASE[$i]}"
+                echo "${i}) ${QUARTUS_STANDARD_RELEASE[$i]}"
             done
             echo
-            echo -n "2nd Number: "
+            echo -n "Number: "
             read -e second_number
             until [ $len -gt $second_number ];
             do
                 printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "2nd Number: "
+                echo -n "Number: "
                 read -e second_number
             done
             echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh"
@@ -395,43 +439,41 @@ tools_setup()
         elif [ $len -eq 1 ];
         then
             echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
-            #source the one release
+            # source the one release
             source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}which quartus pro release would you like to source?${end}"
+            echo "${blu}Which Quartus Prime Pro release would you like to source?${end}"
             for (( i=0; i<${len}; i++ ));
             do
                 echo "${i} ) ${QUARTUS_PRO_RELEASE[$i]}"
             done
             echo
-            #echo "length of array is ${len}"
-            echo -n "2nd Number: "
+            echo -n "Number: "
             read -e second_number
             until [ $len -gt $second_number ];
             do
                 printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "2nd Number: "
+                echo -n "Number: "
                 read -e second_number
             done
             echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh"
-            #source depending on what second_number they chose
+            # source depending on what second_number they chose
             source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh
             echo
         else
             echo "${red}Something went wrong sourcing the pro release ${end}"
         fi
-    elif [ $number -eq 4 ]; #case for HLS
+    elif [ $number -eq 4 ];  # case for HLS
     then
 
         #ask which quartus release
-        echo "${blu}which quartus edition would you like?${end}"
+        echo "${blu}Which Quartus edition would you like?${end}"
         echo "1) Quartus Prime Standard"
         echo "2) Quartus Prime Lite"
         echo "3) Quartus Prime Pro"
         echo
-        #echo "length of array is ${len}"
         echo -n "Number: "
         read -e qnumber
         until [ "$qnumber" -lt 4 ] && [ "$number" -gt 0 ]
@@ -441,7 +483,7 @@ tools_setup()
             read -e qnumber
         done
 
-        if [ $qnumber -eq 1 ]; #case for quartus STANDARD
+        if [ $qnumber -eq 1 ];  # case for quartus STANDARD
         then
             len=${#QUARTUS_STANDARD_RELEASE[@]}
             if [ $len -eq 0 ];
@@ -451,47 +493,47 @@ tools_setup()
             then
                 export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls
 
-                #source the one release of quartus
+                # source the one release of quartus
                 echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
                 source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
 
-                #source the one release of OpenCL
+                # source the one release of OpenCL
                 echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh"
                 source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh
 
                 echo
             elif [ $len -gt 1 ];
             then
-                #ask which verison of openCL
-                echo "${blu}which quartus release would you like to source?${end}"
+                # ask which verison of openCL
+                echo "${blu}Which Quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
-                    echo "${i} ) ${QUARTUS_STANDARD_RELEASE[$i]}"
+                    echo "${i}) ${QUARTUS_STANDARD_RELEASE[$i]}"
                 done
                 echo
-                echo -n "2nd Number: "
+                echo -n "Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
                 do
                     printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                    echo -n "2nd Number: "
+                    echo -n "Number: "
                     read -e second_number
                 done
 
                 export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/hls
 
-                #source quartus
+                # source quartus
                 echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
                 source $INTELFPGAOCLSDKROOT/../init_quartus.sh
 
-                #source opencl
+                # source opencl
                 echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                 source $INTELFPGAOCLSDKROOT/init_hls.sh
 
             else
-                echo "something went wrong with sourcing hls for quartus lite"
+                echo "${red}Something went wrong with sourcing hls for quartus lite ${end}"
             fi
-        elif [ $qnumber -eq 2 ]; #case for quartus LITE
+        elif [ $qnumber -eq 2 ];  # case for quartus LITE
         then
             len=${#QUARTUS_LITE_RELEASE[@]}
             if [ $len -eq 0 ];
@@ -501,31 +543,31 @@ tools_setup()
             then
                 export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls
 
-                #source the one release of quartus
+                # source the one release of quartus
                 echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
                 source $GLOB_INTELFPGA_LITE/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
 
-                #source the one release of OpenCL
+                # source the one release of OpenCL
                 echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh"
                 source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh
 
                 echo
             elif [ $len -gt 1 ];
             then
-                #ask which verison of openCL
-                echo "${blu}which quartus release would you like to source?${end}"
+                # ask which verison of openCL
+                echo "${blu}Which Quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
-                    echo "${i} ) ${QUARTUS_LITE_RELEASE[$i]}"
+                    echo "${i}) ${QUARTUS_LITE_RELEASE[$i]}"
                 done
                 echo
-                #echo "length of array is ${len}"
-                echo -n "2nd Number: "
+                # echo "length of array is ${len}"
+                echo -n "Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
                 do
                     printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                    echo -n "2nd Number: "
+                    echo -n "Number: "
                     read -e second_number
                 done
 
@@ -540,9 +582,9 @@ tools_setup()
                 source $INTELFPGAOCLSDKROOT/init_hls.sh
 
             else
-                echo "something went wrong with sourcing hls for quartus lite"
+                echo "${red}Something went wrong with sourcing HLS for Quartus Prime Lite ${end}"
             fi
-        elif [ $qnumber -eq 3 ]; #case for quartus PRO
+        elif [ $qnumber -eq 3 ];  # case for quartus PRO
         then
             len=${#QUARTUS_PRO_RELEASE[@]}
             if [ $len -eq 0 ];
@@ -552,48 +594,50 @@ tools_setup()
             then
                 export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls
 
-                #source the one release of quartus
+                # source the one release of quartus
                 echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
                 source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
 
-                #source the one release of OpenCL
+                # source the one release of OpenCL
                 echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh"
                 source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh
 
                 echo
             elif [ $len -gt 1 ];
             then
-                #ask which verison of openCL
-                echo "${blu}which quartus release would you like to source?${end}"
+                # ask which verison of openCL
+                echo "${blu}Which Quartus release would you like to source?${end}"
                 for (( i=0; i<${len}; i++ ));
                 do
                     echo "${i}) ${QUARTUS_PRO_RELEASE[$i]}"
                 done
                 echo
-                echo -n "2nd Number: "
+                echo -n "Number: "
                 read -e second_number
                 until [ $len -gt $second_number ];
                 do
                     printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                    echo -n "2nd Number: "
+                    echo -n "Number: "
                     read -e second_number
                 done
 
                 export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/hls
 
-                #source quartus
+                # source quartus
                 echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
                 source $INTELFPGAOCLSDKROOT/../init_quartus.sh
 
-                #source opencl
+                # source opencl
                 echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                 source $INTELFPGAOCLSDKROOT/init_hls.sh
+
+                # add python to path
                 export PATH=/glob/intel-python/python2/bin:${PATH}
             else
-                echo "something went wrong with sourcing hls for quartus pro"
+                echo "${red}Something went wrong with sourcing HLS for Quartus Prime Pro ${end}"
             fi
         else
-            echo "something went wrong with case statements for hls"
+            echo "${red}Something went wrong with case statements for HLS ${end}"
         fi
 
     elif [ $number -eq 5 ]; #case for arria 10 development stack
@@ -605,33 +649,33 @@ tools_setup()
         if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; #this checks that user input is an available node and node has length of 9
         then
             # ask which version of a10 devstack
-            echo "${blu}which a10 devstack release would you like to source?${end}"
+            echo "${blu}Which Arria 10 Development Stack + OpenCL release would you like to source?${end}"
             for (( i=0; i<${#ARRIA10DEVSTACK_RELEASE[@]}; i++));
             do
                 echo "${i}) ${ARRIA10DEVSTACK_RELEASE[$i]}"
             done
             echo
             echo -n "Number: "
-            read -e number
-            until [ ${#ARRIA10DEVSTACK_RELEASE[@]} -gt $number ];
+            read -e second_number
+            until [ ${#ARRIA10DEVSTACK_RELEASE[@]} -gt $second_number ];
             do
                 printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
                 echo -n "Number: "
-                read -e number
+                read -e second_number
             done
-            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/init_env.sh"
-            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/init_env.sh
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh
             echo
-            if [ $number -eq 0 ];
+            if [ $second_number -eq 0 ];
             then
-                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
-                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
+                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
+                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
                 echo
             fi
-            if [ $number -eq 1 ];
+            if [ $second_number -eq 1 ];
             then
-                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/intelFPGA_pro/hld/init_opencl.sh"
-                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$number]}/intelFPGA_pro/hld/init_opencl.sh
+                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/intelFPGA_pro/hld/init_opencl.sh"
+                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/intelFPGA_pro/hld/init_opencl.sh
                 echo
             fi
 
