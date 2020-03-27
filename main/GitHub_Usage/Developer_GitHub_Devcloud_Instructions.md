@@ -9,6 +9,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 **If you don't know what the GitHub Flow is**, click this link: https://guides.github.com/introduction/flow/
 
 [GitHub Devcloud Developer Instructions](#github-devcloud-developer-instructions)
+
   * [General GitHub Devcloud Rules](#general-github-devcloud-rules)
   * [Installing GitBash](#installing-gitbash)
   * [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
@@ -24,6 +25,9 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
   * [Creating a New Branch](#creating-a-new-branch)
   * [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
   * [Pull latest changes on GitHub back to your Computer](#pull-latest-changes-on-github-back-to-your-computer)
+  * [Downloading Github File from MobaXterm Command Line](#downloading-github-file-from-mobaxterm-command-line)
+      * [WGET Command](#1.-wget-command)
+      * [CURL Command](#2.-curl-command)
   * [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
     + [Typora](#typora)
 
@@ -323,6 +327,40 @@ git pull origin master     # when working on the master branch
 git pull				   # entire remote repository
 git log					   # see all the new commits
 ```
+
+
+
+## Downloading Github File from MobaXterm Command Line
+
+You must be at the directory where you want to download the file from the Github site before running any of the two commands.
+
+First copy the specific file's raw link from GitHub. (Open the file in Github, and on the top right corner click on 'Raw' to open the file in raw mode. Copy the URL).                                                      				                       ![image raw-link](https://user-images.githubusercontent.com/59750149/77709776-58d86200-6f89-11ea-89e5-10049dca22c1.png)
+
+Then, use one of the following:
+
+#### 1. WGET Command
+
+**Wget** command retrieves content from web servers.
+Use the wget command in command line providing one or more URLs as arguments to download the file (-s).
+
+```bash
+wget http://www.example.com/
+```
+
+![Image Wget](https://user-images.githubusercontent.com/59750149/77707156-8a4d2f80-6f81-11ea-982a-5bc970884e83.png)
+
+
+
+#### 2. CURL Command
+
+**Curl** command is used to copy a specific file from a public github repository, and it also allows you to rename the file as shown in the figure below. 
+Use the curl command in command line to download the file.
+
+```bash
+curl -o filename http://raw.githubusercontent.com/example-file
+```
+
+![Image curl](https://user-images.githubusercontent.com/59750149/77707877-b36ebf80-6f83-11ea-8f6e-3f36c36d0e51.png)
 
 
 
