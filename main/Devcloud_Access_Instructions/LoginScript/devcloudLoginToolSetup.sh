@@ -127,8 +127,8 @@ devcloud_login()
                 echo
                 echo --------------------------------------------------------------------------------------
                 echo
-                echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
-                qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
+                echo "running: qsub -I -l nodes="$node":ppn=2"
+                qsub -I -l nodes="$node":ppn=2
             fi
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
