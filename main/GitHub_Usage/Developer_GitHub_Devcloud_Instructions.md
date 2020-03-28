@@ -26,8 +26,8 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
   * [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
   * [Pull latest changes on GitHub back to your Computer](#pull-latest-changes-on-github-back-to-your-computer)
   * [Downloading Github File from MobaXterm Command Line](#downloading-github-file-from-mobaxterm-command-line)
-      * [WGET Command](#1.-wget-command)
-      * [CURL Command](#2.-curl-command)
+      * [WGET Command](#1-wget-command)
+      * [CURL Command](#2-curl-command)
   * [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
     + [Typora](#typora)
 
