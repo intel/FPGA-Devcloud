@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 27 2020              #
+# -Mar 31 2020 Version 2    #
 #                           #
 #                           #
 #                           #
@@ -21,7 +21,7 @@ arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 # 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s005-n008" "s001-n189")
-allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
+allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
 
 
@@ -46,7 +46,7 @@ devcloud_login()
     echo -n "Number: "
     read -e number
 
-    until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ]
+    until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ] || [ "$number" -eq 5 ];
     do
         printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
         echo -n "Number: "
@@ -57,7 +57,7 @@ devcloud_login()
     currentNode="$(echo $HOSTNAME | grep -o -E "${allNodes[*]}")"
     unset IFS
 
-    if [ $number -eq 1  ];
+    if [ $number -eq 1 ];
     then
         if [ -z $currentNode ]; #if current node is empty
         then
@@ -96,7 +96,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 2  ];
+    elif [ $number -eq 2 ];
     then
         if [ -z $currentNode ]; #if current node is empty
         then
@@ -215,11 +215,14 @@ devcloud_login()
             readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodesArria10_oneAPI_Nodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
+            readarray availableNodesArria10_oneAPI_Nodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
             let number_of_available_no_hardware_nodes=${#availableNodesNohardware[@]}+${#availableNodesNohardware_on_temp_server[@]}
             let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
+            let number_of_available_arria10_oneAPI_nodes=${#availableNodesArria10_oneAPI_Nodes[@]}+${#availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}
             let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
             # availableNodes=() #initialize the empty array
             # availableNodes+=($availableNodesNohardware) #append an
@@ -227,10 +230,11 @@ devcloud_login()
             # availableNodes+=($availableNodesStratix)
             # echo ${availableNodes}
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" \
-                "${availableNodesNohardware_on_temp_server[@]}" "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}")
+                "${availableNodesNohardware_on_temp_server[@]}" "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}" \
+                "${availableNodesArria10_oneAPI_Nodes[@]}" "${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}")
             #echo ${availableNodes[@]}
             #echo ${availableNodes[2]}
-            if [ ${#availableNodes[@]} == 0  ];
+            if [ ${#availableNodes[@]} == 0 ];
             then
                 echo
                 echo
@@ -241,30 +245,27 @@ devcloud_login()
                 echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)           "
-                #IFS="|"
-                # pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$'
-                #pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}"
                 node_no_hardware_str=$(echo ${availableNodesNohardware[@]} ${availableNodesNohardware_on_temp_server[@]})
                 printf "${red}$node_no_hardware_str${end}"
-                #unset IFS
+                echo 
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)         "
+                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
+                printf "${red}$node_arria10_oneAPI_str${end}"
                 echo 
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)         "
-                #IFS="|"
-                #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -o -E "${arria10Nodes[*]}"
                 node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
                 printf "${red}$node_arria10_str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)          "
-                #pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}"
-                #unset IFS
                 node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
                 printf "${red}$node_stratix_str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
                 echo
-                echo What node would you like to use?
+                echo "What node would you like to use?"
                 echo
                 echo -n "Node: "
                 read -e node
@@ -279,7 +280,7 @@ devcloud_login()
 
                 # find out if the nodeNumber is on the fpga queue to know which qsub command to call
                 is_in_fpga_queue="$(pbsnodes -s v-qsvr-fpga | grep -B 4 fpga | grep -o $node )"
-                if [ -z is_in_fpga_queue ];  # if is_in_fpga_queue is empty then it is not on the fpga queue
+                if [ -z $is_in_fpga_queue ];  # if is_in_fpga_queue is empty then it is not on the fpga queue
                 then
                     echo
                     echo --------------------------------------------------------------------------------------
@@ -317,9 +318,6 @@ devcloud_login()
 }
 
 
-
-
-
 tools_setup()
 {
     QUARTUS_LITE_RELEASE=("18.1")
@@ -334,6 +332,7 @@ tools_setup()
     OPT_INTEL="/opt/intel"
     OPT_INTEL_2="/opt/intel/2.0.1"
     GLOB_FPGASUPPORTSTACK="/glob/development-tools/versions/fpgasupportstack"
+    GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
 
     ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 
@@ -345,7 +344,8 @@ tools_setup()
     echo "3) Quartus Prime Pro"
     echo "4) HLS"
     echo "5) Arria 10 Development Stack + OpenCL"
-    echo "6) Stratix 10 Development Stack + OpenCL"
+    echo "6) Arria 10 OneAPI"
+    echo "7) Stratix 10 Development Stack + OpenCL"
     echo
     echo -n "Number: "
     read -e number
@@ -358,7 +358,7 @@ tools_setup()
     done
 
 
-    if [ $number -eq 1  ];
+    if [ $number -eq 1 ];
     then
         len=${#QUARTUS_LITE_RELEASE[@]}
         if [ $len -eq 0 ];
@@ -642,11 +642,11 @@ tools_setup()
 
     elif [ $number -eq 5 ]; #case for arria 10 development stack
     then
-        #need to check if on correct node only on 137,138,139
+        #need to check if on correct node
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${arria10Nodes[*]}")"
         unset IFS
-        if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; #this checks that user input is an available node and node has length of 9
+        if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]];  # this checks that user is currently on correct node and node name has length of 9
         then
             # ask which version of a10 devstack
             echo "${blu}Which Arria 10 Development Stack + OpenCL release would you like to source?${end}"
@@ -682,9 +682,21 @@ tools_setup()
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
-            echo "Not on an Arria10 node. You need to be on an Arria10 node to run Arria Development Stack"
+            echo "Not on an Arria10 Development Stack node. You need to be on an Arria10 Development Stack node to run Arria Development Stack"
         fi
-    elif [ $number -eq 6 ]; #case for stratix 10 development stack
+    elif [ $number -eq 6 ];  #case for Arria 10 OneAPI
+    then
+        IFS="|"
+        temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
+        unset IFS
+        if [[ ${arria10_oneAPI_Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]];  # this checks that user is currently on correct node and node name has length of 9
+        then
+            echo "sourcing $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh"
+            source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
+        else
+            echo "Not on an Arria 10 OneAPI node. You need to be on an Arria 10 OneAPI node."
+        fi
+    elif [ $number -eq 7 ];  # case for Stratix 10 Development Stack
     then
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10Nodes[*]}")"
