@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 31 2020              #
+# -Mar 31 2020 Version 2    #
 #                           #
 #                           #
 #                           #
@@ -682,7 +682,7 @@ tools_setup()
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
-            echo "Not on an Arria10 node. You need to be on an Arria10 node to run Arria Development Stack"
+            echo "Not on an Arria10 Development Stack node. You need to be on an Arria10 Development Stack node to run Arria Development Stack"
         fi
     elif [ $number -eq 6 ];  #case for Arria 10 OneAPI
     then
