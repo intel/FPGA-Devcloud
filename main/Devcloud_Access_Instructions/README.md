@@ -34,7 +34,6 @@
     </a>
   </h3>
 </div>
-
 ------
 
 # Devcloud Access Instructions
@@ -62,11 +61,11 @@
       + [8.1 Transferring Files to the Devcloud with SCP](#81-transferring-files-to-the-devcloud-with-scp)
       + [8.2 Using MobaXterm to Transfer Files](#82-using-mobaxterm-to-transfer-files)
       + [8.3 Using WinSCP to Transfer Files](#83-using-winscp-to-transfer-files)
-    * [9.0 Job Control on the X2GO Window](#90-job-control-on-the-x2go-window)
-      + [9.1 Searching for Free Nodes](#91-searching-for-free-nodes)
-      + [9.2 Submitting Jobs for a Specified Walltime](#92-submitting-jobs-for-a-specified-walltime)
-      + [9.3 Report Status for Jobs Running on the Devcloud](#93-report-status-for-jobs-running-on-the-devcloud)
-      + [9.4 Deleting Jobs on the Devcloud](#94-deleting-jobs-on-the-devcloud)
+      + [8.4 Using MobaXterm Command Line to Transfer Files](#84-using-mobaxterm-command-line-to-transfer-files)
+    * [9.0 Job Control on the X2GO Window](#90-job-control)
+      + [9.1 Submitting Jobs for a Specified Walltime](#91-submitting-jobs-for-a-specified-walltime)
+      + [9.2 Report Status for Jobs Running on the Devcloud](#92-report-status-for-jobs-running-on-the-devcloud)
+      + [9.3 Deleting Jobs on the Devcloud](#93-deleting-jobs-on-the-devcloud)
     * [10.0 Launching Quartus](#100-launching-quartus)
     * [11.0 Launching the HLS compiler](#110-launching-the-hls-compiler)
     * [12.0 Launching the OpenCL compiler](#120-launching-the-opencl-compiler)
@@ -429,6 +428,8 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 [Setup Devcloud Login Script Instructions](https://github.com/intel/FPGA-Devcloud/blob/master/main/Public_Devcloud_Access_Instructions/LoginScript/README.md)
 
+
+
 ## 7.0 Quartus Access and Setup
 
 From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the tools_setup function. This function will guide you through query of what compile workload you want to run.
@@ -509,8 +510,6 @@ The localhost user directory tool can be re-opened and closed as necessary to tr
 
 ![image](https://user-images.githubusercontent.com/56968566/69988329-52177200-14f6-11ea-8924-da19a9c5a236.png)
 
-
-
 ### 8.3 Using WinSCP to Transfer Files
 
 To have WinSCP working, please have a tunnel open connected to X2GO. This should be done by having a new mobaxterm tab open and connecting to X2GO through an SSH tunnel to the node selected.
@@ -567,11 +566,43 @@ Press **Login**
 
 Note: When re-using WinSCP to transfer files, re-open the application and **Login**. A new window will pop-up. Click **Update** and you should be able to access and transfer your Devcloud files on the server again. 
 
+### 8.4 Using MobaXterm Command Line to Transfer Files
+
+You must be at the directory where you want to download the file from the Github site before running any of the two commands.
+
+First copy the specific file's raw link from GitHub. (Open the file in Github, and on the top right corner click on 'Raw' to open the file in raw mode. Copy the URL).                                                      				                       ![image raw-link](https://user-images.githubusercontent.com/59750149/77709776-58d86200-6f89-11ea-89e5-10049dca22c1.png)
+
+Then, use one of the following:
+
+#### 1. WGET Command
+
+**Wget** command retrieves content from web servers.
+Use the wget command in command line providing one or more URLs as arguments to download the file (-s).
+
+```bash
+wget http://www.example.com/
+```
+
+![Image Wget](https://user-images.githubusercontent.com/59750149/77707156-8a4d2f80-6f81-11ea-982a-5bc970884e83.png)
+
+
+
+#### 2. CURL Command
+
+**Curl** command is used to copy a specific file from a public github repository, and it also allows you to rename the file as shown in the figure below. 
+Use the curl command in command line to download the file.
+
+```bash
+curl -o filename http://raw.githubusercontent.com/example-file
+```
+
+![Image curl](https://user-images.githubusercontent.com/59750149/77707877-b36ebf80-6f83-11ea-8f6e-3f36c36d0e51.png)
+
 
 
 ## 9.0 Job Control
 
-This section provides information on how to terminate jobs on the Devcloud. 
+This section provides information on how to submit and terminate jobs on the Devcloud. 
 
 ### 9.1 Submitting Jobs for a Specified Walltime
 
@@ -603,8 +634,6 @@ The result will be of the form:
 
 ----------------------- ----------- -------- ---------------- ------ ----- ------ --------- --------- - ---------
 `2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02`
-
-
 
 ### 9.3 Deleting Jobs on the Devcloud
 
