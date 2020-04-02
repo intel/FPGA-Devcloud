@@ -1,6 +1,6 @@
 
 
-# Stratix 10 PAC: RTL AFU Compilation and Programming on the FPGA devcloud using the Stratix10 Devstack version 2.0.1
+# Stratix 10 PAC: RTL AFU Compilation and Programming on the FPGA devcloud using the Stratix 10 Devstack version 2.0.1
 
  
 
@@ -10,7 +10,7 @@ If you have not used the D5005 Stratix 10  PAC card refer to this Quickstart Gui
 
 https://www.intel.com/content/www/us/en/programmable/documentation/edj1542148561811.html#cxu1542149035471
 
-The best resource for learning about the RTL and driver functionality is from this document: 
+The best resource for learning about the sample DMA RTL and driver functionality is from this document: 
 
 https://www.intel.com/content/www/us/en/programmable/documentation/iwl1547157036746.html
 
@@ -44,9 +44,9 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an Stratix 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image-20200316172635297](https://user-images.githubusercontent.com/59750149/77004891-17a6d900-691d-11ea-8b3f-433673cc4962.png)
+![image-20200401213113221](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200401213113221.png)
 
-Select option 2 or option 4 and connect to an Stratix 10 ready compute node.
+Select option 3 or option 5 and connect to a Stratix 10 ready compute node.
 
 
 
@@ -68,7 +68,7 @@ cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu S10_RTL_AFU
 
 Prior to compilation, you typically simulate your design. This is accomplished using the Modelsim-SE simulator which is not currently supported on the FPGA devcloud. Should you need to simulate the design, please export to your own enterprise.
 
-We will then cd into that folder and begin working inside the folder. First change directory into the bin folder. Then run the compilation command
+We will then cd into the project folder and begin working inside the folder. Then run the compilation command:
 
 ```bash
 cd S10_RTL_AFU/dma_afu
@@ -81,7 +81,7 @@ These steps will take approximately 60 minutes to complete. Should you want to s
 
 
 
-#### 3.3 Downloading the bit stream into the PAC card
+#### 3.3 Downloading the green bit stream into the PAC card
 
 Next we will be looking for an available acceleration card, program it, compile the host C code and run the software program to display on the terminal.
 
@@ -91,7 +91,7 @@ Next we will be looking for an available acceleration card, program it, compile 
   lspci | grep accel
   ```
 
-- We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 2.0.1 of the devstack tools. Do not use this command if you are accessing the 2.0 version of the Stratix 10 devstack tools.
+- We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 2.0.1 of the devstack tools. If you have a machine with only a single PAC card, the address can be left off.
 
   ```bash
   fpgasupdate ../bin/dma_afu_unsigned.gbs 3b:00.0
@@ -140,6 +140,7 @@ List the revision history for the application note.
 | Rony Schutz  | 11/5/2019 | Initial Release of Acceleration   Card QuickStart Guide   |
 | Larry Landis | 3/13/2020 | Changed to demo, and added specific devcloud instructions |
 | Larry Landis | 3/17/2020 | Fixed Stratix 10 specific steps                           |
+| Larry Landis | 4/1/2020  | New pic for devcloud_login, typos.                        |
 
 
 
