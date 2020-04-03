@@ -255,9 +255,9 @@ You cannot log into the Intel Devcloud through the above steps if you are within
 
 3. Install the **socat package**. This will take approximately 9 minutes to install.
 
-### 4.2  Preparing Configuration file
+### 4.2  Preparing Configuration file for Intel firewall users
 
-1. Append these additional entries into your config file: 
+1. Replace additional entries into your config file: 
 
 ```
 Host colfax-intel-proxy
