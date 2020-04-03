@@ -68,7 +68,7 @@ job_delete()
 
 tools_setup()
 {
-    QUARTUS_LITE_RELEASE=("18.1")
+    QUARTUS_LITE_RELEASE=("18.1", "19.1")
     QUARTUS_STANDARD_RELEASE=("18.1")
     QUARTUS_PRO_RELEASE=("17.1" "18.1" "19.2" "19.3")
 
@@ -123,11 +123,11 @@ tools_setup()
             echo
         elif [ $len -gt 1 ];
         then
-	    if ! [ -z "$2" ] && [ $len -le $2 ];
+	    if ! [ -z "$2" ] && [[ $QUARTUS_LITE_RELEASE =~ (^|[[:space:]])"$2"($|[[:space:]]) ]];
 	    then
-		echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$2]}/init_quartus.sh"
+		echo "sourcing $GLOB_INTELFPGA_LITE/$2/init_quartus.sh"
             	# source depending on what argument was provided
-            	source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$2]}/init_quartus.sh
+            	#source $GLOB_INTELFPGA_LITE/$2/init_quartus.sh
             	echo
 	    elif ! [ -z "$2" ] && [ $len -gt $2 ];
 	    then
