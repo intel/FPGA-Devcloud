@@ -1,6 +1,13 @@
-NOCOLOR='\033[0m'
-RED='\033[0;31m'
-LIGHTBLUE='\033[1;34m'
+#global variables
+red=$'\e[1;31m'
+blu=$'\e[1;34m'
+end=$'\e[0m'
+noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
+arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
+arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
+# 1 more stratix10Nodes expected date TBD
+stratix10Nodes=("s005-n008" "s001-n189")
+allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
 
 job_submit()
@@ -8,16 +15,16 @@ job_submit()
     # initial check to see if user is logged into a node already
     if [ $HOSTNAME != "login-2" ];
     then
-	echo -e "${RED}Your hostname is not login-2. You are probably already logged into a node.${NOCOLOR}"
+	echo -e "${red}Your hostname is not login-2. You are probably already logged into a node.${end}"
 	return 1
     fi
 
-    echo -e "${LIGHTBLUE}How many hours do you need to compile?${NOCOLOR}"
+    echo -e "${blu}How many hours do you need to compile?${end}"
     read -r walltime
 
     # Only integers accepted; maximum number is 48
     while ! [[ "$walltime" =~ ^[0-9]+$ ]] || [ $walltime -ge 48 ]; do
-        echo -e "${RED}Invalid Entry. Please input an integer. ${NOCOLOR} "
+        echo -e "${red}Invalid Entry. Please input an integer. ${end} "
         echo 
         echo "Number of hours needed: "
         read walltime
@@ -55,21 +62,8 @@ job_delete()
 
 ########################################################################################################
 #   Latest Edit             #
-#   -Mar 27 2020            #
+#   -Mar 30 2020            #
 #############################
-
-
-
-#global variables
-red=$'\e[1;31m'
-blu=$'\e[1;34m'
-end=$'\e[0m'
-noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
-arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
-arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
-# 1 more stratix10Nodes expected date TBD
-stratix10Nodes=("s005-n008" "s001-n189")
-allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${stratix10Nodes[@]}" )
 
 
 tools_setup()
@@ -86,32 +80,36 @@ tools_setup()
     OPT_INTEL="/opt/intel"
     OPT_INTEL_2="/opt/intel/2.0.1"
     GLOB_FPGASUPPORTSTACK="/glob/development-tools/versions/fpgasupportstack"
+    GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
 
     ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
-    if [ argv=1 ]
+
+    if [ -z "$1" ]
     then
-    echo
-    printf "%s\n" "${blu}Which tool would you like to source?${end}"
-    echo
-    echo "1) Quartus Prime Lite"
-    echo "2) Quartus Prime Standard"
-    echo "3) Quartus Prime Pro"
-    echo "4) HLS"
-    echo "5) Arria 10 Development Stack + OpenCL"
-    echo "6) Stratix 10 Development Stack + OpenCL"
-    echo
-    echo -n "Number: "
-    read -e number
+	echo
+	printf "%s\n" "${blu}Which tool would you like to source?${end}"
+	echo
+	echo "1) Quartus Prime Lite"
+	echo "2) Quartus Prime Standard"
+	echo "3) Quartus Prime Pro"
+	echo "4) HLS"
+    	echo "5) Arria 10 Development Stack + OpenCL"
+    	echo "6) Arria 10 OneAPI"
+    	echo "7) Stratix 10 Development Stack + OpenCL"
+    	echo
+    	echo -n "Number: "
+    	read -e number
 
-    until [ "$number" -lt 10 ] && [ "$number" -gt 0 ]
-    do
-        printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-        echo -n "Number: "
-        read -e number
-    done
+    	until [ "$number" -lt 10 ] && [ "$number" -gt 0 ]
+    	do
+            printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
+            echo -n "Number: "
+            read -e number
+    	done
+    fi
 
 
-    if [ $number -eq 1  ];
+    if [ $number -eq 1 ] || [ $1 -eq "QL" ];
     then
         len=${#QUARTUS_LITE_RELEASE[@]}
         if [ $len -eq 0 ];
@@ -125,29 +123,41 @@ tools_setup()
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}Which Quartus Prime Lite release would you like to source?${end}"
-            for (( i=0; i<${len}; i++ ));
-            do
-                echo "${i}) ${QUARTUS_LITE_RELEASE[$i]}"
-            done
-            echo
-            echo -n "Number: "
-            read -e second_number
-            until [ $len -gt $second_number ];
-            do
-                printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "Number: "
-                read -e second_number
-            done
-            echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh"
-            # source depending on what second_number they chose
-            source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh
-            echo
+	    if ! [ -z "$2" ] && [ $len -le $2 ];
+	    then
+		echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$2]}/init_quartus.sh"
+            	# source depending on what argument was provided
+            	source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$2]}/init_quartus.sh
+            	echo
+	    elif ! [ -z "$2" ] && [ $len -gt $2 ];
+	    then
+                printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end} "
+		exit
+	    else
+                echo "${blu}Which Quartus Prime Lite release would you like to source?${end}"
+            	for (( i=0; i<${len}; i++ ));
+            	do
+                    echo "${i}) ${QUARTUS_LITE_RELEASE[$i]}"
+            	done
+            	echo
+            	echo -n "Number: "
+            	read -e second_number
+            	until [ $len -gt $second_number ];
+            	do
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
+                    echo -n "Number: "
+                    read -e second_number
+            	done
+            	echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh"
+            	# source depending on what second_number they chose
+            	source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh
+            	echo
+	    fi
         else
             echo "${red}Something went wrong sourcing the lite release ${end}"
         fi
 
-    elif [ $number -eq 2 ];
+    elif [ $number -eq 2 ] || [ $1 -eq "QS" ];
     then
         len=${#QUARTUS_STANDARD_RELEASE[@]}
         if [ $len -eq 0 ];
@@ -183,7 +193,7 @@ tools_setup()
             echo "${red}Something went wrong sourcing the standard release ${end}"
         fi
 
-    elif [ $number -eq 3 ];
+    elif [ $number -eq 3 ] || [ $1 -eq "QP" ];
     then
         len=${#QUARTUS_PRO_RELEASE[@]}
         if [ $len -eq 0 ];
@@ -218,7 +228,7 @@ tools_setup()
         else
             echo "${red}Something went wrong sourcing the pro release ${end}"
         fi
-    elif [ $number -eq 4 ];  # case for HLS
+    elif [ $number -eq 4 ] || [ $1 -eq "HLS" ];  # case for HLS
     then
 
         #ask which quartus release
@@ -393,13 +403,13 @@ tools_setup()
             echo "${red}Something went wrong with case statements for HLS ${end}"
         fi
 
-    elif [ $number -eq 5 ]; #case for arria 10 development stack
+    elif [ $number -eq 5 ] || [ $1 -eq "A10DS" ]; #case for arria 10 development stack
     then
-        #need to check if on correct node only on 137,138,139
+        #need to check if on correct node
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${arria10Nodes[*]}")"
         unset IFS
-        if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; #this checks that user input is an available node and node has length of 9
+        if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]];  # this checks that user is currently on correct node and node name has length of 9
         then
             # ask which version of a10 devstack
             echo "${blu}Which Arria 10 Development Stack + OpenCL release would you like to source?${end}"
@@ -435,9 +445,21 @@ tools_setup()
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
-            echo "Not on an Arria10 node. You need to be on an Arria10 node to run Arria Development Stack"
+            echo "Not on an Arria10 Development Stack node. You need to be on an Arria10 Development Stack node to run Arria Development Stack"
         fi
-    elif [ $number -eq 6 ]; #case for stratix 10 development stack
+    elif [ $number -eq 6 ] || [ $1 -eq "A10OAPI" ];  #case for Arria 10 OneAPI
+    then
+        IFS="|"
+        temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
+        unset IFS
+        if [[ ${arria10_oneAPI_Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]];  # this checks that user is currently on correct node and node name has length of 9
+        then
+            echo "sourcing $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh"
+            source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
+        else
+            echo "Not on an Arria 10 OneAPI node. You need to be on an Arria 10 OneAPI node."
+        fi
+    elif [ $number -eq 7 ] || [ $1 -eq "S10DS" ];  # case for Stratix 10 Development Stack
     then
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10Nodes[*]}")"
