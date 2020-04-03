@@ -66,9 +66,9 @@ job_delete()
 #############################
 
 
-tools_setup()
+tools_setups()
 {
-    QUARTUS_LITE_RELEASE=("18.1", "19.1")
+    QUARTUS_LITE_RELEASE=("18.1")
     QUARTUS_STANDARD_RELEASE=("18.1")
     QUARTUS_PRO_RELEASE=("17.1" "18.1" "19.2" "19.3")
 
@@ -114,7 +114,7 @@ tools_setup()
         len=${#QUARTUS_LITE_RELEASE[@]}
         if [ $len -eq 0 ];
         then
-            echo "${red}Something went wrong, does not support any quartus Lite releases ${end}"
+            echo "${red}Something went wrong, does not support any Quartus Lite releases ${end}"
         elif [ $len -eq 1 ];
         then
             # source the one release
@@ -123,16 +123,15 @@ tools_setup()
             echo
         elif [ $len -gt 1 ];
         then
-	    if ! [ -z "$2" ] && [[ $QUARTUS_LITE_RELEASE =~ (^|[[:space:]])"$2"($|[[:space:]]) ]];
+	    if ! [ -z "$2" ] && [[ ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$2"($|[[:space:]]) ]];
 	    then
 		echo "sourcing $GLOB_INTELFPGA_LITE/$2/init_quartus.sh"
             	# source depending on what argument was provided
-            	#source $GLOB_INTELFPGA_LITE/$2/init_quartus.sh
+            	source $GLOB_INTELFPGA_LITE/$2/init_quartus.sh
             	echo
-	    elif ! [ -z "$2" ] && [ $len -gt $2 ];
+	    elif ! [ -z "$2" ];
 	    then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end} "
-		exit
 	    else
                 echo "${blu}Which Quartus Prime Lite release would you like to source?${end}"
             	for (( i=0; i<${len}; i++ ));
@@ -162,33 +161,43 @@ tools_setup()
         len=${#QUARTUS_STANDARD_RELEASE[@]}
         if [ $len -eq 0 ];
         then
-            echo "${red}Something went wrong, does not support any quartus standard releases ${end}"
+            echo "${red}Something went wrong, does not support any Quartus Standard releases ${end}"
         elif [ $len -eq 1 ];
         then
             echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
-            #source the one release
+            # source the one release
             source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}Which Quartus Prime Standard release would you like to source?${end}"
-            for (( i=0; i<${len}; i++ ));
-            do
-                echo "${i}) ${QUARTUS_STANDARD_RELEASE[$i]}"
-            done
-            echo
-            echo -n "Number: "
-            read -e second_number
-            until [ $len -gt $second_number ];
-            do
-                printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "Number: "
-                read -e second_number
-            done
-            echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh"
-            #source depending on what second_number they chose
-            source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh
-            echo
+	    if ! [ -z "$2" ] && [[ ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$2"($|[[:space:]]) ]];
+	    then
+            	echo "sourcing $GLOB_INTELFPGA_STANDARD/$2/init_quartus.sh"
+            	# source depending on what argument was provided
+            	source $GLOB_INTELFPGA_STANDARD/$2/init_quartus.sh
+            	echo
+	    elif ! [ -z "$2" ];
+	    then
+                printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end} "
+	    else
+            	echo "${blu}Which Quartus Prime Standard release would you like to source?${end}"
+            	for (( i=0; i<${len}; i++ ));
+            	do
+                    echo "${i}) ${QUARTUS_STANDARD_RELEASE[$i]}"
+            	done
+            	echo
+            	echo -n "Number: "
+            	read -e second_number
+            	until [ $len -gt $second_number ];
+            	do
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
+                    echo -n "Number: "
+                    read -e second_number
+            	done
+            	echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh"
+            	# source depending on what second_number they chose
+            	source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh
+            	echo
         else
             echo "${red}Something went wrong sourcing the standard release ${end}"
         fi
@@ -207,24 +216,34 @@ tools_setup()
             echo
         elif [ $len -gt 1 ];
         then
-            echo "${blu}Which Quartus Prime Pro release would you like to source?${end}"
-            for (( i=0; i<${len}; i++ ));
-            do
-                echo "${i} ) ${QUARTUS_PRO_RELEASE[$i]}"
-            done
-            echo
-            echo -n "Number: "
-            read -e second_number
-            until [ $len -gt $second_number ];
-            do
-                printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-                echo -n "Number: "
-                read -e second_number
-            done
-            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh"
-            # source depending on what second_number they chose
-            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh
-            echo
+	    if ! [ -z "$2" ] && [[ ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$2"($|[[:space:]]) ]];
+	    then
+            	echo "sourcing $GLOB_INTELFPGA_PRO/$2/init_quartus.sh"
+            	# source depending on what argument was provided
+            	source $GLOB_INTELFPGA_PRO/$2/init_quartus.sh
+            	echo
+	    elif ! [ -z "$2" ];
+	    then
+                printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end} "
+	    else
+            	echo "${blu}Which Quartus Prime Pro release would you like to source?${end}"
+            	for (( i=0; i<${len}; i++ ));
+            	do
+                    echo "${i} ) ${QUARTUS_PRO_RELEASE[$i]}"
+            	done
+            	echo
+            	echo -n "Number: "
+            	read -e second_number
+            	until [ $len -gt $second_number ];
+            	do
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
+                    echo -n "Number: "
+                    read -e second_number
+            	done
+            	echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh"
+            	# source depending on what second_number they chose
+            	source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh
+            	echo
         else
             echo "${red}Something went wrong sourcing the pro release ${end}"
         fi
