@@ -41,7 +41,7 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image-20200402120549295](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200402120549295.png)
+![https://github.com/intel/FPGA-Devcloud/blob/master/main/figures/A10_OpenCL_devcloud_login_menu
 
 Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
