@@ -108,7 +108,9 @@ aoc: Compiling for FPGA. This process may take several hours to complete.  Prior
 
 Look for the success message upon completion.
 
-
+./vector-add.fpga
+Device: pac_a10 : Intel PAC Platform (pac_ee00000)
+success
 
 ## 6       Document Revision History
 
