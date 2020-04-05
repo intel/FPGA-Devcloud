@@ -38,46 +38,7 @@
 
 # Devcloud Access Instructions
 
-- - [Devcloud Access Instructions](#devcloud-access-instructions)
-    * [1.0 Introduction](#10-introduction)
-    * [2.0 Getting an Account](#20-getting-an-account)
-      + [Connection Methods](#connection-methods)
-    * [3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
-      + [3.1 Install MobaXterm](#31-install-mobaxterm)
-      + [3.2 Open Local Terminal](#32-open-local-terminal)
-      + [3.3 Downloading an SSH key](#33-downloading-an-ssh-key)
-    * [4.0 Connection to Devcloud](#40-connection-to-devcloud)
-      + [Public User](#public-user)
-      + [User Inside Intel Firewall](#user-inside-intel-firewall)
-      + [4.1 Add SOcket CAT Package](#41-add-socket-cat-package)
-      + [4.2  Preparing Configuration file](#42--preparing-configuration-file)
-    * [5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)
-      + [5.1 Understanding available resources](#51-understanding-available-resources)
-    * [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
-      + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
-    * [7.0 Quartus Access and Setup](#70-quartus-access-and-setup)
-      + [7.1 Quartus Font Setup](#71-quartus-font-setup)
-    * [8.0 Transferring Files to the Devcloud](#80-transferring-files-to-the-devcloud)
-      + [8.1 Transferring Files to the Devcloud with SCP](#81-transferring-files-to-the-devcloud-with-scp)
-      + [8.2 Using MobaXterm to Transfer Files](#82-using-mobaxterm-to-transfer-files)
-      + [8.3 Using WinSCP to Transfer Files](#83-using-winscp-to-transfer-files)
-      + [8.4 Using MobaXterm Command Line to Transfer Files](#84-using-mobaxterm-command-line-to-transfer-files)
-    * [9.0 Job Control on the X2GO Window](#90-job-control)
-      + [9.1 Submitting Jobs for a Specified Walltime](#91-submitting-jobs-for-a-specified-walltime)
-      + [9.2 Report Status for Jobs Running on the Devcloud](#92-report-status-for-jobs-running-on-the-devcloud)
-      + [9.3 Deleting Jobs on the Devcloud](#93-deleting-jobs-on-the-devcloud)
-    * [10.0 Launching Quartus](#100-launching-quartus)
-    * [11.0 Launching the HLS compiler](#110-launching-the-hls-compiler)
-    * [12.0 Launching the OpenCL compiler](#120-launching-the-opencl-compiler)
-    * [13.0 Communicating to the PAC card](#130-communicating-to-the-pac-card)
-    * [14.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#140-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
-    * [15.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#150-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
-      + [15.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#151-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
-      + [15.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#152-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
-    * [16.0 Timeouts and Disk Space](#160-timeouts-and-disk-space)
-    * [17.0 Determining and Allocating Memory Availability and CPU Count and Speed](#170-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
-    * [18.0 Devcloud Editors](#180-devcloud-editors)
-    * [19.0 Determining which version of the OS is running on a Node](#190-determining-which-version-of-the-os-is-running-on-a-node)
+[TOC]
 
 ## 1.0 Introduction
 
@@ -661,45 +622,13 @@ kill -9 <job-id>
 
 
 
-## 10.0 Launching Quartus
+## 10.0 Launching Various FPGA based Workflows
 
-The following command will launch the Quartus GUI: 
+Refer to the Quickstart Guide section of this git site.
 
-```
-quartus &
-```
 
-The version you launch (Lite vs Pro) is dependent on the environment variables you set and sourced in the quartus_setup.sh script.
 
-## 11.0 Launching the HLS compiler
-
-Use the tools_setup script to setup search paths and follow the online documentation to run the i++ HLS compiler.
-
-## 12.0 Launching the OpenCL compiler
-
-Use the tools_setup script to setup search paths and follow the online documentation to run the aocl compiler.
-
-## 13.0 Communicating to the PAC card 
-
-To see available PAC cards:
-
-```
-lspci | grep accel
-```
-
-View the various available cards and select a free one.
-
-![image](https://user-images.githubusercontent.com/56968566/69988599-cc47f680-14f6-11ea-8e28-8a4ba3a3a217.png)
-
-**To download a green bit stream (.gbs) for an RTL acceleration functional unit (AFU):*
-
-```
-fpgaconf -B 0x3b hello.gbs
-```
-
-This link to the acceleration hub is an excellent resource for further information: https://www.intel.com/content/www/us/en/programmable/solutions/acceleration-hub/acceleration-stack.html .
-
-## 14.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
+## 11.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
 
 Node s001-n138 has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image](https://user-images.githubusercontent.com/56968566/69988508-a1f63900-14f6-11ea-8fd3-cfb688faedc7.png)
 
@@ -725,13 +654,13 @@ If the USB Blaster is not configured, complete the following steps:
 
 
 
-## 15.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board
+## 12.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board
 
 [15.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#151-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
 
 [15.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#152-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
 
-### 15.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster
+### 12.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster
 
 - [ ] On your PC, launch the Quartus Programmer. Search **Programmer** in the File Explorer. 
 
@@ -796,7 +725,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Make sure localhost:13090 shows up as your currently selected hardware and that the connection status is OK.
 
-  ### 15.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
+  ### 12.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
 
   - [ ] Select the .sof file to be downloaded to the FPGA. 
   
@@ -806,7 +735,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 
 
-## 16.0 Timeouts and Disk Space
+## 13.0 Timeouts and Disk Space
 
 Your session will timeout after six hours after login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
 
@@ -816,7 +745,7 @@ If you find that you are kicked off the Devcloud due to short bursts of inactivi
 2. Select in the side-bar **Power & Sleep**. 
 3. Under **Screen**, change both settings to **Never**. 
 
-## 17.0 Determining and Allocating Memory Availability and CPU Count and Speed
+## 14.0 Determining and Allocating Memory Availability and CPU Count and Speed
 
 Enter the following in a Devcloud Terminal to determine memory availability: 
 
@@ -838,7 +767,7 @@ Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20G
 ```
 
 
-## 18.0 Devcloud Text Editors 
+## 15.0 Devcloud Text Editors 
 
 cat There are three available editors in the Devcloud terminal: 
 
@@ -848,7 +777,7 @@ cat There are three available editors in the Devcloud terminal:
 
 For tutorials on how to use the editors listed above, click the hyperlinks to be redirected to a quick read tutorial site. 
 
-## 19.0 Determining which version of the OS is running on a Node
+## 16.0 Determining which version of the OS is running on a Node
 
 ```
 cat /etc/os-release
@@ -858,5 +787,7 @@ cat /etc/os-release
 
 ------
 <a href="#top">Back to top</a>
+
+
 
 
