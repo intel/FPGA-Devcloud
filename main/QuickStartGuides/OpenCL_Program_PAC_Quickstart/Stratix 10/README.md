@@ -1,14 +1,14 @@
 
 
-# Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2
+# Stratix 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Stratix 10 Devstack version 2.0.1
 
  
 
 ## 1       Introduction
 
-If you are new to the Arria 10 PAC card with OpenCL, check out this quick start guide:
+If you are new to the Stratix 10 PAC card with OpenCL, check out this quick start guide:
 
-https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug-qs-ias-opencl-a10.pdf
+https://www.intel.com/content/www/us/en/programmable/documentation/qgu1548972652523.html
 
 This demonstration will step the user through the following steps:
 
@@ -39,42 +39,48 @@ This lab assumes the following:
 
 #### 3.1            Initial Setup
 
-Run the devcloud_login function and connect to an Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
+Run the devcloud_login function and connect to a Stratix 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
 ![image-20200402120549295](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200402120549295.png)
 
-Select option 1 or option 5 and connect to an Arria 10 ready compute node.
+Select option 3 or option 5 and connect to a Stratix 10 ready compute node.
 
-Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option.
+Once on this node, run tools_setup. Select the Stratix 10 Development Stack + OpenCL option.
 
 Make  working directory
 
 ```bash
-mkdir A10_OPENCL_AFU
+mkdir S10_OPENCL_AFU
 ```
 
 We will then copy the example folder into this project folder. Type this into the terminal:
 
 ```bash
-cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
+cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz S10_OPENCL_AFU
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
 ```
 
-Check to make sure connectivity to the Arria 10 PAC card looks ok:
+Check to make sure connectivity to the Stratix 10 PAC card looks ok:
 
 ```
 aocl diagnose
 ```
 
-Look for DIAGNOSTIC_PASSED.
+Look for DIAGNOSTIC_PASSED. For the specific test on the installed board, use:
+
+```
+aocl diagnose acl0
+```
+
+Note that this shows a board name is pac_s10_dc. You will need this for a subsequent step.
 
 #### 3.2 Running OpenCL in emulation mode
 
 The first step of the OpenCL flow is to compile and execute the design for emulation mode. This step allows you to quickly verify the functionality of your code on the CPU without performing the conversion from OpenCL to RTL and from RTL to an FPGA executable, which takes up to an hour.
 
 ```
-aoc -march=emulator -v device/hello_world.cl -o bin/hello_world.aocx
+aocl -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world.aocx
 ```
 
 The next step is to compile the host code. 
@@ -83,7 +89,7 @@ The next step is to compile the host code.
 make
 ```
 
-Now run for the host code binary. Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.
+Now run emulation with the host code binary. Note that the with the environment setting shown, the host code runs the .aocx file for emulation execution on the CPU and not on the FPGA card.
 
 ```
 CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
@@ -93,45 +99,23 @@ You should see a list of parameters and Kernel execution is complete.
 
 #### 3. 3 Compiling OpenCL code into an FPGA executable
 
-Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently get compiled in Quartus to produce an FPGA executable .aocx file using the following command. This step will take approximately one hour.
+Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently be compiled in Quartus to produce an FPGA executable .aocx file. This step will take approximately one hour.
 
 ```
-aoc device/hello_world.cl -o bin/hello_world.aocx -board=pac_a10
+aoc device/hello_world.cl -o bin/hello_world.aocx -board=pac_s10_dc
 ```
 
-#### 3.4 Downloading the bit stream into the PAC card
+#### 3.4 Downloading the bit stream into the PAC card and running the host code
 
-Next we will be looking for an available acceleration card, program it, compile the host C code and run the software program to display on the terminal.
+Similar to the prior step of running bin/host, but without the environment variable setting.
 
-To see what FPGA accelerator cards are available, we type the following into the terminal. 
-
-```bash
-aoc --list-boards
-```
-
-You will observe the pac_10 board is available. Next, as you did during the initial step, run the aocl diagnose command so that you can get the device name.
+Run the following:
 
 ```
-aocl diagnose
-```
-
-Observe that the device name is acl0.
-
-Next, you will program the PAC card with hello_world.aocx FPGA executable with the following command:
-
-```
-aoc program acl0 bin/hello_world.aocx
-```
-
-#### 3.5 Running the host code 
-
-You have run make to build the CPU host executable in the prior section, so its not necessary to run again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
-
-```bash
 ./bin/host
 ```
 
-Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host .
+
 
 ## 6       Document Revision History
 
@@ -139,7 +123,7 @@ List the revision history for the application note.
 
 | Name         | Date     | Changes         |
 | ------------ | -------- | --------------- |
-| Larry Landis | 4/2/2020 | Initial Release |
+| Larry Landis | 4/4/2020 | Initial Release |
 
 
 

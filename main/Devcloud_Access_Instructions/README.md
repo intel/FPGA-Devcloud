@@ -298,11 +298,13 @@ Some nodes can connect to machines with the above capabilities and also are dire
 
 There are a series of detailed Linux commands shown below should you want know the intricate details of how to connect to available compute nodes. To facilitate connectivity without understanding some of the details on the Linux OS, we offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Add this script to your .bashrc login script with the following command added to your script:
 
+```
 if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
     source /data/intel_fpga/devcloudLoginToolSetup.sh
 fi
+```
 
-Run devcloud_login and follow the instructions to connect the appropriate compute node. Script details are here: https://github.com/intel/FPGA-Devcloud/blob/master/main/Devcloud_Access_Instructions/LoginScript/README.md .
+Source ~/.bashrc and run devcloud_login and follow the instructions to connect the appropriate compute node. Script details are here: https://github.com/intel/FPGA-Devcloud/blob/master/main/Devcloud_Access_Instructions/LoginScript/README.md .
 
 Should you want more details on available compute resources and query what is available, continue with the instructions below.
 
