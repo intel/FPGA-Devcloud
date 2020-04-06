@@ -30,6 +30,7 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
       * [CURL Command](#2-curl-command)
   * [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
     + [Typora](#typora)
+      + [Github Pictures](#github-pictures)
 
 ## General GitHub Devcloud Rules
 
@@ -383,14 +384,35 @@ If Typora is set as the default markdown editor, then in cmd.exe, input `.md` fi
 To set Typora as the default markdown editor you have to do following:
 
 1. Select one of your markdown files
+
 2. Open context menu and choose
    - *Properties* and then click on *Change* button, as shown in **Figure 1**
    - *Open with -> Choose another app*, as shown in **Figure 2**
+   
 3. Choose *Typora* or *Typora Launcher* in **How do you want to open this file?** and set a checkmark for *Always use this app to open .md files.*
 
-**Figure 1 - File properties window**
-![Figure 1 - Open Properties of Markdown file](https://support.typora.io/media/use-from-shell/Snip20180704_1.png)
+   **Figure 1 - File properties window**
+   
+    <img src="https://support.typora.io/media/use-from-shell/Snip20180704_1.png" alt="Figure 1 - Open Properties of Markdown file" width=40% />
+   
+   **Figure 2 - Application chooser window**
+   
+   <img src="https://support.typora.io/media/use-from-shell/Snip20180704_2.png" alt="Figure 2 - Applicaiton chooser" width=40% />
 
-**Figure 2 - Application chooser window**
-![Figure 2 - Applicaiton chooser](https://support.typora.io/media/use-from-shell/Snip20180704_2.png)
 
+
+### Github Pictures
+
+To be able to display the pictures on your Typora markdown files on the github site, you need to create a link for the pictures saved on your computer drive.
+
+ 
+
+To create a link for the pictures, first you need to go to the [github website](https://github.com/intel/FPGA-Devcloud), and click on "issues" tab. 
+
+<img src="https://user-images.githubusercontent.com/59750149/78585828-5bd81b80-77ef-11ea-872f-c2032ac59f79.png" width=70% />
+
+Second, click on <img src="https://user-images.githubusercontent.com/59750149/78585998-9d68c680-77ef-11ea-8583-b88239521262.png" alt="img-newissue" width=16% />to create a new issue. Then, drag&drop or paste the picture in the 'Leave a comment' section; this will automatically create a github link. 
+
+<img src="https://user-images.githubusercontent.com/59750149/78586141-da34bd80-77ef-11ea-933f-aa9f57401cbb.png" alt="comment-sec" width=75% />
+
+Lastly, copy that link and paste it into the .md file you are writing. Note once the link has been copied the issue is not needed anymore, thus you can submit then delete the issue or simply close the internet tab without submitting the issue.
