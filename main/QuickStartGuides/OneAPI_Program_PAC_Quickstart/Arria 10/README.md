@@ -44,7 +44,7 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an OneAPI Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-!https://github.com/intel/FPGA-Devcloud/issues/7
+https://github.com/intel/FPGA-Devcloud/issues/7
 
 Select option 2 or option 5 and connect to an Arria 10 ready OneAPI node.
 
