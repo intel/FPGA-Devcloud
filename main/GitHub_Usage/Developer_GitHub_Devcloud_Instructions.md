@@ -396,7 +396,7 @@ To set Typora as the default markdown editor you have to do following:
 
 
 
-#### Github Pictures
+### Github Pictures
 
 To be able to display the pictures on your Typora markdown files on the github site, you need to create a link for the pictures saved on your computer drive.
 
