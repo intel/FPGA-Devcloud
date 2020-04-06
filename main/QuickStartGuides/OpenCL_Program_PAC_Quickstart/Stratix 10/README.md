@@ -41,7 +41,7 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to a Stratix 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image-20200402120549295](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200402120549295.png)
+![image](https://user-images.githubusercontent.com/22804500/78614057-5a741680-7822-11ea-90de-39ce2a9a94dd.png)
 
 Select option 3 or option 5 and connect to a Stratix 10 ready compute node.
 
