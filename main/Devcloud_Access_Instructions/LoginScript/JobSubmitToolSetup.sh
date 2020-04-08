@@ -111,10 +111,15 @@ tools_setups()
             echo "${red}Something went wrong, does not support any quartus lite releases ${end}"
         elif [ $len -eq 1 ];
         then
-            # source the one release
-            echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
-            source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
-            echo
+            if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_LITE_RELEASE[0]} =~ "$argv2" ) ]];
+	    then
+		# source the one release
+            	echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
+            	source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
+            	echo
+	    else
+                printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end} "
+	    fi
         elif [ $len -gt 1 ];
         then
 	    if [[ -n "$argv2" && ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
@@ -158,10 +163,15 @@ tools_setups()
             echo "${red}Something went wrong, does not support any quartus standard releases ${end}"
         elif [ $len -eq 1 ];
         then
-            echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
-            # source the one release
-            source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
-            echo
+            if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_STANDARD_RELEASE[0]} =~ "$argv2" ) ]];
+	    then
+            	echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
+            	# source the one release
+            	source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
+            	echo
+	    else
+                printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end} "
+	    fi
         elif [ $len -gt 1 ];
         then
 	    if [[ -n "$argv2" && ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
@@ -205,10 +215,15 @@ tools_setups()
             echo "${red}Something went wrong, does not support any quartus pro releases ${end}"
         elif [ $len -eq 1 ];
         then
-            echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
-            # source the one release
-            source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
-            echo
+            if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_PRO_RELEASE[0]} =~ "$argv2" ) ]];
+	    then
+            	echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
+           	# source the one release
+            	source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
+            	echo
+	    else
+                printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
+	    fi
         elif [ $len -gt 1 ];
         then
 	    if [[ -n "$argv2" && ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
@@ -272,16 +287,21 @@ tools_setups()
                 echo "${red}Something went wrong, does not support any quartus standard releases ${end}"
             elif [ $len -eq 1 ];
             then
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls
+            	if [[ -z "$argv3" || ( -n $argv3 && ${QUARTUS_STANDARD_RELEASE[0]} =~ "$argv3" ) ]];
+	    	then
+                    export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls
 
-                # source the one release of quartus
-                echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
-                source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
+                    # source the one release of quartus
+                    echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
+                    source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
 
-                # source the one release of OpenCL
-                echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh"
-                source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh
-                echo
+                    # source the one release of OpenCL
+                    echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh"
+                    source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh
+                    echo
+	    	else
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end}"
+	    	fi
             elif [ $len -gt 1 ];
             then
 		if [[ -n "$argv3" && ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
@@ -336,16 +356,21 @@ tools_setups()
                 echo "${red}Something went wrong, does not support any quartus lite releases ${end}"
             elif [ $len -eq 1 ];
             then
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls
+            	if [[ -z "$argv3" || ( -n $argv3 && ${QUARTUS_LITE_RELEASE[0]} =~ "$argv3" ) ]];
+	    	then
+                    export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls
 
-                # source the one release of quartus
-                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
-                source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
+                    # source the one release of quartus
+                    echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
+                    source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
 
-                # source the one release of OpenCL
-                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh"
-                source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh
-                echo
+                    # source the one release of OpenCL
+                    echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh"
+                    source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh
+                    echo
+	    	else
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end}"
+	    	fi
             elif [ $len -gt 1 ];
             then
 		if [[ -n "$argv3" && ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
@@ -400,16 +425,21 @@ tools_setups()
                 echo "${red}Something went wrong, does not support any quartus pro releases ${end}"
             elif [ $len -eq 1 ];
             then
-                export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls
+            	if [[ -z "$argv3" || ( -n $argv3 && ${QUARTUS_PRO_RELEASE[0]} =~ "$argv3" ) ]];
+	    	then
+                    export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls
 
-                # source the one release of quartus
-                echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
-                source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
+                    # source the one release of quartus
+                    echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
+                    source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
 
-                # source the one release of OpenCL
-                echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh"
-                source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh
-                echo
+                    # source the one release of OpenCL
+                    echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh"
+                    source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh
+                    echo
+	    	else
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
+	    	fi
             elif [ $len -gt 1 ];
             then
 		if [[ -n "$argv3" && ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
@@ -523,7 +553,7 @@ tools_setups()
         else
             echo "Not on an Arria10 Development Stack node. You need to be on an Arria10 Development Stack node to run Arria Development Stack"
         fi
-    elif [[ $number -eq 6 || ( -n $argv1 && "$argv1" == "A10OAPI" ) ]];  #case for Arria 10 OneAPI
+    elif [[ $number -eq 6 || ( -n $argv1 && $argv1 = "A10OAPI" ) ]];  # case for Arria 10 OneAPI
     then
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
@@ -553,7 +583,12 @@ tools_setups()
             echo "Not on a stratix10 node. You need to be on a stratix 10 node to run Stratix 10 Development Stack"
         fi
     else
-        echo "printing else statement for sourcing cases"
+	if [ -z "argv1" ];
+	then
+	    echo "printing else statement for sourcing cases"
+	else
+	    echo "${red}Invalid argument. ${end}"
+	fi
     fi
 
 }
