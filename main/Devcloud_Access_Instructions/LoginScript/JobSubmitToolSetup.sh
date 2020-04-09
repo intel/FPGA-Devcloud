@@ -82,7 +82,6 @@ tools_setups()
     then
 	echo
 	printf "%s\n" "${blu}Which tool would you like to source?${end}"
-	echo
 	echo "1) Quartus Prime Lite"
 	echo "2) Quartus Prime Standard"
 	echo "3) Quartus Prime Pro"
