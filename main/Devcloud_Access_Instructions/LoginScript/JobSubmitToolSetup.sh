@@ -265,7 +265,7 @@ tools_setups()
 	then
 	    echo "${red}Invalid Entry. Please include a Quartus edition you would like. ${end}"
 	elif [ -n "$argv2" ];
-	    echo
+	    true  # do nothing
 	else
             #ask which quartus release
             echo "${blu}Which Quartus edition would you like?${end}"
@@ -532,7 +532,7 @@ tools_setups()
 	    elif [ -n "$argv2" ];
 	    then
 		printf "%s\n" "${red}Invalid Entry. Pleasee input a correct development stack release. ${end}"
-		exit 1
+		exit 0
 	    else
             	echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh"
             	source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh
