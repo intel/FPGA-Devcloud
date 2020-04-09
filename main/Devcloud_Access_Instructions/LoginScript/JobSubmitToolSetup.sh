@@ -265,6 +265,7 @@ tools_setups()
 	then
 	    echo "${red}Invalid Entry. Please include a Quartus edition you would like. ${end}"
 	elif [ -n "$argv2" ];
+	then
 	    true  # do nothing
 	else
             #ask which quartus release
