@@ -53,7 +53,7 @@ job_delete()
 
 ########################################################################################################
 #   Latest Edit             #
-#   -Mar 30 2020            #
+#   -Mar 31 2020 Version2   #
 #############################
 
 
@@ -108,7 +108,7 @@ tools_setups()
         len=${#QUARTUS_LITE_RELEASE[@]}
         if [ $len -eq 0 ];
         then
-            echo "${red}Something went wrong, does not support any quartus lite releases ${end}"
+            echo "${red}Something went wrong, does not support any quartus Lite releases ${end}"
         elif [ $len -eq 1 ];
         then
             if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_LITE_RELEASE[0]} =~ "$argv2" ) ]];
@@ -128,7 +128,7 @@ tools_setups()
             	# source depending on what argument was provided
             	source $GLOB_INTELFPGA_LITE/$argv2/init_quartus.sh
             	echo
-	    elif [ -n "$argv2" ];
+	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
 	    then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end} "
 	    else
@@ -180,7 +180,7 @@ tools_setups()
             	# source depending on what argument was provided
             	source $GLOB_INTELFPGA_STANDARD/$argv2/init_quartus.sh
             	echo
-	    elif [ -n "$argv2" ];
+	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
 	    then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end} "
 	    else
@@ -232,7 +232,7 @@ tools_setups()
             	# source depending on what argument was provided
             	source $GLOB_INTELFPGA_PRO/$argv2/init_quartus.sh
             	echo
-	    elif [ -n "$argv2" ];
+	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
 	    then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end} "
 	    else
@@ -261,8 +261,12 @@ tools_setups()
     elif [[ $number -eq 4 || ( -n $argv1 && $argv1 = "HLS" ) ]];  # case for HLS
     then
 
-	if [ -z "$argv2" ];
+	if [[ -z "$argv2" && -n "$argv1" ]];
 	then
+	    echo "${red}Invalid Entry. Please include a Quartus edition you would like. ${end}"
+	elif [ -n "$argv2" ];
+	    echo
+	else
             #ask which quartus release
             echo "${blu}Which Quartus edition would you like?${end}"
             echo "1) Quartus Prime Standard"
@@ -315,7 +319,7 @@ tools_setups()
                     # source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		elif [ -n "$argv3" ];
+		elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
 		then
 		    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end}"
 		else
@@ -384,7 +388,7 @@ tools_setups()
                     #source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		elif [ -n "$argv3" ];
+		elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
 		then
 		    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end}"
 		else
@@ -453,7 +457,7 @@ tools_setups()
                     #source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		elif [ -n "$argv3" ];
+		elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
 		then
 		    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
 		else
