@@ -12,14 +12,12 @@ allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[
 
 
 Help() {
-    echo "-Description-"
-    echo "The tools_setup is a function created to aid the setup their wanted environment in a devcloud node"
-    echo "If you would like to see all options simply use tools_setup with no arguments. This is an user interactive mode."
-    echo "to speed up the processs you can use the following options to speed up your tool setup"
-    echo "Elimanating user interaction within function"
     echo
+    echo "The tools_setup is a function aimed to help the user setup an environment variable in a devcloud node"
+    echo "If you would like to use the tools_setup user interactive mode, simply type:
+    echo "${blu}tools_setup ${end}"
     echo
-    echo ""
+    echo "To speed up the processs you can use the following options to limit the user interaction with tools_setup"
     echo "Options:"
     echo "QL		Quartus Lite"
     echo "QS		Quartus Standard"
@@ -37,9 +35,7 @@ Help() {
     echo "To setup the HLS tool, you also need to include the Quartus edition and version you would like to use."
     echo "Example:"
     echo "tools_setup HLS QL 18.1"
-    echo ""
-    echo ""
-
+    echo
 }
 
 
