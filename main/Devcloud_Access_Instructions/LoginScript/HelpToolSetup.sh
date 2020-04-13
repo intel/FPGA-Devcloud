@@ -34,7 +34,7 @@ Help() {
     echo "QP		Quartus Pro"
     echo "HLS		High-Level Synthesis"
     echo "A10DS		Arria 10 Development Stack"
-    echo "A10OAPI	Arria 10 One API"
+    echo "A10OAPI   Arria 10 One API"
     echo "S10DS		Stratix 10 Development Stack"
     echo
 }
@@ -64,28 +64,32 @@ tools_setups()
 
     ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 
-    if [ "$1" == ("-h" | "--help") ];
+    if [[ $1 = "-h" || $1 = "--help" ]];
     then
-	# display Help
-	Help
-	return
+	    # display Help
+	    Help
+	    return
     elif [ "$1" == "-t" ]
     then
-	argv1="$2"
-	argv2="$3"
-	argv3="$4"
+	    argv1="$2"
+	    argv2="$3"
+	    argv3="$4"
+    elif [ -z $1 ];
+    then
+        unset argv1 argv2 argv3
     else
-	:  # do nothing
+        echo "${red}Invalid Argument. Please use tools_setup -h for more information.${end}"
+        return
     fi
 
     if [ -z $argv1 ];
     then
-	echo
-	printf "%s\n" "${blu}Which tool would you like to source?${end}"
-	echo "1) Quartus Prime Lite"
-	echo "2) Quartus Prime Standard"
-	echo "3) Quartus Prime Pro"
-	echo "4) HLS"
+	    echo
+	    printf "%s\n" "${blu}Which tool would you like to source?${end}"
+	    echo "1) Quartus Prime Lite"
+	    echo "2) Quartus Prime Standard"
+	    echo "3) Quartus Prime Pro"
+	    echo "4) HLS"
     	echo "5) Arria 10 Development Stack + OpenCL"
     	echo "6) Arria 10 OneAPI"
     	echo "7) Stratix 10 Development Stack + OpenCL"
@@ -111,26 +115,26 @@ tools_setups()
         elif [ $len -eq 1 ];
         then
             if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_LITE_RELEASE[0]} =~ "$argv2" ) ]];
-	    then
-		# source the one release
-            	echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
-            	source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
-            	echo
-	    else
+	        then
+		        # source the one release
+                echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh"
+                source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/init_quartus.sh
+                echo
+	        else
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end} "
-	    fi
+	        fi
         elif [ $len -gt 1 ];
         then
-	    if [[ -n "$argv2" && ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
-	    then
-		echo "sourcing $GLOB_INTELFPGA_LITE/$argv2/init_quartus.sh"
+	        if [[ -n "$argv2" && ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
+	        then
+		        echo "sourcing $GLOB_INTELFPGA_LITE/$argv2/init_quartus.sh"
             	# source depending on what argument was provided
             	source $GLOB_INTELFPGA_LITE/$argv2/init_quartus.sh
             	echo
-	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
-	    then
+	        elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
+	        then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end} "
-	    else
+	        else
                 echo "${blu}Which Quartus Prime Lite release would you like to source?${end}"
             	for (( i=0; i<${len}; i++ ));
             	do
@@ -149,7 +153,7 @@ tools_setups()
             	# source depending on what second_number they chose
             	source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[$second_number]}/init_quartus.sh
             	echo
-	    fi
+	        fi
         else
             echo "${red}Something went wrong sourcing the lite release ${end}"
         fi
@@ -163,26 +167,26 @@ tools_setups()
         elif [ $len -eq 1 ];
         then
             if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_STANDARD_RELEASE[0]} =~ "$argv2" ) ]];
-	    then
+	        then
             	echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh"
             	# source the one release
             	source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/init_quartus.sh
             	echo
-	    else
+	        else
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end} "
-	    fi
+	        fi
         elif [ $len -gt 1 ];
         then
-	    if [[ -n "$argv2" && ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
-	    then
+	        if [[ -n "$argv2" && ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
+	        then
             	echo "sourcing $GLOB_INTELFPGA_STANDARD/$argv2/init_quartus.sh"
             	# source depending on what argument was provided
             	source $GLOB_INTELFPGA_STANDARD/$argv2/init_quartus.sh
             	echo
-	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
-	    then
+	        elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
+	        then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end} "
-	    else
+	        else
             	echo "${blu}Which Quartus Prime Standard release would you like to source?${end}"
             	for (( i=0; i<${len}; i++ ));
             	do
@@ -201,7 +205,7 @@ tools_setups()
             	# source depending on what second_number they chose
             	source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[$second_number]}/init_quartus.sh
             	echo
-	    fi
+	        fi
         else
             echo "${red}Something went wrong sourcing the standard release ${end}"
         fi
@@ -215,26 +219,26 @@ tools_setups()
         elif [ $len -eq 1 ];
         then
             if [[ -z "$argv2" || ( -n $argv2 && ${QUARTUS_PRO_RELEASE[0]} =~ "$argv2" ) ]];
-	    then
+	        then
             	echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh"
-           	# source the one release
+           	    # source the one release
             	source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/init_quartus.sh
             	echo
-	    else
+	        else
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
-	    fi
+	        fi
         elif [ $len -gt 1 ];
         then
-	    if [[ -n "$argv2" && ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
-	    then
+	        if [[ -n "$argv2" && ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
+	        then
             	echo "sourcing $GLOB_INTELFPGA_PRO/$argv2/init_quartus.sh"
             	# source depending on what argument was provided
             	source $GLOB_INTELFPGA_PRO/$argv2/init_quartus.sh
             	echo
-	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
-	    then
+	        elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]];
+	        then
                 printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end} "
-	    else
+	        else
             	echo "${blu}Which Quartus Prime Pro release would you like to source?${end}"
             	for (( i=0; i<${len}; i++ ));
             	do
@@ -253,21 +257,21 @@ tools_setups()
             	# source depending on what second_number they chose
             	source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[$second_number]}/init_quartus.sh
             	echo
-	    fi
+	        fi
         else
             echo "${red}Something went wrong sourcing the pro release ${end}"
         fi
     elif [[ $number -eq 4 || ( -n $argv1 && $argv1 = "HLS" ) ]];  # case for HLS
     then
 
-	if [[ -z "$argv2" && -n "$argv1" ]];
-	then
-	    echo "${red}Invalid Entry. Please include a Quartus edition you would like. ${end}"
-	    return
-	elif [ -n "$argv2" ];
-	then
-	    :  # do nothing
-	else
+	    if [[ -z "$argv2" && -n "$argv1" ]];
+	    then
+	        echo "${red}Invalid Entry. Please include a Quartus edition you would like. ${end}"
+	        return
+	    elif [ -n "$argv2" ];
+	    then
+	        :  # do nothing
+	    else
             #ask which quartus release
             echo "${blu}Which Quartus edition would you like?${end}"
             echo "1) Quartus Prime Standard"
@@ -282,7 +286,7 @@ tools_setups()
             	echo -n "Number: "
             	read -e qnumber
             done
-	fi
+    	fi
 
         if [[ $qnumber -eq 1 || ( -n $argv2 && $argv2 = "QS" ) ]];  # case for quartus STANDARD
         then
@@ -293,7 +297,7 @@ tools_setups()
             elif [ $len -eq 1 ];
             then
             	if [[ -z "$argv3" || ( -n $argv3 && ${QUARTUS_STANDARD_RELEASE[0]} =~ "$argv3" ) ]];
-	    	then
+	    	    then
                     export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls
 
                     # source the one release of quartus
@@ -304,26 +308,26 @@ tools_setups()
                     echo "sourcing $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh"
                     source $GLOB_INTELFPGA_STANDARD/${QUARTUS_STANDARD_RELEASE[0]}/hls/init_hls.sh
                     echo
-	    	else
+	    	    else
                     printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end}"
-	    	fi
+	    	    fi
             elif [ $len -gt 1 ];
             then
-		if [[ -n "$argv3" && ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
-		then
+		        if [[ -n "$argv3" && ${QUARTUS_STANDARD_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
+		        then
                     export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_STANDARD/$argv3/hls
 
-		    # source quartus
+		            # source quartus
                     echo "sourcing $INTELFPGAOCLSDKROOT/../init_quartus.sh"
                     source $INTELFPGAOCLSDKROOT/../init_quartus.sh
 
                     # source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
-		then
-		    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end}"
-		else
+		        elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
+		        then
+		            printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Standard version. ${end}"
+		        else
                     # ask which verison of openCL
                     echo "${blu}Which Quartus release would you like to source?${end}"
                     for (( i=0; i<${len}; i++ ));
@@ -349,7 +353,7 @@ tools_setups()
                     # source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		fi
+		        fi
             else
                 echo "${red}Something went wrong with sourcing hls for quartus standard ${end}"
             fi
@@ -362,7 +366,7 @@ tools_setups()
             elif [ $len -eq 1 ];
             then
             	if [[ -z "$argv3" || ( -n $argv3 && ${QUARTUS_LITE_RELEASE[0]} =~ "$argv3" ) ]];
-	    	then
+	    	    then
                     export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls
 
                     # source the one release of quartus
@@ -373,13 +377,13 @@ tools_setups()
                     echo "sourcing $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh"
                     source $GLOB_INTELFPGA_LITE/${QUARTUS_LITE_RELEASE[0]}/hls/init_hls.sh
                     echo
-	    	else
+	    	    else
                     printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end}"
-	    	fi
+	    	    fi
             elif [ $len -gt 1 ];
             then
-		if [[ -n "$argv3" && ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
-		then
+		        if [[ -n "$argv3" && ${QUARTUS_LITE_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
+		        then
                     export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_LITE/$argv3/hls
 
                     #source quartus
@@ -389,10 +393,10 @@ tools_setups()
                     #source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
-		then
-		    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end}"
-		else
+		        elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
+		        then
+		            printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Lite version. ${end}"
+		        else
                     # ask which verison of openCL
                     echo "${blu}Which Quartus release would you like to source?${end}"
                     for (( i=0; i<${len}; i++ ));
@@ -418,7 +422,7 @@ tools_setups()
                     #source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		fi
+		        fi
             else
                 echo "${red}Something went wrong with sourcing HLS for Quartus Prime Lite ${end}"
             fi
@@ -431,7 +435,7 @@ tools_setups()
             elif [ $len -eq 1 ];
             then
             	if [[ -z "$argv3" || ( -n $argv3 && ${QUARTUS_PRO_RELEASE[0]} =~ "$argv3" ) ]];
-	    	then
+	    	    then
                     export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls
 
                     # source the one release of quartus
@@ -442,13 +446,13 @@ tools_setups()
                     echo "sourcing $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh"
                     source $GLOB_INTELFPGA_PRO/${QUARTUS_PRO_RELEASE[0]}/hls/init_hls.sh
                     echo
-	    	else
+	    	    else
                     printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
-	    	fi
+	    	    fi
             elif [ $len -gt 1 ];
             then
-		if [[ -n "$argv3" && ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
-		then
+		        if [[ -n "$argv3" && ${QUARTUS_PRO_RELEASE[*]} =~ (^|[[:space:]])"$argv3"($|[[:space:]]) ]];
+		        then
                     export INTELFPGAOCLSDKROOT=$GLOB_INTELFPGA_PRO/$argv3/hls
 
                     #source quartus
@@ -458,10 +462,10 @@ tools_setups()
                     #source opencl
                     echo "sourcing $INTELFPGAOCLSDKROOT/init_hls.sh"
                     source $INTELFPGAOCLSDKROOT/init_hls.sh
-		elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
-		then
-		    printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
-		else
+		        elif [[ -n "$argv3" || ( -n "$argv2" && -z "$argv3" ) ]];
+		        then
+		            printf "%s\n" "${red}Invalid Entry. Please input a correct Quartus Pro version. ${end}"
+		        else
                     # ask which verison of openCL
                     echo "${blu}Which Quartus release would you like to source?${end}"
                     for (( i=0; i<${len}; i++ ));
@@ -490,7 +494,7 @@ tools_setups()
 
                     # add python to path
                     export PATH=/glob/intel-python/python2/bin:${PATH}
-		fi
+		        fi
             else
                 echo "${red}Something went wrong with sourcing HLS for Quartus Prime Pro ${end}"
             fi
@@ -506,8 +510,8 @@ tools_setups()
         unset IFS
         if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]];  # this checks that user is currently on correct node and node name has length of 9
         then
-	    if [ -z "$argv2" ];
-	    then
+	        if [ -z "$argv2" ];
+	        then
             	# ask which version of a10 devstack
             	echo "${blu}Which Arria 10 Development Stack + OpenCL release would you like to source?${end}"
             	for (( i=0; i<${#ARRIA10DEVSTACK_RELEASE[@]}; i++));
@@ -523,21 +527,21 @@ tools_setups()
                     echo -n "Number: "
                     read -e second_number
             	done
-	    fi
+	        fi
 
-	    if [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
-	    then
+	        if [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[*]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
+	        then
             	echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/$argv2/inteldevstack/init_env.sh"
             	source $GLOB_FPGASUPPORTSTACK/a10/$argv2/inteldevstack/init_env.sh
-		echo
-	    elif [ -n "$argv2" ];
-	    then
-		printf "%s\n" "${red}Invalid Entry. Pleasee input a correct development stack release. ${end}"
-		return
-	    else
+		        echo
+	        elif [ -n "$argv2" ];
+	        then
+		        printf "%s\n" "${red}Invalid Entry. Pleasee input a correct development stack release. ${end}"
+		        return
+	        else
             	echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh"
             	source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh
-		echo
+		        echo
             fi
 
             if [[ $second_number -eq 0 || ${ARRIA10DEVSTACK_RELEASE[0]} =~ (^|[[:space:]])"$argv2"($|[[:space:]]) ]];
@@ -588,12 +592,12 @@ tools_setups()
             echo "Not on a stratix10 node. You need to be on a stratix 10 node to run Stratix 10 Development Stack"
         fi
     else
-	if [ -z "argv1" ];
-	then
-	    echo "printing else statement for sourcing cases"
-	else
-	    echo "${red}Invalid argument. ${end}"
-	fi
+	    if [ -z "argv1" ];
+	    then
+	        echo "printing else statement for sourcing cases"
+	    else
+	        echo "${red}Invalid argument. ${end}"
+	    fi
     fi
 
 }
