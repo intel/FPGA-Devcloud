@@ -13,12 +13,22 @@ allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[
 
 Help() {
     echo
-    echo "The tools_setup is a function aimed to help the user setup an environment variable in a devcloud node"
-    echo "If you would like to use the tools_setup user interactive mode, simply type:
-    echo "${blu}tools_setup ${end}"
+    echo "Usage: "
+    echo "------"
     echo
-    echo "To speed up the processs you can use the following options to limit the user interaction with tools_setup"
-    echo "Options:"
+    echo "tools_setup -h | --help"
+    echo "tools_setup -t [<script args options>]"
+    echo "tools_setup "
+    echo
+    echo "Description: "
+    echo "------------"
+    echo
+    echo "tools_setup is a function aimed to help the user setup an environment variable in a devcloud node."
+    echo "The tools_setup has a user interactive and non interactive mode. "
+    echo
+    echo "Options: "
+    echo "--------"
+    echo
     echo "QL		Quartus Lite"
     echo "QS		Quartus Standard"
     echo "QP		Quartus Pro"
@@ -26,15 +36,6 @@ Help() {
     echo "A10DS		Arria 10 Development Stack"
     echo "A10OAPI	Arria 10 One API"
     echo "S10DS		Stratix 10 Development Stack"
-    echo
-    echo
-    echo "For all the Quartus editions available you must also include the quartus version you would like to use."
-    echo "Example:"
-    echo "tools_setup QL 18.1"
-    echo
-    echo "To setup the HLS tool, you also need to include the Quartus edition and version you would like to use."
-    echo "Example:"
-    echo "tools_setup HLS QL 18.1"
     echo
 }
 
@@ -62,20 +63,20 @@ tools_setups()
     GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
 
     ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
-    argv1="$1"
-    argv2="$2"
-    argv3="$3"
 
-    while getopts ":h" option; do
-	case $option in
-	    h)  # display Help
-	    	Help
-	    	break;;
-	    \?) # incorrect option
-            	echo "Error: Invalid option"
-            	break;;
-	esac
-    done
+    if [ "$1" == ("-h" | "--help") ];
+    then
+	# display Help
+	Help
+	return
+    elif [ "$1" == "-t" ]
+    then
+	argv1="$2"
+	argv2="$3"
+	argv3="$4"
+    else
+	:  # do nothing
+    fi
 
     if [ -z $argv1 ];
     then
