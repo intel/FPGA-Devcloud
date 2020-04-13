@@ -6,8 +6,7 @@
 
 To learn more, visit [http://fpgauniversity.intel.com](http://fpgauniversity.intel.com).
 
-© Intel Corporation. All rights reserved. Intel, the Intel logo, Altera, Arria, Cyclone, Enpirion, MAX, Nios, Quartus and Stratix words and logos are trademarks of Intel Corporation or its subsidiaries in the U.S. and/or other countries. Intel warrants performance of its FPGA and semiconductor products to current specifications in accordance with Intel’s standard warranty, but reserves the right to make changes to any products and services at any time without notice. Intel assumes no responsibility or liability arising out of the application or use of any information, product, or service described herein except as expressly agreed to in writing by Intel. Intel customers are advised to
-obtain the latest version of device specifications before relying on any published information and before placing orders for products or services. Other names and brands may be claimed as the property of others.
+© Intel Corporation. All rights reserved. Intel, the Intel logo, Altera, Arria, Cyclone, Enpirion, MAX, Nios, Quartus and Stratix words and logos are trademarks of Intel Corporation or its subsidiaries in the U.S. and/or other countries. Intel warrants performance of its FPGA and semiconductor products to current specifications in accordance with Intel’s standard warranty, but reserves the right to make changes to any products and services at any time without notice. Intel assumes no responsibility or liability arising out of the application or use of any information, product, or service described herein except as expressly agreed to in writing by Intel. Intel customers are advised to obtain the latest version of device specifications before relying on any published information and before placing orders for products or services. Other names and brands may be claimed as the property of others.
 
 
 
@@ -42,7 +41,8 @@ obtain the latest version of device specifications before relying on any publish
 
 Welcome to the FPGA DevCloud. This is a QuickStart guide that will demonstrate a basic project setup and execution in Quartus using the Intel hosted cloud service known as the DevCloud.
 
-At the end of this guide, the user will be able to run and simulate a project in the Quartus Prime Software both **locally** to a development board connected to the user’s PC, and **remotely** through the SSH connection to the DevCloud servers. ModelSim, University Waveform, and the In-System Memory Content editor tool will be used to demonstrate a successful remote access to the DevCloud servers and provide insight into the Quartus FPGA development flows. Additionally, usage of the GUI and command line flows will be demonstrated. 
+At the end of this guide, the user will be able to run and simulate a project in the Quartus Prime Software both **locally** to a development board connected to the user’s PC, and **remotely** through the SSH connection to the DevCloud servers. ModelSim, University Waveform, and the In-System Memory Content editor tool will be used to demonstrate a successful remote access to the DevCloud servers and provide insight into the Quartus FPGA development flows. Additionally, usage of the GUI and command line flows will be demonstrated.
+
 The programming image will be downloaded to a development kit connected to the devcloud, and optionally to a local DE10-Lite board if you have one in your possession.
 
 ### Assumptions
@@ -116,7 +116,8 @@ scp /home/username/MyDocuments/rtl_quickstart_files/five_bit_adder.qar colfax‐
 scp /home/username/MyDocuments/rtl_quickstart_files/ram_adder.qar colfax-intel:/home/u1234/Documents/quickstart_project
 ```
 
-- [ ] Ignore the “X11 forwarding request failed on channel 0” message. Look in your destination folder in X2Go to determine if the transfers were completed. 
+- [ ] Ignore the “X11 forwarding request failed on channel 0” message. Look in your destination folder in X2Go to determine if the transfers were completed.
+  
   Alternatively, use Section 8.3: WinSCP instructions shown in the [DevCloud Installation Instructions](https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions#devcloud-access-instructions).
 
 ###### Figure 3: Successful Transfer of File in Project directory in X2Go terminal
@@ -166,8 +167,7 @@ quartus_sh ‐‐restore [<options>] <.qar file name>
 quartus_sh ‐‐restore ‐output ram_adder_restored ram_adder.qar
 ```
 
-The Quartus Prime Shell should state that the job was successfully completed. All source and design files will be saved in the destination folder named ram_adder_restored. For additional
-information on Quartus Prime Command-Line and Tcl API Help, enter the following into the terminal:
+The Quartus Prime Shell should state that the job was successfully completed. All source and design files will be saved in the destination folder named ram_adder_restored. For additional information on Quartus Prime Command-Line and Tcl API Help, enter the following into the terminal:
 
 ```
 quartus_sh ‐‐qhelp
