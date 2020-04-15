@@ -12,26 +12,26 @@ To learn more, visit [http://fpgauniversity.intel.com](http://fpgauniversity.int
 
 ## CONTENTS
 
-[Introduction](#introduction)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Summary](#summary)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Assumptions](#assumptions)
-[Lab 1: Launching Quartus Prime Software](#lab-1:-launching-quartus-prime-software)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.0: Editing and Sourcing Quartus Prime Lite/Pro Software](#1.0:-editing-and-sourcing-quartus-prime-lite/pro-software)
-[Lab 2: New Quartus Prime Design from DevCloud Server](#lab-2:-new-quartus-prime-design-from-devcloud-server)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.0: Downloading .qar Files from University Workshop Page](#2.0:-downloading-.qar-files-from-university-workshop-page)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1: Copying Local .qar Files from PC to DevCloud Terminal](#2.1:-copying-local-.qar-files-from-pc-to-devcloud-terminal)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.2: Unarchiving .qar files in Quartus Prime GUI](#2.2:-unarchiving-.qar-files-in-quartus-prime-gui)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.3: Unarchiving .qar Files in Command Line](#2.3:-unarchiving-.qar-files-in-command-line)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.4: Installing the USB Blaster to Download a Design to a Local FPGA](#2.4:-installing-the-usb-blaster-to-download-a-design-to-a-local-fpga)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.5: Connecting a Local PC USB Blaster through the DevCloud](#2.5:-connecting-a-local-pc-usb-blaster-through-the-devcloud)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.6: Programming a Design into a Local PC Connected FPGA](#2.6:-programming-a-design-into-a-local-pc-connected-fpga)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.7: Testing the Design on the Local PC Connected FPGA](#2.7:-testing-the-design-on-the-local-pc-connected-fpga)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.8: Programming a Design into the DevCloud Hosted Server FPGA](#2.8:-programming-a-design-into-the-devcloud-hosted-server-fpga)
-[Lab 3: Quartus Prime Simulations on DevCloud Server FPGA](#lab-3:-quartus-prime-simulations-on-devcloud-server-fpga)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.0: Running ModelSim on the DevCloud](#3.0:-running-modelsim-on-the-devcloud)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1: Compiling a Testbench in the Quartus Prime Environment](#3.1:-compiling-a-testbench-in-the-quartus-prime-environment)
-[Appendix](#appendix)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Revision History](#revision-history)
+* [Introduction](#introduction)
+  * [Summary](#summary)
+  * [Assumptions](#assumptions)
+* [Lab 1: Launching Quartus Prime Software](#lab-1:-launching-quartus-prime-software)
+  * [1.0: Editing and Sourcing Quartus Prime Lite/Pro Software](#1.0:-editing-and-sourcing-quartus-prime-lite/pro-software)
+* [Lab 2: New Quartus Prime Design from DevCloud Server](#lab-2:-new-quartus-prime-design-from-devcloud-server)
+  * [2.0: Downloading .qar Files from University Workshop Page](#2.0:-downloading-.qar-files-from-university-workshop-page)
+  * [2.1: Copying Local .qar Files from PC to DevCloud Terminal](#2.1:-copying-local-.qar-files-from-pc-to-devcloud-terminal)
+  * [2.2: Unarchiving .qar files in Quartus Prime GUI](#2.2:-unarchiving-.qar-files-in-quartus-prime-gui)
+  * [2.3: Unarchiving .qar Files in Command Line](#2.3:-unarchiving-.qar-files-in-command-line)
+  * [2.4: Installing the USB Blaster to Download a Design to a Local FPGA](#2.4:-installing-the-usb-blaster-to-download-a-design-to-a-local-fpga)
+  * [2.5: Connecting a Local PC USB Blaster through the DevCloud](#2.5:-connecting-a-local-pc-usb-blaster-through-the-devcloud)
+  * [2.6: Programming a Design into a Local PC Connected FPGA](#2.6:-programming-a-design-into-a-local-pc-connected-fpga)
+  * [2.7: Testing the Design on the Local PC Connected FPGA](#2.7:-testing-the-design-on-the-local-pc-connected-fpga)
+  * [2.8: Programming a Design into the DevCloud Hosted Server FPGA](#2.8:-programming-a-design-into-the-devcloud-hosted-server-fpga)
+* [Lab 3: Quartus Prime Simulations on DevCloud Server FPGA](#lab-3:-quartus-prime-simulations-on-devcloud-server-fpga)
+  * [3.0: Running ModelSim on the DevCloud](#3.0:-running-modelsim-on-the-devcloud)
+  * [3.1: Compiling a Testbench in the Quartus Prime Environment](#3.1:-compiling-a-testbench-in-the-quartus-prime-environment)
+* [Appendix](#appendix)
+  * [Revision History](#revision-history)
 
 
 
@@ -71,7 +71,7 @@ This is a short lab that completes the basic project setup using both the Quartu
 
 ###### Figure 1: Correct settings for the quartus_setup.sh file
 
-![image-setup](https://user-images.githubusercontent.com/59750149/78844109-9ee5ea80-79b9-11ea-8ed3-7981b1b46e96.png)
+<img src="https://user-images.githubusercontent.com/59750149/78844109-9ee5ea80-79b9-11ea-8ed3-7981b1b46e96.png" alt="image-setup" width=90% />
 
 - [ ] After editing the quartus_setup.sh file, source the quartus_setup.sh file and run Quartus. Enter the following in the terminal by sequence:
 
