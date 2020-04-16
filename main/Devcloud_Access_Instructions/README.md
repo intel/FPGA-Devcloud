@@ -391,7 +391,7 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 [Setup Devcloud Login Script Instructions](https://github.com/intel/FPGA-Devcloud/blob/master/main/Public_Devcloud_Access_Instructions/LoginScript/README.md)
 
-
+Note that X2Go is only available on nodes s001-n13[7-9] at this time.
 
 ## 7.0 Quartus Access and Setup
 
