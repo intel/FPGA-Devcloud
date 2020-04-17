@@ -1,5 +1,5 @@
 
->>>>>>> 
+>>>>>>
 
 <img width="1000" alt="intel-fpga-devcloud" src="https://user-images.githubusercontent.com/56968566/68611681-86f05600-046f-11ea-8d12-f5259d60e7da.png">
 
@@ -61,9 +61,10 @@
 * [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
   + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
 * [7.0 Job Control and Batch Submission](#70-job-control-and-batch-submission)
-  + [7.1 Submitting Jobs for a Specified Walltime](#71-submitting-jobs-for-a-specified-walltime)
-  + [7.2 Report Status for Jobs Running on the Devcloud](#72-report-status-for-jobs-running-on-the-devcloud)
-  + [7.3 Deleting Jobs on the Devcloud](#73-deleting-jobs-on-the-devcloud)
+  * [7.1 Submitting Batch Jobs](#71-submitting-batch-jobs)
+  * [7.2 Submitting Jobs for a Specified Walltime](#72-submitting-jobs-for-a-specified-walltime)
+  * [7.3 Report Status for Jobs Running on the Devcloud](#73-report-status-for-jobs-running-on-the-devcloud)
+  * [7.4 Deleting Jobs on the Devcloud](#74-deleting-jobs-on-the-devcloud)
 * [8.0 Development Tool Access and Setup](#80-development-tool-access-and-setup)
   + [8.1 Quartus Font Setup](#81-quartus-font-setup)
 * [9.0 Transferring Files to the Devcloud](#90-transferring-files-to-the-devcloud)
@@ -152,7 +153,7 @@ There are different methods of terminal connections. Listed below are a few opti
 
 1. Launch MobaXterm using the installer. You should see the following:
 
-![mobaxterm_window](https://user-images.githubusercontent.com/56968566/67715801-c5721500-f987-11e9-95e0-bdf9f76b7f43.png)
+<img src="https://user-images.githubusercontent.com/56968566/67715801-c5721500-f987-11e9-95e0-bdf9f76b7f43.png" alt="mobaxterm_window" width=80% />
 
 2. Click: **"Start local terminal"**. Within this console you can see your local PC based files using standard Linux operating system commands (ls, cd, vi and etc.). 
 
@@ -379,9 +380,9 @@ ssh -L 4002:s001-n137:22 colfax-intel		# Inside Intel Firewall Example
 
 
 
-Launch the x2go application on your PC. Set up the new session with the following settings substituting the Login field <uxxxx> with your own assigned user name and the path to the RSA/DSA key for ssh connection. This is the same key referenced for MobaXterm connection that enables ssh devcloud.
+Launch the x2go application on your PC. Set up the new session with the following settings substituting the Login field </ uXXXXX /> with your own assigned user name and the path to the RSA/DSA key for ssh connection. This is the same key referenced for MobaXterm connection that enables ssh devcloud.
 
-![image](https://user-images.githubusercontent.com/56968566/70007979-1943c100-1527-11ea-8cc0-685a5b50cfcb.png)
+<img src="https://user-images.githubusercontent.com/56968566/70007979-1943c100-1527-11ea-8cc0-685a5b50cfcb.png" alt="image" width=60% />
 
 
 
@@ -391,30 +392,30 @@ The input/output screen has a setting for the display size which can be adjusted
 xdpyinfo | grep dot
 ```
 
-![image](https://user-images.githubusercontent.com/56968566/70003091-f8736f80-1516-11ea-9b36-666084afee51.png)
+<img src="https://user-images.githubusercontent.com/56968566/70003091-f8736f80-1516-11ea-9b36-666084afee51.png" alt="image" width=60% />
 
 
 To launch the application, hit **OK** to save the settings and then click on the **New Session** icon to launch a graphics session.
 
-![image](https://user-images.githubusercontent.com/56968566/69988900-6871fd80-14f7-11ea-8af1-dddc9c0adaad.png)
+<img src="https://user-images.githubusercontent.com/56968566/69988900-6871fd80-14f7-11ea-8af1-dddc9c0adaad.png" alt="image" width=77% />
 
 After a minute or so, you should see the X2GO screen, be patient. While waiting for X2GO to launch you will see a screen that looks like this:
 
 ![image](https://user-images.githubusercontent.com/56968566/69988847-4c6e5c00-14f7-11ea-8804-6394099a3b85.png)
 
-![image](https://user-images.githubusercontent.com/56968566/70008081-5314c780-1527-11ea-8c47-ad27b69222d7.png)
-
 Click **Yes** when the following window pops up. 
+
+![image](https://user-images.githubusercontent.com/56968566/70008081-5314c780-1527-11ea-8c47-ad27b69222d7.png)
 
 You might get the following message if you previously logged into a different machine:
 
-![host_key_verification_terminate](https://user-images.githubusercontent.com/56968566/67716812-b55b3500-f989-11e9-8c60-9c0eaaee2172.png)
+<img src="https://user-images.githubusercontent.com/56968566/67716812-b55b3500-f989-11e9-8c60-9c0eaaee2172.png" alt="host_key_verification_terminate" width=67% />
 
 Enter **No**.
 
-![host_key_verification_update](https://user-images.githubusercontent.com/56968566/67716830-bee49d00-f989-11e9-86b4-5aee8f792b5e.png)
-
 Then another dialog box will appear, enter **Yes**,
+
+<img src="https://user-images.githubusercontent.com/56968566/67716830-bee49d00-f989-11e9-86b4-5aee8f792b5e.png" alt="host_key_verification_update" width=80% />
 
 You will see a window that looks like the following. If a window opens up, click **Default**.
 
@@ -424,7 +425,7 @@ If X2GO fails to launch, check that you ran the tunneling command on Mobaxterm o
 
 In X2GO, right click within the desktop and select “Open Terminal Here”.
 
-![open_terminal](https://user-images.githubusercontent.com/56968566/67716892-dfacf280-f989-11e9-9d36-6e6c895c363e.png)
+<img src="https://user-images.githubusercontent.com/56968566/67716892-dfacf280-f989-11e9-9d36-6e6c895c363e.png" alt="open_terminal" width=37% />
 
 Your GUI ready environment should  be similar to the following image:![image](https://user-images.githubusercontent.com/56968566/69988693-ff8a8580-14f6-11ea-8b38-16ab19094b37.png)
 
@@ -442,9 +443,23 @@ Note that X2Go is only available on nodes s001-n13[7-9] and s001-n189 at this ti
 
 ## 7.0 Job Control and Batch Submission
 
-This section provides information on how to submit and terminate jobs on the Devcloud. 
+This section provides information on how to submit and terminate bash jobs on the Devcloud. 
 
-### 7.1 Submitting Jobs for a Specified Walltime
+### 7.1 Submitting Batch Jobs
+
+To launch a batch job, user must be logged in to the machine called login-2 (headnode) since the qsub command launches the batch job from the head node. The user must also specify the name of the wanted powerful compute node server </ sxxx-nxxx/ > that will execute their submitted batch job. 
+
+Type the following after knowing specified node; where job.sh represents user's batch file:
+
+```bash
+qsub -q batch@v-qsvr-fpga -l nodes=s00X-nXXX:ppn=2 -d . job.sh
+```
+
+Once the submitted job finishes running, two log files are created; *.sh.oxxxx and *.sh.exxxxx. The *.sh.oxxxxx file allows you to view the output results of the commands within the batch file. And *.sh.exxxxx file allows you to view any error results, if any, while the submitted batch file was running.
+
+
+
+### 7.2 Submitting Jobs for a Specified Walltime
 
 A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours). Nodes n130-n136 can increase walltime up to 24 hours and nodes n137-n139 and 189 can be increased up to a maximum of 48 hours. Type the following after qsub-ing into a specified node:
 
@@ -462,7 +477,7 @@ sleep 11h											# sleep command equivalent to a quartus compilation file req
 echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, output "job success" to walltime_log.txt
 ```
 
-### 7.2 Report Status for Jobs Running on the Devcloud
+### 7.3 Report Status for Jobs Running on the Devcloud
 
 To report the status of your jobs running on the DevCloud is to type the following:
 
@@ -480,7 +495,7 @@ The result will be of the form:
 
 `2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02`
 
-### 7.3 Deleting Jobs on the Devcloud
+### 7.4 Deleting Jobs on the Devcloud
 
 Jobs can be terminated with the following command when nodes are hanging with stalled jobs: 
 
@@ -526,8 +541,9 @@ If the Quartus font appears too zoomed in, as shown below, complete the followin
 
 Under the Tools tab on the Main Bar, select Options. In the General Category, select “Fonts” and change the text size to 6.
 
-![quartus_options](https://user-images.githubusercontent.com/56968566/67717114-55b15980-f98a-11e9-857e-8c8f5d572d51.png)
-![quartus_fontsize](https://user-images.githubusercontent.com/56968566/67717117-5649f000-f98a-11e9-92fe-2864e3d9b155.png)
+<img src="https://user-images.githubusercontent.com/56968566/67717114-55b15980-f98a-11e9-857e-8c8f5d572d51.png" alt="quartus_options"/>
+
+ ![quartus_fontsize](https://user-images.githubusercontent.com/56968566/67717117-5649f000-f98a-11e9-92fe-2864e3d9b155.png)
 
 
 
@@ -570,15 +586,23 @@ MobaXterm can be used to transfer files to and from your local PC to the Devclou
 <u>**To setup this feature, make sure that you have completed all the steps to connect to the DevCloud.**</u>
 
 1. In the main toolbar of MobaXterm, click the **Session** button. ![mobaxterm_new_session](https://user-images.githubusercontent.com/56968566/67717144-65c93900-f98a-11e9-870b-784e76806a7f.png)
-2. Select **SSH**. ![mobaxterm_ssh](https://user-images.githubusercontent.com/56968566/67717168-6d88dd80-f98a-11e9-987a-3d226b109886.png)
+
+   
+
+2. Select **SSH**. <img src="https://user-images.githubusercontent.com/56968566/67717168-6d88dd80-f98a-11e9-987a-3d226b109886.png" alt="mobaxterm_ssh" width=20% />
+
 3. Enter the following information:
    1. Remote host: **localhost**
    2. Specify username: u12345 (edit to your username)
    3. Port: **4002**
       ![image](https://user-images.githubusercontent.com/56968566/69988244-1da3b600-14f6-11ea-8276-39ae5e70ef7d.png)
+
 4. Under **Advanced SSH settings** > Select **Use Private Key** and search for the private key you used when you setup your DevCloud log-in. 
+
 5. Click **OK**. 
+
 6. If a new tab does not open, double-click on the side window **localhost (u#)**
+
    ![localhost_user_session](https://user-images.githubusercontent.com/56968566/67717217-82657100-f98a-11e9-8e15-30a98a73741e.png)
 
 The localhost user directory tool can be re-opened and closed as necessary to transfer files. Files can be transferred by dragging and dropping into the side-bar that displays the contents of the user saved in the DevCloud directory. 
@@ -722,7 +746,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] On your PC, launch the Quartus Programmer. Search **Programmer** in the File Explorer. 
 
-  ![programmer](https://user-images.githubusercontent.com/56968566/67718453-01f43f80-f98d-11e9-9745-3f596993ced4.png)
+  <img src="https://user-images.githubusercontent.com/56968566/67718453-01f43f80-f98d-11e9-9745-3f596993ced4.png" alt="programmer" width=67% />
 
 - [ ] If you don’t have the Programmer on your PC, download it from this link: http://fpgasoftware.intel.com/18.1/?edition=lite&download_manager=dlm3&platform=windows
 
@@ -734,7 +758,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] For Intel Employees within the Firewall, in the File Explorer Search window, search ''**Programmer**'', and select **Run as administrator**. For other users, you can open the Programmer (Quartus Prime 18.1) normally. 
 
-  ![programmer](https://user-images.githubusercontent.com/56968566/67718645-64e5d680-f98d-11e9-9987-ea2d1ea6344c.png)
+  <img src="https://user-images.githubusercontent.com/56968566/67718645-64e5d680-f98d-11e9-9987-ea2d1ea6344c.png" alt="programmer" width=77% />
 
 - [ ] Select **Yes** if a yellow window will pop-up asking if you to allow app changes from an unknown publisher. 
 
@@ -742,11 +766,13 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Left click on **Hardware Setup…** and then select the **JTAG Settings** tab.
 
-  ![download_programmer](https://user-images.githubusercontent.com/56968566/67718852-dde52e00-f98d-11e9-9c06-39ac5c61aa5d.png)![run_admin](https://user-images.githubusercontent.com/56968566/67718870-eccbe080-f98d-11e9-83b8-1a7738f3f018.png)
+<img src="https://user-images.githubusercontent.com/56968566/67718852-dde52e00-f98d-11e9-9c06-39ac5c61aa5d.png" alt="download_programmer" width=57% /><img src="https://user-images.githubusercontent.com/56968566/67718870-eccbe080-f98d-11e9-83b8-1a7738f3f018.png" alt="run_admin" width=57% />
 
 - [ ] Click on **Configure Local JTAG Server...**
 
-- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.![hardware_setup](https://user-images.githubusercontent.com/56968566/67718930-0f5df980-f98e-11e9-92ce-21c5476c11b2.png)
+- [ ] **Enable remote clients to connect to the local JTAG** server and **enter a password** in the prompt box and **<u>remember this password</u>**. It will be used to connect later.
+
+  <img src="https://user-images.githubusercontent.com/56968566/67718930-0f5df980-f98e-11e9-92ce-21c5476c11b2.png" alt="hardware_setup" width=47% />
 
 - [ ] On your local PC terminal, type in the following command to tunnel from the DevCloud to your local USB: **Note: the last parameter points to the node 138. For server consistency, you need to adjust this to the node number you are currently using to connect to the Devcloud.**
 
@@ -763,11 +789,11 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] On the X2Go app and Quartus Prime Lite window, launch the programmer by selecting **Tools** > **Programmer**. 
 
-  ![configure_JTAG](https://user-images.githubusercontent.com/56968566/67718964-20a70600-f98e-11e9-99ac-d897ffa295cd.png)
+  <img src="https://user-images.githubusercontent.com/56968566/67718964-20a70600-f98e-11e9-99ac-d897ffa295cd.png" alt="configure_JTAG" width=70% />
 
 - [ ] Left click on **Hardware Setup,** select the **JTAG Settings** tab, and **Add Server**.
 
-  ![JTAG_password](https://user-images.githubusercontent.com/56968566/67718986-2a306e00-f98e-11e9-9d06-24ccc2173801.png)
+  <img src="https://user-images.githubusercontent.com/56968566/67718986-2a306e00-f98e-11e9-9d06-24ccc2173801.png" alt="JTAG_password" width=67% />
 
 - [ ] Enter in the following information: 
 
@@ -777,7 +803,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Select **OK**, and you should see the localhost on the list of JTAG servers.
 
-  ![add_server_JTAG](https://user-images.githubusercontent.com/56968566/67719028-3d433e00-f98e-11e9-8c3d-fcaf6cec4aba.png)
+  <img src="https://user-images.githubusercontent.com/56968566/67719028-3d433e00-f98e-11e9-8c3d-fcaf6cec4aba.png" alt="add_server_JTAG" width=67% />
 
 - [ ] Click on the **Hardware settings tab,** double click on the **localhost:13090**, and that should now be your selected USB blaster download connection. 
 
