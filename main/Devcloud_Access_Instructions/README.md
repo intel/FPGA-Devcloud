@@ -38,7 +38,6 @@
     </a>
   </h3>
 </div>
-
 ------
 
 # Devcloud Access Instructions
@@ -657,7 +656,7 @@ Use the wget command in command line providing one or more URLs as arguments to 
 
 ```bash
 wget http://www.example.com/
-​```
+```
 
 ![Image Wget](https://user-images.githubusercontent.com/59750149/77707156-8a4d2f80-6f81-11ea-982a-5bc970884e83.png)
 
@@ -670,7 +669,7 @@ Use the curl command in command line to download the file.
 
 ```bash
 curl -o filename http://raw.githubusercontent.com/example-file
-​```
+```
 
 ![Image curl](https://user-images.githubusercontent.com/59750149/77707877-b36ebf80-6f83-11ea-8f6e-3f36c36d0e51.png)
 
