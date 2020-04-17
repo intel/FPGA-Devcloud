@@ -321,7 +321,7 @@ If there is a free node, when you execute this command you will be logged in to 
 
 To login to a specific machine in interactive mode (-I), execute one of the following commands:
 
-Note, we would also show how to launch a batch job which launches from the head node and will execute on the compute node and created associated log files to allow you to view the results.
+We will also show how to launch a batch job which launches from the head node and will execute on the compute node and created associated log files to allow you to view the results.
 
 ```
 qsub -q batch@v-qsvr-fpga -I -l nodes=s00X-nXXX:ppn=2 # (for nodes with attached PAC cards, substitute with appropriate server numbers). Compute only nodes do not require -s v-qsvr-fpga
