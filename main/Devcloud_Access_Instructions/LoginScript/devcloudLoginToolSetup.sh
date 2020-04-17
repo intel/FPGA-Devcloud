@@ -799,12 +799,12 @@ Help() {
     echo "Argument Options: "
     echo "-----------------"
     echo
-    echo "QL		Quartus Lite"
-    echo "QS		Quartus Standard"
-    echo "QP		Quartus Pro"
-    echo "HLS		High-Level Synthesis"
-    echo "A10DS		Arria 10 Development Stack"
-    echo "A10OAPI  	Arria 10 One API"
-    echo "S10DS		Stratix 10 Development Stack"
+    echo "QL 	  (eg. tools_setup -t QL 18.1)		Quartus Lite"
+    echo "QS	  (eg. tools_setup -t QS 18.1)		Quartus Standard"
+    echo "QP      (eg. tools_setup -t QP 18.1)		Quartus Pro"
+    echo "HLS     (eg. tools_setup -t HLS QL 18.1)	High-Level Synthesis"
+    echo "A10DS   (eg. tools_setup -t A10DS 1.2)	Arria 10 Development Stack"
+    echo "A10OAPI (eg. tools_setup -t A10OAPI)  	Arria 10 One API"
+    echo "S10DS   (eg. tools_setup -t S10DS)		Stratix 10 Development Stack"
     echo
 }
