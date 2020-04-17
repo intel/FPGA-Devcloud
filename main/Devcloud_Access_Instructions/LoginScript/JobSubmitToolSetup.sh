@@ -1,15 +1,3 @@
-#global variables
-red=$'\e[1;31m'
-blu=$'\e[1;34m'
-end=$'\e[0m'
-noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
-arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
-arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
-# 1 more stratix10Nodes expected date TBD
-stratix10Nodes=("s005-n008" "s001-n189")
-allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
-
-
 job_submit()
 {
     # initial check to see if user is logged into a node already
@@ -46,3 +34,41 @@ job_delete()
 	qdel $latest
 	echo "Job: " +  $latest + " deleted."
 }
+
+
+
+
+######################################################################################################
+#					#
+#	Revised April 16, 2020		#
+#########################################
+
+Reserch: 
+qsub .... "hob.sh>logfile" as opposed to each line showing > result or >> result
+
+
+Status: 
+qstat -s batch@v-qsvr-fpga
+
+
+qsub -q batch@v-qsvr-fpga job.sh
+qsub -l nodes=1:fpga_compile:ppn=2 -d . job.sh
+qsub -l nodes=1:fpga:ppn=2 -d . job.sh (goes to OAPI node -> s001-n081)
+qsub -l nodes=fpga:fpga:ppn=2 -d . job.sh (also goes to same OAPI)
+
+qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
+
+
+
+Output:
+cat result
+tail -n 1000 -f result
+
+
+Make .sh > exe Process:
+chmod 775 hob.sh
+./hob.sh
+cat result
+
+
+pbsnodes > foo
