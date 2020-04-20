@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Mar 31 2020 Version 2    #
-#                           #
+# -Apr 20 2020 Version 1    #
+# Add 20.1 QPro             #
 #                           #
 #                           #
 #                           #
@@ -322,7 +322,7 @@ tools_setup()
 {
     QUARTUS_LITE_RELEASE=("18.1")
     QUARTUS_STANDARD_RELEASE=("18.1")
-    QUARTUS_PRO_RELEASE=("17.1" "18.1" "19.2" "19.3")
+    QUARTUS_PRO_RELEASE=("17.1" "18.1" "19.2" "19.3" "20.1")
 
     #defined paths
     GLOB_INTELFPGA_PRO="/glob/development-tools/versions/intelFPGA_pro"
@@ -334,7 +334,8 @@ tools_setup()
     GLOB_FPGASUPPORTSTACK="/glob/development-tools/versions/fpgasupportstack"
     GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
 
-    ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
+    #ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
+    ARRIA10DEVSTACK_RELEASE=("1.2") 
 
     echo
     printf "%s\n" "${blu}Which tool would you like to source?${end}"
