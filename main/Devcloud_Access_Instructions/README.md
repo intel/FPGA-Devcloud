@@ -449,15 +449,34 @@ This section provides information on how to submit and terminate bash jobs on th
 
 To launch a batch job, user must be logged in to the machine called login-2 (headnode) since the qsub command launches the batch job from the head node. The user must also specify the name of the wanted powerful compute node server </ sxxx-nxxx/ > that will execute their submitted batch job. 
 
-Type the following after knowing specified node; where job.sh represents user's batch file:
+Type the following after knowing specified node; where *example.sh* represents user's batch file:
 
 ```bash
-qsub -q batch@v-qsvr-fpga -l nodes=s00X-nXXX:ppn=2 -d . job.sh
+qsub -q batch@v-qsvr-fpga -l nodes=s00X-nXXX:ppn=2 -d . example.sh
 ```
 
 Once the submitted job finishes running, two log files are created; *.sh.oxxxx and *.sh.exxxxx. The *.sh.oxxxxx file allows you to view the output results of the commands within the batch file. And *.sh.exxxxx file allows you to view any error results, if any, while the submitted batch file was running.
 
+Example of a file to be executed, and the obtained outcomes once the job is done executing:
 
+```bash
+qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
+----------------------------------job.sh--------------------------------------------
+  1 date
+  2 hostname
+  3 source ~/JOB_DEMO/HelpToolSetup.sh
+  4 tools_setup -t QL 18.1
+  5 which quartus
+  6 cd unknown_directory
+```
+
+Error logfile obtained:
+
+![errorimage](https://user-images.githubusercontent.com/59750149/79778493-a8425180-82ed-11ea-9f3a-c29f5d7cf945.png)
+
+Output logfile obtained:
+
+![outputimage](https://user-images.githubusercontent.com/59750149/79783143-0f173900-82f5-11ea-85d1-ce51ec62bd60.png)
 
 ### 7.2 Submitting Jobs for a Specified Walltime
 
@@ -465,14 +484,14 @@ A user will be logged off a node if they have been using it for longer than 6 ho
 
 ```
 qsub -l walltime=<insert-time> 'command/bash file to be executed'
+
 qsub -l walltime=12:00:00 walltime.sh		# example of a file to be executed
 -------------------------------= walltime.sh ------------------------------
 
 # begin walltime.sh
 
-sleep 11h											# sleep command equivalent to a quartus compilation file requiring 11 hours of compilation
-
-													# alternatively, sleep 11h would be quartus_sh commands (i.e. quartus_sh --flow main.v) 	
+sleep 11h		# sleep command equivalent to a quartus compilation file requiring 11 hours of compilation
+# alternatively, sleep 11h would be quartus_sh commands (i.e. quartus_sh --flow main.v) 	
 
 echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, output "job success" to walltime_log.txt
 ```
