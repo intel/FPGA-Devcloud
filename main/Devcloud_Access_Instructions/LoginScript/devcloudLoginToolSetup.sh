@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Apr 20 2020 Version 2    #
+# -Apr 21 2020 Version 2    #
 # Add argv login            #
 #                           #
 #                           #
@@ -36,7 +36,7 @@ devcloud_login()
 
     if [[ $1 =~ "-h" ]]; then
 	# display Help
-	Help
+	dev_Help
 	return 0
     elif [[ $1 == "-b" && -n $2 ]]; then
 	argv1="$2"
@@ -243,6 +243,38 @@ devcloud_login()
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
 	    elif [[ -n "$argv2" && ${availableNodes[*]} =~ "$argv2" ]]; then
 		node="$argv2"
+                # find out if the nodeNumber is on the fpga queue to know which qsub command to call
+                is_in_fpga_queue="$(pbsnodes -s v-qsvr-fpga | grep -B 4 fpga | grep -o $node )"
+                if [ -z $is_in_fpga_queue ];  # if is_in_fpga_queue is empty then it is not on the fpga queue
+                then
+                    echo
+                    echo --------------------------------------------------------------------------------------
+                    printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
+                    echo
+                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
+                    echo --------------------------------------------------------------------------------------
+                    echo
+                    echo "running: qsub -I -l nodes="$node":ppn=2"
+                    qsub -I -l nodes="$node":ppn=2
+                else
+                    echo
+                    echo --------------------------------------------------------------------------------------
+                    printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
+                    echo
+                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
+                    echo --------------------------------------------------------------------------------------
+                    echo
+                    echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
+                    qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
+                fi
 	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]]; then
 		printf "%s\n%s\n" "${red}Invalid Entry. Available nodes are: ${availableNodes[*]}" "eg: devcloud_login -b SNN ${availableNodes[0]}${end}"
             else
@@ -343,7 +375,7 @@ tools_setup()
 
     if [[ $1 =~ "-h" ]]; then
 	# display Help
-	Help
+	tool_Help
 	return 0
     elif [[ $1 == "-t" && -n $2 ]]; then
 	argv1="$2"
@@ -786,7 +818,34 @@ tools_setup()
 }
 
 
-Help() {
+dev_Help() {
+    echo
+    echo "Usage: "
+    echo "------"
+    echo
+    echo "devcloud_login -h | --help"
+    echo "devcloud_login -b [<script args options>]"
+    echo "devcloud_login "
+    echo
+    echo "Description: "
+    echo "------------"
+    echo
+    echo "devcloud_login is a command aimed to help the user setup in a devcloud node."
+    echo "The devcloud_login has a user interactive and non interactive mode. "
+    echo
+    echo "Argument Options: "
+    echo "-----------------"
+    echo
+    echo "A10PAC 	(eg. devcloud_login -b A10PAC)		Arria 10 PAC Card"
+    echo "A10OAPI	(eg. devcloud_login -b A10OAPI)		Arria 10 OneAPI"
+    echo "S10PAC      	(eg. devcloud_login -b S10PAC)		Stratix 10 PAC Card"
+    echo "CO     	(eg. devcloud_login -b CO)		Compilation Only"
+    echo "SNN		(eg. devcloud_login -b SNN s001-n139)	Specific Node Name"
+    echo
+}
+
+
+tool_Help() {
     echo
     echo "Usage: "
     echo "------"
@@ -813,3 +872,4 @@ Help() {
     echo "S10DS   (eg. tools_setup -t S10DS)		Stratix 10 Development Stack"
     echo
 }
+
