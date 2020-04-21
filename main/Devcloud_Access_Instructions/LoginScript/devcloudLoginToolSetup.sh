@@ -34,33 +34,47 @@ devcloud_login()
         return 1
     fi
 
-    echo
-    printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
-    echo
-    echo "1) Arria 10 PAC Card Programming"
-    echo "2) Arria 10 OneAPI"
-    echo "3) Stratix 10 PAC Card Programming"
-    echo "4) Compilation Only"
-    echo "5) Enter Specific Node Number"
-    echo
-    echo -n "Number: "
-    read -e number
+    if [[ $1 =~ "-h" ]]; then
+	# display Help
+	Help
+	return 0
+    elif [[ $1 == "-b" && -n $2 ]]; then
+	argv1="$2"
+	argv2="$3"
+	argv3="$4"
+    elif [ -z $1 ]; then
+        unset argv1 argv2 argv3
+    else
+        echo "${red}Invalid Argument. Try 'devcloud_login --help' for more information.${end}"
+        return 0
+    fi
 
-    until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ] || [ "$number" -eq 5 ];
-    do
-        printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
-        echo -n "Number: "
-        read -e number
-    done
+    if [ -z $argv1 ]; then
+	echo
+	printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
+	echo
+	echo "1) Arria 10 PAC Card Programming"
+	echo "2) Arria 10 OneAPI"
+	echo "3) Stratix 10 PAC Card Programming"
+	echo "4) Compilation Only"
+	echo "5) Enter Specific Node Number"
+	echo
+	echo -n "Number: "
+	read -e number
+	until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ] || [ "$number" -eq 5 ];
+	do
+	    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
+	    echo -n "Number: "
+	    read -e number
+	done
+    fi
 
     IFS="|"
     currentNode="$(echo $HOSTNAME | grep -o -E "${allNodes[*]}")"
     unset IFS
 
-    if [ $number -eq 1 ];
-    then
-        if [ -z $currentNode ]; #if current node is empty
-        then
+    if [[ $number -eq 1 || ( -n $argv1 && $argv1 = "A10PAC" ) ]]; then
+        if [ -z $currentNode ]; then  #if current node is empty
             #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
             #node=$(head -n 1 nodes.txt)
             IFS="|"
@@ -96,10 +110,8 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 2 ];
-    then
-        if [ -z $currentNode ]; #if current node is empty
-        then
+    elif [[ $number -eq 2 || ( -n $argv1 && $argv1 = "A10OAPI" ) ]]; then
+        if [ -z $currentNode ]; then  #if current node is empty
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
@@ -133,10 +145,8 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 3 ];
-    then
-        if [ -z $currentNode ];
-        then
+    elif [[ $number -eq 3 || ( -n $argv1 && $argv1 = "S10PAC" ) ]]; then
+        if [ -z $currentNode ]; then
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
@@ -169,10 +179,8 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 4 ];
-    then
-        if [ -z $currentNode ];
-        then
+    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 = "CO" ) ]]; then
+        if [ -z $currentNode ]; then
             IFS="|"
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -206,10 +214,8 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [ $number -eq 5 ];
-    then
-        if [ -z $currentNode ];
-        then
+    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 = "SNN" ) ]]; then
+        if [ -z $currentNode ]; then
             IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -224,23 +230,21 @@ devcloud_login()
             let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
             let number_of_available_arria10_oneAPI_nodes=${#availableNodesArria10_oneAPI_Nodes[@]}+${#availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}
             let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
-            # availableNodes=() #initialize the empty array
-            # availableNodes+=($availableNodesNohardware) #append an
-            # availableNodes+=($availableNodesArria)
-            # availableNodes+=($availableNodesStratix)
-            # echo ${availableNodes}
+
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" \
                 "${availableNodesNohardware_on_temp_server[@]}" "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}" \
                 "${availableNodesArria10_oneAPI_Nodes[@]}" "${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}")
-            #echo ${availableNodes[@]}
-            #echo ${availableNodes[2]}
-            if [ ${#availableNodes[@]} == 0 ];
-            then
+
+            if [ ${#availableNodes[@]} == 0 ]; then
                 echo
                 echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes. Try again later. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
+	    elif [[ -n "$argv2" && ${availableNodes[*]} =~ "$argv2" ]]; then
+		node="$argv2"
+	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]]; then
+		printf "%s\n%s\n" "${red}Invalid Entry. Available nodes are: ${availableNodes[*]}" "eg: devcloud_login -b SNN ${availableNodes[0]}${end}"
             else
                 echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
                 echo --------------------------------------------------------------------------------------
@@ -269,7 +273,6 @@ devcloud_login()
                 echo
                 echo -n "Node: "
                 read -e node
-
                 #until  [ $node -lt 140 ] && [ $node -gt 129 ]  ||  [ "$node" == 189 ]
                 until  [[ ${availableNodes[@]} =~ ${node} && ${#node} -eq 9 ]] #this checks that user input is an available node and node has length of 9
                 do
