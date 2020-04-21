@@ -291,7 +291,12 @@ You will now be logged in:
 
 ![image](https://user-images.githubusercontent.com/56968566/69987680-e54fa800-14f4-11ea-8b03-9da4de9381c7.png)
 
+Note that the following response:
 
+tty: standard input: Inappropriate ioctl for device
+X11 forwarding request failed on channel 0 
+
+​	 is expected behavior.
 
 ## 5.0 Connecting to Servers Running FPGA Development Software
 
@@ -311,7 +316,7 @@ if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
 fi
 ```
 
-Source ~/.bashrc and run devcloud_login and follow the instructions to connect the appropriate compute node. Script details are here: https://github.com/intel/FPGA-Devcloud/blob/master/main/Devcloud_Access_Instructions/LoginScript/README.md .
+Source ~/.bashrc and run devcloud_login and follow the instructions to connect to the appropriate compute node. 
 
 Should you want more details on available compute resources and query what is available, continue with the instructions below.
 
@@ -362,13 +367,13 @@ Grab the **MS Windows version** – click where the cursor is in the screenshot 
 
 Go through the install steps for the mswin X2Go Client and accept all.
 
-Repoen the MobaXterm window, open a second session tab by clicking on the "+" as shown below:![image](https://user-images.githubusercontent.com/56968566/69987433-5b074400-14f4-11ea-9046-eb3d39ca0f69.png)
 
-This tab will a launch terminal running UNIX commands on your local machine. Note that you first need to be logged in to the compute server (use devcloud_login) prior to opening the graphics port as shown in the step below.
 
 ### 6.1 Opening Port for Graphics Usage in X2Go
 
-To open the port for graphics usage, use the devcloud_login function (sec 5.1) and copy and paste the appropriate ssh command shown as an output from this function. Examples of this command are shown below based on inside and outside the Intel firewall.
+Repoen the MobaXterm window, open a second session tab by clicking on the "+" as shown below:![image](https://user-images.githubusercontent.com/56968566/69987433-5b074400-14f4-11ea-9046-eb3d39ca0f69.png)
+
+This tab will a launch terminal running UNIX commands on your local (PC) machine. You should have two tabs open. The first tab should be logged into login-2. The second tab will be logged in to your PC. Recall when you ran devcloud_login you see a message that needs to be pasted into the PC tab as described in the next section. To open the port for graphics usage, use the devcloud_login function (sec 5.1) and copy and paste the appropriate ssh command shown as an output from this function into the tab that is logged into your PC. Examples of this command are shown below based on inside and outside the Intel firewall.
 
 ```
 ssh -L 4002:s001-n137:22 devcloud			# Public User Example
