@@ -36,7 +36,7 @@ devcloud_login()
     inter_nodeusage=`ps -auwx | grep "qsub.*-I" | grep -v "grep" | wc -l`
     name_node=`ps -auwx | grep "qsub.*-I" | awk '{print $16}'`
     if [ $inter_nodeusage -ne 0 ]; then
-	echo "You are already logged into node $name_node interactively."
+	echo "You are already logged into node ${name_node:7:9} interactively."
 	return 1
     fi
  
@@ -866,9 +866,9 @@ dev_Help() {
     echo "Argument Options: "
     echo "-----------------"
     echo
-    echo "A10PAC  (eg. devcloud_login -I A10PAC  or devcloud_login -b A10PAC job.sh)	             Arria 10 PAC Card"
+    echo "A10PAC  (eg. devcloud_login -I A10PAC  or devcloud_login -b A10PAC job.sh)	           Arria 10 PAC Card"
     echo "A10OAPI (eg. devcloud_login -I A10OAPI or devcloud_login -b A10OAPI job.sh)                Arria 10 OneAPI"
-    echo "S10PAC  (eg. devcloud_login -I S10PAC  or devcloud_login -b S10PAC job.sh)	             Stratix 10 PAC Card"
+    echo "S10PAC  (eg. devcloud_login -I S10PAC  or devcloud_login -b S10PAC job.sh)	           Stratix 10 PAC Card"
     echo "CO      (eg. devcloud_login -I CO      or devcloud_login -b CO job.sh)                     Compilation Only"
     echo "SNN     (eg. devcloud_login -I SNN s001-n139 or devcloud_login -b SNN s001-n139 job.sh)    Specific Node Name"
     echo
