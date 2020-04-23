@@ -404,7 +404,7 @@ tools_setup()
 
     if [[ $1 =~ "-h" ]]; then
 	# display Help
-	tool_Help
+	tool_Help ${QUARTUS_LITE_RELEASE[@]} ${QUARTUS_STANDARD_RELEASE[@]} ${QUARTUS_PRO_RELEASE[@]}
 	return 0
     elif [[ $1 == "-t" && -n $2 ]]; then
 	argv1="$2"
@@ -893,9 +893,9 @@ tool_Help() {
     echo "Argument Options: "
     echo "-----------------"
     echo
-    echo "QL      (eg. tools_setup -t QL 18.1)          Quartus Lite"
-    echo "QS      (eg. tools_setup -t QS 18.1)	      Quartus Standard"
-    echo "QP      (eg. tools_setup -t QP 18.1)	      Quartus Pro"
+    echo "QL      (eg. tools_setup -t QL 18.1)          Quartus Lite; $1"
+    echo "QS      (eg. tools_setup -t QS 18.1)	      Quartus Standard; $2"
+    echo "QP      (eg. tools_setup -t QP 18.1)	      Quartus Pro; ${*:3}"
     echo "HLS     (eg. tools_setup -t HLS QL 18.1)      High-Level Synthesis"
     echo "A10DS   (eg. tools_setup -t A10DS 1.2)        Arria 10 Development Stack"
     echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 One API"
