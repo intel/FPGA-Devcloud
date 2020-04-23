@@ -36,7 +36,7 @@ devcloud_login()
     inter_nodeusage=`ps -auwx | grep "qsub.*-I" | grep -v "grep" | wc -l`
     name_node=`ps -auwx | grep "qsub.*-I" | awk '{print $16}'`
     if [ $inter_nodeusage -ne 0 ]; then
-	echo "You are already logged into node ${name_node:7:9} interactively."
+	echo "You are already logged into node ${name_node:6:9} interactively."
 	return 1
     fi
  
