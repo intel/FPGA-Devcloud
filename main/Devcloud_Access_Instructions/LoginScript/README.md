@@ -1,6 +1,6 @@
 **Login Script**
 
-Below are the instructions to the Devcloud login script. The picture below shows what the current script appears as. When you type the command “login”, the following output is shown. It separates the available nodes into 130-136, and 137-139, as well as stating what the nodes have.
+Below are the instructions to the Devcloud login script. The picture below shows what the current script appears as. When you type the command “devcloud_login”, the following output is shown. It separates the available nodes and what machines are capable of running.
 
 ![](LoginScriptGif.gif)
 
@@ -9,7 +9,7 @@ Below are the instructions to the Devcloud login script. The picture below shows
 Figure 1: Login Script Running
 
 
- 
+
 
 Source the script in your ~/.bashrc by including these two lines inside the .bashrc:
 ```
@@ -23,13 +23,13 @@ fi
 
 
 
- 
 
- 
 
- 
 
- 
+
+
+
+
 
 
  
