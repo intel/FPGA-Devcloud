@@ -29,3 +29,19 @@ Once you select a node to start an interactive login, it will also output the co
 Figure 3: x2go Command
 
 
+
+Other features to the Devcloud login script are the ability to submit batch jobs from the home node as well as to speed the user's interaction when wanting to log into a compute node interactively.
+
+Instead of the user answering "What are you trying to use the Devcloud for? ..." every time to login to a node interactively,  
+
+For more information, try "devcloud_login --help" on the MobaXterm terminal.
+
+![dev_help](https://user-images.githubusercontent.com/59750149/80256309-668a1180-8633-11ea-8b32-555a0c4bcc8c.png)
+
+Figure 4: Login Script Help
+
+
+
+____
+
+Refer to this<>

@@ -55,7 +55,7 @@
   + [4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)
 * [5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)
   + [5.1 Understanding available resources](#51-understanding-available-resources)
-* [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
+* [6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)
   + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
 * [7.0 Job Control and Batch Submission](#70-job-control-and-batch-submission)
   * [7.1 Submitting Batch Jobs](#71-submitting-batch-jobs)
@@ -64,11 +64,11 @@
   * [7.4 Deleting Jobs on the Devcloud](#74-deleting-jobs-on-the-devcloud)
 * [8.0 Development Tool Access and Setup](#80-development-tool-access-and-setup)
   + [8.1 Quartus Font Setup](#81-quartus-font-setup)
-* [9.0 Transferring Files to the Devcloud](#90-transferring-files-to-the-devcloud)
-  + [9.1 Transferring Files to the Devcloud with SCP](#91-transferring-files-to-the-devcloud-with-scp)
+* [9.0 Transferring Files to and from the Devcloud](#90-transferring-files-to-and-from-the-devcloud)
+  + [9.1 Transferring Files to and from the Devcloud with SCP](#91-transferring-files-to-and-from-the-devcloud-with-scp)
   + [9.2 Using MobaXterm to Transfer Files](#92-using-mobaxterm-to-transfer-files)
   + [9.3 Using WinSCP to Transfer Files](#93-using-winscp-to-transfer-files)
-  + [9.4 Using MobaXterm Command Line to Transfer Files](#94-using-mobaxterm-command-line-to-transfer-files)
+  + [9.4 Using MobaXterm Command Line to Transfer URLs (Github)](#94-using-mobaxterm-command-line-to-transfer-urls-github)
     + [1. WGET Command](#1-wget-command)
     + [2. CURL Command](#2-curl-command)
 * [10.0 Launching Development Tools](#100-launching-development-tools)
@@ -356,7 +356,9 @@ At this point you will want to run a PC based product called **X2Go client** tha
 
 
 
-## 6.0 Loading and launching X2Go
+## 6.0 Graphics Usage on the FPGA Devcloud
+
+Although you can do graphics in MobaXterm, it is slow thus we decided to use X2GO application for GUI based programs 
 
 To download X2Go, navigate to this link on your PC browser: https://wiki.x2go.org/doku.php/download:start
 
@@ -540,40 +542,6 @@ Free up the node with the following command:
 kill -9 <job-id>
 ```
 
-### 9.4 Submit/Status/Delete Jobs Script
-
-While in the home node, you can submit a job to compile by running the following command with your compilation file as an argument. 
-
-```bash
-job_submit <compilation_file.sh>
-```
-
-Before it starts compiling, it will ask you how many hours of compilation time you will need. Please only enter an integer (i.e. 4, 6, or 12).
-
-<img src="https://user-images.githubusercontent.com/59750149/78049064-6eee7580-732f-11ea-923e-14e0be047a58.png" alt="image-qsub" style="zoom:80%;" />
-
-To report the status of your latest job, type the following command:
-
-```bash
-job_status
-```
-
-![image-qstat](https://user-images.githubusercontent.com/59750149/78049499-fd62f700-732f-11ea-9d30-f7a3dfe8e292.png)
-
-Your latest job can be terminated with the following command:
-
-```bash
-job_delete
-```
-
-<img src="https://user-images.githubusercontent.com/59750149/78050416-0b654780-7331-11ea-9c07-3b4fafbfad82.png" alt="image-qdelete" style="zoom:80%;" />
-
-Or if you want to delete your first job compiled then use the following command with the job  name you want to terminate as an argument: 
-
-```bash
-job_delete <1234>.v-qsvr-fpga.aidevcloud
-```
-
 
 
 ## 8.0 Development Tool Access and Setup
@@ -604,15 +572,15 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 
 
-## 9.0 Transferring Files to the Devcloud 
+## 9.0 Transferring Files to and from the Devcloud 
 
-**There are three different ways to Transfer Files to the Devcloud:** 
+**There are three different ways to Transfer Files to and from the Devcloud:** 
 
-1. [From a Local PC to DevCloud Server in X2Go Terminal (9.1)](#91-transferring-files-to-the-devcloud-with-scp)
+1. [From/To a Local PC to/from DevCloud Server in X2Go Terminal (9.1)](#91-transferring-files-to-and-from-the-devcloud-with-scp)
 2. [MobaXterm User Session (9.2)](#92-Using-MobaXterm-to-Transfer-Files)
 3. [WinSCP Application (9.3)](#93-Using-WinSCP-to-Transfer-Files)
 
-### 9.1 Transferring Files to the Devcloud with SCP 
+### 9.1 Transferring Files to and from the Devcloud with SCP 
 
 Refer to the login instructions welcome page on file transfer to/from devcloud. **Use the local terminal on your PC to transfer files. Note: If on Intel firewall, replace devcloud with colfax-intel.**
 
@@ -627,6 +595,8 @@ From headnode or computenode to the localnode.
 ```
 scp devcloud:/path/to/remote/file /path/to/local/directory
 ```
+
+If the path to the local directory is simply "." you will find the file on your PC in the following location:
 
 Here is an example:
 
@@ -722,7 +692,7 @@ Press **Login**
 
 Note: When re-using WinSCP to transfer files, re-open the application and **Login**. A new window will pop-up. Click **Update** and you should be able to access and transfer your Devcloud files on the server again. 
 
-### 9.4 Using MobaXterm Command Line to Transfer Files
+### 9.4 Using MobaXterm Command Line to Transfer URLs (Github)
 
 You must be at the directory where you want to download the file from the Github site before running any of the two commands.
 
@@ -753,6 +723,8 @@ curl -o filename http://raw.githubusercontent.com/example-file
 ```
 
 ![Image curl](https://user-images.githubusercontent.com/59750149/77707877-b36ebf80-6f83-11ea-8f6e-3f36c36d0e51.png)
+
+tr -d '/r' < filename > newfilename
 
 
 
