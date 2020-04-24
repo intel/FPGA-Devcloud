@@ -442,7 +442,7 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 **<u>If you want to make the log-in experience shorter without the need of typing the lengthy qsub and ssh commands for future log-in, complete the following steps outlined here:</u>**
 
-[Setup Devcloud Login Script Instructions](https://github.com/intel/FPGA-Devcloud/blob/master/main/Public_Devcloud_Access_Instructions/LoginScript/README.md)
+[Setup Devcloud Login Script Instructions](https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions/LoginScript)
 
 Note that X2Go is only available on nodes s001-n13[7-9] and s001-n189 at this time.
 
@@ -575,9 +575,9 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 **There are three different ways to Transfer Files to the Devcloud:** 
 
-1. [From a Local PC to DevCloud Server in X2Go Terminal (8.1)](#81-transferring-files-to-the-devcloud-with-scp)
-2. [MobaXterm User Session (8.2)](#82-Using-MobaXterm-to-Transfer-Files)
-3. [WinSCP Application (8.3)](#83-Using-WinSCP-to-Transfer-Files)
+1. [From a Local PC to DevCloud Server in X2Go Terminal (9.1)](#91-transferring-files-to-the-devcloud-with-scp)
+2. [MobaXterm User Session (9.2)](#92-Using-MobaXterm-to-Transfer-Files)
+3. [WinSCP Application (9.3)](#93-Using-WinSCP-to-Transfer-Files)
 
 ### 9.1 Transferring Files to the Devcloud with SCP 
 
@@ -762,9 +762,9 @@ If the USB Blaster is not configured, complete the following steps:
 
 ## 12.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board
 
-[15.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#151-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
+[12.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#121-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
 
-[15.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#152-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
+[12.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#122-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
 
 ### 12.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster
 
