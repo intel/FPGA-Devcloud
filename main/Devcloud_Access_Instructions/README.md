@@ -250,7 +250,7 @@ Click [here](#50-Connecting-to-Servers-Running-FPGA-Development-Software) to ski
 
 You cannot log into the Intel Devcloud through the above steps if you are within the Intel firewall. This section contains the tunneling commands and MobaXterm modifications needed to bypass the firewall to connect to the Devcloud. 
 
-### 4.1 Add SOcket CAT Package
+### 4.1 Add socat Package
 
 1. Go to the packages icon and left-click.
 
