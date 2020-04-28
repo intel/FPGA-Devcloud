@@ -63,46 +63,44 @@
   + [5.1 Understanding available resources](#51-understanding-available-resources)
   + [5.2 Login Script](#52-login-script)
   + [5.3 Development Tool Access and Setup](#53-development-tool-access-and-setup)
-  + [5.4 Linux Commands](#54-linux-commands)
+  + [5.4 Querying Device Availability](#54-querying-device-availability)
   
-* [6.0 Job Control and Batch Submission](#60-job-control-and-batch-submission)
+  * [5.5 Submitting Batch Jobs](#55-submitting-batch-jobs)
+  * [5.6 Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
+  * [5.7 Report Status for Jobs Running on the Devcloud](#57-report-status-for-jobs-running-on-the-devcloud)
+  * [5.8 Deleting Jobs on the Devcloud](#58-deleting-jobs-on-the-devcloud)
   
-  * [6.1 Submitting Batch Jobs](#61-submitting-batch-jobs)
-  * [6.2 Submitting Jobs for a Specified Walltime](#62-submitting-jobs-for-a-specified-walltime)
-  * [6.3 Report Status for Jobs Running on the Devcloud](#63-report-status-for-jobs-running-on-the-devcloud)
-  * [6.4 Deleting Jobs on the Devcloud](#64-deleting-jobs-on-the-devcloud)
-  
-* [7.0 Graphics Usage on the FPGA Devcloud](#70-graphics-usage-on-the-fpga-devcloud)
+* [6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)
 
-  + [7.1 Opening Port for Graphics Usage in X2Go](#71-opening-port-for-graphics-usage-in-x2go)
+  + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
 
-  + [7.2 Quartus Font Setup](#72-quartus-font-setup)
+  + [6.2 Quartus Font Setup](#62-quartus-font-setup)
 
-* [8.0 Transferring Files to and from the Devcloud](#80-transferring-files-to-and-from-the-devcloud)
+* [7.0 Transferring Files to and from the Devcloud](#70-transferring-files-to-and-from-the-devcloud)
   
-  + [8.1 Transferring Files to and from the Devcloud with SCP](#81-transferring-files-to-and-from-the-devcloud-with-scp)
-  + [8.2 Using MobaXterm to Transfer Files](#82-using-mobaxterm-to-transfer-files)
-  + [8.3 Using WinSCP to Transfer Files](#83-using-winscp-to-transfer-files)
-  + [8.4 Using MobaXterm Command Line to Transfer URLs (Github)](#84-using-mobaxterm-command-line-to-transfer-urls-github)
+  + [7.1 Transferring Files to and from the Devcloud with SCP](#71-transferring-files-to-and-from-the-devcloud-with-scp)
+  + [7.2 Using MobaXterm to Transfer Files](#72-using-mobaxterm-to-transfer-files)
+  + [7.3 Using WinSCP to Transfer Files](#73-using-winscp-to-transfer-files)
+  + [7.4 Using MobaXterm Command Line to Transfer URLs (Github)](#74-using-mobaxterm-command-line-to-transfer-urls-github)
     + [1. WGET Command](#1-wget-command)
     + [2. CURL Command](#2-curl-command)
   
-* [9.0 Launching Development Tools](#90-launching-development-tools)
+* [8.0 Launching Development Tools](#80-launching-development-tools)
 
-* [10.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#100-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
+* [9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#90-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
 
-* [11.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#110-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
+* [10.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#100-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
   
-  + [11.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#111-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
-  + [11.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#112-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
+  + [10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#101-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
+  + [10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#102-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
   
-* [12.0 Timeouts and Disk Space](#120-timeouts-and-disk-space)
+* [11.0 Timeouts and Disk Space](#110-timeouts-and-disk-space)
 
-* [13.0 Determining and Allocating Memory Availability and CPU Count and Speed](#130-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
+* [12.0 Determining and Allocating Memory Availability and CPU Count and Speed](#120-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
 
-* [14.0 Devcloud Text Editors](#140-devcloud-text-editors)
+* [13.0 Devcloud Text Editors](#130-devcloud-text-editors)
 
-* [15.0 Determining which version of the OS is running on a Node](#150-determining-which-version-of-the-os-is-running-on-a-node)
+* [14.0 Determining which version of the OS is running on a Node](#140-determining-which-version-of-the-os-is-running-on-a-node)
 
 
 
@@ -150,7 +148,7 @@ Intel AI DevCloud Team
 
 ### Connection Methods
 
-Once you have an account / email received you are ready to start the process to setup our account within the cloud. 
+Once you have an account / email received you are ready to start the process to setup your account within the cloud. 
 
 There are different methods of terminal connections. Listed below are a few options you can select in choosing which Terminal application tool you would like to use:
 
@@ -163,7 +161,9 @@ There are different methods of terminal connections. Listed below are a few opti
 
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
-**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment. If you are already running a native Linux or client running Linux, you don't need to load MobaXterm. 
+**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment. 
+
+If you are already running a native Linux or client running Linux, you don't need to load MobaXterm. To skip  the MobaXterm installation process click [here](#33-downloading-an-ssh-key).
 
 ### 3.1 Install MobaXterm
 
@@ -316,7 +316,7 @@ You will now be logged in:
 Note that the following response:
 
 tty: standard input: Inappropriate ioctl for device
-X11 forwarding request failed on channel 0 
+X11 forwarding request <span style="color:red">failed </span>on channel 0 
 
 ​	 is expected behavior.
 
@@ -324,15 +324,20 @@ X11 forwarding request failed on channel 0
 
 ### 5.1 Understanding available resources
 
-You are now logged in to machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.  
+You are now logged into machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.  
 
 Some nodes can run Quartus, OpenCL emulation and compile and HLS emulation, simulation and compile. The node capacity grows with additional servers periodically added.
 
 Some nodes can connect to machines with the above capabilities and also are directly connected to Arria 10 and Stratix 10 PAC cards.
 
-There are a series of detailed Linux commands shown below should you want know the intricate details of how to connect to available compute nodes. 
+There are a series of detailed Linux commands shown below should you want to know the intricate details of how to connect to available compute nodes. 
 
-### 5.2 **Login Script**
+1. [Login Script](#52-login-script) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. [Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
+2. [Development Setup Tool](#53-development-tool-access-and-setup)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. [Batch Jobs Report Status](#57-report-status-for-jobs-running-on-the-devcloud)
+3. [Querying Device Availability](#54-querying-device-availability) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. [Deleting Batch Jobs](#58-deleting-jobs-on-the-devcloud)
+4. [Submitting Batch Jobs](#55-submitting-batch-jobs)
+
+### 5.2 Login Script
 
 To facilitate connectivity without understanding some of the details on the Linux OS, we offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Source the script in your ~/.bashrc by including these two lines inside the .bashrc:
 
@@ -344,13 +349,21 @@ fi
 
 Now you can run devcloud_login and follow the Devcloud login script instructions to connect to the appropriate compute node. The picture below shows what the current script appears as. When you type the command “devcloud_login”, the following output is shown. It separates the available nodes and what machines are capable of running.
 
-![](C:/Users/damarisr/Documents/GitHub/FPGA-Devcloud/main/Devcloud_Access_Instructions/LoginScript/LoginScriptGif.gif)
+![](LoginScriptGif.gif)
 
  Figure 1: Login Script Running
 
  <img src="https://user-images.githubusercontent.com/59750149/80254531-3725d580-8630-11ea-8f25-9987132616c6.png" alt="LoginScript" width=67% />
 
-Figure 2: Login Script Running
+Figure 2: Arria 10 Compute Node Login Script Selection
+
+Figure 3: Arria 10 OneAPI Compute Node Login Script Selection
+
+Figure 4: Stratix 10 Compute Node Login Script Selection
+
+Figure 5: Compilation Compute Node Login Script Selection
+
+Figure 6: Specific Compute Node Login Script Selection
 
 
 
@@ -358,27 +371,53 @@ Once you select a node to start an interactive login, it will also output the co
 
  <img src="https://user-images.githubusercontent.com/59750149/80255690-4b6ad200-8632-11ea-83ea-39df83ab5852.png" alt="x2go" width=70% />
 
-Figure 3: x2go Command
+Figure 7: x2go Command
 
 
 
-Other features to the Devcloud login script are the ability to submit batch jobs from the home node as well as to speed the user's interaction when wanting to log into a compute node interactively.
+Other features to the Devcloud login script are the ability to submit batch jobs from the homenode as well as to speed the user's interaction when wanting to log into a compute node interactively.
 
-Instead of the user answering "What are you trying to use the Devcloud for? ..." every time to login to a node interactively,  
+Instead of answering "What are you trying to use the Devcloud for? ..." every time to login to a node interactively, you can type the following:
 
-For more information, try "devcloud_login --help" on the MobaXterm terminal.
+```bash
+devcloud_login -I [<argument options>]
+
+-----------------------------------Argument-Options-------------------------------------
+A10PAC
+A10OAPI
+S10PAC
+CO
+SNN <compute node name>
+```
+
+To  submit a batch job when logged into the login-2 machine (aka. homenode) , type the following:
+
+```bash
+devcloud_login -b [<argument options>] <job>.sh
+
+-----------------------------------Argument-Options-------------------------------------
+A10PAC <job>.sh
+A10OAPI <job>.sh
+S10PAC <job>.sh
+CO <job>.sh
+SNN <compute node name> <job>.sh
+```
+
+When you submit your job, you will be prompted with the job ID for your submission. With this ID you are able to query for job status and delete if desired. Once the job is completed, two files will be generated. One will contain any error messages that occurred while running your batch job (if any). The other file will contain the output to your batch submission.
+
+For more information, try "devcloud_login --help" on a terminal that is logged into the devcloud.
 
 ![dev_help](https://user-images.githubusercontent.com/59750149/80256309-668a1180-8633-11ea-8b32-555a0c4bcc8c.png)
 
-Figure 4: Login Script Help Message
+Figure 8: Login Script Help Message
 
 ### 5.3 Development Tool Access and Setup
 
-From a terminal that is logged in to the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the tools_setup function. This function will guide you through query of what compile workload you want to run.
+From a terminal that is logged into the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the **tools_setup** function. This function will guide you through query of what compile workload you want to run.
 
 Should you want to source setup scripts manually, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh and manually copy and paste the paths and environment variable settings for your desired tool flow.
 
-We highly recommend to include the lines in your ~/.bashrc script to simplify tool access:
+To source the tools_setup function, include these two lines inside your ~/.bashrc script:
 
     if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
     	source /data/intel_fpga/devcloudLoginToolSetup.sh
@@ -386,11 +425,13 @@ We highly recommend to include the lines in your ~/.bashrc script to simplify to
 
 Follow the instructions after invoking the tools_setup function.
 
+
+
 Should you want more details on available compute resources and query what is available, continue with the instructions below.
 
-### 5.4 Linux Commands
+### 5.4 Querying Device Availability
 
-To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and computenode. The computenode is a high power machine for running compilations . 
+To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and computenode. The computenode is a high power machine for running compilations. 
 
 ```
 pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
@@ -425,11 +466,9 @@ Be cognizant of which Mobaxterm tab and machine you are typing in.
 
 At this point you will want to run a PC based product called [**X2Go client**](#60-graphics-usage-on-the-fpga-devcloud) that will allow you to have a Linux based GUI Intel Quartus and multiple terminal usage. In order to run GUI based applications such as Quartus and Modelsim, you will need to download an application on your PC called X2Go. X2Go is the remedy for slow graphics response from Mobaxterm running X11 or VNC windowing systems.
 
-## 6.0 Job Control and Batch Submission
+### 5.5 Submitting Batch Jobs
 
-This section provides information on how to submit and terminate bash jobs on the Devcloud. 
-
-### 6.1 Submitting Batch Jobs
+This section provides information on how to submit and terminate batch jobs on the Devcloud. 
 
 To launch a batch job, user must be logged in to the machine called login-2 (headnode) since the qsub command launches the batch job from the head node. The user must also specify the name of the wanted powerful compute node server </ sxxx-nxxx/ > that will execute their submitted batch job. 
 
@@ -462,7 +501,7 @@ Output logfile obtained:
 
 ![outputimage](https://user-images.githubusercontent.com/59750149/79783143-0f173900-82f5-11ea-85d1-ce51ec62bd60.png)
 
-### 6.2 Submitting Jobs for a Specified Walltime
+### 5.6 Submitting Jobs for a Specified Walltime
 
 A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours). Nodes n130-n136 can increase walltime up to 24 hours and nodes n137-n139 and 189 can be increased up to a maximum of 48 hours. Type the following after qsub-ing into a specified node:
 
@@ -480,7 +519,7 @@ sleep 11h		# sleep command equivalent to a quartus compilation file requiring 11
 echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, output "job success" to walltime_log.txt
 ```
 
-### 6.3 Report Status for Jobs Running on the Devcloud
+### 5.7 Report Status for Jobs Running on the Devcloud
 
 To report the status of your jobs running on the DevCloud is to type the following:
 
@@ -498,7 +537,7 @@ The result will be of the form:
 
 `2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02`
 
-### 6.4 Deleting Jobs on the Devcloud
+### 5.8 Deleting Jobs on the Devcloud
 
 Jobs can be terminated with the following command when nodes are hanging with stalled jobs: 
 
@@ -522,7 +561,7 @@ kill -9 <job-id>
 
 
 
-## 7.0 Graphics Usage on the FPGA Devcloud
+## 6.0 Graphics Usage on the FPGA Devcloud
 
 Although you can do graphics in MobaXterm, it is slow thus we decided to use X2GO application for GUI based programs.
 
@@ -536,7 +575,7 @@ Go through the install steps for the mswin X2Go Client and accept all.
 
 
 
-### 7.1 Opening Port for Graphics Usage in X2Go
+### 6.1 Opening Port for Graphics Usage in X2Go
 
 Repoen the MobaXterm window, open a second session tab by clicking on the "+" as shown below:![image](https://user-images.githubusercontent.com/56968566/69987433-5b074400-14f4-11ea-9046-eb3d39ca0f69.png)
 
@@ -609,11 +648,11 @@ To change the font sizing of the Desktop files in **Desktop Settings** under the
 
 **<u>If you want to make the log-in experience shorter without the need of typing the lengthy qsub and ssh commands for future log-in, complete the following steps outlined here:</u>**
 
-[Setup Devcloud Login Script Instructions](https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions/LoginScript)
+[Setup Devcloud Login Script Instructions](#52-login-script)
 
 Note that X2Go is only available on nodes s001-n13[7-9] and s001-n189 at this time.
 
-### 7.2 Quartus Font Setup
+### 6.2 Quartus Font Setup
 
 Note, for any GUI based activity you need X2Go running. Based on network activity GUI response could be considerably slower speed than when running on a local PC. Try to structure your project to use batch commands for faster response through the terminal.
 
@@ -627,15 +666,16 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 
 
-## 8.0 Transferring Files to and from the Devcloud 
+## 7.0 Transferring Files to and from the Devcloud 
 
 **There are three different ways to Transfer Files to and from the Devcloud:** 
 
-1. [From/To a Local PC to/from DevCloud Server in X2Go Terminal (9.1)](#91-transferring-files-to-and-from-the-devcloud-with-scp)
-2. [MobaXterm User Session (9.2)](#92-Using-MobaXterm-to-Transfer-Files)
-3. [WinSCP Application (9.3)](#93-Using-WinSCP-to-Transfer-Files)
+1. [From/To a Local PC to/from DevCloud Server in X2Go Terminal (7.1)](#71-transferring-files-to-and-from-the-devcloud-with-scp)
+2. [MobaXterm User Session (7.2)](#72-Using-MobaXterm-to-Transfer-Files)
+3. [WinSCP Application (7.3)](#73-Using-WinSCP-to-Transfer-Files)
+4. [MobaXterm Command Line to Transfer URLs (7.4)](#74-using-mobaxterm-command-line to-transfer-urls-github)
 
-### 8.1 Transferring Files to and from the Devcloud with SCP 
+### 7.1 Transferring Files to and from the Devcloud with SCP 
 
 Refer to the login instructions welcome page on file transfer to/from devcloud. **Use the local terminal on your PC to transfer files. Note: If on Intel firewall, replace devcloud with colfax-intel.**
 
@@ -661,7 +701,7 @@ scp /drives/c/User/username/Documents/file.txt devcloud:/home/u12345
 
 
 
-### 8.2 Using MobaXterm to Transfer Files
+### 7.2 Using MobaXterm to Transfer Files
 
 MobaXterm can be used to transfer files to and from your local PC to the Devcloud server.
 
@@ -691,7 +731,7 @@ The localhost user directory tool can be re-opened and closed as necessary to tr
 
 ![image](https://user-images.githubusercontent.com/56968566/69988329-52177200-14f6-11ea-8924-da19a9c5a236.png)
 
-### 8.3 Using WinSCP to Transfer Files
+### 7.3 Using WinSCP to Transfer Files
 
 To have WinSCP working, please have a tunnel open connected to X2GO. This should be done by having a new mobaxterm tab open and connecting to X2GO through an SSH tunnel to the node selected.
 
@@ -747,7 +787,7 @@ Press **Login**
 
 Note: When re-using WinSCP to transfer files, re-open the application and **Login**. A new window will pop-up. Click **Update** and you should be able to access and transfer your Devcloud files on the server again. 
 
-### 8.4 Using MobaXterm Command Line to Transfer URLs (Github)
+### 7.4 Using MobaXterm Command Line to Transfer URLs (Github)
 
 You must be at the directory where you want to download the file from the Github site before running any of the two commands.
 
@@ -783,18 +823,18 @@ tr -d '/r' < filename > newfilename
 
 
 
-## 9.0 Launching Development Tools
+## 8.0 Launching Development Tools
 
 Quickstart Guides are available at the Quickstart Guide section of this git site and updated frequently. Please take a look at these guides for various  topics:
 
-* RTL AFU
-* OpenCL
-* HLS
-* One API
-* OpenVino
-* Programing DE-Series boards
+* [RTL AFU](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_AFU_Program_PAC_Quickstart)
+* [OpenCL](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/OpenCL_Program_PAC_Quickstart)
+* [HLS](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/HLS_Lab)
+* [One API](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart)
+* [OpenVino](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides)
+* [Programing DE-Series boards](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_DE_board_Quickstart)
 
-## 10.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
+## 9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
 
 Node s001-n138 has a DE10-Lite development board connected to the USB port. Login to this machine and you will see a programmer connection USB Blaster 1-13 to the board. Note there is only one DE10-Lite on the network.![image](https://user-images.githubusercontent.com/56968566/69988508-a1f63900-14f6-11ea-8fd3-cfb688faedc7.png)
 
@@ -820,13 +860,13 @@ If the USB Blaster is not configured, complete the following steps:
 
 
 
-## 11.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board
+## 10.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board
 
-[11.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#111-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
+[10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#101-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
 
-[11.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#112-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
+[10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#102-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
 
-### 11.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster
+### 10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster
 
 - [ ] On your PC, launch the Quartus Programmer. Search **Programmer** in the File Explorer. 
 
@@ -893,7 +933,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 - [ ] Make sure localhost:13090 shows up as your currently selected hardware and that the connection status is OK.
 
-### 11.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
+### 10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA
 
 - [ ] Select the .sof file to be downloaded to the FPGA. 
 
@@ -903,7 +943,7 @@ If the USB Blaster is not configured, complete the following steps:
 
 
 
-## 12.0 Timeouts and Disk Space
+## 11.0 Timeouts and Disk Space
 
 Your session will timeout after six hours after login. Batch submissions must complete within 24 hours or the job will terminated. Each user has access to 200 GB of disk space on the Devcloud.
 
@@ -913,7 +953,7 @@ If you find that you are kicked off the Devcloud due to short bursts of inactivi
 2. Select in the side-bar **Power & Sleep**. 
 3. Under **Screen**, change both settings to **Never**. 
 
-## 13.0 Determining and Allocating Memory Availability and CPU Count and Speed
+## 12.0 Determining and Allocating Memory Availability and CPU Count and Speed
 
 Enter the following in a Devcloud Terminal to determine memory availability: 
 
@@ -935,7 +975,7 @@ Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20G
 ```
 
 
-## 14.0 Devcloud Text Editors 
+## 13.0 Devcloud Text Editors 
 
 cat There are three available editors in the Devcloud terminal: 
 
@@ -945,7 +985,7 @@ cat There are three available editors in the Devcloud terminal:
 
 For tutorials on how to use the editors listed above, click the hyperlinks to be redirected to a quick read tutorial site. 
 
-## 15.0 Determining which version of the OS is running on a Node
+## 14.0 Determining which version of the OS is running on a Node
 
 ```
 cat /etc/os-release
