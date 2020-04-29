@@ -332,7 +332,7 @@ Some nodes can connect to machines with the above capabilities and also are dire
 
 There are a series of detailed Linux commands shown below should you want to know the intricate details of how to connect to available compute nodes. 
 
-1. [Login Script](#52-login-script) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. [Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
+1. [Login Script](#52-login-script)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. [Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
 2. [Development Setup Tool](#53-development-tool-access-and-setup)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. [Batch Jobs Report Status](#57-report-status-for-jobs-running-on-the-devcloud)
 3. [Querying Device Availability](#54-querying-device-availability) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. [Deleting Batch Jobs](#58-deleting-jobs-on-the-devcloud)
 4. [Submitting Batch Jobs](#55-submitting-batch-jobs)
@@ -353,13 +353,21 @@ Now you can run devcloud_login and follow the Devcloud login script instructions
 
  Figure 1: Login Script Running
 
-<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=50% /> <img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=50% />
+<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=60% /> 
 
-Figure 2: Arria10 Node Login Script Selection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 3: Arria10 OneAPI Node Login Script Selection
+Figure 2: Arria10 Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540587-74ef6a80-895e-11ea-939a-089b2f147ba4.png" alt="StratixLogin" width=50% /> <img src="https://user-images.githubusercontent.com/59750149/80540856-f3e4a300-895e-11ea-957e-e5c9cf44a373.png" alt="StratixLogin" width=50% />
+<img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=60% />
 
-Figure 4: Stratix10 Node Login Script Selection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 5: Compilation Node Login Script Selection
+Figure 3: Arria10 OneAPI Node Login Script Selection
+
+<img src="https://user-images.githubusercontent.com/59750149/80540587-74ef6a80-895e-11ea-939a-089b2f147ba4.png" alt="StratixLogin" width=60% /> 
+
+Figure 4: Stratix10 Node Login Script Selection
+
+<img src="https://user-images.githubusercontent.com/59750149/80540856-f3e4a300-895e-11ea-957e-e5c9cf44a373.png" alt="StratixLogin" width=60% />
+
+Figure 5: Compilation Node Login Script Selection
 
 <img src="https://user-images.githubusercontent.com/59750149/80254531-3725d580-8630-11ea-8f25-9987132616c6.png" alt="LoginScript" width=53% />
 
@@ -367,7 +375,7 @@ Figure 6: Specific Node Login Script Selection
 
 Once you select a node to start an interactive login, it will also output the command required to set up the x2go window. Just copy and paste into a new mobaxterm terminal. 
 
- <img src="https://user-images.githubusercontent.com/59750149/80255690-4b6ad200-8632-11ea-83ea-39df83ab5852.png" alt="x2go" width=70% />
+ <img src="https://user-images.githubusercontent.com/59750149/80255690-4b6ad200-8632-11ea-83ea-39df83ab5852.png" alt="x2go" width=77% />
 
 Figure 7: x2go Command
 
