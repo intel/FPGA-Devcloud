@@ -1,12 +1,12 @@
 
 
-# Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2
+# Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2 / 1.2.1
 
  
 
 ## 1       Introduction
 
-If you are new to the Arria 10 PAC card with OpenCL, check out this quick start guide:
+If you are new to the Arria 10 GX PAC card with OpenCL, check out this quick start guide:
 
 https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug-qs-ias-opencl-a10.pdf
 
@@ -45,7 +45,7 @@ Run the devcloud_login function and connect to an Arria 10 capable node. This fu
 
 Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
-Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option.
+Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option. Select the appropriate version of tools.
 
 Make  working directory
 
@@ -101,7 +101,7 @@ aoc device/hello_world.cl -o bin/hello_world.aocx -board=pac_a10
 
 #### 3.4 Downloading the bit stream into the PAC card
 
-Next we will be looking for an available acceleration card, program it, compile the host C code and run the software program to display on the terminal.
+Next we will be looking for an available acceleration card, convert .aocx to unsigned (v1.2.1) program it, compile the host C code and run the software program to display on the terminal.
 
 To see what FPGA accelerator cards are available, we type the following into the terminal. 
 
@@ -117,11 +117,38 @@ aocl diagnose
 
 Observe that the device name is acl0.
 
-Next, you will program the PAC card with hello_world.aocx FPGA executable with the following command:
+For version **1.2.1 only**, you need to create the unsigned version of the .aocx file. If you use version 1.2, skip this next step.
+
+#### 3.4.1 Converting the 1.2.1 version to an unsigned .aocx file
+
+```
+cd bin
+```
+
+```
+source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world.aocx -r NULL -k NULL -o hello_world_unsigned.aocx
+```
+
+Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
+
+```
+No root key specified.  Generate unsigned bitstream? Y = yes, N = no: Y
+No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: Y
+```
+
+#### 3.4.2 Programming the Arria 10 GX PAC Card
+
+Next, you will program the PAC card with hello_world.aocx (version 1.2) or hello_world_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
 ```
 aoc program acl0 bin/hello_world.aocx
 ```
+
+```
+aoc program acl0 bin/hello_world_unsigned.aocx
+```
+
+
 
 #### 3.5 Running the host code 
 
@@ -137,9 +164,10 @@ Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./b
 
 List the revision history for the application note.
 
-| Name         | Date     | Changes         |
-| ------------ | -------- | --------------- |
-| Larry Landis | 4/2/2020 | Initial Release |
+| Name         | Date      | Changes                       |
+| ------------ | --------- | ----------------------------- |
+| Larry Landis | 4/2/2020  | Initial Release               |
+| Larry Landis | 4/28/2020 | Added sign_aocx.sh for v1.2.1 |
 
 
 
