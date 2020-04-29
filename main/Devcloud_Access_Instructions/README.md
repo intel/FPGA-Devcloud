@@ -332,7 +332,7 @@ Some nodes can connect to machines with the above capabilities and also are dire
 
 There are a series of detailed Linux commands shown below should you want to know the intricate details of how to connect to available compute nodes. 
 
-1. [Login Script](#52-login-script) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. [Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
+1. [Login Script](#52-login-script) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. [Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
 2. [Development Setup Tool](#53-development-tool-access-and-setup)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. [Batch Jobs Report Status](#57-report-status-for-jobs-running-on-the-devcloud)
 3. [Querying Device Availability](#54-querying-device-availability) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. [Deleting Batch Jobs](#58-deleting-jobs-on-the-devcloud)
 4. [Submitting Batch Jobs](#55-submitting-batch-jobs)
@@ -353,13 +353,13 @@ Now you can run devcloud_login and follow the Devcloud login script instructions
 
  Figure 1: Login Script Running
 
-<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=50% /><img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=50% />
+<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=50% /> <img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=49% />
 
-Figure 2: Arria10 Node Login Script Selection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 3: Arria10 OneAPI Node Login Script Selection
+Figure 2: Arria10 Node Login Script Selection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 3: Arria10 OneAPI Node Login Script Selection
 
 <img src="https://user-images.githubusercontent.com/59750149/80540587-74ef6a80-895e-11ea-939a-089b2f147ba4.png" alt="StratixLogin" width=50% /> <img src="https://user-images.githubusercontent.com/59750149/80540856-f3e4a300-895e-11ea-957e-e5c9cf44a373.png" alt="StratixLogin" width=49% />
 
-Figure 4: Stratix10 Node Login Script Selection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 5: Compilation Node Login Script Selection
+Figure 4: Stratix10 Node Login Script Selection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 5: Compilation Node Login Script Selection
 
 <img src="https://user-images.githubusercontent.com/59750149/80254531-3725d580-8630-11ea-8f25-9987132616c6.png" alt="LoginScript" width=53% />
 
@@ -379,9 +379,8 @@ Other features to the Devcloud login script are the ability to submit batch jobs
 
 Instead of answering "What are you trying to use the Devcloud for? ..." every time to login to a node interactively, you can type the following:
 
-```bash
+```
 devcloud_login -I [<argument options>]
-
 -----------------------------------Argument-Options-------------------------------------
 A10PAC
 A10OAPI
@@ -392,9 +391,8 @@ SNN <compute node name>
 
 To  submit a batch job when logged into the login-2 machine (aka. homenode) , type the following:
 
-```bash
+```
 devcloud_login -b [<argument options>] <job>.sh
-
 -----------------------------------Argument-Options-------------------------------------
 A10PAC <job>.sh
 A10OAPI <job>.sh
@@ -403,7 +401,7 @@ CO <job>.sh
 SNN <compute node name> <job>.sh
 ```
 
-When you submit your job, you will be prompted with a job ID for your submission. With this ID you are able to query for job status and delete the job if desired. Once the job is completed, two files will be generated; </ job.sh**.e**XXXXX /> and </ job.sh**.o**XXXXX />. The </ job.sh**.e**XXXXX /> file will contain any error messages that occurred while running your batch job (if any). The </ job.sh**.o**XXXXX /> file will contain the output to your batch job submission.
+When you submit your job, you will be prompted with a job ID for your submission. With this ID you are able to query for job status and delete the job if desired. Once the job is completed, two files will be generated; </ job.sh.**e**XXXXX /> and </ job.sh.**o**XXXXX />. The </ job.sh.**e**XXXXX /> file will contain any error messages that occurred while running your batch job (if any). The </ job.sh.**o**XXXXX /> file will contain the output to your batch job submission.
 
 For more information, try "devcloud_login --help" on a terminal that is logged into the devcloud.
 
@@ -427,9 +425,8 @@ Follow the instructions after invoking the tools_setup function.
 
 Another feature to the tools-setup function is the ability to speed the user's interaction when wanting to source the paths and environment variable settings for a desired tool flow into a compute node. Instead of answering "Which tool would you like to source? ..." every time, you can type the following:
 
-```bash
+```
 tools_setup -t [<argument options>]
-
 -----------------------------------Argument-Options-------------------------------------
 QL <Version Number>
 QS <Version Number>
@@ -452,7 +449,7 @@ Should you want more details on available compute resources and query what is av
 
 ### 5.4 Querying Device Availability
 
-To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and computenode. The computenode is a high power machine for running compilations. 
+To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and compute node. The compute node is a high power machine for running compilations. 
 
 ```
 pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
