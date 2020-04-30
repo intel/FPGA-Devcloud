@@ -112,13 +112,39 @@ Look for the success message upon completion.
 Device: pac_a10 : Intel PAC Platform (pac_ee00000)
 success
 
-## 6       Document Revision History
+#### 4 	Batch Submission
+
+The follow commands can be included in a batch script (in this case A10_oneapi_batch.sh) to launch the OneAPI emulation flow, followed by the compilation and FPGA board programming flow using make commands. Adjust commands to your own needs.
+
+```
+source /data/intel_fpga/devcloudLoginToolSetup.sh
+tools_setup -t A10OAPI
+cd ~/A10_ONEAPI/vector-add
+make run_emu -f Makefile.fpga
+make run_hw -f Makefile.fpga
+```
+
+From the headnode login-2, run this command:
+
+```
+devcloud_login -b A10OAPI A10_oneapi_batch.sh
+```
+
+To see the resulting terminal output, consult the files:
+
+A10_oneapi_batch.sh.exxxxxx
+A10_oneapi_batch.sh.oxxxxxx
+
+xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
+
+#### 5       Document Revision History
 
 List the revision history for the application note.
 
-| Name         | Date     | Changes         |
-| ------------ | -------- | --------------- |
-| Larry Landis | 4/5/2020 | Initial Release |
+| Name         | Date      | Changes            |
+| ------------ | --------- | ------------------ |
+| Larry Landis | 4/5/2020  | Initial Release    |
+| Larry Landis | 4/29/2020 | Batch Command flow |
 
 
 

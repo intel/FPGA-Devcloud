@@ -1,6 +1,6 @@
 
 
-# Arria 10 PAC: RTL AFU Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2
+# Arria 10 PAC: RTL AFU Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2 / 1.2.1
 
  
 
@@ -44,11 +44,9 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image-20200316172635297](https://user-images.githubusercontent.com/59750149/77004891-17a6d900-691d-11ea-8b3f-433673cc4962.png)
+![image](https://user-images.githubusercontent.com/22804500/80554353-b9d8c880-8981-11ea-9ddf-e11e8799fe4f.png)
 
-Select option 1 or option 4 and connect to an Arria 10 ready compute node.
-
-
+Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
 Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option.
 
@@ -77,25 +75,44 @@ $OPAE_PLATFORM_ROOT/bin/run.sh
 
 This step will take approximately 40 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu.gbs . Note if you compile your own gbs, it will be located in the build_synth directory.
 
+For version **1.2.1 only**, you need to create the unsigned version of the .gbs file. If you use version 1.2, skip this next step.
 
+#### 3.2.1 Converting the 1.2.1 .gbs file to an unsigned version
+
+```
+PACSign PR -t UPDATE -H openssl_manager -i dma_afu.gbs -o dma_afu_compile_unsigned.gbs
+```
+
+Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
+
+No root key specified.  Generate unsigned bitstream? Y = yes, N = no: Y
+No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: Y
 
 #### 3.3 Downloading the bit stream into the PAC card
 
 Next we will be looking for an available acceleration card, program it, compile the host C code and run the software program to display on the terminal.
 
-- To see what PCI accelerator cards are available, we type the following into the terminal:
+To see what PCI accelerator cards are available, we type the following into the terminal:
 
-  ```bash
-  lspci | grep accel
-  ```
+```bash
+lspci | grep accel
+```
 
-- We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 1.2 of the devstack tools. Do not use this command if you are accessing the 1.2.1 version of the Arria 10 devstack tools. Note if you did not compiled your own gbs, then the precompiled gbs will be located in the bin directory ( ../bin/dma_afu.gbs ).
+We will then download the green bit stream on to the acceleration card, in this case we are running it on acceleration card **0x3b** using the following command for version 1.2 of the devstack tools. Do not use this command if you are accessing the 1.2.1 version of the Arria 10 devstack tools. Note if you did not compiled your own gbs, then the precompiled gbs will be located in the bin directory ( ../bin/dma_afu.gbs ). 
 
-  ```bash
-  fpgaconf -B 0x3b dma_afu.gbs
-  ```
+For version 1.2:
 
-- This step will take about 15 seconds. 
+```bash
+fpgaconf -B 0x3b dma_afu.gbs
+```
+
+For version 1.2.1:
+
+```
+fpgasupdate dma_afu_compile_unsigned.gbs
+```
+
+Programming takes about 15 seconds.
 
 #### 3.4 Compiling the host software
 
@@ -138,6 +155,7 @@ List the revision history for the application note.
 | Rony Schutz  | 11/5/2019 | Initial Release of Acceleration   Card QuickStart Guide   |
 | Larry Landis | 3/13/2020 | Changed to demo, and added specific devcloud instructions |
 | Larry Landis | 3/16/2020 | Switched to using the dma_afu as it is better documented  |
+| Larry Landis | 4/28/2020 | Add PACSign and fpgasupdate per v1.2.1 instructions       |
 
 
 
