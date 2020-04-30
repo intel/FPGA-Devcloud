@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Apr 23 2020 Version 2    #
+# -Apr 30 2020 Version 2    #
 # Add argv login            #
 #                           #
 #                           #
@@ -18,10 +18,13 @@ blu=$'\e[1;34m'
 end=$'\e[0m'
 noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
+arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s001-n137" "s001-n138" "s001-n139")
+arria10Nodes121=("s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 # 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
+ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 
 
 
@@ -29,7 +32,7 @@ devcloud_login()
 {
     # initial check to see if user is logged into a node already
     if [ $HOSTNAME != "login-2" ]; then
-        echo "Your hostname is not login-2. You are probably already logged into a node. Exit node in order to log into another node."
+        echo "Your hostname is not login-2. You are probably already logged into a compute node. Exit node in order to log into headnode."
         return 1
     fi
 
@@ -63,9 +66,9 @@ devcloud_login()
 	echo
 	printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
 	echo
-	echo "1) Arria 10 PAC Card Programming"
+	echo "1) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
 	echo "2) Arria 10 OneAPI"
-	echo "3) Stratix 10 PAC Card Programming"
+	echo "3) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
 	echo "4) Compilation Only"
 	echo "5) Enter Specific Node Number"
 	echo
@@ -83,27 +86,57 @@ devcloud_login()
     currentNode="$(echo $HOSTNAME | grep -o -E "${allNodes[*]}")"
     unset IFS
 
-    if [[ $number -eq 1 || ( -n $argv1 && $argv1 = "A10PAC" ) ]]; then
+    if [[ $number -eq 1 || ( -n $argv1 && $argv1 == "A10PAC" ) ]]; then
         if [ -z $currentNode ]; then  #if current node is empty
             #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
             #node=$(head -n 1 nodes.txt)
-            IFS="|"
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
-            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
-            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
-            unset IFS
-            if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
-            then
-                echo
+	    if [ -z "$argv1" ]; then
+            	# ask which version of a10 devstack
+            	echo "${blu}Which Arria 10 PAC Development Stack release would you like to source?${end}"
+            	for (( i=0; i<${#ARRIA10DEVSTACK_RELEASE[@]}; i++)); do
+                    echo "${i}) ${ARRIA10DEVSTACK_RELEASE[$i]}"
+            	done
+            	echo
+            	echo -n "Number: "
+            	read -e second_number
+            	until [ ${#ARRIA10DEVSTACK_RELEASE[@]} -gt $second_number ]; do
+                    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end}"
+                    echo -n "Number: "
+                    read -e second_number
+            	done
+	    elif [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[0]} =~ "$argv2" ]]; then
+		second_number=0
+	    elif [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[1]} =~ "$argv2" ]]; then
+		second_number=1
+	    else
+                printf "%s\n%s\n" "${red}Invalid Entry. Valid development stack options are: ${ARRIA10DEVSTACK_RELEASE[*]}" "eg: devcloud_login -I A10PAC ${ARRIA10DEVSTACK_RELEASE[0]} ${end}"
+		return 0
+	    fi
+
+	    if [ $second_number -eq 0 ]; then
+            	IFS="|"
+            	readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
+            	readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
+           	availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
+            	unset IFS
+	    else
+            	IFS="|"
+            	readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
+            	readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
+           	availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
+            	unset IFS
+	    fi
+
+            if [ ${#availableNodes[@]} == 0 ]; then #if length of availableNodes is empty then no nodes are available
                 echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 devcloud_login
-	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
+	    elif [[ -n "$argv3" && $argv3 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
-		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv2
-            else
+		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv3
+	    else
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
@@ -121,9 +154,9 @@ devcloud_login()
                 qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
         else
-            printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
+            printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
-    elif [[ $number -eq 2 || ( -n $argv1 && $argv1 = "A10OAPI" ) ]]; then
+    elif [[ $number -eq 2 || ( -n $argv1 && $argv1 == "A10OAPI" ) ]]; then
         if [ -z $currentNode ]; then  #if current node is empty
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
@@ -159,9 +192,9 @@ devcloud_login()
                 qsub -I -l nodes="$node":ppn=2
             fi
         else
-            printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
+            printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
-    elif [[ $number -eq 3 || ( -n $argv1 && $argv1 = "S10PAC" ) ]]; then
+    elif [[ $number -eq 3 || ( -n $argv1 && $argv1 == "S10PAC" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
@@ -198,7 +231,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 = "CO" ) ]]; then
+    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 == "CO" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
@@ -234,9 +267,9 @@ devcloud_login()
                 qsub -I -l nodes="$node":ppn=2
             fi
         else
-            printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
+            printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
-    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 = "SNN" ) ]]; then
+    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -376,7 +409,7 @@ devcloud_login()
                 fi
             fi
         else
-            printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
+            printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again from headnode.${end}"
         fi
     fi
 }
@@ -399,7 +432,6 @@ tools_setup()
     GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
 
     #ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
-    ARRIA10DEVSTACK_RELEASE=("1.2") 
 
 
     if [[ $1 =~ "-h" ]]; then
@@ -424,9 +456,9 @@ tools_setup()
 	echo "2) Quartus Prime Standard"
 	echo "3) Quartus Prime Pro"
 	echo "4) HLS"
-    	echo "5) Arria 10 Development Stack + OpenCL"
+    	echo "5) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
     	echo "6) Arria 10 OneAPI"
-    	echo "7) Stratix 10 Development Stack + OpenCL"
+    	echo "7) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
     	echo
     	echo -n "Number: "
     	read -e number
@@ -438,7 +470,7 @@ tools_setup()
     	done
     fi
 
-    if [[ $number -eq 1 || ( -n $argv1 && $argv1 = "QL" ) ]]; then
+    if [[ $number -eq 1 || ( -n $argv1 && $argv1 == "QL" ) ]]; then
         len=${#QUARTUS_LITE_RELEASE[@]}
         if [ $len -eq 0 ]; then
             echo "${red}Sorry, No quartus lite releases are supported at this time.${end}"
@@ -481,7 +513,7 @@ tools_setup()
             echo "${red}Something went wrong sourcing the lite release ${end}"
         fi
 
-    elif [[ $number -eq 2 || ( -n $argv1 && $argv1 = "QS" ) ]]; then
+    elif [[ $number -eq 2 || ( -n $argv1 && $argv1 == "QS" ) ]]; then
         len=${#QUARTUS_STANDARD_RELEASE[@]}
         if [ $len -eq 0 ]; then
             echo "${red}Sorry, No quartus standard releases are supported at this time.${end}"
@@ -524,7 +556,7 @@ tools_setup()
             echo "${red}Something went wrong sourcing the standard release ${end}"
         fi
 
-    elif [[ $number -eq 3 || ( -n $argv1 && $argv1 = "QP" ) ]]; then
+    elif [[ $number -eq 3 || ( -n $argv1 && $argv1 == "QP" ) ]]; then
         len=${#QUARTUS_PRO_RELEASE[@]}
         if [ $len -eq 0 ]; then
             echo "${red}Sorry, No quartus pro releases are supported at this time.${end}"
@@ -567,7 +599,7 @@ tools_setup()
             echo "${red}Something went wrong sourcing the pro release ${end}"
         fi
 
-    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 = "HLS" ) ]]; then  # case for HLS
+    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 == "HLS" ) ]]; then  # case for HLS
 	if [[ -z "$argv2" && -n "$argv1" ]]; then
 	    echo "${red}Missing arguments. Please include Quartus edition. Valid Quartus Prime editions are: Standard | Lite | Pro"
 	    echo "eg: tools_setup -t HLS QL ${QUARTUS_LITE_RELEASE[0]} ${end}"
@@ -591,7 +623,7 @@ tools_setup()
             done
     	fi
 
-        if [[ $qnumber -eq 1 || ( -n $argv2 && $argv2 = "QS" ) ]]; then  # case for Quartus STANDARD
+        if [[ $qnumber -eq 1 || ( -n $argv2 && $argv2 == "QS" ) ]]; then  # case for Quartus STANDARD
             len=${#QUARTUS_STANDARD_RELEASE[@]}
             if [ $len -eq 0 ]; then
 		echo "${red}Sorry, No quartus standard releases are supported at this time.${end}"
@@ -646,7 +678,7 @@ tools_setup()
                 echo "${red}Something went wrong with sourcing hls for quartus standard ${end}"
             fi
 
-        elif [[ $qnumber -eq 2 || ( -n $argv2 && $argv2 = "QL" ) ]]; then  # case for quartus LITE
+        elif [[ $qnumber -eq 2 || ( -n $argv2 && $argv2 == "QL" ) ]]; then  # case for quartus LITE
             len=${#QUARTUS_LITE_RELEASE[@]}
             if [ $len -eq 0 ]; then
                 echo "${red}Sorry, No quartus lite releases are supported at this time.${end}"
@@ -701,7 +733,7 @@ tools_setup()
                 echo "${red}Something went wrong with sourcing hls for quartus prime lite ${end}"
             fi
 
-        elif [[ $qnumber -eq 3 || ( -n $argv2 && $argv2 = "QP" ) ]]; then  # case for quartus PRO
+        elif [[ $qnumber -eq 3 || ( -n $argv2 && $argv2 == "QP" ) ]]; then  # case for quartus PRO
             len=${#QUARTUS_PRO_RELEASE[@]}
             if [ $len -eq 0 ]; then
                 echo "${red}Sorry, No quartus pro releases are supported at this time.${end}"
@@ -761,47 +793,27 @@ tools_setup()
             echo "${red}Something went wrong with case statements for HLS ${end}"
         fi
 
-    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 = "A10DS" ) ]]; then  #case for arria 10 development stack
+    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "A10DS" ) ]]; then  #case for arria 10 development stack
         #need to check if on correct node
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${arria10Nodes[*]}")"
         unset IFS
-        if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
-	    if [ -z "$argv1" ]; then
-            	# ask which version of a10 devstack
-            	echo "${blu}Which Arria 10 Development Stack + OpenCL release would you like to source?${end}"
-            	for (( i=0; i<${#ARRIA10DEVSTACK_RELEASE[@]}; i++)); do
-                    echo "${i}) ${ARRIA10DEVSTACK_RELEASE[$i]}"
-            	done
-            	echo
-            	echo -n "Number: "
-            	read -e second_number
-            	until [ ${#ARRIA10DEVSTACK_RELEASE[@]} -gt $second_number ]; do
-                    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end}"
-                    echo -n "Number: "
-                    read -e second_number
-            	done
-	    fi
-
-	    if [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[*]} =~ "$argv2" ]]; then
-            	echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/$argv2/inteldevstack/init_env.sh"
-            	source $GLOB_FPGASUPPORTSTACK/a10/$argv2/inteldevstack/init_env.sh
-	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]]; then
-		printf "%s\n%s\n" "${red}Invalid Entry. Valid development stack releases are: ${ARRIA10DEVSTACK_RELEASE[*]}." "eg: tools_setup -t A10DS ${ARRIA10DEVSTACK_RELEASE[0]} ${end}"
-		return 0
-	    else
-            	echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh"
-            	source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[$second_number]}/inteldevstack/init_env.sh
-            fi
+        #if [[ ${arria10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
+        if [[ ${arria10Nodes12[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/init_env.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/init_env.sh
 	    echo
-            if [[ $second_number -eq 0 || ${ARRIA10DEVSTACK_RELEASE[0]} =~ "$argv2" ]]; then
-                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
-                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
-            fi
-            if [[ $second_number -eq 1 || ${ARRIA10DEVSTACK_RELEASE[1]} =~ "$argv2" ]]; then
-                echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh"
-                source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh
-            fi
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
+	    echo
+            echo "Putting python2 in the search path - required for Arria 10 development stack"
+            export PATH=/glob/intel-python/python2/bin:${PATH}
+	elif [[ ${arria10Nodes121[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/inteldevstack/init_env.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/inteldevstack/init_env.sh
+	    echo
+            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh"
+            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
@@ -809,7 +821,7 @@ tools_setup()
             echo "Not on an Arria10 Development Stack node. You need to be on an Arria10 Development Stack node to run Arria Development Stack"
         fi
 
-    elif [[ $number -eq 6 || ( -n $argv1 && $argv1 = "A10OAPI" ) ]]; then  # case for Arria 10 OneAPI
+    elif [[ $number -eq 6 || ( -n $argv1 && $argv1 == "A10OAPI" ) ]]; then  # case for Arria 10 OneAPI
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
         unset IFS
@@ -820,7 +832,7 @@ tools_setup()
             echo "Not on an Arria 10 OneAPI node. You need to be on an Arria 10 OneAPI node."
         fi
 
-    elif [[ $number -eq 7 || ( -n $argv1 && $argv1 = "S10DS" ) ]]; then  # case for Stratix 10 Development Stack
+    elif [[ $number -eq 7 || ( -n $argv1 && $argv1 == "S10DS" ) ]]; then  # case for Stratix 10 Development Stack
         IFS="|"
         temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10Nodes[*]}")"
         unset IFS
@@ -866,10 +878,10 @@ dev_Help() {
     echo "Argument Options: "
     echo "-----------------"
     echo
-    echo "A10PAC  (eg. devcloud_login -I A10PAC  or devcloud_login -b A10PAC job.sh)	           Arria 10 PAC Card"
-    echo "A10OAPI (eg. devcloud_login -I A10OAPI or devcloud_login -b A10OAPI job.sh)                Arria 10 OneAPI"
-    echo "S10PAC  (eg. devcloud_login -I S10PAC  or devcloud_login -b S10PAC job.sh)	           Stratix 10 PAC Card"
-    echo "CO      (eg. devcloud_login -I CO      or devcloud_login -b CO job.sh)                     Compilation Only"
+    echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2 or devcloud_login -b A10PAC 1.2 job.sh)          Arria 10 PAC; 1.2  1.2.1"
+    echo "A10OAPI (eg. devcloud_login -I A10OAPI    or devcloud_login -b A10OAPI job.sh)             Arria 10 OneAPI"
+    echo "S10PAC  (eg. devcloud_login -I S10PAC     or devcloud_login -b S10PAC job.sh)	           Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -I CO         or devcloud_login -b CO job.sh)                  Compilation Only"
     echo "SNN     (eg. devcloud_login -I SNN s001-n139 or devcloud_login -b SNN s001-n139 job.sh)    Specific Node Name"
     echo
 }
