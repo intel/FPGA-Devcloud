@@ -119,6 +119,7 @@ The follow commands can be included in a batch script (in this case A10_oneapi_b
 ```
 source /data/intel_fpga/devcloudLoginToolSetup.sh
 tools_setup -t A10OAPI
+cd ~/A10_ONEAPI/vector-add
 make run_emu -f Makefile.fpga
 make run_hw -f Makefile.fpga
 ```
