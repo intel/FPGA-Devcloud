@@ -48,7 +48,13 @@ Run the devcloud_login function and connect to an Arria 10 capable node. This fu
 
 Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
-Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option.
+Once on this node, run tools_setup. 
+
+```
+tools_setup
+```
+
+Select the Arria 10 Development Stack + OpenCL option.
 
 Make a directory in your root folder called DMA_AFU. To do this change directory to the appropriate location and type into the terminal:
 
@@ -56,11 +62,11 @@ Make a directory in your root folder called DMA_AFU. To do this change directory
 mkdir A10_RTL_AFU
 ```
 
-- We will then copy the example folder into this DEMO folder. Type this into the terminal:
+We will then copy the example folder into this DEMO folder. Type this into the terminal:
 
-  ```bash
-  cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu A10_RTL_AFU
-  ```
+```bash
+cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu A10_RTL_AFU
+```
 
 #### 3.2 Compiling RTL code into an FPGA bitstream
 
@@ -116,27 +122,27 @@ Programming takes about 15 seconds.
 
 #### 3.4 Compiling the host software
 
-- We then need to compile and run the C host code to display on to the terminal screen. This will demonstrate the interaction of CPU host and FPGA PAC card. To do this, we need to first switch directories into the software folder. Do this by typing into the terminal:
+We then need to compile and run the C host code to display on to the terminal screen. This will demonstrate the interaction of CPU host and FPGA PAC card. To do this, we need to first switch directories into the software folder. Do this by typing into the terminal:
 
-  ```bash
-  cd ../sw
-  ```
+```bash
+cd ../sw
+```
 
-- We then need to **make clean** to remove old files and start fresh. And make the code to build the program.
+We then need to **make clean** to remove old files and start fresh. And make the code to build the program.
 
-  ```bash
-  make clean
-  ```
+```bash
+make clean
+```
 
-  ```bash
-  make
-  ```
+```bash
+make
+```
 
-- To run the host program, we launch the executable
+To run the host program, we launch the executable
 
-  ```bash
-  ./fpga_dma_test 0
-  ```
+```bash
+./fpga_dma_test 0
+```
 
 If successful, you should see an output as shown below.
 
