@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Apr 30 2020 Version 2    #
+# -May 1 2020 Version 2     #
 # Add argv login            #
 #                           #
 #                           #
@@ -894,7 +894,7 @@ dev_Help() {
     echo
     echo "devcloud_login -h | --help"
     echo "devcloud_login -I <script args options>"
-    echo "devcloud_login -b <script args options> [walltime=xx:00:00] <job.sh>"
+    echo "devcloud_login -b <script args options> [walltime=hh:mm:ss] <job.sh>"
     echo "devcloud_login "
     echo
     echo "Description: "
@@ -906,11 +906,21 @@ dev_Help() {
     echo "Argument Options: "
     echo "-----------------"
     echo
-    echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2 or devcloud_login -b A10PAC 1.2 job.sh)          Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -I A10OAPI    or devcloud_login -b A10OAPI job.sh)             Arria 10 OneAPI"
-    echo "S10PAC  (eg. devcloud_login -I S10PAC     or devcloud_login -b S10PAC job.sh)	           Stratix 10 PAC"
-    echo "CO      (eg. devcloud_login -I CO         or devcloud_login -b CO job.sh)                  Compilation Only"
-    echo "SNN     (eg. devcloud_login -I SNN s001-n139 or devcloud_login -b SNN s001-n139 job.sh)    Specific Node Name"
+    echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2)         Arria 10 PAC; 1.2  1.2.1"
+    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI"
+    echo "S10PAC  (eg. devcloud_login -I S10PAC)	           Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -I CO)                 Compilation Only"
+    echo "SNN     (eg. devcloud_login -I SNN s001-n139)      Specific Node Name"
+    echo
+    echo "Batch Submissions: "
+    echo "------------------"
+    echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours."
+    echo
+    echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
+    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI"
+    echo "S10PAC  (eg. devcloud_login -b S10PAC [walttime=12:00:00] job.sh)	   Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -b CO [walttime=12:00:00] job.sh)              Compilation Only"
+    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walttime=12:00:00] job.sh)   Specific Node Name"
     echo
 }
 
