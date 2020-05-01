@@ -50,13 +50,14 @@ devcloud_login()
     elif [[ $1 == "-I" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
-	unset argv3
+	unset argv3 argv4
     elif [[ $1 == "-b" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
 	argv3="$4"
+	argv4="$5"
     elif [ -z $1 ]; then
-        unset argv1 argv2 argv3
+        unset argv1 argv2 argv3 argv4
     else
         echo "${red}Invalid Argument. Try 'devcloud_login --help' for more information.${end}"
         return 0
@@ -136,6 +137,9 @@ devcloud_login()
 	    elif [[ -n "$argv3" && $argv3 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv3
+	    elif [[ -n "$argv3" && $argv3 =~ "walltime=" && $argv4 =~ ".sh" ]]; then
+		node=(${availableNodes[0]})
+		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 -l $argv3 $argv4
 	    else
                 node=(${availableNodes[0]})
                 echo
@@ -174,6 +178,9 @@ devcloud_login()
 	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -l nodes="$node":ppn=2 $argv2
+	    elif [[ -n "$argv2" && $argv2 =~ "walltime=" && $argv3 =~ ".sh" ]]; then
+		node=(${availableNodes[0]})
+		qsub -l nodes="$node":ppn=2 -l $argv2 $argv3
             else
                 node=(${availableNodes[0]})
                 echo
@@ -212,6 +219,9 @@ devcloud_login()
 	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv2
+	    elif [[ -n "$argv2" && $argv2 =~ "walltime=" && $argv3 =~ ".sh" ]]; then
+		node=(${availableNodes[0]})
+		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 -l $argv2 $argv3
             else
                 node=(${availableNodes[0]})
                 echo
@@ -250,6 +260,9 @@ devcloud_login()
 	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -l nodes="$node":ppn=2 $argv2
+	    elif [[ -n "$argv2" && $argv2 =~ "walltime=" && $argv3 =~ ".sh" ]]; then
+		node=(${availableNodes[0]})
+		qsub -l nodes="$node":ppn=2 -l $argv2 $argv3
             else
                 node=(${availableNodes[0]})
                 echo
@@ -276,6 +289,10 @@ devcloud_login()
             readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
+            readarray availableNodesArria12 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
+            readarray availableNodesArria12_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
+            readarray availableNodesArria121 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
+            readarray availableNodesArria121_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
             readarray availableNodesArria10_oneAPI_Nodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             readarray availableNodesArria10_oneAPI_Nodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
@@ -303,6 +320,8 @@ devcloud_login()
                 if [ -z $is_in_fpga_queue ]; then  # if is_in_fpga_queue is empty then it is not on the fpga queue
 		    if [[ -n "$argv3" && $argv3 =~ ".sh" ]]; then
 			qsub -l nodes="$node":ppn=2 $argv3
+	    	    elif [[ -n "$argv3" && $argv3 =~ "walltime=" && $argv4 =~ ".sh" ]]; then
+			qsub -l nodes="$node":ppn=2 -l $argv3 $argv4
 		    else
                         echo
                         echo --------------------------------------------------------------------------------------
@@ -321,6 +340,8 @@ devcloud_login()
                 else
 		    if [[ -n "$argv3" && $argv3 =~ ".sh" ]]; then
 			qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv3
+	    	    elif [[ -n "$argv3" && $argv3 =~ "walltime=" && $argv4 =~ ".sh" ]]; then
+			qsub -l nodes="$node":ppn=2 -l $argv3 $argv4
 		    else
                         echo
                         echo --------------------------------------------------------------------------------------
@@ -353,8 +374,15 @@ devcloud_login()
                 echo 
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)         "
-                node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
-                printf "${red}$node_arria10_str${end}"
+		#node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
+                #printf "${red}$node_arria10_str${end}"
+                echo "Release 1.2:"
+		node_arria10_12str=$(echo ${availableNodesArria12[@]} ${availableNodesArria12_on_temp_server[@]})
+                printf "${red}$node_arria10_12str${end}"
+                echo
+                echo "Release 1.2.1:"
+		node_arria10_121str=$(echo ${availableNodesArria121[@]} ${availableNodesArria121_on_temp_server[@]})
+                printf "${red}$node_arria10_121str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)          "
@@ -865,8 +893,8 @@ dev_Help() {
     echo "------"
     echo
     echo "devcloud_login -h | --help"
-    echo "devcloud_login -I [<script args options>]"
-    echo "devcloud_login -b [<script args options>] <job.sh>"
+    echo "devcloud_login -I <script args options>"
+    echo "devcloud_login -b <script args options> [walltime=xx:00:00] <job.sh>"
     echo "devcloud_login "
     echo
     echo "Description: "
@@ -914,4 +942,3 @@ tool_Help() {
     echo "S10DS   (eg. tools_setup -t S10DS)	      Stratix 10 Development Stack"
     echo
 }
-
