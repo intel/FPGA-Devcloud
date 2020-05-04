@@ -42,47 +42,9 @@
 
 # Devcloud Access Instructions
 
-[Devcloud Access Instructions](#devcloud-access-instructions)
+[TOC]
 
-* [1.0 Introduction](#10-introduction)
-* [2.0 Getting an Account](#20-getting-an-account)
-  + [Connection Methods](#connection-methods)
-* [3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
-  + [3.1 Install MobaXterm](#31-install-mobaxterm)
-  + [3.2 Open Local Terminal](#32-open-local-terminal)
-  + [3.3 Downloading an SSH key](#33-downloading-an-ssh-key)
-* [4.0 Connection to Devcloud](#40-connection-to-devcloud)
-  + [Public User](#public-user)
-  + [User Inside Intel Firewall](#user-inside-intel-firewall)
-  + [4.1 Add SOcket CAT Package](#41-add-socket-cat-package)
-  + [4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)
-* [5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)
-  + [5.1 Understanding available resources](#51-understanding-available-resources)
-* [6.0 Loading and launching X2Go](#60-loading-and-launching-x2go)
-  + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
-* [7.0 Job Control and Batch Submission](#70-job-control-and-batch-submission)
-  * [7.1 Submitting Batch Jobs](#71-submitting-batch-jobs)
-  * [7.2 Submitting Jobs for a Specified Walltime](#72-submitting-jobs-for-a-specified-walltime)
-  * [7.3 Report Status for Jobs Running on the Devcloud](#73-report-status-for-jobs-running-on-the-devcloud)
-  * [7.4 Deleting Jobs on the Devcloud](#74-deleting-jobs-on-the-devcloud)
-* [8.0 Development Tool Access and Setup](#80-development-tool-access-and-setup)
-  + [8.1 Quartus Font Setup](#81-quartus-font-setup)
-* [9.0 Transferring Files to the Devcloud](#90-transferring-files-to-the-devcloud)
-  + [9.1 Transferring Files to the Devcloud with SCP](#91-transferring-files-to-the-devcloud-with-scp)
-  + [9.2 Using MobaXterm to Transfer Files](#92-using-mobaxterm-to-transfer-files)
-  + [9.3 Using WinSCP to Transfer Files](#93-using-winscp-to-transfer-files)
-  + [9.4 Using MobaXterm Command Line to Transfer Files](#94-using-mobaxterm-command-line-to-transfer-files)
-    + [1. WGET Command](#1-wget-command)
-    + [2. CURL Command](#2-curl-command)
-* [10.0 Launching Development Tools](#100-launching-development-tools)
-* [11.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#110-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
-* [12.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#120-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
-  + [12.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#121-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
-  + [12.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#122-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
-* [13.0 Timeouts and Disk Space](#130-timeouts-and-disk-space)
-* [14.0 Determining and Allocating Memory Availability and CPU Count and Speed](#140-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
-* [15.0 Devcloud Text Editors](#150-devcloud-text-editors)
-* [16.0 Determining which version of the OS is running on a Node](#160-determining-which-version-of-the-os-is-running-on-a-node)
+
 
 ## 1.0 Introduction
 
@@ -891,7 +853,15 @@ For tutorials on how to use the editors listed above, click the hyperlinks to be
 cat /etc/os-release
 ```
 
+## 17.0 Debug Notes - Tips and Tricks
 
+Don't forget to check the Intel Forum(s), your issue and solution might be documented there:
+
+https://forums.intel.com/s/topic/0TO0P000000MWKFWA4/application-acceleration-with-fpgas?language=en_US
+
+Sometimes, when you access an interactive compute node from the headnode, login-2, it can take up to four minutes to connect. This is due to the logout scripts temporarily getting hung, before allowing access for a new login.
+
+If you are not are not able to gain access to a compute node, because of this error: qsub: submit error (Unauthorized Request MSG=group ACL is not satisfied: user u#####@login-2, queue batch) it could be that you did not request access to the FPGA devcloud, and are in fact on the OneAPI devcloud. The FPGA devcloud is a superset of the OneAPI devcloud, and enables more machines connected to PAC cards. To check, type groups from login-2 node. If you do not see c009-fpga group, you are not in the right access group for the devcloud. Go to this site https://software.intel.com/en-us/devcloud/FPGA and click on the signup page. Sign up, and state you already have an account and want to be added to the c009-fpga group. State the u##### account number you were assigned.
 
 ------
 
