@@ -307,7 +307,7 @@ You cannot log into the Intel Devcloud through the above steps if you are within
 Note that the following response:
 
 tty: standard input: Inappropriate ioctl for device\
-X11 forwarding request <span style="color:red">failed </span>on channel 0 
+X11 forwarding request failed on channel 0 
 
 is expected behavior.
 
@@ -390,7 +390,7 @@ SNN <s00X-nXXX>
 
 For more information, try "devcloud_login --help" on a terminal that is logged into the FPGA devcloud.
 
-![dev_help](https://user-images.githubusercontent.com/59750149/81036993-fdd23e80-8e55-11ea-91e3-d72d9b5361a3.png)
+<img src="https://user-images.githubusercontent.com/59750149/81036993-fdd23e80-8e55-11ea-91e3-d72d9b5361a3.png" alt="dev_help" width=90% />
 
 ### 5.3 Development Tool Access and Setup
 
@@ -429,14 +429,14 @@ tools_setup -t <argument option>
 
 For more information, try "tools_setup --help" on a terminal that is logged into the devcloud.
 
-![image](https://user-images.githubusercontent.com/59750149/81037113-7507d280-8e56-11ea-8145-b095b83e24e5.png)
+<img src="https://user-images.githubusercontent.com/59750149/81037113-7507d280-8e56-11ea-8145-b095b83e24e5.png" alt="image" width=95% />
 
 ### 5.4 Submitting Batch Jobs
 
-This section provides information on how to submit batch jobs on the Devcloud when logged into the headnode machine (login-2) to be executed on a compute node. 
+This section provides information on how to submit batch jobs on the Devcloud when logged into the headnode machine (login-2), to be executed on a compute node. 
 
 To submit a batch job using the [**login script**](#52-login-script) provided, use the following:\
-Note, walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours.
+Note, [walltime](#55-submitting-jobs-for-a-specified-walltime) is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours.
 
 ```
 devcloud_login -b <argument options> [<walltime=hh:mm:ss>] <job.sh>
@@ -454,7 +454,9 @@ To launch a batch job without using the login script, you must first know the na
 Type the following after knowing the compute node name:
 
 ```
-qsub -q batch@v-qsvr-fpga -l nodes=<s00X-nXXX>:ppn=2 -d . <job.sh>
+qsub -q batch@v-qsvr-fpga -l nodes=<s00X-nXXX>:ppn=2 -d . <job.sh>   #for nodes with attached PAC cards
+
+qsub -l nodes=<s00X-nXXX>:ppn=2 -d . <job.sh>    #for compute only nodes and oneAPI nodes
 ```
 
 <br/>
@@ -488,7 +490,7 @@ qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
 ### 5.5 Submitting Jobs for a Specified Walltime
 
 A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours) use one of the following commands.\
-Nodes n001-n007 walltime can be increased up to a maximum of 24 hours, and nodes n137-n139 and n189 can be increased up to a maximum of 48 hours. 
+Nodes n039-n045 walltime can be increased up to a maximum of 24 hours, and nodes n137-n139 and n189 can be increased up to a maximum of 48 hours. 
 
 To submit a batch job with a specified walltime using the [**login script**](#52-login-script) provided, use the following:\
 Note, you must be logged into the **headnode** machine (login-2).
@@ -584,16 +586,14 @@ Should you want more details on available compute resources and query what is av
 To query if free nodes are available run the below command on the login-2 server (headnode).
 
 ```
-pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
-pbsnodes -l free -s v-qsvr-fpga	    #lists all free nodes that host PAC cards
-
-pbsnodes | grep -B 4 fpga
-pbsnodes -l free	    #lists all free nodes 
+pbsnodes -s v-qsvr-fpga | grep -B 4 fpga 	   #lists all nodes that host PAC cards
+pbsnodes -l free -s v-qsvr-fpga	    		   #lists all free nodes that host PAC cards
+pbsnodes | grep -B 4 fpga_runtime 	   		   #lists all OneAPI nodes
 ```
 
-You will get a listing of free and busy nodes that connect to PAC cards. 
+You will get a listing of free and busy nodes that connect to PAC cards, or a listing of free and busy OneAPI nodes.
 
-If there is a free node, when you execute the command below you will be logged in to a new machine within a minute or so. If no machine is available, you will be placed in a queue.
+If there is a free node, when you execute the command below you will be logged into a new machine within a minute or so. If no machine is available, you will be placed in a queue.
 
 To login to a specific machine in interactive mode ( -I ), execute the following command:\
 Note, substitute *s00X-nXXX* with appropriate server numbers
@@ -610,7 +610,7 @@ When launching the qsub command, you can request additional memory with the foll
 -l h_vmem=10G
 ```
 
-Now you have a high power machine available for powerful computing jobs. You only have an **interactive**  console available but no graphics available.\
+Now you have a high power machine available for powerful computing jobs. You only have an **interactive**  console available, but with no graphics.\
 Note: MobaXterm has multiple tabs and three possibilities of where to be logged in: 
 
 - Local Machine, your PC (eg. llandis-MOBL)
