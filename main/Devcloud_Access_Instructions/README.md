@@ -346,19 +346,19 @@ Now you can run devcloud_login and follow the Devcloud login script instructions
 
 ###### Figure 2: Arria10 Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=60% /> 
+<img src="https://user-images.githubusercontent.com/59750149/81036560-60c2d600-8e54-11ea-91c0-b48023b006f7.png" alt="ArriaLogin" width=60% /> 
 
 ###### Figure 3: Arria10 OneAPI Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=60% />
+<img src="https://user-images.githubusercontent.com/59750149/81036504-3244fb00-8e54-11ea-9d2f-979a4ed382cf.png" alt="ArriaOapiLogin" width=60% />
 
 ###### Figure 4: Stratix10 Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540587-74ef6a80-895e-11ea-939a-089b2f147ba4.png" alt="StratixLogin" width=60% /> 
+<img src="https://user-images.githubusercontent.com/59750149/81036445-ff9b0280-8e53-11ea-86f5-94ba4f096d73.png" alt="StratixLogin" width=60% /> 
 
 ###### Figure 5: Compilation Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540856-f3e4a300-895e-11ea-957e-e5c9cf44a373.png" alt="StratixLogin" width=60% />
+<img src="https://user-images.githubusercontent.com/59750149/81036359-afbc3b80-8e53-11ea-8f71-a300b9845ade.png" alt="StratixLogin" width=60% />
 
 ###### Figure 6: Specific Node Login Script Selection
 
@@ -390,7 +390,7 @@ SNN <s00X-nXXX>
 
 For more information, try "devcloud_login --help" on a terminal that is logged into the FPGA devcloud.
 
-![dev_help](https://user-images.githubusercontent.com/59750149/80256309-668a1180-8633-11ea-8b32-555a0c4bcc8c.png)
+![dev_help](https://user-images.githubusercontent.com/59750149/81036993-fdd23e80-8e55-11ea-91e3-d72d9b5361a3.png)
 
 ### 5.3 Development Tool Access and Setup
 
@@ -429,7 +429,7 @@ tools_setup -t <argument option>
 
 For more information, try "tools_setup --help" on a terminal that is logged into the devcloud.
 
-![image](https://user-images.githubusercontent.com/59750149/80544165-488b1c80-8965-11ea-8cc4-1174ebbe325a.png)
+![image](https://user-images.githubusercontent.com/59750149/81037113-7507d280-8e56-11ea-8145-b095b83e24e5.png)
 
 ### 5.4 Submitting Batch Jobs
 
@@ -526,18 +526,29 @@ echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, outpu
 
 ### 5.6 Report Status for Jobs Running on the Devcloud
 
-To report the status of your jobs running on the DevCloud, type the following:
+To report the status of your jobs running on the DevCloud using the [**login script**](#52-login-script) provided, type the following:
+
+```
+qstat
+```
+
+<br/>
+
+To report the status of your jobs running on the DevCloud without using the login script, type the following:
 
 ```
 qstat -s batch@v-qsvr-fpga
 ```
 
-The result will be of the form:
+<br/>
+
+The result for both of the commands above will be of the following form:
 
 ```
-v-qsvr-fpga.aidevcloud: Req'd       Req'd       Elap Job ID                  Username    Queue    Jobname          SessID  NDS   TSK   Memory      Time    S   Time
------------------------------------------------------------------------------------------
-2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02
+v-qsvr-fpga.aidevcloud: 
+Job ID                  Username    Queue    Jobname          SessID   NDS   TSK   Req'd Memory      Req'd Time    S     Elap Time
+----------------------------------------------------------------------------------------------------------------------------------
+2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --            06:00:00     R      01:15:02
 ```
 
 ### 5.7 Deleting Jobs on the Devcloud
@@ -575,16 +586,22 @@ To query if free nodes are available run the below command on the login-2 server
 ```
 pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
 pbsnodes -l free -s v-qsvr-fpga	    #lists all free nodes that host PAC cards
+
+pbsnodes | grep -B 4 fpga
+pbsnodes -l free	    #lists all free nodes 
 ```
 
 You will get a listing of free and busy nodes that connect to PAC cards. 
 
 If there is a free node, when you execute the command below you will be logged in to a new machine within a minute or so. If no machine is available, you will be placed in a queue.
 
-To login to a specific machine in interactive mode ( -I ), execute the following command:
+To login to a specific machine in interactive mode ( -I ), execute the following command:\
+Note, substitute *s00X-nXXX* with appropriate server numbers
 
 ```
-qsub -q batch@v-qsvr-fpga -I -l nodes=<s00X-nXXX>:ppn=2   #(for nodes with attached PAC cards, substitute with appropriate server numbers). Compute only nodes do not require -s v-qsvr-fpga
+qsub -q batch@v-qsvr-fpga -I -l nodes=<s00X-nXXX>:ppn=2   #for nodes with attached PAC cards
+
+qsub -I -l nodes=<s00X-nXXX>:ppn=2    #for compute only nodes and oneAPI nodes
 ```
 
 When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.

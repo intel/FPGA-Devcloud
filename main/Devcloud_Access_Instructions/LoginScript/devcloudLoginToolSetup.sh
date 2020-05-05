@@ -443,6 +443,13 @@ devcloud_login()
 }
 
 
+qstat()
+{
+    #display the status of all jobs currently running and queued
+    qstat -s batch@v-qsvr-fpga
+}
+
+
 tools_setup()
 {
     QUARTUS_LITE_RELEASE=("18.1")
