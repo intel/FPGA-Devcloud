@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 1 2020 Version 2     #
-# Add argv login            #
+# -May 5 2020 Version 2     #
+# Add 1.2.1                 #
 #                           #
 #                           #
 #                           #
@@ -18,8 +18,8 @@ blu=$'\e[1;34m'
 end=$'\e[0m'
 noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
-arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s001-n137" "s001-n138" "s001-n139")
-arria10Nodes121=("s005-n007")
+arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n006" "s001-n137" "s001-n138" "s001-n139")
+arria10Nodes121=("s005-n005" "s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 # 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s005-n008" "s001-n189")
