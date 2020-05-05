@@ -723,8 +723,8 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 **There are three different ways to Transfer Files to and from the Devcloud:** 
 
 1. [From/To a Local PC to/from DevCloud Server in X2Go Terminal (7.1)](#71-transferring-files-to-and-from-the-devcloud-with-scp)
-2. [MobaXterm User Session (7.2)](#72-Using-MobaXterm-to-Transfer-Files)
-3. [WinSCP Application (7.3)](#73-Using-WinSCP-to-Transfer-Files)
+2. [MobaXterm User Session (7.2)](#72-using-mobaxterm-to-transfer-files)
+3. [WinSCP Application (7.3)](#73-using-winscp-to-transfer-files)
 4. [MobaXterm Command Line to Transfer URLs (7.4)](#74-using-mobaxterm-command-line to-transfer-urls-github)
 
 ### 7.1 Transferring Files to and from the Devcloud with SCP 
