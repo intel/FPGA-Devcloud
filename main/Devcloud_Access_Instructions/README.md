@@ -362,7 +362,7 @@ Now you can run devcloud_login and follow the Devcloud login script instructions
 
 ###### Figure 6: Specific Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80254531-3725d580-8630-11ea-8f25-9987132616c6.png" alt="LoginScript" width=53% />
+<img src="https://user-images.githubusercontent.com/59750149/81090112-183a0580-8eb2-11ea-9628-fbe39af59ffc.png" alt="LoginScript" width=53% />
 
 <br/>
 
@@ -529,7 +529,7 @@ echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, outpu
 To report the status of your jobs running on the DevCloud using the [**login script**](#52-login-script) provided, type the following:
 
 ```
-qstat
+qstatus
 ```
 
 <br/>

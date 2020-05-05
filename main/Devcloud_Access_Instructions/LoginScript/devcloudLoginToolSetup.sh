@@ -445,7 +445,7 @@ devcloud_login()
 }
 
 
-qstat()
+qstatus()
 {
     #display the status of all jobs currently running and queued
     qstat -s batch@v-qsvr-fpga
