@@ -63,12 +63,12 @@
   + [5.1 Understanding available resources](#51-understanding-available-resources)
   + [5.2 Login Script](#52-login-script)
   + [5.3 Development Tool Access and Setup](#53-development-tool-access-and-setup)
-  + [5.4 Querying Device Availability](#54-querying-device-availability)
   
-  * [5.5 Submitting Batch Jobs](#55-submitting-batch-jobs)
-  * [5.6 Submitting Jobs for a Specified Walltime](#56-submitting-jobs-for-a-specified-walltime)
-  * [5.7 Report Status for Jobs Running on the Devcloud](#57-report-status-for-jobs-running-on-the-devcloud)
-  * [5.8 Deleting Jobs on the Devcloud](#58-deleting-jobs-on-the-devcloud)
+  * [5.4 Submitting Batch Jobs](#54-submitting-batch-jobs)
+  * [5.5 Submitting Jobs for a Specified Walltime](#55-submitting-jobs-for-a-specified-walltime)
+  * [5.6 Report Status for Jobs Running on the Devcloud](#56-report-status-for-jobs-running-on-the-devcloud)
+  * [5.7 Deleting Jobs on the Devcloud](#57-deleting-jobs-on-the-devcloud)
+  * [5.8 Querying Device Availability](#58-querying-device-availability)
   
 * [6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)
 
@@ -163,7 +163,7 @@ There are different methods of terminal connections. Listed below are a few opti
 
 **MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment. 
 
-If you are already running a native Linux or client running Linux, you don't need to load MobaXterm. To skip  the MobaXterm installation process click [here](#33-downloading-an-ssh-key).
+If you are already running a native Linux or client running Linux, you don't need to load MobaXterm. Click [here](#33-downloading-an-ssh-key) to skip  the MobaXterm installation process.
 
 ### 3.1 Install MobaXterm
 
@@ -315,7 +315,7 @@ You will now be logged in:
 
 Note that the following response:
 
-tty: standard input: Inappropriate ioctl for device
+tty: standard input: Inappropriate ioctl for device\
 X11 forwarding request <span style="color:red">failed </span>on channel 0 
 
 ​	 is expected behavior.
@@ -324,18 +324,18 @@ X11 forwarding request <span style="color:red">failed </span>on channel 0
 
 ### 5.1 Understanding available resources
 
-You are now logged into machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.  
+You are now logged into machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.
 
 Some nodes can run Quartus, OpenCL emulation and compile and HLS emulation, simulation and compile. The node capacity grows with additional servers periodically added.
 
 Some nodes can connect to machines with the above capabilities and also are directly connected to Arria 10 and Stratix 10 PAC cards.
 
-There are a series of detailed Linux commands shown below should you want to know the intricate details of how to connect to available compute nodes. 
+There are a series of detailed Linux commands shown below should you want to know the intricate details of how to connect to available compute nodes.
 
-1. [Login Script (5.2)](#52-login-script)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;5. [Submitting Jobs for a Specified Walltime (5.6)](#56-submitting-jobs-for-a-specified-walltime)
-2. [Development Setup Tool (5.3)](#53-development-tool-access-and-setup)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. [Batch Jobs Report Status (5.7)](#57-report-status-for-jobs-running-on-the-devcloud)
-3. [Querying Device Availability (5.4)](#54-querying-device-availability) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. [Deleting Batch Jobs (5.8)](#58-deleting-jobs-on-the-devcloud)
-4. [Submitting Batch Jobs (5.5)](#55-submitting-batch-jobs)
+1. [Login Script (5.2)](#52-login-script)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;5. [Batch Jobs Report Status (5.6)](#56-report-status-for-jobs-running-on-the-devcloud)
+2. [Development Setup Tool (5.3)](#53-development-tool-access-and-setup)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. [Deleting Batch Jobs (5.7)](#57-deleting-jobs-on-the-devcloud)
+3. [Submitting Batch Jobs (5.4)](#54-submitting-batch-jobs) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. [Querying Device Availability (5.8)](#58-querying-device-availability)
+4. [Submitting Jobs for a Specified Walltime (5.5)](#55-submitting-jobs-for-a-specified-walltime)
 
 ### 5.2 Login Script
 
@@ -349,164 +349,133 @@ fi
 
 Now you can run devcloud_login and follow the Devcloud login script instructions to connect to the appropriate compute node. The picture below shows what the current script appears as. When you type the command “devcloud_login”, the following output is shown. It separates the available nodes and what machines are capable of running.
 
-![](LoginScriptGif.gif)
-
 ###### Figure 1: Login Script Running
 
-<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=60% /> 
+![](LoginScriptGif.gif)
 
 ###### Figure 2: Arria10 Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=60% />
+<img src="https://user-images.githubusercontent.com/59750149/80539447-5a1bf680-895c-11ea-923d-8bd150eb4779.png" alt="ArriaLogin" width=60% /> 
 
 ###### Figure 3: Arria10 OneAPI Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540587-74ef6a80-895e-11ea-939a-089b2f147ba4.png" alt="StratixLogin" width=60% /> 
+<img src="https://user-images.githubusercontent.com/59750149/80540030-5fc60c00-895d-11ea-80ac-77f8c1dda845.png" alt="ArriaOapiLogin" width=60% />
 
 ###### Figure 4: Stratix10 Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80540856-f3e4a300-895e-11ea-957e-e5c9cf44a373.png" alt="StratixLogin" width=60% />
+<img src="https://user-images.githubusercontent.com/59750149/80540587-74ef6a80-895e-11ea-939a-089b2f147ba4.png" alt="StratixLogin" width=60% /> 
 
 ###### Figure 5: Compilation Node Login Script Selection
 
-<img src="https://user-images.githubusercontent.com/59750149/80254531-3725d580-8630-11ea-8f25-9987132616c6.png" alt="LoginScript" width=53% />
+<img src="https://user-images.githubusercontent.com/59750149/80540856-f3e4a300-895e-11ea-957e-e5c9cf44a373.png" alt="StratixLogin" width=60% />
 
 ###### Figure 6: Specific Node Login Script Selection
 
-Once you select a node to start an interactive login, it will also output the command required to set up the x2go window. Just copy and paste into a new mobaxterm terminal. 
+<img src="https://user-images.githubusercontent.com/59750149/80254531-3725d580-8630-11ea-8f25-9987132616c6.png" alt="LoginScript" width=53% />
 
- <img src="https://user-images.githubusercontent.com/59750149/80255690-4b6ad200-8632-11ea-83ea-39df83ab5852.png" alt="x2go" width=77% />
+\
+
+Once you select a node to start an interactive login, it will also output the command required to set up the x2go window. Just copy and paste into a new mobaxterm terminal. 
 
 ###### Figure 7: x2go Command
 
-Other features to the Devcloud login script are the ability to submit batch jobs from the headnode as well as to speed the user's interaction when wanting to log into a compute node interactively.
+ <img src="https://user-images.githubusercontent.com/59750149/80255690-4b6ad200-8632-11ea-83ea-39df83ab5852.png" alt="x2go" width=77% />
 
-Instead of answering "What are you trying to use the Devcloud for? ..." every time to login to a node interactively, you can type the following:
+<br/>
+
+Other features to the Devcloud login script are the ability to [submit batch jobs](#55-submitting-batch-jobs) from the headnode as well as to speed the user's interaction when wanting to log into a compute node interactively.
+
+Instead of answering "What are you trying to use the Devcloud for? ..." every time to start an interactive login to a compute node, you can type the following:
 
 ```
 devcloud_login -I <argument options>
 -----------------------------------Argument-Options-------------------------------------
-A10PAC
+A10PAC <development-stack version>
 A10OAPI
 S10PAC
 CO
-SNN <compute node name>
+SNN <s00X-nXXX>
 ```
 
-
-
-To  submit a batch job when logged into the login-2 machine (headnode) , type the following:
-
-```
-devcloud_login -b <argument options> [<walltime=hh:mm:ss>] <job>.sh
------------------------------------Argument-Options-------------------------------------
-A10PAC <job>.sh
-A10OAPI <job>.sh
-S10PAC <job>.sh
-CO <job>.sh
-SNN <compute node name> <job>.sh
-```
-
-When you submit your job, you will be prompted with a job ID for your submission. With this ID you are able to query for job status and delete the job if desired. Once the job is completed, two files will be generated; </ job.sh.**e**[jobID] /> and </ job.sh.**o**[jobID] />. The </ job.sh.**e**[jobID] /> file will contain any error messages that occurred while running your batch job (if any). The </ job.sh.**o**[jobID] /> file will contain the output to your batch job submission.
-
-For more information, try "devcloud_login --help" on a terminal that is logged into the devcloud.
+For more information, try "devcloud_login --help" on a terminal that is logged into the FPGA devcloud.
 
 ![dev_help](https://user-images.githubusercontent.com/59750149/80256309-668a1180-8633-11ea-8b32-555a0c4bcc8c.png)
 
-Figure 8: Login Script Help Message
-
 ### 5.3 Development Tool Access and Setup
 
-From a terminal that is logged into the devcloud, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the **tools_setup** function. This function will guide you through query of what compile workload you want to run.
+From a terminal that is logged into a compute node, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the **tools_setup** function. This function will guide you through query of what compile workload you want to run.
 
-Should you want to source setup scripts manually, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh and manually copy and paste the paths and environment variable settings for your desired tool flow.
+Should you want to source setup scripts manually, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh, and manually copy & paste the paths and environment-variable settings for your desired tool flow.
 
-To source the tools_setup function, include these two lines inside your ~/.bashrc script:
+To source the tools_setup function script, include these two lines inside your ~/.bashrc script:
 
     if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
     	source /data/intel_fpga/devcloudLoginToolSetup.sh
     fi
 
-Follow the instructions after invoking the tools_setup function.
+Now you can run tools_setup and follow the instructions to source a tool's path and environment settings into the compute node you are interactively logged into.
 
-Another feature to the tools-setup function is the ability to speed the user's interaction when wanting to source the paths and environment variable settings for a desired tool flow into a compute node. Instead of answering "Which tool would you like to source? ..." every time, you can type the following:
+Another feature to the tools-setup function is the ability to speed the user's interaction when wanting to source the environment variable settings for a tool when interactively logged into a compute node. Instead of answering "Which tool would you like to source? ..." every time, you can type the following:
 
 ```
-tools_setup -t <argument options>
+tools_setup -t <argument option>
 -----------------------------------Argument-Options-------------------------------------
-QL <Version Number>
-QS <Version Number>
-QP <Version Number>
-HLS <Quartus Edition> <Version Number>
-A10DS <Version Number>
+QL <Version>
+QS <Version>
+QP <Version>
+HLS <Quartus Edition> <Version>
+A10DS
 A10OAPI
 S10DS
 ```
 
+The above command can also be included in a batch script. Simply include the following two lines to be able to use the tools-setup function within your batch script. Then [submit a batch job](#54-submitting-batch-jobs).
 
+```
+source /data/intel_fpga/devcloudLoginToolSetup.sh
+tools_setup -t <argument option>
+```
 
 For more information, try "tools_setup --help" on a terminal that is logged into the devcloud.
 
 ![image](https://user-images.githubusercontent.com/59750149/80544165-488b1c80-8965-11ea-8cc4-1174ebbe325a.png)
 
-Figure 1: Tool_Setup Help Message
+### 5.4 Submitting Batch Jobs
 
-Should you want more details on available compute resources and query what is available, continue with the instructions below.
+This section provides information on how to submit batch jobs on the Devcloud when logged into the headnode machine (login-2) to be executed on a compute node. 
 
-### 5.4 Querying Device Availability
-
-To query if free nodes are available run the below command on the login server (headnode). The terminology that we will use is localnode (your PC), headnode (login node) and compute node. The compute node is a high power machine for running compilations. 
-
-```
-pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
-pbsnodes -l free -s v-qsvr-fpga	# lists all free nodes that host PAC cards
-```
-
-You will get a listing of free and busy nodes that connect to PAC cards. 
-
-If there is a free node, when you execute this command you will be logged in to a new machine within a minute or so. If no machine is available, you will be placed in a queue.
-
-To login to a specific machine in interactive mode ( -I ), execute one of the following commands:
-
-We will also show how to launch a batch job, which launches from the head node and executes on the compute node, and creates associated log files to allow you to view the results.
+To submit a batch job using the [**login script**](#52-login-script) provided, use the following:\
+Note, walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours.
 
 ```
-qsub -q batch@v-qsvr-fpga -I -l nodes=s00X-nXXX:ppn=2 # (for nodes with attached PAC cards, substitute with appropriate server numbers). Compute only nodes do not require -s v-qsvr-fpga
+devcloud_login -b <argument options> [<walltime=hh:mm:ss>] <job.sh>
+-----------------------------------Argument-Options-------------------------------------
+A10PAC <development-stack version> <job.sh>
+A10OAPI <job.sh>
+S10PAC <job.sh>
+CO <job.sh>
+SNN <s00X-nXXX> <job.sh>
 ```
 
-When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
+\
+
+To launch a batch job without using the login script, you must first know the name of the compute node machine (sxxx-nxxx) you want to use.\
+Type the following after knowing the compute node name:
 
 ```
--l h_vmem=10G
+qsub -q batch@v-qsvr-fpga -l nodes=<s00X-nXXX>:ppn=2 -d . <job.sh>
 ```
 
-Now you have a high power machine available for powerful computing jobs. You only have an **interactive**  console available but no graphics available. Note: MobaXterm has multiple tabs and three possibilities of where to be logged in: 
+\
 
-- Local Machine, your PC (eg. llandis-MOBL)
-- devcloud eg login-2 login server
-- compute server eg s001-n137
+When you submit your batch job, you will be prompted with a job ID for your submission. With this ID you are able to query for job [status](#57-report-status-for-jobs-running-on-the-devcloud) and/or [delete](#58-deleting-jobs-on-the-devcloud) the job if desired.\
+Once the job is completed, two files will be generated; *.sh.**e**xxxxx and *.sh.**o**xxxxx (where xxxxx is the unique job ID). The .exxxxxx file is the error log, and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
 
-Be cognizant of which Mobaxterm tab and machine you are typing in.
-
-At this point you will want to run a PC based product called [**X2Go client**](#60-graphics-usage-on-the-fpga-devcloud) that will allow you to have a Linux based GUI Intel Quartus and multiple terminal usage. In order to run GUI based applications such as Quartus and Modelsim, you will need to download an application on your PC called X2Go. X2Go is the remedy for slow graphics response from Mobaxterm running X11 or VNC windowing systems.
-
-### 5.5 Submitting Batch Jobs
-
-This section provides information on how to submit and terminate batch jobs on the Devcloud. 
-
-To launch a batch job, user must be logged in to the machine called login-2 (headnode) since the qsub command launches the batch job from the head node. The user must also specify the name of the wanted powerful compute node server </ sxxx-nxxx/ > that will execute their submitted batch job. 
-
-Type the following after knowing specified node; where *example.sh* represents user's batch file:
+Example:
 
 ```bash
-qsub -q batch@v-qsvr-fpga -l nodes=s00X-nXXX:ppn=2 -d . example.sh
-```
-
-Once the submitted job finishes running, two log files are created; *.sh.oxxxx and *.sh.exxxxx. The *.sh.oxxxxx file allows you to view the output results of the commands within the batch file. And *.sh.exxxxx file allows you to view any error results, if any, while the submitted batch file was running.
-
-Example of a file to be executed, and the obtained outcomes once the job is done executing:
-
-```bash
+devcloud_login -b A10PAC 1.2 job.sh
+				or
 qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
 ----------------------------------job.sh--------------------------------------------
   1 date
@@ -517,41 +486,68 @@ qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
   6 cd unknown_directory
 ```
 
-Error logfile obtained:
+###### Figure 1: Error logfile obtained
 
 ![errorimage](https://user-images.githubusercontent.com/59750149/79778493-a8425180-82ed-11ea-9f3a-c29f5d7cf945.png)
 
-Output logfile obtained:
+###### Figure 2: Terminal logfile obtained
 
 ![outputimage](https://user-images.githubusercontent.com/59750149/79783143-0f173900-82f5-11ea-85d1-ce51ec62bd60.png)
 
-### 5.6 Submitting Jobs for a Specified Walltime
+### 5.5 Submitting Jobs for a Specified Walltime
 
-A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours). Nodes n130-n136 can increase walltime up to 24 hours and nodes n137-n139 and 189 can be increased up to a maximum of 48 hours. Type the following after qsub-ing into a specified node:
+A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours) use one of the following commands.\
+Nodes n001-n007 walltime can be increased up to a maximum of 24 hours, and nodes n137-n139 and n189 can be increased up to a maximum of 48 hours. 
+
+To submit a batch job with a specified walltime using the [**login script**](#52-login-script) provided, use the following:\
+Note, you must be logged into the **headnode** machine (login-2).
 
 ```
-qsub -l walltime=<insert-time> 'command/bash file to be executed'
+devcloud_login -b <argument options> walltime=<hh:mm:ss> <job.sh>
+-----------------------------------Argument-Options-------------------------------------
+A10PAC <development-stack version> walltime=<hh:mm:ss> <job.sh>
+A10OAPI walltime=<hh:mm:ss> <job.sh>
+S10PAC walltime=<hh:mm:ss> <job.sh>
+CO walltime=<hh:mm:ss> <job.sh>
+SNN <s00X-nXXX> walltime=<hh:mm:ss> <job.sh>
 
-qsub -l walltime=12:00:00 walltime.sh		# example of a file to be executed
--------------------------------= walltime.sh ------------------------------
 
+devcloud_login -b S10PAC walltime=08:00:00 job.sh     #Example with Walltime of 8 hours
+```
+
+\
+
+To launch a batch job without using the login script, type the following after starting an **interactive login** into a specified node:
+
+```
+qsub -l walltime=<hh:mm:ss> <job.sh>
+
+
+qsub -l walltime=12:00:00 walltime.sh		#example of a file to be executed
+-------------------------------- walltime.sh --------------------------------------
 # begin walltime.sh
 
 sleep 11h		# sleep command equivalent to a quartus compilation file requiring 11 hours of compilation
-# alternatively, sleep 11h would be quartus_sh commands (i.e. quartus_sh --flow main.v) 	
+# alternatively, sleep 11h would be quartus_sh commands (i.e. quartus_sh --flow main.v) 
 
 echo job success > ~/Documents/walltime_log.txt		# exit sleep at 11:00:00, output "job success" to walltime_log.txt
 ```
 
-### 5.7 Report Status for Jobs Running on the Devcloud
+### 5.6 Report Status for Jobs Running on the Devcloud
 
-To report the status of your jobs running on the DevCloud is to type the following:
+To report the status of your jobs running on the DevCloud, type the following:
 
 ```
 qstat -s batch@v-qsvr-fpga
 ```
 
 The result will be of the form:
+
+```
+v-qsvr-fpga.aidevcloud: Req'd       Req'd       Elap Job ID                  Username    Queue    Jobname          SessID  NDS   TSK   Memory      Time    S   Time
+-----------------------------------------------------------------------------------------
+2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02
+```
 
 `v-qsvr-fpga.aidevcloud:`
                                                                                   `Req'd       Req'd       Elap`
@@ -561,17 +557,21 @@ The result will be of the form:
 
 `2390.v-qsvr-fpga.aidev  u27224      batch    STDIN             27907     1      2       --   06:00:00 R  01:15:02`
 
-### 5.8 Deleting Jobs on the Devcloud
+### 5.7 Deleting Jobs on the Devcloud
 
 Jobs can be terminated with the following command when nodes are hanging with stalled jobs: 
 
 ```
-qdel 2390.v-qsvr-fpga.aidevcloud
+qdel XXXX.v-qsvr-fpga.aidevcloud
 ```
 
-Note the suffix for the qstat command is .aidev however to kill the job with qdel you need to append .aidevcloud .
+Where XXXX is the unique Job ID.
 
-This is **not recommended** but it is a another technique to delete a job from the headnode if a node is hanging. Type the following and look for the qsub commands:
+Note, the qstat command mentioned in section 5.6 displays job ID finishing with .aidev however to kill the job usng qdel you need to append .aidevcloud .
+
+\
+
+This is **not recommended**, but it is another technique to delete a job from the headnode if a node is hanging. Type the following and look for the qsub commands:
 
 ```
 ps -auxw 
@@ -583,9 +583,47 @@ Free up the node with the following command:
 kill -9 <job-id>
 ```
 
+### 5.8 Querying Device Availability
+
+Should you want more details on available compute resources and query what is available, continue with the instructions below.
+
+To query if free nodes are available run the below command on the login-2 server (headnode).
+
+```
+pbsnodes -s v-qsvr-fpga | grep -B 4 fpga
+pbsnodes -l free -s v-qsvr-fpga	    #lists all free nodes that host PAC cards
+```
+
+You will get a listing of free and busy nodes that connect to PAC cards. 
+
+If there is a free node, when you execute the command below you will be logged in to a new machine within a minute or so. If no machine is available, you will be placed in a queue.
+
+To login to a specific machine in interactive mode ( -I ), execute the following command:
+
+```
+qsub -q batch@v-qsvr-fpga -I -l nodes=<s00X-nXXX>:ppn=2   #(for nodes with attached PAC cards, substitute with appropriate server numbers). Compute only nodes do not require -s v-qsvr-fpga
+```
+
+When launching the qsub command, you can request additional memory with the following command. Note: Each job takes 2 slots, so when you request 10G, it's actually 10G*2 = 20GB.
+
+```
+-l h_vmem=10G
+```
+
+Now you have a high power machine available for powerful computing jobs. You only have an **interactive**  console available but no graphics available.\
+Note: MobaXterm has multiple tabs and three possibilities of where to be logged in: 
+
+- Local Machine, your PC (eg. llandis-MOBL)
+- devcloud (eg. login-2 login server)
+- compute server (eg. s001-n137)
+
+Be cognizant of which Mobaxterm tab and machine you are typing in.
+
+At this point you will want to run a PC based product called **X2Go client** that will allow you to have a Linux based GUI Intel Quartus and multiple terminal usage. 
+
 ## 6.0 Graphics Usage on the FPGA Devcloud
 
-Although you can do graphics in MobaXterm, it is slow thus we decided to use X2GO application for GUI based programs.
+In order to run GUI based applications such as Quartus and Modelsim, you will need to download an application on your PC called X2Go. X2Go is the remedy for slow graphics response from Mobaxterm running X11 or VNC windowing systems.
 
 To download X2Go, navigate to this link on your PC browser: https://wiki.x2go.org/doku.php/download:start
 
@@ -820,7 +858,7 @@ Then, use one of the following:
 #### 1. WGET Command
 
 **Wget** command retrieves content from web servers.
-Use the wget command in command line providing one or more URLs as arguments to download the file (-s).
+Use the wget command in command line providing one or more URLs as arguments to download the file(-s).
 
 ```bash
 wget http://www.example.com/
@@ -841,9 +879,9 @@ curl -o filename http://raw.githubusercontent.com/example-file
 
 ![Image curl](https://user-images.githubusercontent.com/59750149/77707877-b36ebf80-6f83-11ea-8f6e-3f36c36d0e51.png)
 
-tr -d '/r' < filename > newfilename
+\
 
-
+Note, when using any of the two commands above you may have added '/r' characters within your downloaded files. To removed this added characters use the following command: `tr -d '/r' < filename > newfilename`
 
 ## 8.0 Launching Development Tools
 
