@@ -54,7 +54,7 @@ Once on this node, run tools_setup.
 tools_setup
 ```
 
-Select the Arria 10 Development Stack + OpenCL option.
+Select the Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL option.
 
 Make a directory in your root folder called DMA_AFU. To do this change directory to the appropriate location and type into the terminal:
 
@@ -79,7 +79,8 @@ cd build_synth
 $OPAE_PLATFORM_ROOT/bin/run.sh
 ```
 
-This step will take approximately 40 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu.gbs . Note if you compile your own gbs, it will be located in the build_synth directory.
+This step will take approximately 40 minutes to complete. Should you want to skip this step, you can skip, as the sample includes a precompiled "green bit stream" which is the FPGA programming file called bin/dma_afu_unsigned.gbs .\
+Note if you compile your own gbs, it will be located in the build_synth directory.
 
 For version **1.2.1 only**, you need to create the unsigned version of the .gbs file. If you use version 1.2, skip this next step.
 
@@ -91,8 +92,8 @@ PACSign PR -t UPDATE -H openssl_manager -i dma_afu.gbs -o dma_afu_compile_unsign
 
 Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
 
-No root key specified.  Generate unsigned bitstream? Y = yes, N = no: Y
-No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: Y
+No root key specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**\
+No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
 
 #### 3.3 Downloading the bit stream into the PAC card
 
@@ -148,7 +149,7 @@ If successful, you should see an output as shown below.
 
 ![image-20200316183648648](https://user-images.githubusercontent.com/59750149/77005112-82f0ab00-691d-11ea-9334-52c6ab8414af.png)
 
-   
+ <br/>
 
 This last step can take up to 10 minutes to complete. If you go to the directory: $OPAE_PLATFORM_ROOT/hw/samples you will find other samples that you can try out using similar steps.
 
