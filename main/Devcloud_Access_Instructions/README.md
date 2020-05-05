@@ -728,9 +728,7 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 3. [WinSCP Application (7.3)](#73-using-winscp-to-transfer-files)
 
-4. [MobaXterm Command Line to Transfer URLs (7.4)](#74-using-mobaxterm-command-line to-transfer-urls-github)
-
-   
+4. [MobaXterm Command Line to Transfer URLs (7.4)](#74-using-mobaxterm-command-line-to-transfer-urls-github)
 
 ### 7.1 Transferring Files to and from the Devcloud with SCP 
 
