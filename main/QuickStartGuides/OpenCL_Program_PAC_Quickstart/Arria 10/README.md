@@ -144,11 +144,11 @@ No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
 Next, you will program the PAC card with hello_world.aocx (version 1.2) or hello_world_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
 ```
-aoc program acl0 bin/hello_world.aocx
+aocl program acl0 bin/hello_world.aocx
 ```
 
 ```
-aoc program acl0 bin/hello_world_unsigned.aocx
+aocl program acl0 bin/hello_world_unsigned.aocx
 ```
 
 #### 3.5 Running the host code 
