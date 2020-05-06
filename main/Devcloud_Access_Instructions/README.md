@@ -490,7 +490,7 @@ qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
 ### 5.5 Submitting Jobs for a Specified Walltime
 
 A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours) use one of the following commands.\
-Nodes n039-n045 walltime can be increased up to a maximum of 24 hours, and nodes n137-n139 and n189 can be increased up to a maximum of 48 hours. 
+Nodes can be increased up to a maximum of 48 hours. 
 
 To submit a batch job with a specified walltime using the [**login script**](#52-login-script) provided, use the following:\
 Note, you must be logged into the **headnode** machine (login-2).
