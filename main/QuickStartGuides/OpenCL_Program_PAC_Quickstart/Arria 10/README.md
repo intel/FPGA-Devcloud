@@ -45,9 +45,15 @@ Run the devcloud_login function and connect to an Arria 10 capable node. This fu
 
 Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
-Once on this node, run tools_setup. Select the Arria 10 Development Stack + OpenCL option. Select the appropriate version of tools.
+Once on this node, run tools_setup. 
 
-Make  working directory
+```
+tools_setup
+```
+
+Select the Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL option.
+
+Make working directory
 
 ```bash
 mkdir A10_OPENCL_AFU
@@ -58,7 +64,6 @@ We will then copy the example folder into this project folder. Type this into th
 ```bash
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
 tar xvf exm_opencl_hello_world_x64_linux.tgz
-
 ```
 
 Check to make sure connectivity to the Arria 10 PAC card looks ok:
@@ -131,10 +136,8 @@ source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager 
 
 Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
 
-```
-No root key specified.  Generate unsigned bitstream? Y = yes, N = no: Y
-No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: Y
-```
+No root key specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**\
+No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
 
 #### 3.4.2 Programming the Arria 10 GX PAC Card
 
@@ -148,8 +151,6 @@ aoc program acl0 bin/hello_world.aocx
 aoc program acl0 bin/hello_world_unsigned.aocx
 ```
 
-
-
 #### 3.5 Running the host code 
 
 You have run make to build the CPU host executable in the prior section, so its not necessary to run again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
@@ -160,7 +161,7 @@ You have run make to build the CPU host executable in the prior section, so its 
 
 Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host .
 
-## 6       Document Revision History
+## 4       Document Revision History
 
 List the revision history for the application note.
 
