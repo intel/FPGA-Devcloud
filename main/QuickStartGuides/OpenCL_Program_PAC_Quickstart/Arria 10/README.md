@@ -163,14 +163,44 @@ You have run make to build the CPU host executable in the prior section, so its 
 
 Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host .
 
-## 4       Document Revision History
+## 4       Batch Submission for v1.2
+
+The follow commands can be included in a batch script (in this case A10_opencl_batch.sh) to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. Adjust commands to your own needs.
+
+```
+source /data/intel_fpga/devcloudLoginToolSetup.sh
+tools_setup -t A10DS
+cd ~/A10_OPENCL_AFU/hello_world
+aoc -march=emulator -v device/hello_world.cl -o bin/hello_world.aocx
+make
+CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
+aoc device/hello_world.cl -o bin/hello_world.aocx -board=pac_a10
+aocl program acl0 bin/hello_world.aocx
+
+```
+
+From the headnode login-2, run this command:
+
+```
+devcloud_login -b A10PAC 1.2 A10_opencl_batch.sh
+```
+
+To see the resulting terminal output, consult the files:
+
+A10_opencl_batch.sh.exxxxxx\
+A10_opencl_batch.sh.oxxxxxx
+
+xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
+
+## 5       Document Revision History
 
 List the revision history for the application note.
 
-| Name         | Date      | Changes                       |
-| ------------ | --------- | ----------------------------- |
-| Larry Landis | 4/2/2020  | Initial Release               |
-| Larry Landis | 4/28/2020 | Added sign_aocx.sh for v1.2.1 |
+| Name             | Date      | Changes                       |
+| ---------------- | --------- | ----------------------------- |
+| Larry Landis     | 4/2/2020  | Initial Release               |
+| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1 |
+| Damaris Renteria | 5/7/2020  | Batch Command flow            |
 
 
 
