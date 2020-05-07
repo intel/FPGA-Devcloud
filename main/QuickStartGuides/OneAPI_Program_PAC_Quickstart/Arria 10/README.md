@@ -48,7 +48,13 @@ Run the devcloud_login function and connect to an OneAPI Arria 10 capable node. 
 
 Select option 2 or option 5 and connect to an Arria 10 ready OneAPI node.
 
-Once on this node, run tools_setup. Select the Arria 10 OneAPI option.
+Once on this node, run tools_setup.
+
+```
+tools_setup
+```
+
+Select the Arria 10 OneAPI option.
 
 Make  working directory:
 
@@ -62,13 +68,14 @@ We will use a utility called oneapi-cli to copy over the sample design.
 oneapi-cli
 ```
 
-Select option (1) Create a project.
+- Select option (1) Create a project.
 
-Selection (1) cpp
+- Selection (1) cpp
 
-Scroll down to CPU, GPU, FPGA and select Vector Add
+- Scroll down to CPU, GPU, FPGA and select Vector Add
 
-Create the sample sign under the A10_ONEAPI directory that you created in the prior step and exit the oneapi-cli utility.
+- Create the sample sign under the A10_ONEAPI directory that you created in the prior step and quit the oneapi-cli utility.
+
 
 #### 3.2 Running dpc++ vector-add project in the emulation mode
 
@@ -84,7 +91,7 @@ make run_emu -f Makefile.fpga
 
 You will observe the two commands that are run for emulation mode:
 
-dpcpp  -fintelfpga src/vector-add.cpp -o vector-add.fpga_emu -DFPGA_EMULATOR
+dpcpp  -fintelfpga src/vector-add.cpp -o vector-add.fpga_emu -DFPGA_EMULATOR\
 ./vector-add.fpga_emu
 
 Observe for the success message upon completion.
@@ -99,20 +106,20 @@ make run_hw -f Makefile.fpga
 
 Observe the messages below. Note how the OpenCL compiler is launched as a processing step to generate the FPGA executable hardware. This step takes approximately one hour.
 
-dpcpp  -fintelfpga -c src/vector-add.cpp -o a.o -DFPGA
+dpcpp  -fintelfpga -c src/vector-add.cpp -o a.o -DFPGA\
 dpcpp  -fintelfpga a.o -o vector-add.fpga -Xshardware
 
 aoc: Compiling for FPGA. This process may take several hours to complete.  Prior to performing this compile, be sure to check the reports to ensure the design will meet your performance targets.  If the reports indicate performance targets are not being met, code edits may be required.  Please refer to the oneAPI FPGA Optimization Guide for information on performance tuning applications for FPGAs.
 
-
+<br/>
 
 Look for the success message upon completion.
 
-./vector-add.fpga
-Device: pac_a10 : Intel PAC Platform (pac_ee00000)
+./vector-add.fpga\
+Device: pac_a10 : Intel PAC Platform (pac_ee00000)\
 success
 
-#### 4 	Batch Submission
+## 4       Batch Submission
 
 The follow commands can be included in a batch script (in this case A10_oneapi_batch.sh) to launch the OneAPI emulation flow, followed by the compilation and FPGA board programming flow using make commands. Adjust commands to your own needs.
 
@@ -132,12 +139,12 @@ devcloud_login -b A10OAPI A10_oneapi_batch.sh
 
 To see the resulting terminal output, consult the files:
 
-A10_oneapi_batch.sh.exxxxxx
+A10_oneapi_batch.sh.exxxxxx\
 A10_oneapi_batch.sh.oxxxxxx
 
 xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
 
-#### 5       Document Revision History
+## 5       Document Revision History
 
 List the revision history for the application note.
 

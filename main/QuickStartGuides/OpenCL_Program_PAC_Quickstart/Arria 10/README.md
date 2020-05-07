@@ -63,6 +63,7 @@ We will then copy the example folder into this project folder. Type this into th
 
 ```bash
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
+cd A10_OPENCL_AFU
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 ```
 
@@ -79,6 +80,7 @@ Look for DIAGNOSTIC_PASSED.
 The first step of the OpenCL flow is to compile and execute the design for emulation mode. This step allows you to quickly verify the functionality of your code on the CPU without performing the conversion from OpenCL to RTL and from RTL to an FPGA executable, which takes up to an hour.
 
 ```
+cd hello_world
 aoc -march=emulator -v device/hello_world.cl -o bin/hello_world.aocx
 ```
 
@@ -136,8 +138,8 @@ source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager 
 
 Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
 
-No root key specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**\
-No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No root key specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
 
 #### 3.4.2 Programming the Arria 10 GX PAC Card
 
