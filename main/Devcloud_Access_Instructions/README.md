@@ -37,74 +37,52 @@
     </a>
   </h3>
 </div>
-------
+<br/>
 
 # Devcloud Access Instructions
 
-[Devcloud Access Instructions](#devcloud-access-instructions)
-
-* [1.0 Introduction](#10-introduction)
-
-* [2.0 Getting an Account](#20-getting-an-account)
-  
-  + [Connection Methods](#connection-methods)
-  
-* [3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
-  + [3.1 Install MobaXterm](#31-install-mobaxterm)
-  + [3.2 Open Local Terminal](#32-open-local-terminal)
-  + [3.3 Downloading an SSH key](#33-downloading-an-ssh-key)
-  
-* [4.0 Connection to Devcloud](#40-connection-to-devcloud)
-  + [Public User](#public-user)
-  + [User Inside Intel Firewall](#user-inside-intel-firewall)
-  + [4.1 Add SOcket CAT Package](#41-add-socat-package)
-  + [4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)
-  
-* [5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)
-  
-  + [5.1 Understanding available resources](#51-understanding-available-resources)
-  + [5.2 Login Script](#52-login-script)
-  + [5.3 Development Tool Access and Setup](#53-development-tool-access-and-setup)
-  
-  * [5.4 Submitting Batch Jobs](#54-submitting-batch-jobs)
-  * [5.5 Submitting Jobs for a Specified Walltime](#55-submitting-jobs-for-a-specified-walltime)
-  * [5.6 Report Status for Jobs Running on the Devcloud](#56-report-status-for-jobs-running-on-the-devcloud)
-  * [5.7 Deleting Jobs on the Devcloud](#57-deleting-jobs-on-the-devcloud)
-  * [5.8 Querying Device Availability](#58-querying-device-availability)
-  
-* [6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)
-
-  + [6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)
-
-  + [6.2 Quartus Font Setup](#62-quartus-font-setup)
-
-* [7.0 Transferring Files to and from the Devcloud](#70-transferring-files-to-and-from-the-devcloud)
-  
-  + [7.1 Transferring Files to and from the Devcloud with SCP](#71-transferring-files-to-and-from-the-devcloud-with-scp)
-  + [7.2 Using MobaXterm to Transfer Files](#72-using-mobaxterm-to-transfer-files)
-  + [7.3 Using WinSCP to Transfer Files](#73-using-winscp-to-transfer-files)
-  + [7.4 Using MobaXterm Command Line to Transfer URLs (Github)](#74-using-mobaxterm-command-line-to-transfer-urls-github)
-    + [1. WGET Command](#1-wget-command)
-    + [2. CURL Command](#2-curl-command)
-  
-* [8.0 Launching Development Tools](#80-launching-development-tools)
-
-* [9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#90-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)
-
-* [10.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#100-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)
-
-  + [10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#101-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)
-  + [10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#102-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)
-
-* [11.0 Timeouts and Disk Space](#110-timeouts-and-disk-space)
-
-* [12.0 Determining and Allocating Memory Availability and CPU Count and Speed](#120-determining-and-allocating-memory-availability-and-cpu-count-and-speed)
-
-* [13.0 Devcloud Text Editors](#130-devcloud-text-editors)
-
-* [14.0 Determining which version of the OS is running on a Node](#140-determining-which-version-of-the-os-is-running-on-a-node)
-
-* [15.0 Debug Notes - Tips and Tricks](#150-debug-notes---tips-and-tricks)
+[Devcloud Access Instructions](#devcloud-access-instructions)\
+[1.0 Introduction](#10-introduction)\
+[2.0 Getting an Account](#20-getting-an-account)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Connection Methods](#connection-methods)\
+[3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1 Install MobaXterm](#31-install-mobaxterm)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2 Open Local Terminal](#32-open-local-terminal)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3 Downloading an SSH key](#33-downloading-an-ssh-key)\
+[4.0 Connection to Devcloud](#40-connection-to-devcloud)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Public User](#public-user)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[User Inside Intel Firewall](#user-inside-intel-firewall)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 Add SOcket CAT Package](#41-add-socat-package)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)\
+[5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.1 Understanding available resources](#51-understanding-available-resources)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.2 Login Script](#52-login-script)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.3 Development Tool Access and Setup](#53-development-tool-access-and-setup)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.4 Submitting Batch Jobs](#54-submitting-batch-jobs)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.5 Submitting Jobs for a Specified Walltime](#55-submitting-jobs-for-a-specified-walltime)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.6 Report Status for Jobs Running on the Devcloud](#56-report-status-for-jobs-running-on-the-devcloud)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.7 Deleting Jobs on the Devcloud](#57-deleting-jobs-on-the-devcloud)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.8 Querying Device Availability](#58-querying-device-availability)\
+[6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[6.2 Quartus Font Setup](#62-quartus-font-setup)\
+[7.0 Transferring Files to and from the Devcloud](#70-transferring-files-to-and-from-the-devcloud)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.1 Transferring Files to and from the Devcloud with SCP](#71-transferring-files-to-and-from-the-devcloud-with-scp)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.2 Using MobaXterm to Transfer Files](#72-using-mobaxterm-to-transfer-files)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.3 Using WinSCP to Transfer Files](#73-using-winscp-to-transfer-files)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.4 Using MobaXterm Command Line to Transfer URLs (Github)](#74-using-mobaxterm-command-line-to-transfer-urls-github)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1. WGET Command](#1-wget-command)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2. CURL Command](#2-curl-command)\
+[8.0 Launching Development Tools](#80-launching-development-tools)\
+[9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#90-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)\
+[10.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#100-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#101-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#102-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)\
+[11.0 Timeouts and Disk Space](#110-timeouts-and-disk-space)\
+[12.0 Determining and Allocating Memory Availability and CPU Count and Speed](#120-determining-and-allocating-memory-availability-and-cpu-count-and-speed)\
+[13.0 Devcloud Text Editors](#130-devcloud-text-editors)\
+[14.0 Determining which version of the OS is running on a Node](#140-determining-which-version-of-the-os-is-running-on-a-node)\
+[15.0 Debug Notes - Tips and Tricks](#150-debug-notes---tips-and-tricks)
 
 <br/>
 
