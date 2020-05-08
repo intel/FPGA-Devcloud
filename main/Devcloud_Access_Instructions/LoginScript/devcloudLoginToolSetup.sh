@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 5 2020 Version 2     #
-# Add 1.2.1                 #
+# -May 6 2020 Version 2     #
+# Add v1.2.1                #
 #                           #
 #                           #
 #                           #
@@ -19,14 +19,13 @@ end=$'\e[0m'
 ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
-arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n006" "s001-n138" "s001-n139")
-arria10Nodes121=("s005-n005" "s005-n007")
+arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n006" "s001-n137" "s001-n138" "s001-n139")
+arria10Nodes121=("s005-n004" "s005-n005" "s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 # 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
-debugNodes=("s001-n137")
 
 
 
@@ -66,6 +65,9 @@ devcloud_login()
     fi
 
     if [ -z $argv1 ]; then
+	echo
+	printf "%s\n%s\n" "You are selecting an interactive compute server sesssion. Please consider using batch mode submission using" "devcloud_login -b to not tie up compute servers with idle sessions."
+	echo "See the help menu using devcloud_login -h for more details."
 	echo
 	printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
 	echo
@@ -445,10 +447,10 @@ devcloud_login()
 }
 
 
-qstatus()
-{
-    #display the status of all jobs currently running and queued
-    qstat -s batch@v-qsvr-fpga
+qstatus()	
+{	
+    #display the status of all jobs currently running and queued	
+    qstat -s batch@v-qsvr-fpga	
 }
 
 
@@ -457,6 +459,7 @@ tools_setup()
     QUARTUS_LITE_RELEASE=("18.1")
     QUARTUS_STANDARD_RELEASE=("18.1")
     QUARTUS_PRO_RELEASE=("17.1" "18.1" "19.2" "19.3" "20.1")
+    #ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 
     #defined paths
     GLOB_INTELFPGA_PRO="/glob/development-tools/versions/intelFPGA_pro"
@@ -466,9 +469,7 @@ tools_setup()
     OPT_INTEL="/opt/intel"
     OPT_INTEL_2="/opt/intel/2.0.1"
     GLOB_FPGASUPPORTSTACK="/glob/development-tools/versions/fpgasupportstack"
-    GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
-
-    #ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
+    #GLOB_ONEAPI="/glob/development-tools/versions/oneapi"
 
 
     if [[ $1 =~ "-h" ]]; then
@@ -854,15 +855,6 @@ tools_setup()
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
-	elif [[ ${debugNodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
-            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/init_env.sh"
-            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/init_env.sh
-	    echo
-            echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
-            source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
-	    echo
-            echo "Putting python2 in the search path - required for Arria 10 development stack"
-            export PATH=/glob/intel-python/python2/bin:${PATH}
         else
             echo "Not on an Arria10 Development Stack node. You need to be on an Arria10 Development Stack node to run Arria Development Stack"
         fi
@@ -872,8 +864,11 @@ tools_setup()
         temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
         unset IFS
         if [[ ${arria10_oneAPI_Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks if user is currently on correct node and node name has length of 9
-            echo "sourcing $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh"
-            source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
+            #echo "sourcing $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh"
+            #source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
+            echo "sourcing /opt/intel/inteloneapi/setvars.sh"
+	    source /opt/intel/inteloneapi/setvars.sh
+	    echo "${red}Note ONEAPI compile does not work, only emulation. --May 08, 2020--${end}"
         else
             echo "Not on an Arria 10 OneAPI node. You need to be on an Arria 10 OneAPI node."
         fi
