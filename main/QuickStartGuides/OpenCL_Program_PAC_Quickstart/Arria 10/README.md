@@ -94,6 +94,14 @@ Now run for the host code binary. Note that the with the environment setting sho
 CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
 ```
 
+For version 1.2.1, you need to run emulation with this command:
+
+```
+./bin/host -emulator
+```
+
+
+
 You should see a list of parameters and Kernel execution is complete.
 
 #### 3. 3 Compiling OpenCL code into an FPGA executable
@@ -165,10 +173,11 @@ Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./b
 
 List the revision history for the application note.
 
-| Name         | Date      | Changes                       |
-| ------------ | --------- | ----------------------------- |
-| Larry Landis | 4/2/2020  | Initial Release               |
-| Larry Landis | 4/28/2020 | Added sign_aocx.sh for v1.2.1 |
+| Name         | Date      | Changes                                  |
+| ------------ | --------- | ---------------------------------------- |
+| Larry Landis | 4/2/2020  | Initial Release                          |
+| Larry Landis | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
+| Larry Landis | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
 
 
 
