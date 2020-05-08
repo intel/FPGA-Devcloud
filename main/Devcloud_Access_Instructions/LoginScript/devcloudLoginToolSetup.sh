@@ -868,9 +868,9 @@ tools_setup()
             #source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
             echo "sourcing /opt/intel/inteloneapi/setvars.sh"
 	    source /opt/intel/inteloneapi/setvars.sh
-	    echo "${red}Note ONEAPI compile does not work, only emulation. --May 08, 2020--${end}"
+	    echo "${red}Please note that until further notice ONEAPI compile does not work, only emulation. --May 08, 2020--${end}"
         else
-            echo "Not on an Arria 10 OneAPI node. You need to be on an Arria 10 OneAPI node."
+            echo "Not on an Arria10 OneAPI node. You need to be on an Arria10 OneAPI node."
         fi
 
     elif [[ $number -eq 7 || ( -n $argv1 && $argv1 == "S10DS" ) ]]; then  # case for Stratix 10 Development Stack
