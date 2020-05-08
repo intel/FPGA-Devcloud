@@ -81,7 +81,7 @@ The first step of the OpenCL flow is to compile and execute the design for emula
 
 ```
 cd hello_world
-aoc -march=emulator -v device/hello_world.cl -o bin/hello_world.aocx
+aoc -march=emulator -v device/hello_world.cl -o bin/hello_world_emulation.aocx
 ```
 
 The next step is to compile the host code. 
@@ -90,10 +90,18 @@ The next step is to compile the host code.
 make
 ```
 
-Now run for the host code binary. Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.
+Now run for the host code binary. Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.\
+
+For version 1.2, you need to run emulation with this command:
 
 ```
 CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
+```
+
+For version 1.2.1, you need to run emulation with this command:
+
+```
+./bin/host -emulator
 ```
 
 You should see a list of parameters and Kernel execution is complete.
@@ -103,12 +111,12 @@ You should see a list of parameters and Kernel execution is complete.
 Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently get compiled in Quartus to produce an FPGA executable .aocx file using the following command. This step will take approximately one hour.
 
 ```
-aoc device/hello_world.cl -o bin/hello_world.aocx -board=pac_a10
+aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
 ```
 
 #### 3.4 Downloading the bit stream into the PAC card
 
-Next we will be looking for an available acceleration card, convert .aocx to unsigned (v1.2.1) program it, compile the host C code and run the software program to display on the terminal.
+Next we will be looking for an available acceleration card, convert .aocx to unsigned (v1.2.1), program it, compile the host C code, and run the software program to display on the terminal.
 
 To see what FPGA accelerator cards are available, we type the following into the terminal. 
 
@@ -133,7 +141,7 @@ cd bin
 ```
 
 ```
-source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world.aocx -r NULL -k NULL -o hello_world_unsigned.aocx
+source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
 ```
 
 Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
@@ -143,14 +151,14 @@ Because no root key or code signing key is provided, the script asks if you woul
 
 #### 3.4.2 Programming the Arria 10 GX PAC Card
 
-Next, you will program the PAC card with hello_world.aocx (version 1.2) or hello_world_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
+Next, you will program the PAC card with hello_world_fpga.aocx (version 1.2) or hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
 ```
-aocl program acl0 bin/hello_world.aocx
+aocl program acl0 bin/hello_world_fpga.aocx
 ```
 
 ```
-aocl program acl0 bin/hello_world_unsigned.aocx
+aocl program acl0 hello_world_fpga_unsigned.aocx
 ```
 
 #### 3.5 Running the host code 
@@ -158,10 +166,15 @@ aocl program acl0 bin/hello_world_unsigned.aocx
 You have run make to build the CPU host executable in the prior section, so its not necessary to run again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
 
 ```bash
-./bin/host
+./bin/host					#version 1.2
 ```
 
-Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host .
+```bash
+./host						#version 1.2.1
+```
+
+Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host (for version 1.2)\
+Note the differences in results from: ./bin/host -emulator vs ./host (for version 1.2.1)
 
 ## 4       Batch Submission for v1.2
 
@@ -196,12 +209,9 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 
 List the revision history for the application note.
 
-| Name             | Date      | Changes                       |
-| ---------------- | --------- | ----------------------------- |
-| Larry Landis     | 4/2/2020  | Initial Release               |
-| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1 |
-| Damaris Renteria | 5/7/2020  | Batch Command flow            |
-
-
-
- 
+| Name             | Date      | Changes                                  |
+| ---------------- | --------- | ---------------------------------------- |
+| Larry Landis     | 4/2/2020  | Initial Release                          |
+| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
+| Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
+| Damaris Renteria | 5/11/2020 | Batch Command flow                       |
