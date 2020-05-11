@@ -52,6 +52,9 @@ devcloud_login()
 	argv1="$2"
 	argv2="$3"
 	unset argv3 argv4
+    elif [[ $1 == "-l" && -z $2 ]]; then
+	argv1="SNN"
+	unset argv2 argv3 argv4
     elif [[ $1 == "-b" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
