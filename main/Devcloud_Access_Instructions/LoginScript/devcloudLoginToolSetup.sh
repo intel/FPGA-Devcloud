@@ -365,8 +365,38 @@ devcloud_login()
                         qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
 		    fi
                 fi
-	    elif [[ -n "$argv2" || ( -n "$argv1" && -z "$argv2" ) ]]; then
+	    elif [[ -n "$argv2" ]]; then
 		printf "%s\n%s\n" "${red}Invalid Entry. Available nodes are: ${availableNodes[*]}" "eg: devcloud_login -b SNN ${availableNodes[0]}${end}"
+	    elif [[ -n "$argv1" && -z "$argv2" ]]; then
+                echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)           "
+                node_no_hardware_str=$(echo ${availableNodesNohardware[@]} ${availableNodesNohardware_on_temp_server[@]})
+                printf "${red}$node_no_hardware_str${end}"
+                echo 
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)         "
+                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
+                printf "${red}$node_arria10_oneAPI_str${end}"
+                echo 
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)         "
+		#node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
+                #printf "${red}$node_arria10_str${end}"
+                echo "Release 1.2:"
+		node_arria10_12str=$(echo ${availableNodesArria12[@]} ${availableNodesArria12_on_temp_server[@]})
+                printf "${red}$node_arria10_12str${end}"
+                echo
+                echo "Release 1.2.1:"
+		node_arria10_121str=$(echo ${availableNodesArria121[@]} ${availableNodesArria121_on_temp_server[@]})
+                printf "${red}$node_arria10_121str${end}"
+                echo
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)          "
+                node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+                printf "${red}$node_stratix_str${end}"
+                echo
+                echo --------------------------------------------------------------------------------------
             else
                 echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
                 echo --------------------------------------------------------------------------------------
