@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 6 2020 Version 2     #
-# Add v1.2.1                #
+# -May 11 2020 Version 2    #
+# Add node list             #
 #                           #
 #                           #
 #                           #
@@ -939,6 +939,7 @@ dev_Help() {
     echo "------"
     echo
     echo "devcloud_login -h | --help"
+    echo "devcloud_login -l"
     echo "devcloud_login -I <script args options>"
     echo "devcloud_login -b <script args options> [walltime=hh:mm:ss] <job.sh>"
     echo "devcloud_login "
@@ -946,8 +947,8 @@ dev_Help() {
     echo "Description: "
     echo "------------"
     echo
-    echo "devcloud_login is a command to start an interactive login to a compute node, "
-    echo "or submit a batch job to a compute node. "
+    echo "devcloud_login is a command to display available nodes, start an interactive login to a compute "
+    echo "node, or submit a batch job to a compute node. "
     echo
     echo "Argument Options: "
     echo "-----------------"
