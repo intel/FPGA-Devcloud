@@ -31,30 +31,28 @@ allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[
 
 devcloud_login()
 {
-    # initial check to see if user is logged into a node already
-    if [ $HOSTNAME != "login-2" ]; then
-        echo "Your hostname is not login-2. You are probably already logged into a compute node. Exit node in order to log into headnode."
-        return 1
-    fi
-
-    inter_nodeusage=`ps -auwx | grep "qsub.*-I" | grep -v "grep" | wc -l`
+    interactive_nodeusage=`ps -auwx | grep "qsub.*-I" | grep -v "grep" | wc -l`
     name_node=`ps -auwx | grep "qsub.*-I" | awk '{print $16}'`
-    if [ $inter_nodeusage -ne 0 ]; then
-	echo "You are already logged into node ${name_node:6:9} interactively."
-	return 1
-    fi
  
     if [[ $1 =~ "-h" ]]; then
 	# display Help
 	dev_Help
 	return 0
+    elif [[ $1 == "-l" && -z $2 ]]; then
+	argv1="SNN"
+	unset argv2 argv3 argv4
+    elif [ $HOSTNAME != "login-2" ]; then
+	# check to see if user is logged into a compute node already
+	echo "Your hostname is not login-2. You are probably already logged into a compute node. Exit node in order to log into headnode."
+        return 1
+    elif [ $interactive_nodeusage -ne 0 ]; then
+	# check to see if user is already logged into a compute node and is currently at the headnode
+	echo "You are already logged into node ${name_node:6:10} interactively."
+	return 1
     elif [[ $1 == "-I" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
 	unset argv3 argv4
-    elif [[ $1 == "-l" && -z $2 ]]; then
-	argv1="SNN"
-	unset argv2 argv3 argv4
     elif [[ $1 == "-b" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
