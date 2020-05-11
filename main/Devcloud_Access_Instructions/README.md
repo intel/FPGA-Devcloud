@@ -50,7 +50,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2 Open Local Terminal](#32-open-local-terminal)\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3 Downloading an SSH key](#33-downloading-an-ssh-key)\
 [4.0 Connection to Devcloud](#40-connection-to-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Public User](#public-user)\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Public User](#public-user---anyone-not-working-at-intel)\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[User Inside Intel Firewall](#user-inside-intel-firewall)\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 Add SOcket CAT Package](#41-add-socat-package)\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)\
@@ -207,7 +207,7 @@ To start the process:
 
 **The next steps to connect to the Intel Devcloud are different for usage inside and outside the Intel Firewall. Select the correct usage option below:** 
 
-[Public User](#public-user)\
+[Public User](#public-user---anyone-not-working-at-intel)\
 [User Inside Intel Firewall](#user-inside-intel-firewall)
 
 ## 4.0 Connection to Devcloud
@@ -353,7 +353,7 @@ Once you select a node to start an interactive login, it will also output the co
 
 <br/>
 
-Other features to the Devcloud login script are the ability to [submit batch jobs](#54-submitting-batch-jobs) from the headnode as well as to speed the user's interaction when wanting to log into a compute node interactively.
+Other features to the Devcloud login script are the ability to display available nodes, [submit batch jobs](#54-submitting-batch-jobs) from the headnode as well as to speed the user's interaction when wanting to log into a compute node interactively.
 
 Instead of answering "What are you trying to use the Devcloud for? ..." every time to start an interactive login to a compute node, you can type the following:
 
@@ -367,9 +367,15 @@ CO
 SNN <s00X-nXXX>
 ```
 
+Type the following to simply view a list of the available nodes, to etheir specifically choose a compute node when submitting a batch job or to start an interactive login:
+
+```
+devcloud_login -l
+```
+
 For more information, try "devcloud_login --help" on a terminal that is logged into the FPGA devcloud.
 
-<img src="https://user-images.githubusercontent.com/59750149/81036993-fdd23e80-8e55-11ea-91e3-d72d9b5361a3.png" alt="dev_help" width=90% />
+<img src="https://user-images.githubusercontent.com/59750149/81611116-5f7f3500-938f-11ea-9f7c-dbf2eca902c4.png" alt="dev_help" width=90% />
 
 ### 5.3 Development Tool Access and Setup
 
