@@ -37,13 +37,13 @@
     </a>
   </h3>
 </div>
-<br/>
+
 
 # Devcloud Access Instructions
 
 [TOC]
 
-<br/>
+
 
 ## 1.0 Introduction
 
