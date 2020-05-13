@@ -88,6 +88,7 @@ The first step of the OpenCL flow is to compile and execute the design for emula
 ```
 cd hello_world
 aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_emulation.aocx
+ln -s hello_world_emulation.aocx hello_world.aocx
 ```
 
 The next step is to compile the host code. 
@@ -106,10 +107,13 @@ You should see a list of parameters and Kernel execution is complete.
 
 #### 3. 3 Compiling OpenCL code into an FPGA executable
 
-Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently be compiled in Quartus to produce an FPGA executable .aocx file. This step will take approximately one hour.
+Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently be compiled in Quartus to produce an FPGA executable .aocx file. This step will take approximately one hour. You can also copy or link over a prebuilt copy of the .aocx file from $OPAE_PLATFORM_ROOT/opencl/hello_world.aocx .
 
 ```
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
+# Remove the symbolic link
+rm hello_world.aocx
+ln -s bin/hello_world_fpga.aocx hello_world.aocx
 ```
 
 #### 3.4 Downloading the bit stream into the PAC card and running the host code
@@ -127,16 +131,24 @@ Run the following:
 The follow commands can be included in a batch script (in this case S10_opencl_batch.sh) to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aoc commands. Adjust commands to your own needs.
 
 ```
+date
 source /data/intel_fpga/devcloudLoginToolSetup.sh
 tools_setup -t S10DS
 cd ~/S10_OPENCL_AFU/hello_world
 aocl diagnose
-
-aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_emulation.aocx
+# Compile for emulation
+aoc -march=emulator -legacy-emulator device/hello_world.cl -o \ bin/hello_world_emulation.aocx
+# Compile host software
 make
+ln -s bin/hello_world_emulation.aocx bin/hello_world.aocx
+# Run in emulation mode
 CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
-
+# Compile for FPGA hardware
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
+# Remove symbolic link
+rm hello_world.aocx
+# Relink hardware .aocx
+ln -s bin/hello_world_fpga.aocx hello_world.aocx
 ./bin/host
 ```
 
@@ -157,10 +169,11 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 
 List the revision history for the application note.
 
-| Name             | Date      | Changes            |
-| ---------------- | --------- | ------------------ |
-| Larry Landis     | 4/4/2020  | Initial Release    |
-| Damaris Renteria | 5/11/2020 | Batch Command flow |
+| Name             | Date      | Changes                              |
+| ---------------- | --------- | ------------------------------------ |
+| Larry Landis     | 4/4/2020  | Initial Release                      |
+| Damaris Renteria | 5/11/2020 | Batch Command flow                   |
+| Larry Landis     | 5/12/2020 | Symbolic links from hello_world.aocx |
 
 
 

@@ -965,11 +965,15 @@ cat /etc/os-release
 
 ## 15.0 Security
 
-The devcloud accounts cannot be viewed from one user to another. There is no way of associating a login u numbers to a user name or organization. Users cannot change their protections so that other users can see their files. There are no group settings that open up that visibility. No user has sudo access, only the system adminstrator who works for a third party cloud service provider, Colfax International.
+The devcloud accounts cannot be viewed from one user to another. There is no way of associating a login u numbers to a user name or organization. Users cannot change their protections so that other users can see their files. There are no group settings that open up that visibility. No user has sudo access, only the system adminstrator who works for a third party cloud service provider, Colfax International, has root access.
 
-The PAC cards offer a security "sign" feature that associates a key with a workload. It is possible for users to sign their green bit stream or aocx file prior to programming the board.
+The PAC cards offer a security "sign" feature that associates a key with a bit stream. It is possible for users to sign their green bit stream or aocx file prior to programming the board.
 
+Further details can be found in the license agreement:
 
+https://devcloud.intel.com/datacenter/static/docs/terms/Intel-DevCloud-Access-and-Software-License-Agreement.pdf
+
+https://devcloud.intel.com/datacenter/static/docs/terms/Colfax_Cloud_Service_Terms_v1.3.pdf
 
 ## 16.0 Debug Notes - Tips and Tricks
 
