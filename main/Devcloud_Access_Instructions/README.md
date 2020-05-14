@@ -37,60 +37,23 @@
     </a>
   </h3>
 </div>
-<br/>
+
 
 # Devcloud Access Instructions
 
-[Devcloud Access Instructions](#devcloud-access-instructions)\
-[1.0 Introduction](#10-introduction)\
-[2.0 Getting an Account](#20-getting-an-account)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Connection Methods](#connection-methods)\
-[3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1 Install MobaXterm](#31-install-mobaxterm)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2 Open Local Terminal](#32-open-local-terminal)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3 Downloading an SSH key](#33-downloading-an-ssh-key)\
-[4.0 Connection to Devcloud](#40-connection-to-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Public User](#public-user)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[User Inside Intel Firewall](#user-inside-intel-firewall)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 Add SOcket CAT Package](#41-add-socat-package)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)\
-[5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.1 Understanding available resources](#51-understanding-available-resources)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.2 Login Script](#52-login-script)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.3 Development Tool Access and Setup](#53-development-tool-access-and-setup)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.4 Submitting Batch Jobs](#54-submitting-batch-jobs)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.5 Submitting Jobs for a Specified Walltime](#55-submitting-jobs-for-a-specified-walltime)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.6 Report Status for Jobs Running on the Devcloud](#56-report-status-for-jobs-running-on-the-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.7 Deleting Jobs on the Devcloud](#57-deleting-jobs-on-the-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.8 Querying Device Availability](#58-querying-device-availability)\
-[6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[6.2 Quartus Font Setup](#62-quartus-font-setup)\
-[7.0 Transferring Files to and from the Devcloud](#70-transferring-files-to-and-from-the-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.1 Transferring Files to and from the Devcloud with SCP](#71-transferring-files-to-and-from-the-devcloud-with-scp)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.2 Using MobaXterm to Transfer Files](#72-using-mobaxterm-to-transfer-files)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.3 Using WinSCP to Transfer Files](#73-using-winscp-to-transfer-files)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.4 Using MobaXterm Command Line to Transfer URLs (Github)](#74-using-mobaxterm-command-line-to-transfer-urls-github)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1. WGET Command](#1-wget-command)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2. CURL Command](#2-curl-command)\
-[8.0 Launching Development Tools](#80-launching-development-tools)\
-[9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#90-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)\
-[10.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#100-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#101-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#102-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)\
-[11.0 Timeouts and Disk Space](#110-timeouts-and-disk-space)\
-[12.0 Determining and Allocating Memory Availability and CPU Count and Speed](#120-determining-and-allocating-memory-availability-and-cpu-count-and-speed)\
-[13.0 Devcloud Text Editors](#130-devcloud-text-editors)\
-[14.0 Determining which version of the OS is running on a Node](#140-determining-which-version-of-the-os-is-running-on-a-node)\
-[15.0 Debug Notes - Tips and Tricks](#150-debug-notes---tips-and-tricks)
+[TOC]
 
-<br/>
+
 
 ## 1.0 Introduction
 
 Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Jupyter notebook, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
 
-**Note:** Please allow 60-90 mins to complete the entire setup. For ease of reference, it is recommended you print these instructions out. 
+These instructions detail how to connect your Windows PC to the devcloud which runs Linux. If you are attempting connectivity from a Mac or Linux machine, we do not offer exact instructions, but you can use the ssh key and config details described here with other ssh terminals.
+
+Perform steps through section 5.3 and you will be able to run various workflows found in our Quickstart guides. Information after this section is useful for topics such as batch flows (recommended), graphics, and job control.
+
+**Note:** Please allow 60-90 mins to complete the entire setup. 
 
 ## 2.0 Getting an Account
 
@@ -130,18 +93,15 @@ Intel AI DevCloud Team
 
 Once you have an account / email received you are ready to start the process to setup your account within the cloud. 
 
-There are different methods of terminal connections. Listed below are a few options you can select in choosing which Terminal application tool you would like to use:
+There are different methods of terminal connections. Listed below are a few options you can select in choosing which Terminal application tool you would like to use. This guide focuses on the recommended method 1.
 
 1. [Windows with Mobaxterm (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) (recommended)
 2. [Windows with Cygwin](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows-cygwin/)
 3. [Windows with PuTTy](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows/)
-4. [Linux or macOS (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)
 
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
-**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment. 
-
-If you are already running a native Linux or client running Linux, you don't need to load MobaXterm. Click [here](#33-downloading-an-ssh-key) to skip  the MobaXterm installation process.
+**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment.  Note that the X11 server with Mobaxterm runs slow, so we dont recommend its use. The X2Go section shows how to gain GUI access.
 
 ### 3.1 Install MobaXterm
 
@@ -157,21 +117,17 @@ If you are already running a native Linux or client running Linux, you don't nee
 
 2. Click: **"Start local terminal"**. Within this console you can see your local PC based files using standard Linux operating system commands (ls, cd, vi and etc.). 
 
-3. Navigate around with ```cd``` (change directory) and ```ls``` (list) you will recognize your Windows folders and files accessible through a UNIX interface. 
+3. Navigate around with ```cd``` (change directory) and ```ls``` (list) you will recognize your Windows folders and files accessible through a UNIX interface. To view your "C" drive in Windows, cd /drives/c . If you type ls and cd you can navigate the hierarchy that you see in Windows File Explorer. When your navigate to home through cd, you are at C:\Users\<username>\Documents\MobaXterm\home on your PC.
 
    Return to home by typing: ``` cd ```
 
    ![image](https://user-images.githubusercontent.com/56968566/69997123-4c2a8c80-1508-11ea-89d0-547a8a40515f.png)
 
-If MobaXterm fails to launch after working for a period of time, try reinstalling the software. Prior to removal and re-install, copy the folder MobaXterm from your Documents directory to a new name. Under the directory Mobaxterm/home you will have the .ssh folder and .bashrc file. Reinstall Mobaxterm and copy these files over to the new install if you have customized these files.
-
 ### 3.3 Downloading an SSH key
-
-**For the MobaXterm flow, native LINUX flow or macOS, click on the link Linux or macOS and follow the steps as stated in the welcome email.**
 
 To start the process:
 
-1. Click on the first link in the welcome email (might need to use an incognito window if you have issues launching or clear cookies).
+1. Click on the first link in the welcome email from colfaxresearch (might need to use an incognito window if you have issues launching or clear cookies).
 2. If you are a first time user, you will see a "Terms and Conditions" page come up. Please click "accept" on the T&C's to proceed.
 3. You will then come to a new screen asking to select "Learn" or "Connect", please select "Connect".
 4. The following page will then be displayed. Click on “Linux* or MAC OS” under the "Connect with a Terminal" button.
@@ -210,12 +166,12 @@ To start the process:
 
 **The next steps to connect to the Intel Devcloud are different for usage inside and outside the Intel Firewall. Select the correct usage option below:** 
 
-[Public User](#public-user)\
+[Public User](#public-user---anyone-not-working-at-intel)\
 [User Inside Intel Firewall](#user-inside-intel-firewall)
 
 ## 4.0 Connection to Devcloud
 
-### Public User
+### Public User - anyone not working at Intel
 
 After the preparation steps above, you should be able to log in to your login node in the Intel Devcloud without a password. 
 
@@ -320,7 +276,7 @@ if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
 fi
 ```
 
-Now you can run devcloud_login and follow the Devcloud login script instructions to connect to the appropriate compute node. The picture below shows what the current script appears as. When you type the command “devcloud_login”, the following output is shown. It separates the available nodes and what machines are capable of running.
+Now you can run devcloud_login command tools_setup command and follow the Devcloud login script instructions to connect to the appropriate compute node. The picture below shows what the current script appears as. When you type the command “devcloud_login”, the following output is shown. It separates the available nodes and what machines are capable of running. This file also 
 
 ###### Figure 1: Login Script Running
 
@@ -348,7 +304,7 @@ Now you can run devcloud_login and follow the Devcloud login script instructions
 
 <br/>
 
-Once you select a node to start an interactive login, it will also output the command required to set up the x2go window. Just copy and paste into a new mobaxterm terminal. 
+Once you select a node to start an interactive login, it will also output the command required to set up the x2go window. Just copy and paste into a new mobaxterm terminal. This is only required if you are running tools requiring a GUI. 
 
 ###### Figure 7: x2go Command
 
@@ -356,7 +312,7 @@ Once you select a node to start an interactive login, it will also output the co
 
 <br/>
 
-Other features to the Devcloud login script are the ability to [submit batch jobs](#54-submitting-batch-jobs) from the headnode as well as to speed the user's interaction when wanting to log into a compute node interactively.
+Other features to the Devcloud login script are the ability to display available nodes, [submit batch jobs](#54-submitting-batch-jobs) from the headnode as well as to speed the user's interaction when wanting to log into a compute node interactively.
 
 Instead of answering "What are you trying to use the Devcloud for? ..." every time to start an interactive login to a compute node, you can type the following:
 
@@ -370,23 +326,19 @@ CO
 SNN <s00X-nXXX>
 ```
 
+Type the following to simply view a list of the available nodes, to etheir specifically choose a compute node when submitting a batch job or to start an interactive login:
+
+```
+devcloud_login -l
+```
+
 For more information, try "devcloud_login --help" on a terminal that is logged into the FPGA devcloud.
 
-<img src="https://user-images.githubusercontent.com/59750149/81036993-fdd23e80-8e55-11ea-91e3-d72d9b5361a3.png" alt="dev_help" width=90% />
+<img src="https://user-images.githubusercontent.com/59750149/81611116-5f7f3500-938f-11ea-9f7c-dbf2eca902c4.png" alt="dev_help" width=90% />
 
 ### 5.3 Development Tool Access and Setup
 
-From a terminal that is logged into a compute node, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the **tools_setup** function. This function will guide you through query of what compile workload you want to run.
-
-Should you want to source setup scripts manually, view the file: /data/intel_fpga/devcloudLoginToolSetup.sh, and manually copy & paste the paths and environment-variable settings for your desired tool flow.
-
-To source the tools_setup function script, include these two lines inside your ~/.bashrc script:
-
-    if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
-    	source /data/intel_fpga/devcloudLoginToolSetup.sh
-    fi
-
-Now you can run tools_setup and follow the instructions to source a tool's path and environment settings into the compute node you are interactively logged into.
+From a terminal that is logged into a compute node, to get Quartus Access and Quartus Setup you can source the bash scripts manually however its highly recommended to use the **tools_setup** command. This command will guide you through query of what compile workload you want to run and setup environment variables and search paths.
 
 Another feature to the tools-setup function is the ability to speed the user's interaction when wanting to source the environment variable settings for a tool when interactively logged into a compute node. Instead of answering "Which tool would you like to source? ..." every time, you can type the following:
 
@@ -855,14 +807,7 @@ Note, when using any of the two commands above you may have added '/r' character
 
 ## 8.0 Launching Development Tools
 
-Quickstart Guides are available at the Quickstart Guide section of this git site and updated frequently. Please take a look at these guides for various  topics:
-
-* [RTL AFU](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_AFU_Program_PAC_Quickstart)
-* [OpenCL](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/OpenCL_Program_PAC_Quickstart)
-* [HLS](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/HLS_Lab)
-* [One API](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart)
-* [OpenVino](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides)
-* [Programing DE-Series boards](https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides/RTL_DE_board_Quickstart)
+Quickstart Guides are available at the Quickstart Guide section of this git site https://github.com/intel/FPGA-Devcloud/tree/master/main/QuickStartGuides#Contents and are updated frequently.
 
 ## 9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board
 
@@ -1016,13 +961,25 @@ For tutorials on how to use the editors listed above, click the hyperlinks to be
 cat /etc/os-release
 ```
 
-## 15.0 Debug Notes - Tips and Tricks
+
+
+## 15.0 Security
+
+The devcloud accounts cannot be viewed from one user to another. There is no way of associating a login u numbers to a user name or organization. Users cannot change their protections so that other users can see their files. There are no group settings that open up that visibility. No user has sudo access, only the system adminstrator who works for a third party cloud service provider, Colfax International, has root access.
+
+The PAC cards offer a security "sign" feature that associates a key with a bit stream. It is possible for users to sign their green bit stream or aocx file prior to programming the board.
+
+Further details can be found in the license agreement:
+
+https://devcloud.intel.com/datacenter/static/docs/terms/Intel-DevCloud-Access-and-Software-License-Agreement.pdf
+
+https://devcloud.intel.com/datacenter/static/docs/terms/Colfax_Cloud_Service_Terms_v1.3.pdf
+
+## 16.0 Debug Notes - Tips and Tricks
 
 Don't forget to check the Intel Forum(s), your issue and solution might be documented there:
 
 https://forums.intel.com/s/topic/0TO0P000000MWKFWA4/application-acceleration-with-fpgas?language=en_US
-
-Sometimes, when you access an interactive compute node from the headnode, login-2, it can take up to four minutes to connect. This is due to the logout scripts temporarily getting hung, before allowing access for a new login.
 
 If you are not are not able to gain access to a compute node, because of this error: qsub: submit error (Unauthorized Request MSG=group ACL is not satisfied: user u#####@login-2, queue batch) it could be that you did not request access to the FPGA devcloud, and are in fact on the OneAPI devcloud. The FPGA devcloud is a superset of the OneAPI devcloud, and enables more machines connected to PAC cards. To check, type groups from login-2 node. If you do not see c009-fpga group, you are not in the right access group for the devcloud. Go to this site https://software.intel.com/en-us/devcloud/FPGA and click on the signup page. Sign up, and state you already have an account and want to be added to the c009-fpga group. State the u##### account number you were assigned.
 
