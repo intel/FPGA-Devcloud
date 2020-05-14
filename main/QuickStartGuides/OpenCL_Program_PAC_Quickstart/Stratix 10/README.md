@@ -123,6 +123,7 @@ Similar to the prior step of running bin/host, but without the environment varia
 Run the following:
 
 ```
+aocl program acl0 bin/hello_world.aocx
 ./bin/host
 ```
 
