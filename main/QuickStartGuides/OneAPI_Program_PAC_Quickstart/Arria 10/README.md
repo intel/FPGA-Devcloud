@@ -14,6 +14,10 @@ For OneAPI documentation on FPGAs, please refer to:
 
 https://software.intel.com/en-us/oneapi-fpga-optimization-guide-quick-reference
 
+Specifics on the vector-add: 
+
+https://github.com/intel/BaseKit-code-samples/tree/master/DPC%2B%2BCompiler/vector-add
+
 This demonstration will step the user through the following steps:
 
 1. Select appropriate compute node machine on the FPGA devcloud
@@ -148,10 +152,11 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 
 List the revision history for the application note.
 
-| Name         | Date      | Changes            |
-| ------------ | --------- | ------------------ |
-| Larry Landis | 4/5/2020  | Initial Release    |
-| Larry Landis | 4/29/2020 | Batch Command flow |
+| Name         | Date      | Changes                               |
+| ------------ | --------- | ------------------------------------- |
+| Larry Landis | 4/5/2020  | Initial Release                       |
+| Larry Landis | 4/29/2020 | Batch Command flow                    |
+| Larry Landis | 5/15/2020 | Add OneAPI github link for vector-add |
 
 
 
