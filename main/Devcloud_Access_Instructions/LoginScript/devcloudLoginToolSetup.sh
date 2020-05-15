@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 11 2020 Version 2    #
-# Add node list             #
+# -May 15 2020 Version 2    #
+# Add no HW node list       #
 #                           #
 #                           #
 #                           #
@@ -17,7 +17,9 @@ red=$'\e[1;31m'
 blu=$'\e[1;34m'
 end=$'\e[0m'
 ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
-noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
+#noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
+#Replaced with fpga_compile
+noHardwareNodes=("s001-n145" "s001-n146" "s001-n147" "s001-n148" "s001-n149" "s001-n150" "s001-n151" "s001-n152" "s001-n153" "s001-n154" "s001-n155" "s001-n156")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
 arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n006" "s001-n137" "s001-n138" "s001-n139")
 arria10Nodes121=("s005-n004" "s005-n005" "s005-n007")
@@ -75,7 +77,7 @@ devcloud_login()
 	echo "1) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
 	echo "2) Arria 10 OneAPI"
 	echo "3) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-	echo "4) Compilation Only"
+	echo "4) Compilation (Command Line) Only"
 	echo "5) Enter Specific Node Number"
 	echo
 	echo -n "Number: "
@@ -250,8 +252,10 @@ devcloud_login()
         if [ -z $currentNode ]; then
             IFS="|"
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            # readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            # readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
@@ -290,8 +294,8 @@ devcloud_login()
     elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
-            readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria12 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
