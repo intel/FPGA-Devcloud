@@ -73,12 +73,10 @@ oneapi-cli
 ```
 
 - Select option (1) Create a project.
-
 - Selection (1) cpp
-
 - Scroll down to CPU, GPU, FPGA and select Vector Add
-
 - Create the sample sign under the A10_ONEAPI directory that you created in the prior step and quit the oneapi-cli utility.
+- An alternative is to pull from the github site: https://github.com/intel/BaseKit-code-samples/tree/master/DPC%2B%2BCompiler
 
 
 #### 3.2 Running dpc++ vector-add project in the emulation mode
