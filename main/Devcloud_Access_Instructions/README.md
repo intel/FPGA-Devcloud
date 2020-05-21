@@ -955,9 +955,10 @@ There are three available editors in the Devcloud terminal:
 
 For tutorials on how to use the editors listed above, click the hyperlinks to be redirected to a quick read tutorial site. 
 
-## 14.0 Determining which version of the OS is running on a Node
+## 14.0 Determining which machine and version of the OS is running on a Node
 
 ```
+cat /sys/devices/virtual/dmi/id/product_name
 cat /etc/os-release
 ```
 
