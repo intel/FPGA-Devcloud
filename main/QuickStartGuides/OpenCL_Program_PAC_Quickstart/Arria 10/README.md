@@ -185,7 +185,3 @@ List the revision history for the application note.
 | Larry Landis | 4/2/2020  | Initial Release                          |
 | Larry Landis | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
 | Larry Landis | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
-
-
-
- 
