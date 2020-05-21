@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 15 2020 Version 2    #
-# Add no HW node list       #
+# -May 21 2020 Version 2    #
+# Add X2Go node list        #
 #                           #
 #                           #
 #                           #
@@ -15,6 +15,7 @@
 #global variables
 red=$'\e[1;31m'
 blu=$'\e[1;34m'
+yllw='\033[1;33m'
 end=$'\e[0m'
 ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 #noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
@@ -71,6 +72,7 @@ devcloud_login()
 	echo
 	printf "%s\n%s\n" "You are selecting an interactive compute server sesssion. Please consider using batch mode submission using" "devcloud_login -b to not tie up compute servers with idle sessions."
 	echo "See the help menu using devcloud_login -h for more details."
+	echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
 	echo
 	printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
 	echo
@@ -151,7 +153,8 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+		echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
+		printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                 echo
@@ -192,6 +195,7 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
+		echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
                 printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
@@ -233,7 +237,8 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+		echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
+		printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
                 echo
@@ -276,6 +281,7 @@ devcloud_login()
                 node=(${availableNodes[0]})
                 echo
                 echo --------------------------------------------------------------------------------------
+		echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
                 printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                 echo
                 printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
@@ -334,6 +340,7 @@ devcloud_login()
 		    else
                         echo
                         echo --------------------------------------------------------------------------------------
+			echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
                         printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                         echo
                         printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
@@ -354,6 +361,7 @@ devcloud_login()
 		    else
                         echo
                         echo --------------------------------------------------------------------------------------
+			echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
                         printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                         echo
                         printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
@@ -448,6 +456,7 @@ devcloud_login()
                 then
                     echo
                     echo --------------------------------------------------------------------------------------
+		    echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
                     printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
@@ -462,6 +471,7 @@ devcloud_login()
                 else
                     echo
                     echo --------------------------------------------------------------------------------------
+		    echo "${yllw}Note that X2Go is only available on nodes s001-n13[7-9] and s005-n005 at this time.${end}"
                     printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
                     echo
                     printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
