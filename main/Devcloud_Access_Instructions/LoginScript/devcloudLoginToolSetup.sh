@@ -15,7 +15,7 @@
 #global variables
 red=$'\e[1;31m'
 blu=$'\e[1;34m'
-yllw=$'\033[1;33m'
+yllw=$'\e[1;33m'
 end=$'\e[0m'
 ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 #noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
