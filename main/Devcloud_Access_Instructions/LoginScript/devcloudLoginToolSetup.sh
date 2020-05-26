@@ -15,7 +15,7 @@
 #global variables
 red=$'\e[1;31m'
 blu=$'\e[1;34m'
-yllw='\033[1;33m'
+yllw=$'\e[1;33m'
 end=$'\e[0m'
 ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 #noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
@@ -259,8 +259,8 @@ devcloud_login()
             # readarray availableNodes < <(pbsnodes | grep -B 1 "state = free"| grep -T '13[0-6]' | grep -o '...$')
             # readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             # readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
@@ -300,8 +300,8 @@ devcloud_login()
     elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
-            readarray availableNodesNohardware < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesNohardware < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+            readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria12 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
