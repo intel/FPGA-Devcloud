@@ -76,7 +76,8 @@ oneapi-cli
 - Selection (1) cpp
 - Scroll down to CPU, GPU, FPGA and select Vector Add
 - Create the sample sign under the A10_ONEAPI directory that you created in the prior step and quit the oneapi-cli utility.
-- An alternative is to pull from the github site: https://github.com/intel/BaseKit-code-samples/tree/master/DPC%2B%2BCompiler
+
+An alternative is to pull from the github site: https://github.com/intel/BaseKit-code-samples/tree/master/DPC%2B%2BCompiler
 
 
 #### 3.2 Running dpc++ vector-add project in the emulation mode
@@ -123,15 +124,7 @@ success
 
 ## 4       Batch Submission
 
-The follow commands can be included in a batch script (in this case A10_oneapi_batch.sh) to launch the OneAPI emulation flow, followed by the compilation and FPGA board programming flow using make commands. Adjust commands to your own needs.
-
-```
-source /data/intel_fpga/devcloudLoginToolSetup.sh
-tools_setup -t A10OAPI
-cd ~/A10_ONEAPI/vector-add
-make run_emu -f Makefile.fpga
-make run_hw -f Makefile.fpga
-```
+The batch script attached above (in this case A10_oneapi_batch.sh) can be use to launch the OneAPI emulation flow, followed by the compilation and FPGA board programming flow using make commands. Adjust commands within the script to your own needs.
 
 From the headnode login-2, run this command:
 
@@ -150,11 +143,12 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 
 List the revision history for the application note.
 
-| Name         | Date      | Changes                               |
-| ------------ | --------- | ------------------------------------- |
-| Larry Landis | 4/5/2020  | Initial Release                       |
-| Larry Landis | 4/29/2020 | Batch Command flow                    |
-| Larry Landis | 5/15/2020 | Add OneAPI github link for vector-add |
+| Name             | Date      | Changes                               |
+| ---------------- | --------- | ------------------------------------- |
+| Larry Landis     | 4/5/2020  | Initial Release                       |
+| Larry Landis     | 4/29/2020 | Batch Command flow                    |
+| Larry Landis     | 5/15/2020 | Add OneAPI github link for vector-add |
+| Damaris Renteria | 5/28/2020 | Relocated Batch Commands              |
 
 
 
