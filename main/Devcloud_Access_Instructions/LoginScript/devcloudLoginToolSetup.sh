@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 27 2020 Version 2    #
-# Add "See Also"            #
+# -June 1 2020 Version 2    #
+# Add ErrorCheck            #
 #                           #
 #                           #
 #                           #
@@ -495,10 +495,21 @@ devcloud_login()
 }
 
 
-qstatus()	
+qstatus()
 {	
     #display the status of all jobs currently running and queued	
     qstat -s batch@v-qsvr-fpga	
+}
+
+
+error_check()
+{
+    if [ $? -ne 0 ]; then
+	echo failed
+	exit
+    else
+	:  #do nothing
+    fi
 }
 
 
@@ -987,7 +998,7 @@ dev_Help() {
     echo "---------"
     echo
     echo "qstatus		To see the status report of your jobs running on the DevCloud"
-    echo "qdel		To terminate a job running on the DevCloud"
+    echo "qdel		To terminate a job running on the DevCloud (eg. qdel XXXX.v-qsvr-fpga.aidevcloud)"
 }
 
 
