@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -May 27 2020 Version 1    #
-# Add "See Also"            #
+# -June 3 2020 Version 1    #
+# Add FPGA_BBB env          #
 #                           #
 #                           #
 #                           #
@@ -891,6 +891,10 @@ tools_setup()
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
 	    echo
+            echo "exporting basic building blocks env-variable settings"
+	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            export LD_LIBRARY_PATH=~/usr/local/lib:$LD_LIBRARY_PATH
+	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
 	elif [[ ${arria10Nodes121[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
@@ -899,6 +903,10 @@ tools_setup()
 	    echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh
+	    echo
+            echo "exporting basic building blocks env-variable settings"
+	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            export LD_LIBRARY_PATH=~/usr/local/lib:$LD_LIBRARY_PATH
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
@@ -986,7 +994,7 @@ dev_Help() {
     echo "---------"
     echo
     echo "qstatus		To see the status report of your jobs running on the DevCloud"
-    echo "qdel		To terminate a job running on the DevCloud"
+    echo "qdel		To terminate a job running on the DevCloud (eg. qdel XXXX.v-qsvr-fpga.aidevcloud)"
 }
 
 
