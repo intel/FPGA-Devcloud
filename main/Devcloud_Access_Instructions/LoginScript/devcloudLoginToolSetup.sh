@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -June 3 2020 Version 1    #
+# -June 4 2020 Version 1    #
 # Add FPGA_BBB env          #
 #                           #
 #                           #
@@ -893,7 +893,7 @@ tools_setup()
 	    echo
             echo "exporting basic building blocks env-variable settings"
 	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
-            export LD_LIBRARY_PATH=~/usr/local/lib:$LD_LIBRARY_PATH
+            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
 	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
@@ -907,7 +907,7 @@ tools_setup()
 	    echo
             echo "exporting basic building blocks env-variable settings"
 	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
-            export LD_LIBRARY_PATH=~/usr/local/lib:$LD_LIBRARY_PATH
+            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
 	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
@@ -942,8 +942,9 @@ tools_setup()
 	    echo
             echo "exporting basic building blocks env-variable settings"
 	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
-            export LD_LIBRARY_PATH=~/usr/local/lib:$LD_LIBRARY_PATH
+            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
 	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    echo
             echo "Putting python2 in the search path - required for Stratix 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
