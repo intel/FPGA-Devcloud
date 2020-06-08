@@ -45,7 +45,7 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an OneAPI Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-<img src="https://user-images.githubusercontent.com/59750149/83576210-129e0280-a4e6-11ea-8f32-46af9ff40a4d.png" alt="image" width=80% />
+<img src="https://user-images.githubusercontent.com/59750149/83576210-129e0280-a4e6-11ea-8f32-46af9ff40a4d.png" alt="image" width=70% />
 
 Select option 2 or option 5 and connect to an Arria 10 ready OneAPI node.
 
@@ -96,7 +96,7 @@ dpcpp  -fintelfpga src/vector-add.cpp -o vector-add.fpga_emu -DFPGA_EMULATOR\
 
 Observe for the success message upon completion.
 
-#### 3. 3 Running dpc++ vector-add project in FPGA hardware mode
+#### 3.3 Running dpc++ vector-add project in FPGA hardware mode
 
 In this step you will run the same Makefile.fpga file but now with the run_hw target.
 

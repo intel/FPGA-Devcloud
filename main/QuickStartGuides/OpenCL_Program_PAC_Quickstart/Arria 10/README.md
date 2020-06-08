@@ -40,7 +40,7 @@ This lab assumes the following:
 
 Run the devcloud_login function and connect to an Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image](https://user-images.githubusercontent.com/22804500/78613373-8d1d0f80-7820-11ea-80a0-6cc3194ded2d.png)
+<img src="https://user-images.githubusercontent.com/59750149/83576210-129e0280-a4e6-11ea-8f32-46af9ff40a4d.png" alt="image" width=70% />
 
 Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
@@ -105,7 +105,7 @@ For version 1.2.1, you need to run emulation with this command:
 
 You should see a list of parameters and Kernel execution is complete.
 
-#### 3. 3 Compiling OpenCL code into an FPGA executable
+#### 3.3 Compiling OpenCL code into an FPGA executable
 
 Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently get compiled in Quartus to produce an FPGA executable .aocx file using the following command. This step will take approximately one hour.
 
@@ -177,16 +177,16 @@ Note the differences in results from: ./bin/host -emulator vs ./host (for versio
 
 <br/>
 
-## 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batch Submission for v1.2
+## 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batch Submission
 
-The batch script attached above (in this case A10_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
+The batch script attached above (in this case A10_v1.2[.1]_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
 
-From the headnode login-2, run this command:
+From the headnode login-2, run one of the following two commands:
 
 ```
-devcloud_login -b A10PAC 1.2 A10_opencl_batch.sh
+devcloud_login -b A10PAC 1.2 A10_v1.2_opencl_batch.sh
 	or
-devcloud_login -b A10PAC 1.2.1 A10_opencl_batch.sh
+devcloud_login -b A10PAC 1.2.1 A10_v1.2.1_opencl_batch.sh
 ```
 
 To see the resulting terminal output, consult the files:

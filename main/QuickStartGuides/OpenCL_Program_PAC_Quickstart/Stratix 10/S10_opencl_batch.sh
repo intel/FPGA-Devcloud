@@ -27,6 +27,7 @@ fi
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
 # Relink hardware .aocx
 ln -sf hello_world_fpga.aocx bin/hello_world.aocx
+aocl program acl0 bin/hello_world.aocx
 # Run host code
 ./bin/host
 error_check
