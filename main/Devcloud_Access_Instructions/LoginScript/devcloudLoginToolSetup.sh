@@ -903,6 +903,11 @@ tools_setup()
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[0]}/inteldevstack/intelFPGA_pro/hld/init_opencl.sh
 	    echo
+	    echo "exporting basic building blocks env-variable settings"
+	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
+	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
 	elif [[ ${arria10Nodes121[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks that user is currently on correct node and node name has length of 9
@@ -911,6 +916,11 @@ tools_setup()
 	    echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh
+	    echo
+	    echo "exporting basic building blocks env-variable settings"
+	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
+	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
@@ -941,6 +951,12 @@ tools_setup()
             echo
             echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh"
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh
+	    echo
+	    echo "exporting basic building blocks env-variable settings"
+	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
+	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    echo
             echo "Putting python2 in the search path - required for Stratix 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
         else
