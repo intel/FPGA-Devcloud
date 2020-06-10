@@ -7,12 +7,12 @@
 # Initial Setup
 source /data/intel_fpga/devcloudLoginToolSetup.sh
 tools_setup -t A10DS
-# Job will exit if directory already exists; no overwrite.
-[ ! -d ~/A10_OPENCL_AFU] && mkdir -p ~/A10_OPENCL_AFU || echo "Directory ~/A10_OPENCL_AFU exists." && exit
+# Job will exit if directory already exists; no overwrite. No error message.
+[ ! -d ~/A10_OPENCL_AFU/v1.2.1] && mkdir -p ~/A10_OPENCL_AFU/v1.2.1 || exit 0
 
 # Copy Over sample design
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
-cd A10_OPENCL_AFU
+cd A10_OPENCL_AFU/v1.2.1
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
 # Check Arria 10 PAC card connectivity
@@ -28,7 +28,7 @@ make
 ./bin/host -emulator
 error_check
 
-# Running project in FPGA Hardware Mode
+# Running project in FPGA Hardware Mode (this takes approximately 1 hour)
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
 # Availavility of Acceleration cards
 aoc --list-boards
@@ -39,6 +39,7 @@ error_check
 # Converting to an unsigned .aocx file
 cd bin
 printf "Y\nY\n" | source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
+error_check
 # Programmming PAC Card
 aocl program acl0 hello_world_fpga_unsigned.aocx
 ./host

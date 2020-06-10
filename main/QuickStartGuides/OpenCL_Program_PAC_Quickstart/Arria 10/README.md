@@ -89,7 +89,8 @@ The next step is to compile the host code.
 make
 ```
 
-Now run for the host code binary. Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.
+Now run for the host code binary.\
+Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.
 
 For version 1.2, you need to run emulation with this command:
 
@@ -162,7 +163,7 @@ aocl program acl0 hello_world_fpga_unsigned.aocx
 
 #### 3.5 Running the host code 
 
-You have run make to build the CPU host executable in the prior section, so its not necessary to run again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
+You have already run `make` to build the CPU host executable in the prior section, so it's not necessary to compile the host code again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
 
 ```bash
 ./bin/host					#version 1.2
@@ -179,7 +180,7 @@ Note the differences in results from: ./bin/host -emulator vs ./host (for versio
 
 ## 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batch Submission
 
-The batch script attached above (in this case A10_v1.2[.1]_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
+The batch scripts attached above (in this case A10_v1.2[.1]_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
 
 From the headnode login-2, run one of the following two commands:
 
@@ -191,8 +192,8 @@ devcloud_login -b A10PAC 1.2.1 A10_v1.2.1_opencl_batch.sh
 
 To see the resulting terminal output, consult the files:
 
-A10_opencl_batch.sh.exxxxxx\
-A10_opencl_batch.sh.oxxxxxx
+A10_v1.2[.1] _opencl_batch.sh.exxxxxx\
+A10_v1.2[.1] _opencl_batch.sh.oxxxxxx
 
 xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
 

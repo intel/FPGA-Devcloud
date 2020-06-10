@@ -7,12 +7,12 @@
 # Initial Setup
 source /data/intel_fpga/devcloudLoginToolSetup.sh
 tools_setup -t A10DS
-# Job will exit if directory already exists; no overwrite.
-[ ! -d ~/A10_OPENCL_AFU] && mkdir -p ~/A10_OPENCL_AFU || echo "Directory ~/A10_OPENCL_AFU exists." && exit
+# Job will exit if directory already exists; no overwrite. No error message.
+[ ! -d ~/A10_OPENCL_AFU/v1.2] && mkdir -p ~/A10_OPENCL_AFU/v1.2 || exit 0
 
 # Copy Over sample design
-cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
-cd A10_OPENCL_AFU
+cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU/v1.2
+cd A10_OPENCL_AFU/v1.2
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
 # Check Arria 10 PAC card connectivity
@@ -28,7 +28,7 @@ make
 CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
 error_check
 
-# Running project in FPGA Hardware Mode
+# Running project in FPGA Hardware Mode (this takes approximately 1 hour)
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
 # Availavility of Acceleration cards
 aoc --list-boards
