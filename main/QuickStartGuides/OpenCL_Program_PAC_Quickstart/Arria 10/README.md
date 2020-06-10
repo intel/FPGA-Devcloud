@@ -2,12 +2,11 @@
 
 # Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2 / 1.2.1
 
- 
+ <br/>
 
-## 1       Introduction
+## 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Introduction
 
-If you are new to the Arria 10 GX PAC card with OpenCL, check out this quick start guide:
-
+If you are new to the Arria 10 GX PAC card with OpenCL, check out this quick start guide:\
 https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug-qs-ias-opencl-a10.pdf
 
 This demonstration will step the user through the following steps:
@@ -22,9 +21,9 @@ This demonstration will step the user through the following steps:
 8. Download the OpenCL FPGA bitstream to the PAC card
 9. Run the application software on the host and show that the host CPU  and FPGA interact to solve heterogenous workloads. Results should be comparable to emulation mode, with improved throughput.
 
+<br/>
 
-
-## 2       Assumptions
+## 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assumptions
 
 This lab assumes the following:
 
@@ -33,15 +32,15 @@ This lab assumes the following:
 - Intel Devcloud registration and SSH key set up
 - MobaXterm installed and set up, X2Go optional
 
+<br/>
 
+## 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Walkthrough
 
-## 3       Walkthrough
-
-#### 3.1            Initial Setup
+#### 3.1 Initial Setup
 
 Run the devcloud_login function and connect to an Arria 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image](https://user-images.githubusercontent.com/22804500/78613373-8d1d0f80-7820-11ea-80a0-6cc3194ded2d.png)
+<img src="https://user-images.githubusercontent.com/59750149/83576210-129e0280-a4e6-11ea-8f32-46af9ff40a4d.png" alt="image" width=70% />
 
 Select option 1 or option 5 and connect to an Arria 10 ready compute node.
 
@@ -90,7 +89,8 @@ The next step is to compile the host code.
 make
 ```
 
-Now run for the host code binary. Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.\
+Now run for the host code binary.\
+Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.
 
 For version 1.2, you need to run emulation with this command:
 
@@ -106,7 +106,7 @@ For version 1.2.1, you need to run emulation with this command:
 
 You should see a list of parameters and Kernel execution is complete.
 
-#### 3. 3 Compiling OpenCL code into an FPGA executable
+#### 3.3 Compiling OpenCL code into an FPGA executable
 
 Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently get compiled in Quartus to produce an FPGA executable .aocx file using the following command. This step will take approximately one hour.
 
@@ -163,7 +163,7 @@ aocl program acl0 hello_world_fpga_unsigned.aocx
 
 #### 3.5 Running the host code 
 
-You have run make to build the CPU host executable in the prior section, so its not necessary to run again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
+You have already run `make` to build the CPU host executable in the prior section, so it's not necessary to compile the host code again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
 
 ```bash
 ./bin/host					#version 1.2
@@ -176,12 +176,37 @@ You have run make to build the CPU host executable in the prior section, so its 
 Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host (for version 1.2)\
 Note the differences in results from: ./bin/host -emulator vs ./host (for version 1.2.1)
 
-## 4       Document Revision History
+<br/>
+
+## 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batch Submission
+
+The batch scripts attached above (in this case A10_v1.2[.1]_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
+
+From the headnode login-2, run one of the following two commands:
+
+```
+devcloud_login -b A10PAC 1.2 A10_v1.2_opencl_batch.sh
+	or
+devcloud_login -b A10PAC 1.2.1 A10_v1.2.1_opencl_batch.sh
+```
+
+To see the resulting terminal output, consult the files:
+
+A10_v1.2[.1] _opencl_batch.sh.exxxxxx\
+A10_v1.2[.1] _opencl_batch.sh.oxxxxxx
+
+xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
+
+<br/>
+
+## 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document Revision History
 
 List the revision history for the application note.
 
-| Name         | Date      | Changes                                  |
-| ------------ | --------- | ---------------------------------------- |
-| Larry Landis | 4/2/2020  | Initial Release                          |
-| Larry Landis | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
-| Larry Landis | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
+| Name             | Date      | Changes                                  |
+| ---------------- | --------- | ---------------------------------------- |
+| Larry Landis     | 4/2/2020  | Initial Release                          |
+| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
+| Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
+| Damaris Renteria | 5/29/2020 | Added batch script                       |
+

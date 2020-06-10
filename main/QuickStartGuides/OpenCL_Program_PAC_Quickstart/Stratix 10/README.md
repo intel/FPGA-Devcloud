@@ -2,12 +2,11 @@
 
 # Stratix 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Stratix 10 Devstack version 2.0.1
 
- 
+  <br/>
 
-## 1       Introduction
+## 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Introduction
 
-If you are new to the Stratix 10 PAC card with OpenCL, check out this quick start guide:
-
+If you are new to the Stratix 10 PAC card with OpenCL, check out this quick start guide:\
 https://www.intel.com/content/www/us/en/programmable/documentation/qgu1548972652523.html
 
 This demonstration will step the user through the following steps:
@@ -22,9 +21,9 @@ This demonstration will step the user through the following steps:
 8. Download the OpenCL FPGA bitstream to the PAC card
 9. Run the application software on the host and show that the host CPU  and FPGA interact to solve heterogenous workloads. Results should be comparable to emulation mode, with improved throughput.
 
+ <br/>
 
-
-## 2       Assumptions
+## 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assumptions
 
 This lab assumes the following:
 
@@ -33,15 +32,15 @@ This lab assumes the following:
 - Intel Devcloud registration and SSH key set up
 - MobaXterm installed and set up, X2Go optional
 
+ <br/>
 
+## 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Walkthrough
 
-## 3       Walkthrough
-
-#### 3.1            Initial Setup
+#### 3.1 Initial Setup
 
 Run the devcloud_login function and connect to a Stratix 10 capable node. This function is available in the script: /data/intel_fpga/devcloudLoginToolSetup.sh .
 
-![image](https://user-images.githubusercontent.com/22804500/78614057-5a741680-7822-11ea-90de-39ce2a9a94dd.png)
+<img src="https://user-images.githubusercontent.com/59750149/83576210-129e0280-a4e6-11ea-8f32-46af9ff40a4d.png" alt="image" width=70% />
 
 Select option 3 or option 5 and connect to a Stratix 10 ready compute node.
 
@@ -88,7 +87,7 @@ The first step of the OpenCL flow is to compile and execute the design for emula
 ```
 cd hello_world
 aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_emulation.aocx
-ln -s hello_world_emulation.aocx hello_world.aocx
+ln -sf hello_world_emulation.aocx bin/hello_world.aocx
 ```
 
 The next step is to compile the host code. 
@@ -105,15 +104,13 @@ CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
 
 You should see a list of parameters and Kernel execution is complete.
 
-#### 3. 3 Compiling OpenCL code into an FPGA executable
+#### 3.3 Compiling OpenCL code into an FPGA executable
 
 Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently be compiled in Quartus to produce an FPGA executable .aocx file. This step will take approximately one hour. You can also copy or link over a prebuilt copy of the .aocx file from $OPAE_PLATFORM_ROOT/opencl/hello_world.aocx .
 
 ```
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
-# Remove the symbolic link
-rm hello_world.aocx
-ln -s bin/hello_world_fpga.aocx hello_world.aocx
+ln -sf hello_world_fpga.aocx bin/hello_world.aocx
 ```
 
 #### 3.4 Downloading the bit stream into the PAC card and running the host code
@@ -127,31 +124,11 @@ aocl program acl0 bin/hello_world.aocx
 ./bin/host
 ```
 
-## 4       Batch Submission
+ <br/>
 
-The follow commands can be included in a batch script (in this case S10_opencl_batch.sh) to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aoc commands. Adjust commands to your own needs.
+## 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batch Submission
 
-```
-date
-source /data/intel_fpga/devcloudLoginToolSetup.sh
-tools_setup -t S10DS
-cd ~/S10_OPENCL_AFU/hello_world
-aocl diagnose
-# Compile for emulation
-aoc -march=emulator -legacy-emulator device/hello_world.cl -o \ bin/hello_world_emulation.aocx
-# Compile host software
-make
-ln -s bin/hello_world_emulation.aocx bin/hello_world.aocx
-# Run in emulation mode
-CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
-# Compile for FPGA hardware
-aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
-# Remove symbolic link
-rm hello_world.aocx
-# Relink hardware .aocx
-ln -s bin/hello_world_fpga.aocx hello_world.aocx
-./bin/host
-```
+The batch script attached above (in this case S10_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
 
 From the headnode login-2, run this command:
 
@@ -161,20 +138,22 @@ devcloud_login -b S10PAC S10_opencl_batch.sh
 
 To see the resulting terminal output, consult the files:
 
-S10_opencl_batch.sh.exxxxxx
+S10_opencl_batch.sh.exxxxxx\
 S10_opencl_batch.sh.oxxxxxx
 
 xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
 
-## 5       Document Revision History
+ <br/>
+
+## 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document Revision History
 
 List the revision history for the application note.
 
 | Name             | Date      | Changes                              |
 | ---------------- | --------- | ------------------------------------ |
 | Larry Landis     | 4/4/2020  | Initial Release                      |
-| Damaris Renteria | 5/11/2020 | Batch Command flow                   |
 | Larry Landis     | 5/12/2020 | Symbolic links from hello_world.aocx |
+| Damaris Renteria | 6/8/2020  | Batch Command flow                   |
 
 
 
