@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -June 4 2020 Version 1    #
-# Add FPGA_BBB env          #
+# -Jun 10 2020 Version 1    #
+# Add ErrorCheck            #
 #                           #
 #                           #
 #                           #
@@ -497,7 +497,19 @@ devcloud_login()
 qstatus()	
 {	
     #display the status of all jobs currently running and queued	
-    qstat -s batch@v-qsvr-fpga	
+    qstat -s batch@v-qsvr-fpga
+    qstat -s
+}
+
+
+error_check()
+{
+    if [ $? -ne 0 ]; then
+	echo failed
+	exit
+    else
+	:  #do nothing
+    fi
 }
 
 
