@@ -81,6 +81,7 @@ The first step of the OpenCL flow is to compile and execute the design for emula
 ```
 cd hello_world
 aoc -march=emulator -v device/hello_world.cl -o bin/hello_world_emulation.aocx
+ln -sf hello_world_emulation.aocx bin/hello_world.aocx
 ```
 
 The next step is to compile the host code. 
@@ -112,6 +113,7 @@ Now that you have emulated your design, you can run the steps to convert OpenCL 
 
 ```
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
+ln -sf hello_world_fpga.aocx bin/hello_world.aocx
 ```
 
 #### 3.4 Downloading the bit stream into the PAC card
@@ -151,10 +153,10 @@ Because no root key or code signing key is provided, the script asks if you woul
 
 #### 3.4.2 Programming the Arria 10 GX PAC Card
 
-Next, you will program the PAC card with hello_world_fpga.aocx (version 1.2) or hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
+Next, you will program the PAC card with hello_world.aocx (version 1.2) or hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
 ```
-aocl program acl0 bin/hello_world_fpga.aocx
+aocl program acl0 bin/hello_world.aocx
 ```
 
 ```

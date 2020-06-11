@@ -106,7 +106,8 @@ You should see a list of parameters and Kernel execution is complete.
 
 #### 3.3 Compiling OpenCL code into an FPGA executable
 
-Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently be compiled in Quartus to produce an FPGA executable .aocx file. This step will take approximately one hour. You can also copy or link over a prebuilt copy of the .aocx file from $OPAE_PLATFORM_ROOT/opencl/hello_world.aocx .
+Now that you have emulated your design, you can run the steps to convert OpenCL to RTL, which will subsequently be compiled in Quartus to produce an FPGA executable .aocx file. This step will take approximately one hour.\
+You can also copy or link over a prebuilt copy of the .aocx file from $OPAE_PLATFORM_ROOT/opencl/hello_world.aocx .
 
 ```
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc

@@ -4,12 +4,10 @@
 ###########################################################################################################
 
 # Initial Setup
-#date
-#hostname
 source /data/intel_fpga/devcloudLoginToolSetup.sh
 tools_setup -t S10DS
 # Job will exit if directory already exists; no overwrite. No error message.
-[ ! -d ~/S10_OPENCL_AFU] && mkdir -p ~/S10_OPENCL_AFU || exit 0
+[ ! -d ~/S10_OPENCL_AFU ] && mkdir -p ~/S10_OPENCL_AFU || exit 0
 
 # Copy Over sample design
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz S10_OPENCL_AFU
@@ -23,7 +21,7 @@ error_check
 #Compile for emulation
 cd hello_world
 aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_emulation.aocx
-# Creating symbolic link to emulation .aocx file
+# Creating symbolic link to emulation .aocx
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
 # Compile host software
 make
@@ -33,7 +31,7 @@ error_check
 
 # Compile for FPGA hardware (this takes approximately 1 hour)
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
-# Relink hardware .aocx
+# Relink to hardware .aocx
 ln -sf hello_world_fpga.aocx bin/hello_world.aocx
 aocl program acl0 bin/hello_world.aocx
 # Run host code

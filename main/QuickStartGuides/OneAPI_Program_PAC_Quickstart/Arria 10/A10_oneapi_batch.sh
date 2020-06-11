@@ -11,7 +11,7 @@ tools_setup -t A10OAPI
 
 # Copy Over sample design
 cd ~/A10_ONEAPI/vector-add
-wget -N https://raw.githubusercontent.com/intel/FPGA-Devcloud/feature/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart/Arria%2010/download-file-list.txt
+wget -N https://raw.githubusercontent.com/intel/FPGA-Devcloud/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart/Arria%2010/download-file-list.txt
 wget -i download-file-list.txt
 mkdir src
 mv *.cpp *.hpp src/

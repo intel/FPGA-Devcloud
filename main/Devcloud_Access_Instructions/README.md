@@ -664,6 +664,8 @@ You will see a window that looks like the following. If a window opens up, click
 
 If X2GO fails to launch, check that you ran the tunneling command on Mobaxterm on your local host. Click [here](#6.1-Opening-Port-for-Graphics-Usage-in-X2Go) to be redirected to the section regarding this tunneling command. 
 
+If you still aren't able to launch X2Go, temporarily disable your firewall (eg. McAfee) before launching a new X2Go graphics session.
+
 In X2GO, right click within the desktop and select “Open Terminal Here”.
 
 <img src="https://user-images.githubusercontent.com/56968566/67716892-dfacf280-f989-11e9-9d36-6e6c895c363e.png" alt="open_terminal" width=30% />
@@ -1020,8 +1022,7 @@ https://devcloud.intel.com/datacenter/static/docs/terms/Colfax_Cloud_Service_Ter
 
 ## 16.0 Debug Notes - Tips and Tricks
 
-Don't forget to check the Intel Forum(s), your issue and solution might be documented there:
-
+Don't forget to check the Intel Forum(s), your issue and solution might be documented there:\
 https://forums.intel.com/s/topic/0TO0P000000MWKFWA4/application-acceleration-with-fpgas?language=en_US
 
 If you are not are not able to gain access to a compute node, because of this error: qsub: submit error (Unauthorized Request MSG=group ACL is not satisfied: user u#####@login-2, queue batch) it could be that you did not request access to the FPGA devcloud, and are in fact on the OneAPI devcloud. The FPGA devcloud is a superset of the OneAPI devcloud, and enables more machines connected to PAC cards. To check, type groups from login-2 node. If you do not see c009-fpga group, you are not in the right access group for the devcloud. Go to this site https://software.intel.com/en-us/devcloud/FPGA and click on the signup page. Sign up, and state you already have an account and want to be added to the c009-fpga group. State the u##### account number you were assigned.
