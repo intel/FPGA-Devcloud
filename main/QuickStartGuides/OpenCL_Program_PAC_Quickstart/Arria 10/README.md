@@ -123,7 +123,7 @@ Next we will be looking for an available acceleration card, convert .aocx to uns
 To see what FPGA accelerator cards are available, we type the following into the terminal. 
 
 ```bash
-aoc --list-boards
+aoc -list-boards
 ```
 
 You will observe the pac_10 board is available. Next, as you did during the initial step, run the aocl diagnose command so that you can get the device name.
