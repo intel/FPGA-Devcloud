@@ -179,8 +179,6 @@ To start the process:
 
 5. ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
 
-   ![image-20200612160501317](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200612160501317.png)
-
 6. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
 
 7. Click the button "SSH Key for Linux/macOS". 
