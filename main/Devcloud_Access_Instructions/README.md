@@ -177,20 +177,20 @@ To start the process:
 
 4. The following page will then be displayed. Click on “Linux* or MAC OS” under the "Connect with a Terminal" button.
 
-5. ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
+   ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
 
-6. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
+5. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
 
-7. Click the button "SSH Key for Linux/macOS". 
+6. Click the button "SSH Key for Linux/macOS". 
 
-8. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
+7. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
 
    ```bash
    mkdir -p ~/.ssh
    mv ~/Downloads/devcloud-access-key-12345.txt ~/.ssh/
    ```
 
-9. Add the following lines to files ~/.ssh/config:
+8. Add the following lines to files ~/.ssh/config:
 
    ```bash
    Host devcloud 
@@ -202,7 +202,7 @@ To start the process:
 
    If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
 
-10. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
+9. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
    ```bash
    chmod 600 ~/.ssh/devcloud-access-key-u12345.txt
