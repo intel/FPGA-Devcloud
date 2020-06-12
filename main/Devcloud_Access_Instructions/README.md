@@ -170,24 +170,29 @@ There are different methods of terminal connections. Listed below are a few opti
 To start the process:
 
 1. Click on the first link in the welcome email from colfaxresearch (might need to use an incognito window if you have issues launching or clear cookies).
+
 2. If you are a first time user, you will see a "Terms and Conditions" page come up. Please click "accept" on the T&C's to proceed.
+
 3. You will then come to a new screen asking to select "Learn" or "Connect", please select "Connect".
+
 4. The following page will then be displayed. Click on “Linux* or MAC OS” under the "Connect with a Terminal" button.
 
-   ![ssh_key_access](https://user-images.githubusercontent.com/56968566/67715899-f3eff000-f987-11e9-9b1c-5ad2ba2a96ea.png)
+5. ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
 
-5. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
+   ![image-20200612160501317](C:\Users\llandis\AppData\Roaming\Typora\typora-user-images\image-20200612160501317.png)
 
-6. Click the button "SSH Key for Linux/macOS". 
+6. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
 
-7. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
+7. Click the button "SSH Key for Linux/macOS". 
+
+8. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
 
    ```bash
    mkdir -p ~/.ssh
    mv ~/Downloads/devcloud-access-key-12345.txt ~/.ssh/
    ```
 
-8. Add the following lines to files ~/.ssh/config:
+9. Add the following lines to files ~/.ssh/config:
 
    ```bash
    Host devcloud 
@@ -199,7 +204,7 @@ To start the process:
 
    If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
 
-9. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
+10. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
    ```bash
    chmod 600 ~/.ssh/devcloud-access-key-u12345.txt
