@@ -1,14 +1,14 @@
 
 #############################
 #                           #
-#   Latest Edit             #
+#      Latest Edit          #
 #                           #
 # -Jun 15 2020 Version 2    #
 # Fixed script design       #
 #                           #
-#                           #
-#                           #
 #############################
+
+#Add Intel Confidentiality Message
 
 
 
@@ -30,6 +30,50 @@ allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[
 x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n005")
 
 
+login_Help() {
+    echo
+    echo "Usage: "
+    echo "------"
+    echo
+    echo "devcloud_login -h | --help"
+    echo "devcloud_login -l"
+    echo "devcloud_login -I <script args options>"
+    echo "devcloud_login -b <script args options> [walltime=hh:mm:ss] <job.sh>"
+    echo "devcloud_login "
+    echo
+    echo "Description: "
+    echo "------------"
+    echo
+    echo "devcloud_login is a command to display available nodes, start an interactive login to a compute "
+    echo "node, or submit a batch job to a compute node. "
+    echo
+    echo "Argument Options: "
+    echo "-----------------"
+    echo
+    echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2)         Arria 10 PAC; 1.2  1.2.1"
+    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI"
+    echo "S10PAC  (eg. devcloud_login -I S10PAC)	           Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -I CO)                 Compilation Only"
+    echo "SNN     (eg. devcloud_login -I SNN s001-n139)      Specific Node Name"
+    echo
+    echo "Batch Submissions: "
+    echo "------------------"
+    echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours."
+    echo
+    echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
+    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI"
+    echo "S10PAC  (eg. devcloud_login -b S10PAC [walttime=12:00:00] job.sh)	   Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -b CO [walttime=12:00:00] job.sh)              Compilation Only"
+    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walttime=12:00:00] job.sh)   Specific Node Name"
+    echo
+    echo "See Also: "
+    echo "---------"
+    echo
+    echo "qstatus		To see the status report of your jobs running on the DevCloud"
+    echo "qdel		To terminate a job running on the DevCloud (eg. qdel XXXX.v-qsvr-fpga.aidevcloud)"
+}
+
+
 devcloud_login()
 {
     interactive_nodeusage=`ps -auwx | grep "qsub.*-I" | grep -v "grep" | wc -l`
@@ -37,10 +81,10 @@ devcloud_login()
  
     if [[ $1 =~ "-h" ]]; then
 	# Display help message
-	dev_Help
+	login_Help
 	return 0
     elif [[ $1 == "-l" && -z $2 ]]; then
-	# Display node list
+	# Display node availability list
 	argv1="SNN"
 	unset argv2 argv3 argv4
     elif [ $HOSTNAME != "login-2" ]; then
@@ -170,6 +214,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
+    # Arria 10 OneAPI Login Selection
     elif [[ $number -eq 2 || ( -n $argv1 && $argv1 == "A10OAPI" ) ]]; then
         if [ -z $currentNode ]; then  #if current node is empty
             IFS="|"
@@ -213,6 +258,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
+    # Stratix 10 PAC Compilation and Programming Login Selection
     elif [[ $number -eq 3 || ( -n $argv1 && $argv1 == "S10PAC" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
@@ -255,6 +301,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
+    # Compilation (Command Line) Only Login Selection
     elif [[ $number -eq 4 || ( -n $argv1 && $argv1 == "CO" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
@@ -297,6 +344,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
+    # Specific Node Number Login Selection
     elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
@@ -512,6 +560,35 @@ error_check()
     else
 	:  #do nothing
     fi
+}
+
+
+tool_Help() {
+    echo
+    echo "Usage: "
+    echo "------"
+    echo
+    echo "tools_setup -h | --help"
+    echo "tools_setup -t [<script args options>]"
+    echo "tools_setup "
+    echo
+    echo "Description: "
+    echo "------------"
+    echo
+    echo "tools_setup is a function aimed to help the user setup an environment variable in a devcloud node."
+    echo "The tools_setup has a user interactive and non interactive mode. "
+    echo
+    echo "Argument Options: "
+    echo "-----------------"
+    echo
+    echo "QL      (eg. tools_setup -t QL 18.1)          Quartus Lite; $1"
+    echo "QS      (eg. tools_setup -t QS 18.1)	      Quartus Standard; $2"
+    echo "QP      (eg. tools_setup -t QP 18.1)	      Quartus Pro; ${*:3}"
+    echo "HLS     (eg. tools_setup -t HLS QL 18.1)      High-Level Synthesis"
+    echo "A10DS   (eg. tools_setup -t A10DS 1.2)        Arria 10 Development Stack"
+    echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 One API"
+    echo "S10DS   (eg. tools_setup -t S10DS)	      Stratix 10 Development Stack"
+    echo
 }
 
 
@@ -973,77 +1050,4 @@ tools_setup()
 	fi
     fi
 
-}
-
-
-dev_Help() {
-    echo
-    echo "Usage: "
-    echo "------"
-    echo
-    echo "devcloud_login -h | --help"
-    echo "devcloud_login -l"
-    echo "devcloud_login -I <script args options>"
-    echo "devcloud_login -b <script args options> [walltime=hh:mm:ss] <job.sh>"
-    echo "devcloud_login "
-    echo
-    echo "Description: "
-    echo "------------"
-    echo
-    echo "devcloud_login is a command to display available nodes, start an interactive login to a compute "
-    echo "node, or submit a batch job to a compute node. "
-    echo
-    echo "Argument Options: "
-    echo "-----------------"
-    echo
-    echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2)         Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI"
-    echo "S10PAC  (eg. devcloud_login -I S10PAC)	           Stratix 10 PAC"
-    echo "CO      (eg. devcloud_login -I CO)                 Compilation Only"
-    echo "SNN     (eg. devcloud_login -I SNN s001-n139)      Specific Node Name"
-    echo
-    echo "Batch Submissions: "
-    echo "------------------"
-    echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours."
-    echo
-    echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI"
-    echo "S10PAC  (eg. devcloud_login -b S10PAC [walttime=12:00:00] job.sh)	   Stratix 10 PAC"
-    echo "CO      (eg. devcloud_login -b CO [walttime=12:00:00] job.sh)              Compilation Only"
-    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walttime=12:00:00] job.sh)   Specific Node Name"
-    echo
-    echo "See Also: "
-    echo "---------"
-    echo
-    echo "qstatus		To see the status report of your jobs running on the DevCloud"
-    echo "qdel		To terminate a job running on the DevCloud (eg. qdel XXXX.v-qsvr-fpga.aidevcloud)"
-}
-
-
-tool_Help() {
-    echo
-    echo "Usage: "
-    echo "------"
-    echo
-    echo "tools_setup -h | --help"
-    echo "tools_setup -t [<script args options>]"
-    echo "tools_setup "
-    echo
-    echo "Description: "
-    echo "------------"
-    echo
-    echo "tools_setup is a function aimed to help the user setup an environment variable in a devcloud node."
-    echo "The tools_setup has a user interactive and non interactive mode. "
-    echo
-    echo "Argument Options: "
-    echo "-----------------"
-    echo
-    echo "QL      (eg. tools_setup -t QL 18.1)          Quartus Lite; $1"
-    echo "QS      (eg. tools_setup -t QS 18.1)	      Quartus Standard; $2"
-    echo "QP      (eg. tools_setup -t QP 18.1)	      Quartus Pro; ${*:3}"
-    echo "HLS     (eg. tools_setup -t HLS QL 18.1)      High-Level Synthesis"
-    echo "A10DS   (eg. tools_setup -t A10DS 1.2)        Arria 10 Development Stack"
-    echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 One API"
-    echo "S10DS   (eg. tools_setup -t S10DS)	      Stratix 10 Development Stack"
-    echo
 }
