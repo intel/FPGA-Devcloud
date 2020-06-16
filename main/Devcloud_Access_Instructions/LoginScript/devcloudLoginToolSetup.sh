@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Jun 10 2020 Version 1    #
-# Add ErrorCheck            #
+# -Jun 15 2020 Version 2    #
+# Fixed script design       #
 #                           #
 #                           #
 #                           #
@@ -24,7 +24,6 @@ arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-
 arria10Nodes12=("s005-n001" "s005-n002" "s005-n003" "s005-n006" "s001-n137" "s001-n138" "s001-n139")
 arria10Nodes121=("s005-n004" "s005-n005" "s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
-# 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
@@ -37,37 +36,35 @@ devcloud_login()
     name_node=`ps -auwx | grep "qsub.*-I" | awk '{print $16}'`
  
     if [[ $1 =~ "-h" ]]; then
-	# display Help
+	# Display help message
 	dev_Help
 	return 0
     elif [[ $1 == "-l" && -z $2 ]]; then
+	# Display node list
 	argv1="SNN"
 	unset argv2 argv3 argv4
     elif [ $HOSTNAME != "login-2" ]; then
-	# check to see if user is logged into a compute node already
+	# Check to see if user is logged into a compute node already
 	echo "Your hostname is not login-2. You are probably already logged into a compute node. Exit node in order to log into headnode."
         return 1
     elif [ $interactive_nodeusage -ne 0 ]; then
-	# check to see if user is already logged into a compute node and is currently at the headnode
+	# Check to see if user is already logged into a compute node and is currently at the headnode
 	echo "You are already logged into node ${name_node:6:10} interactively."
 	return 1
     elif [[ $1 == "-I" && -n $2 ]]; then
+	# Login to compute node interactively based on user arguments
 	argv1="$2"
 	argv2="$3"
 	unset argv3 argv4
     elif [[ $1 == "-b" && -n $2 ]]; then
+	# Submitting batch job to compute node based on user arguments 
 	argv1="$2"
 	argv2="$3"
 	argv3="$4"
 	argv4="$5"
     elif [ -z $1 ]; then
+	# Display user-interactive devcloud login menu
         unset argv1 argv2 argv3 argv4
-    else
-        echo "${red}Invalid Argument. Try 'devcloud_login --help' for more information.${end}"
-        return 0
-    fi
-
-    if [ -z $argv1 ]; then
 	echo
 	printf "%s\n%s\n" "You are selecting an interactive compute server sesssion. Please consider using batch mode submission using" "devcloud_login -b to not tie up compute servers with idle sessions."
 	echo "See the help menu using devcloud_login -h for more details."
@@ -88,14 +85,18 @@ devcloud_login()
 	    echo -n "Number: "
 	    read -e number
 	done
+    else
+        echo "${red}Invalid Argument. Try 'devcloud_login --help' for more information.${end}"
+        return 0
     fi
 
     IFS="|"
     currentNode="$(echo $HOSTNAME | grep -o -E "${allNodes[*]}")"
     unset IFS
 
+    # Arria 10 PAC Compilation and Programming Login Selection
     if [[ $number -eq 1 || ( -n $argv1 && $argv1 == "A10PAC" ) ]]; then
-        if [ -z $currentNode ]; then  #if current node is empty
+        if [ -z $currentNode ]; then  #If not currently logged into node is empty
             #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
             #node=$(head -n 1 nodes.txt)
 	    if [ -z "$argv1" ]; then
@@ -300,6 +301,7 @@ devcloud_login()
         if [ -z $currentNode ]; then
             IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+	    # readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
             readarray availableNodesArria12 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
