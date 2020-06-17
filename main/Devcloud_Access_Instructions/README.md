@@ -215,7 +215,7 @@ To start the process:
 
 **The next steps to connect to the Intel Devcloud are different for usage inside and outside the Intel Firewall. Select the correct usage option below:** 
 
-[Public User](#public-user---anyone-not-working-at-intel)\
+[Public User](#public-user---anyone-not-working-at-intel)
 [User Inside Intel Firewall](#user-inside-intel-firewall)
 
 ## 4.0 Connection to Devcloud
