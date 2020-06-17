@@ -89,9 +89,13 @@
 
 ## 1.0 Introduction
 
-Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Jupyter notebook, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
+Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Acceleration Stack, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
 
-These instructions detail how to connect your Windows PC to the devcloud which runs Linux. If you are attempting connectivity from a Mac or Linux machine, we do not offer exact instructions, but you can use the ssh key and config details described here with other ssh terminals.
+These instructions detail how to connect your Windows PC to the devcloud which runs Linux. If you are attempting connectivity from a Mac or Linux machine, we do not offer exact instructions, but you can use the ssh key and config file details described here with other ssh terminals.
+
+When you signed up for the Intel Devcloud, you were presented with three different instances to sign-up for: IOTG, ONEAPI or FPGA. IOTG is a standalone setup with its own login. FPGA is a superset of the ONEAPI instance. At the time of this writing, ONEAPI has 225 nodes and FPGA has 12 nodes. With the FPGA instance you can run all of the features of the ONEAPI instance and gain access to an additional 12 machines that have FPGA PAC cards and associated tools.
+
+This set of instructions superscedes the instructions on the OneAPI login instruction site. Once you download your devcloud access key, use these instructions. Also note that if you are inside the Intel firewall, the instructions differ so pay close attention to the changes in the config file if you are an Intel employee accessing the FPGA devcloud.
 
 Perform steps through section 5.3 and you will be able to run various workflows found in our Quickstart guides. Information after this section is useful for topics such as batch flows (recommended), graphics, and job control.
 
@@ -143,7 +147,7 @@ There are different methods of terminal connections. Listed below are a few opti
 
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
-**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment.  Note that the X11 server with Mobaxterm runs slow, so we dont recommend its use. The X2Go section shows how to gain GUI access.
+**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment.  Note that the X11 server with Mobaxterm runs slow, so we don't recommend its use. The X2Go section shows how to gain GUI access. 
 
 ### 3.1 Install MobaXterm
 
