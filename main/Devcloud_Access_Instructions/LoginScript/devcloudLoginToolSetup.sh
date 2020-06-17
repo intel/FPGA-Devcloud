@@ -74,6 +74,23 @@ login_Help() {
 }
 
 
+x2go_msg()
+{
+    echo
+    echo --------------------------------------------------------------------------------------
+    printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+    echo
+    printf  "%s\n" "${blu}ssh -L 4002:"$1":22 colfax-intel${end} "
+    echo
+    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+    echo
+    printf  "%s\n" "${blu}ssh -L 4002:"$1":22 devcloud${end} "
+    echo
+    echo --------------------------------------------------------------------------------------
+    echo
+}
+
+
 devcloud_login()
 {
     interactive_nodeusage=`ps -auwx | grep "qsub.*-I" | grep -v "grep" | wc -l`
@@ -140,11 +157,9 @@ devcloud_login()
 
     # Arria 10 PAC Compilation and Programming Login Selection
     if [[ $number -eq 1 || ( -n $argv1 && $argv1 == "A10PAC" ) ]]; then
-        if [ -z $currentNode ]; then  #If not currently logged into node is empty
-            #pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free"| grep -B 1 '13[0-9]' | grep -o '...$' > ~/nodes.txt
-            #node=$(head -n 1 nodes.txt)
+        if [ -z $currentNode ]; then  # If not currently logged into a compute node then...
 	    if [ -z "$argv1" ]; then
-            	# ask which version of a10 devstack
+            	# Ask user to select a version of A10 devstack
             	echo "${blu}Which Arria 10 PAC Development Stack release would you like to source?${end}"
             	for (( i=0; i<${#ARRIA10DEVSTACK_RELEASE[@]}; i++)); do
                     echo "${i}) ${ARRIA10DEVSTACK_RELEASE[$i]}"
@@ -158,21 +173,21 @@ devcloud_login()
                     read -e second_number
             	done
 	    elif [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[0]} =~ "$argv2" ]]; then
-		second_number=0
+		second_number=0  # Select A10 version 1.2
 	    elif [[ -n "$argv2" && ${ARRIA10DEVSTACK_RELEASE[1]} =~ "$argv2" ]]; then
-		second_number=1
+		second_number=1  # Select A10 version 1.2.1
 	    else
                 printf "%s\n%s\n" "${red}Invalid Entry. Valid development stack options are: ${ARRIA10DEVSTACK_RELEASE[*]}" "eg: devcloud_login -I A10PAC ${ARRIA10DEVSTACK_RELEASE[0]} ${end}"
 		return 0
 	    fi
 
-	    if [ $second_number -eq 0 ]; then
+	    if [ $second_number -eq 0 ]; then  # Look for all available A10 v1.2 nodes
             	IFS="|"
             	readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
             	readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
            	availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             	unset IFS
-	    else
+	    else  # Look for all available A10 v1.2.1 nodes
             	IFS="|"
             	readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
             	readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
@@ -180,13 +195,12 @@ devcloud_login()
             	unset IFS
 	    fi
 
-            if [ ${#availableNodes[@]} == 0 ]; then #if length of availableNodes is empty then no nodes are available
+            if [ ${#availableNodes[@]} == 0 ]; then  # If no nodes are available (length of availableNodes is empty) then...
                 echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
-                devcloud_login
-	    elif [[ -n "$argv3" && $argv3 =~ ".sh" ]]; then
+	    elif [[ -n "$argv3" && $argv3 =~ ".sh" ]]; then 
 		node=(${availableNodes[0]})
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv3
 	    elif [[ -n "$argv3" && $argv3 =~ "walltime=" && $argv4 =~ ".sh" ]]; then
@@ -195,18 +209,7 @@ devcloud_login()
 	    else
                 node=(${availableNodes[0]})
 		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    echo
-                    echo --------------------------------------------------------------------------------------
-		    printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                    echo
-                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                    echo
-                    echo --------------------------------------------------------------------------------------
-                    echo
+                    x2go_msg $node
 		fi
                 echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                 qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
@@ -216,7 +219,7 @@ devcloud_login()
         fi
     # Arria 10 OneAPI Login Selection
     elif [[ $number -eq 2 || ( -n $argv1 && $argv1 == "A10OAPI" ) ]]; then
-        if [ -z $currentNode ]; then  #if current node is empty
+        if [ -z $currentNode ]; then  # If not currently logged into a compute node then...
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
@@ -229,7 +232,6 @@ devcloud_login()
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
-                devcloud_login
 	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -l nodes="$node":ppn=2 $argv2
@@ -239,18 +241,7 @@ devcloud_login()
             else
                 node=(${availableNodes[0]})
 		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    echo
-                    echo --------------------------------------------------------------------------------------
-                    printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                    echo
-                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                    echo
-                    echo --------------------------------------------------------------------------------------
-                    echo
+                    x2go_msg $node
 		fi
                 echo "running: qsub -I -l nodes="$node":ppn=2"
                 qsub -I -l nodes="$node":ppn=2
@@ -260,7 +251,7 @@ devcloud_login()
         fi
     # Stratix 10 PAC Compilation and Programming Login Selection
     elif [[ $number -eq 3 || ( -n $argv1 && $argv1 == "S10PAC" ) ]]; then
-        if [ -z $currentNode ]; then
+        if [ -z $currentNode ]; then  # If not currently logged into a compute node then...
             IFS="|"
             readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
@@ -273,7 +264,6 @@ devcloud_login()
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
-                devcloud_login
 	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 $argv2
@@ -283,17 +273,7 @@ devcloud_login()
             else
                 node=(${availableNodes[0]})
 		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    echo
-                    echo --------------------------------------------------------------------------------------
-		    printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                    echo
-                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                    echo --------------------------------------------------------------------------------------
-                    echo
+                    x2go_msg $node
 		fi
                 echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                 qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
@@ -303,7 +283,7 @@ devcloud_login()
         fi
     # Compilation (Command Line) Only Login Selection
     elif [[ $number -eq 4 || ( -n $argv1 && $argv1 == "CO" ) ]]; then
-        if [ -z $currentNode ]; then
+        if [ -z $currentNode ]; then  # If not currently logged into a compute node then...
             IFS="|"
             # readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
             # readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -316,7 +296,6 @@ devcloud_login()
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
-                devcloud_login
 	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
 		node=(${availableNodes[0]})
 		qsub -l nodes="$node":ppn=2 $argv2
@@ -326,17 +305,7 @@ devcloud_login()
             else
                 node=(${availableNodes[0]})
 		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    echo
-                    echo --------------------------------------------------------------------------------------
-                    printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                    echo
-                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    echo
-                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                    echo --------------------------------------------------------------------------------------
-                    echo
+                    x2go_msg $node
 		fi
                 echo "running: qsub -I -l nodes="$node":ppn=2"
                 qsub -I -l nodes="$node":ppn=2
@@ -346,7 +315,7 @@ devcloud_login()
         fi
     # Specific Node Number Login Selection
     elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
-        if [ -z $currentNode ]; then
+        if [ -z $currentNode ]; then  # If not currently logged into a compute node then...
             IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
 	    # readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -372,7 +341,6 @@ devcloud_login()
 
             if [ ${#availableNodes[@]} == 0 ]; then
                 echo
-                echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
                 printf "%s\n" "${red}No available nodes. Try again later. ${end} "
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
@@ -387,17 +355,7 @@ devcloud_login()
 			qsub -l nodes="$node":ppn=2 -l $argv3 $argv4
 		    else
 			if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                            echo
-                            echo --------------------------------------------------------------------------------------
-                            printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                            echo
-                            printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                            echo
-                            printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                            echo
-                            printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                            echo --------------------------------------------------------------------------------------
-                            echo
+                            x2go_msg $node
 			fi
                         echo "running: qsub -I -l nodes="$node":ppn=2"
                         qsub -I -l nodes="$node":ppn=2
@@ -409,17 +367,7 @@ devcloud_login()
 			qsub -l nodes="$node":ppn=2 -l $argv3 $argv4
 		    else
 			if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                            echo
-                            echo --------------------------------------------------------------------------------------
-                            printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                            echo
-                            printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                            echo
-                            printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                            echo
-                            printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                            echo --------------------------------------------------------------------------------------
-                            echo
+                            x2go_msg $node
 			fi
                         echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                         qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
@@ -505,33 +453,13 @@ devcloud_login()
                 if [ -z $is_in_fpga_queue ];  # if is_in_fpga_queue is empty then it is not on the fpga queue
                 then
 		    if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    	echo
-                    	echo --------------------------------------------------------------------------------------
-                    	printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    	echo
-                    	printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                    	echo
-                    	printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    	echo
-                    	printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                    	echo --------------------------------------------------------------------------------------
-                    	echo
+                    	x2go_msg $node
 		    fi
                     echo "running: qsub -I -l nodes="$node":ppn=2"
                     qsub -I -l nodes="$node":ppn=2
                 else		
 		    if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    	echo
-                    	echo --------------------------------------------------------------------------------------
-                    	printf "%s\n" "${blu}For X2GO tunneling access. If connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    	echo
-                    	printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
-                    	echo
-                    	printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-                    	echo
-                    	printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
-                    	echo --------------------------------------------------------------------------------------
-                    	echo
+                    	x2go_msg $node
 		    fi
                     echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                     qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
@@ -540,25 +468,8 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again from headnode.${end}"
         fi
-    fi
-}
-
-
-qstatus()	
-{	
-    #display the status of all jobs currently running and queued	
-    qstat -s batch@v-qsvr-fpga
-    qstat -s
-}
-
-
-error_check()
-{
-    if [ $? -ne 0 ]; then
-	echo failed
-	exit
     else
-	:  #do nothing
+	echo "${red}Invalid argument. Try 'devcloud_login --help' for more information.${end}"
     fi
 }
 
@@ -1050,4 +961,23 @@ tools_setup()
 	fi
     fi
 
+}
+
+
+qstatus()	
+{	
+    #display the status of all jobs currently running and queued	
+    qstat -s batch@v-qsvr-fpga
+    qstat -s
+}
+
+
+error_check()
+{
+    if [ $? -ne 0 ]; then
+	echo failed
+	exit
+    else
+	:  #do nothing
+    fi
 }
