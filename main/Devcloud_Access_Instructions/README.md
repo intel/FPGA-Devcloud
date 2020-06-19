@@ -202,7 +202,7 @@ To start the process:
    ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-12345.txt guest@devcloud.intel.com
    ```
 
-   If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
+   If you saved your key in a location other than /drives/c/Users/<user>/Downloads, insert the correct path and the correct user number that was provided to you in the email. 
 
 8. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
