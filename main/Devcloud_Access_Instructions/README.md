@@ -189,7 +189,7 @@ To start the process:
 
    ```bash
    mkdir -p ~/.ssh
-   mv /drives/c/Users/llandis/Downloads/devcloud-access-key-12345.txt ~/.ssh/
+   mv /drives/c/Users/<user>/Downloads/devcloud-access-key-12345.txt ~/.ssh/
    ```
 
 7. Add the following lines to files ~/.ssh/config:
