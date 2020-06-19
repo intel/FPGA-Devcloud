@@ -419,7 +419,7 @@ For more information, try "tools_setup --help" on a terminal that is logged into
 This section provides information on how to submit batch jobs on the Devcloud when logged into the headnode machine (login-2), to be executed on a compute node. 
 
 To submit a batch job using the [**login script**](#52-login-script) provided, use the following:\
-Note, [walltime](#55-submitting-jobs-for-a-specified-walltime) is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours.
+Note, [walltime](#55-submitting-jobs-for-a-specified-walltime) is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours for machines running RTL AFU/OpenCL and 24 hours for machines running OneAPI.
 
 ```
 devcloud_login -b <argument options> [<walltime=hh:mm:ss>] <job.sh>
@@ -473,7 +473,6 @@ qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
 ### 5.5 Submitting Jobs for a Specified Walltime
 
 A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours) use one of the following commands.\
-Nodes can be increased up to a maximum of 48 hours. 
 
 To submit a batch job with a specified walltime using the [**login script**](#52-login-script) provided, use the following:\
 Note, you must be logged into the **headnode** machine (login-2).
