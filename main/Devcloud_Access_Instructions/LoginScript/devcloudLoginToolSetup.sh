@@ -1002,7 +1002,7 @@ dev_Help() {
     echo
     echo "Batch Submissions: "
     echo "------------------"
-    echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours."
+    echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours for machines running RTL AFU/OpenCL and 24 hours for machines running OneAPI."
     echo
     echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
     echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI"
