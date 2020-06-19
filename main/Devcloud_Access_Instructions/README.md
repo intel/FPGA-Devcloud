@@ -173,28 +173,26 @@ There are different methods of terminal connections. Listed below are a few opti
 
 To start the process:
 
-1. Click on the first link in the welcome email from colfaxresearch (might need to use an incognito window if you have issues launching or clear cookies).
+1. Click on the following link to access the Connect website: https://devcloud.intel.com/oneapi/connect/.
 
-2. If you are a first time user, you will see a "Terms and Conditions" page come up. Please click "accept" on the T&C's to proceed.
-
-3. You will then come to a new screen asking to select "Learn" or "Connect", please select "Connect".
-
-4. The following page will then be displayed. Click on “Linux* or MAC OS” under the "Connect with a Terminal" button.
+2. The following page will then be displayed. Click on the button “Linux* or MAC OS” under Connect with a Terminal.
 
    ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
 
-5. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
+3. Once you click on the "Linux* or macOS" link, you will see two different connection options. You will **only** need to download the key that is under Option 2: Manual Configuration.
 
-6. Click the button "SSH Key for Linux/macOS". 
+4. To download the access key, click on the "SSH key for Linux/macOS/Cygwin" blue button under Direct SSH Connection.
 
-7. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
+5. Once you have downloaded the SSH key, return to these GitHub Instructions.
+
+6. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
 
    ```bash
    mkdir -p ~/.ssh
    mv ~/Downloads/devcloud-access-key-12345.txt ~/.ssh/
    ```
 
-8. Add the following lines to files ~/.ssh/config:
+7. Add the following lines to files ~/.ssh/config:
 
    ```bash
    Host devcloud 
@@ -206,7 +204,7 @@ To start the process:
 
    If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
 
-9. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
+8. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
    ```bash
    chmod 600 ~/.ssh/devcloud-access-key-u12345.txt
@@ -215,7 +213,7 @@ To start the process:
 
 **The next steps to connect to the Intel Devcloud are different for usage inside and outside the Intel Firewall. Select the correct usage option below:** 
 
-[Public User](#public-user---anyone-not-working-at-intel)
+[Public User](#public-user---anyone-not-working-at-intel)\
 [User Inside Intel Firewall](#user-inside-intel-firewall)
 
 ## 4.0 Connection to Devcloud
@@ -745,8 +743,6 @@ MobaXterm can be used to transfer files to and from your local PC to the Devclou
 <u>**To setup this feature, make sure that you have completed all the steps to connect to the DevCloud.**</u>
 
 1. In the main toolbar of MobaXterm, click the **Session** button. ![mobaxterm_new_session](https://user-images.githubusercontent.com/56968566/67717144-65c93900-f98a-11e9-870b-784e76806a7f.png)
-
-   
 
 2. Select **SSH**. <img src="https://user-images.githubusercontent.com/56968566/67717168-6d88dd80-f98a-11e9-987a-3d226b109886.png" alt="mobaxterm_ssh" width=20% />
 
