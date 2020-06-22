@@ -8,29 +8,11 @@ https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners
 
 **If you don't know what the GitHub Flow is**, click this link: https://guides.github.com/introduction/flow/
 
-[GitHub Devcloud Developer Instructions](#github-devcloud-developer-instructions)
+[
 
-  * [General GitHub Devcloud Rules](#general-github-devcloud-rules)
-  * [Installing GitBash](#installing-gitbash)
-  * [Logging-in to Devcloud Repository in Terminal](#logging-in-to-devcloud-repository-in-terminal)
-  * [Logging-in to Devcloud Repository through GitHub Desktop](#logging-in-to-devcloud-repository-through-github-desktop)
-  * [Generating a new SSH Key in MobaXterm](#generating-a-new-ssh-key-in-mobaxterm)
-  * [Clone Remote FPGA-Devcloud Repository](#clone-remote-fpga-devcloud-repository)
-  * [Cloning a Single Branch from the FPGA-Devcloud Repository](#cloning-a-single-branch-from-the-fpga-devcloud-repository)
-  * [Examples of Cloning a Specific Quickstart Source Package](#examples-of-cloning-a-specific-quickstart-source-package)
-    + [1.  RTL Quickstart Guide](#1--rtl-quickstart-guide)
-    + [2.  Embedded Nios Quickstart Guide](#2--embedded-nios--platform-designer--quickstart-guide)
-  * [Moving from Branch to Branch](#moving-from-branch-to-branch)
-  * [Adding a File to a Repository](#adding-a-file-to-a-repository)
-  * [Creating a New Branch](#creating-a-new-branch)
-  * [Pushing a Branch to Master GitHub Repository](#pushing-a-branch-to-master-github-repository)
-  * [Pull latest changes on GitHub back to your Computer](#pull-latest-changes-on-github-back-to-your-computer)
-  * [Downloading Github File from MobaXterm Command Line](#downloading-github-file-from-mobaxterm-command-line)
-      * [WGET Command](#1-wget-command)
-      * [CURL Command](#2-curl-command)
-  * [Opening Files from MobaXterm Command Line](#opening-files-from-mobaxterm-command-line)
-    + [Typora](#typora)
-      + [Github Pictures](#github-pictures)
+[TOC]
+
+](#github-pictures)
 
 ## General GitHub Devcloud Rules
 
@@ -416,3 +398,8 @@ Second, click on <img src="https://user-images.githubusercontent.com/59750149/78
 <img src="https://user-images.githubusercontent.com/59750149/78586141-da34bd80-77ef-11ea-933f-aa9f57401cbb.png" alt="comment-sec" width=75% />
 
 Lastly, copy that link and paste it into the .md file you are writing. Note once the link has been copied the issue is not needed anymore, thus you can submit then delete the issue or simply close the internet tab without submitting the issue.
+
+### Adding contributors 
+
+See: https://opensource.intel.com/how-to/otc-infrastructure/github
+

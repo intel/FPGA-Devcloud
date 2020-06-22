@@ -89,9 +89,13 @@
 
 ## 1.0 Introduction
 
-Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Jupyter notebook, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
+Welcome to the FPGA Devcloud. This cloud is an Intel hosted cloud service with Intel XEON processors and FPGA acceleration cards. The FPGA Cloud has a number of development tools installed including Acceleration Stack, and Quartus Prime Lite / Prime Pro development tools. The FPGA Cloud hosts high end FPGA accelerator cards to allow users to experiment with accelerated workloads running on FPGAs.
 
-These instructions detail how to connect your Windows PC to the devcloud which runs Linux. If you are attempting connectivity from a Mac or Linux machine, we do not offer exact instructions, but you can use the ssh key and config details described here with other ssh terminals.
+These instructions detail how to connect your Windows PC to the devcloud which runs Linux. If you are attempting connectivity from a Mac or Linux machine, we do not offer exact instructions, but you can use the ssh key and config file details described here with other ssh terminals.
+
+When you signed up for the Intel Devcloud, you were presented with three different instances to sign-up for: IOTG, ONEAPI or FPGA. IOTG is a standalone setup with its own login. FPGA is a superset of the ONEAPI instance. At the time of this writing, ONEAPI has 225 nodes and FPGA has 12 nodes. With the FPGA instance you can run all of the features of the ONEAPI instance and gain access to an additional 12 machines that have FPGA PAC cards and associated tools.
+
+This set of instructions superscedes the instructions on the OneAPI login instruction site. Once you download your devcloud access key, use these instructions. Also note that if you are inside the Intel firewall, the instructions differ so pay close attention to the changes in the config file if you are an Intel employee accessing the FPGA devcloud.
 
 Perform steps through section 5.3 and you will be able to run various workflows found in our Quickstart guides. Information after this section is useful for topics such as batch flows (recommended), graphics, and job control.
 
@@ -143,7 +147,7 @@ There are different methods of terminal connections. Listed below are a few opti
 
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
-**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment.  Note that the X11 server with Mobaxterm runs slow, so we dont recommend its use. The X2Go section shows how to gain GUI access.
+**MobaXterm** is an enhanced terminal for Windows with an X11 server, a tabbed SSH client and several other network tools for remote computing (VNC, RDP, telnet, rlogin). **MobaXterm** brings all the essential Unix commands to Windows desktop, in a single portable exe file which works out of the box and makes your Windows PC look like a UNIX environment.  Note that the X11 server with Mobaxterm runs slow, so we don't recommend its use. The X2Go section shows how to gain GUI access. 
 
 ### 3.1 Install MobaXterm
 
@@ -169,25 +173,26 @@ There are different methods of terminal connections. Listed below are a few opti
 
 To start the process:
 
-1. Click on the first link in the welcome email from colfaxresearch (might need to use an incognito window if you have issues launching or clear cookies).
-2. If you are a first time user, you will see a "Terms and Conditions" page come up. Please click "accept" on the T&C's to proceed.
-3. You will then come to a new screen asking to select "Learn" or "Connect", please select "Connect".
-4. The following page will then be displayed. Click on “Linux* or MAC OS” under the "Connect with a Terminal" button.
+1. Click on the following link to access the Connect website: https://devcloud.intel.com/oneapi/connect/.
 
-   ![ssh_key_access](https://user-images.githubusercontent.com/56968566/67715899-f3eff000-f987-11e9-9b1c-5ad2ba2a96ea.png)
+2. The following page will then be displayed. Click on the button “Linux* or MAC OS” under Connect with a Terminal.
 
-5. After clicking “**SSH key for Linux/macOS**”, you will get instructions on accessing a UNIX key file. 
+   ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
 
-6. Click the button "SSH Key for Linux/macOS". 
+3. Once you click on the "Linux* or macOS" link, you will see two different connection options. You will **only** need to download the key that is under Option 2: Manual Configuration.
 
-7. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
+4. To download the access key, click on the "SSH key for Linux/macOS/Cygwin" blue button under Direct SSH Connection.
+
+5. Once you have downloaded the SSH key, return to these GitHub Instructions.
+
+6. Create the directory ~/. ssh, unless it already exists and move the private SSH key into permanent storage in ~/.ssh:
 
    ```bash
    mkdir -p ~/.ssh
-   mv ~/Downloads/devcloud-access-key-12345.txt ~/.ssh/
+   mv /drives/c/Users/<user>/Downloads/devcloud-access-key-12345.txt ~/.ssh/
    ```
 
-8. Add the following lines to files ~/.ssh/config:
+7. Add the following lines to files ~/.ssh/config:
 
    ```bash
    Host devcloud 
@@ -197,9 +202,9 @@ To start the process:
    ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-12345.txt guest@devcloud.intel.com
    ```
 
-   If you saved your key in a location other than ~/Downloads/, insert the correct path and the correct user number that was provided to you in the email. 
+   If you saved your key in a location other than /drives/c/Users/<user>/Downloads, insert the correct path and the correct user number that was provided to you in the email. 
 
-9. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
+8. Set the correct restrictive permissions on the private SSH. Run the following commands in terminal: 
 
    ```bash
    chmod 600 ~/.ssh/devcloud-access-key-u12345.txt
@@ -412,7 +417,7 @@ For more information, try "tools_setup --help" on a terminal that is logged into
 This section provides information on how to submit batch jobs on the Devcloud when logged into the headnode machine (login-2), to be executed on a compute node. 
 
 To submit a batch job using the [**login script**](#52-login-script) provided, use the following:\
-Note, [walltime](#55-submitting-jobs-for-a-specified-walltime) is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours.
+Note, [walltime](#55-submitting-jobs-for-a-specified-walltime) is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours for machines running RTL AFU/OpenCL and 24 hours for machines running OneAPI.
 
 ```
 devcloud_login -b <argument options> [<walltime=hh:mm:ss>] <job.sh>
@@ -466,7 +471,6 @@ qsub -q batch@v-qsvr-fpga -l nodes=s001-n139:ppn=2 -d . job.sh
 ### 5.5 Submitting Jobs for a Specified Walltime
 
 A user will be logged off a node if they have been using it for longer than 6 hours. To submit a job with a specified walltime longer than 6 hours (for compilations longer than 6 hours) use one of the following commands.\
-Nodes can be increased up to a maximum of 48 hours. 
 
 To submit a batch job with a specified walltime using the [**login script**](#52-login-script) provided, use the following:\
 Note, you must be logged into the **headnode** machine (login-2).
@@ -739,8 +743,6 @@ MobaXterm can be used to transfer files to and from your local PC to the Devclou
 <u>**To setup this feature, make sure that you have completed all the steps to connect to the DevCloud.**</u>
 
 1. In the main toolbar of MobaXterm, click the **Session** button. ![mobaxterm_new_session](https://user-images.githubusercontent.com/56968566/67717144-65c93900-f98a-11e9-870b-784e76806a7f.png)
-
-   
 
 2. Select **SSH**. <img src="https://user-images.githubusercontent.com/56968566/67717168-6d88dd80-f98a-11e9-987a-3d226b109886.png" alt="mobaxterm_ssh" width=20% />
 
