@@ -92,7 +92,7 @@ The purpose of a given remote lab is to create an environment as close as possib
 Configuration and verification steps must be completed before a given lab is distributed to a user. The following block diagram shows the flow for instructors to convert their existing labs to a virtual lab using the provided package contents:
 
 <p align="center">
-  <img src="CookBook/InstructorFlow.png" >
+  <img src="CookBook/IntructorFlow.png" >
 </p>
 
 The next section provides an implementation example instructors may use to add peripherals, and test lab functionality before distributing to users.
