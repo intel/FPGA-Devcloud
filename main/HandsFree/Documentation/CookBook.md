@@ -92,7 +92,7 @@ The purpose of a given remote lab is to create an environment as close as possib
 Configuration and verification steps must be completed before a given lab is distributed to a user. The following block diagram shows the flow for instructors to convert their existing labs to a virtual lab using the provided package contents:
 
 <p align="center">
-  <img src="CookBook/IntructorFlow.png" >
+  <img src="CookBook/InstructorFlow.png" >
 </p>
 
 The next section provides an implementation example instructors may use to add peripherals, and test lab functionality before distributing to users.
@@ -133,19 +133,15 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
    * With Qsys open double click the slide switch IP.
 
-   
-
-   ![](CookBook/Switch_IP.PNG)
-
-   
+<p align="center">
+  <img src="CookBook/Switch_IP.PNG" >
+</p>
 
    * Finally, change the PIO width to 16 bits. 
-
    
-
-   ![](CookBook/PIO_width_adjustment.PNG)
-
-   
+<p align="center">
+  <img src="CookBook/PIO_width_adjustment.PNG" >
+</p>
 
    * To save, click "Generate IP". In the Generation window select "Generate". After completion, select "Finish".
 
@@ -231,20 +227,16 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      
 
    * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
-
-     
-
-     ![](CookBook/SelectDevkit.PNG)
-
-     
+ 
+<p align="center">
+  <img src="CookBook/SelectDevkit.PNG" >
+</p>
 
    * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
-
-     
-
-     <img src="CookBook/TutorialToolkit.PNG"/>
-
-     
+  
+<p align="center">
+  <img src="CookBook/TutorialToolkit.PNG" >
+</p>
 
      Toggle the slide switches to validate the odd parity function has been satisfied. 
 
@@ -254,11 +246,9 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
    * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
-     
-
-     <img src="CookBook/ArchiveProject.PNG" />
-
-     
+<p align="center">
+  <img src="CookBook/ArchiveProject.PNG" >
+</p>
 
    * The archive tool does not recognize .toolkit files, so they must be added to the list of files included in the archive.  To do this, in the archive window, select Advanced, then select Add, and then add the .toolkit file found in the Source/ directory of the package, then press OK.
 
@@ -282,19 +272,15 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 
 3. At the home screen navigate to File $ \rarr $ Open as shown below.
 
-   
-
-   ![](CookBook/QuartusFileOpen.PNG)
-
-   
+<p align="center">
+  <img src="CookBook/QuartusFileOpen.PNG" >
+</p> 
 
 4. Allow all files to be visible as shown below.
-
    
-
-   ![](CookBook/AllFiles.PNG)
-
-   
+<p align="center">
+  <img src="CookBook/AllFiles.PNG" >
+</p> 
 
 5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
 
@@ -306,11 +292,9 @@ The project unarchived in the previous section implements no digital logic desig
 
 1. Navigate to Files in the "Project Navigator" pane as shown below.
 
-   
-
-   ![](CookBook/FilesUserTutorial.PNG)
-
-   
+<p align="center">
+  <img src="CookBook/FilesUserTutorial.PNG" >
+</p> 
 
 2. Double click on the file named ""../Verilog/UserDesign.v".
 
@@ -384,21 +368,17 @@ The project unarchived in the previous section implements no digital logic desig
 
 7. After a couple minutes, an icon similar to the one shown below should appear.
 
-   
-   
-   ![](CookBook/AvailFPGADevKits.PNG)
-   
-   
+<p align="center">
+  <img src="CookBook/AvailFPGADevKits.PNG" >
+</p>  
    
    * These are available Intel FPGA Development Kits. Select one and proceed.
    
 8. After a short delay the selected Intel FPGA development kit will connect to the local Quartus Prime installation, and the  Graphical User Interface (GUI) shown below will appear.
 
-   
-
-   <img src="CookBook/UserTutorialGUI.PNG"/>
-
-   
+<p align="center">
+  <img src="CookBook/UserTutorialGUI.PNG" >
+</p>  
 
    * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
    * Recall from step 5 that wires "sws[0]" and "sws[1]" are connected to the OR2X1 module's inputs while the "leds[0]" wire is connected to the module's output.
@@ -406,7 +386,6 @@ The project unarchived in the previous section implements no digital logic desig
 
 9. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
-   
-
-   ![](CookBook/UserTutorialCompilation.PNG)
-
+ <p align="center">
+  <img src="CookBook/UserTutorialCompilation.PNG" >
+</p>  
