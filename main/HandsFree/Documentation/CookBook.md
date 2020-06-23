@@ -165,9 +165,9 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
          
      	//Connect to QSys IP
      	internal_pin_if 	i1	(	.clk_clk(clock),
-     						.led_export(leds),   
-     						.reset_reset_n(reset_count == reset_timeout), 	
-     						.sws_export(sws)   );							
+                              .led_export(leds),   
+                              .reset_reset_n(reset_count == reset_timeout), 	
+                              .sws_export(sws)   );							
      endmodule
      ```
 
@@ -191,8 +191,8 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      
 
      ```verilog
-     module parity16b(	input  [15:0] ins,
-     					          output parity);
+     module parity16b(  input  [15:0] ins,
+                        output parity);
      						
      	assign parity = ^ins;
      	
@@ -212,13 +212,13 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      	wire [9:0]  leds;
      	wire [15:0] sws;
      							
-     	parity16b 				i0(	.ins(sws), 
+     	parity16b 				i0( .ins(sws), 
                             .parity(leds[0]));
      	
      	// Provided to Student/Profs Don't Touch!
-     	pin_ip					i1(	.clock(clock), 
-     								      .sws(sws), 
-     								      .leds(leds));
+     	pin_ip					i1( .clock(clock), 
+                          .sws(sws), 
+                          .leds(leds));
      	
      endmodule
      ```
@@ -303,8 +303,8 @@ The project unarchived in the previous section implements no digital logic desig
 
    ```verilog
    module OR2X1(	input  A,
-   				        input  B,
-   				        output Y  );
+                  input  B,
+                  output Y  );
    					
    	assign Y = A|B;
    
@@ -341,13 +341,13 @@ The project unarchived in the previous section implements no digital logic desig
    	// User instantiates design below
    	
    	OR2X1            		i0	(	.A(sws[0]),
-   									          .B(sws[1]),
-   									          .Y(leds[0]));
+                              .B(sws[1]),
+                              .Y(leds[0]));
    	
    	// Remote Pin IP Do not touch below!
    	pin_ip					i1	(	.clock(clock), 
-   									      .sws(sws), 
-   									      .leds(leds));
+                          .sws(sws), 
+                          .leds(leds));
    	
    endmodule
    ```
