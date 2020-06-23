@@ -6,7 +6,7 @@ This package provides a cookbook for creating hands free FPGA labs. Using the pr
 
 
 
-<align="center" img src="CookBook/TopLevel.png" />
+<img align="center" img src="CookBook/TopLevel.png" />
 
 
 
@@ -94,7 +94,7 @@ The purpose of a given remote lab is to create an environment as close as possib
 Configuration and verification steps must be completed before a given lab is distributed to a user. The following block diagram shows the flow for instructors to convert their existing labs to a virtual lab using the provided package contents:
 
 
-<align="center" img src="CookBook/InstructorFlow.png" />
+<img align="center" img src="CookBook/InstructorFlow.png" />
 
 
 
