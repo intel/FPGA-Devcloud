@@ -91,10 +91,9 @@ The purpose of a given remote lab is to create an environment as close as possib
 
 Configuration and verification steps must be completed before a given lab is distributed to a user. The following block diagram shows the flow for instructors to convert their existing labs to a virtual lab using the provided package contents:
 
-
-<img align="center" img src="CookBook/InstructorFlow.png" />
-
-
+<p align="center">
+  <img src="CookBook/InstructorFlow.png" >
+</p>
 
 The next section provides an implementation example instructors may use to add peripherals, and test lab functionality before distributing to users.
 
@@ -128,11 +127,9 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
    * First, navigate to IP components in the Quartus Prime project navigator, an click on the "internal_pin_if" IP.
 
-   
-
-   <img src="CookBook/IP_Components.PNG" />
-
-   
+<p align="center">
+  <img src="CookBook/IP_Components.PNG" >
+</p>
 
    * With Qsys open double click the slide switch IP.
 
