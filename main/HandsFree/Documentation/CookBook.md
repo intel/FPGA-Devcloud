@@ -10,7 +10,7 @@ This package provides a cookbook for creating hands free FPGA labs. Using the pr
 
 
 
-This documentation provides resources for [IT](# 2 IT Resources), [instructors](# 3 Instructor Resources), and [users](# 4 User Resources) (students). The  [IT](# 2 IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](# 3 Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](# 4 User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
+This documentation provides resources for [IT](#2 IT Resources), [instructors](#3 Instructor Resources), and [users](#4 User Resources) (students). The  [IT](#2 IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](#3 Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](#4 User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
 
 # 2 IT Resources
 
