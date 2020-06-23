@@ -131,21 +131,21 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
   <img src="CookBook/IP_Components.PNG" >
 </p>
 
-    * With Qsys open double click the slide switch IP.
+   * With Qsys open double click the slide switch IP.
 
 <p align="center">
   <img src="CookBook/Switch_IP.PNG" >
 </p>
 
-    * Finally, change the PIO width to 16 bits. 
+   * Finally, change the PIO width to 16 bits. 
    
 <p align="center">
   <img src="CookBook/PIO_width_adjustment.PNG" >
 </p>
 
-    * To save, click "Generate IP". In the Generation window select "Generate". After completion, select "Finish".
+   * To save, click "Generate IP". In the Generation window select "Generate". After completion, select "Finish".
 
-    * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below.
+   * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below.
 
      
      
@@ -187,7 +187,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 5. **Perform a test** of the updated system by completing the lab prompt and validating functionality. 
 
-  * The user design provided in the package must be changed to the 16-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
+   * The user design provided in the package must be changed to the 16-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
 
      
 
@@ -202,7 +202,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
      
 
-    * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows.
+   * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows.
 
      
 
@@ -226,33 +226,33 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
      
 
-    * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
+   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
  
 <p align="center">
   <img src="CookBook/SelectDevkit.PNG" >
 </p>
 
-    * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
+   * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
   
 <p align="center">
   <img src="CookBook/TutorialToolkit.PNG" >
 </p>
 
-    * Toggle the slide switches to validate the odd parity function has been satisfied. 
+   * Toggle the slide switches to validate the odd parity function has been satisfied. 
 
-  * Closing the System Console window will move the compilation progress to 100%.
+   * Closing the System Console window will move the compilation progress to 100%.
 
 6. **Archive the project for distribution to users** by removing the completed prompt sections. If it is desired to have students gain experience with instantiating modules, it may be useful to remove the instantiated solution from the "top.v" file as well.
 
-    * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
+   * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
 <p align="center">
   <img src="CookBook/ArchiveProject.PNG" >
 </p>
 
-    * The archive tool does not recognize .toolkit files, so they must be added to the list of files included in the archive.  To do this, in the archive window, select Advanced, then select Add, and then add the .toolkit file found in the Source/ directory of the package, then press OK.
+   * The archive tool does not recognize .toolkit files, so they must be added to the list of files included in the archive.  To do this, in the archive window, select Advanced, then select Add, and then add the .toolkit file found in the Source/ directory of the package, then press OK.
 
-    * Finally, select Archive. The generated archive can be shared, and users may be directed to the User Resources section of this documentation for support in unarchiving and running their labs.
+   * Finally, select Archive. The generated archive can be shared, and users may be directed to the User Resources section of this documentation for support in unarchiving and running their labs.
 
 ## 3.2 Additional Material
 
@@ -313,10 +313,9 @@ The project unarchived in the previous section implements no digital logic desig
    ```
 
    
+   * This code represents a simple 2-input OR logic gate, where the output Y represents the OR of the single-bit inputs A and B
 
-    * This code represents a simple 2-input OR logic gate, where the output Y represents the OR of the single-bit inputs A and B
-
-    * The truth table for the function is shown below.
+   * The truth table for the function is shown below.
 
      
 
@@ -358,13 +357,13 @@ The project unarchived in the previous section implements no digital logic desig
 
    
 
-    * The "." indicates a port name. For example, ".A(sws[0])" can be read as port A of the OR2X1 module is connected to the wire sws[0]. 
-    * To allow multiple OR2X1 modules to be instantiated, the instance name "i0" is placed before the port connections are defined.
+   * The "." indicates a port name. For example, ".A(sws[0])" can be read as port A of the OR2X1 module is connected to the wire sws[0]. 
+   * To allow multiple OR2X1 modules to be instantiated, the instance name "i0" is placed before the port connections are defined.
 
 6. With the design OR2X1 module instantiated, the design is now ready to be compiled. In Quartus Prime, project compilation is a multi-stage process that translates a user's project to a format capable of being programmed to an Intel FPGA. To compile this project perform the following steps. 
 
-    * Select File $ \rarr $ Save Project
-    * Select Processing $ \rarr $ Start Compilation
+   * Select File $ \rarr $ Save Project
+   * Select Processing $ \rarr $ Start Compilation
 
 7. After a couple minutes, an icon similar to the one shown below should appear.
 
@@ -372,7 +371,7 @@ The project unarchived in the previous section implements no digital logic desig
   <img src="CookBook/AvailFPGADevKits.PNG" >
 </p>  
    
-    * These are available Intel FPGA Development Kits. Select one and proceed.
+   * These are available Intel FPGA Development Kits. Select one and proceed.
    
 8. After a short delay the selected Intel FPGA development kit will connect to the local Quartus Prime installation, and the  Graphical User Interface (GUI) shown below will appear.
 
@@ -380,9 +379,9 @@ The project unarchived in the previous section implements no digital logic desig
   <img src="CookBook/UserTutorialGUI.PNG" >
 </p>  
 
-    * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
-    * Recall from step 5 that wires "sws[0]" and "sws[1]" are connected to the OR2X1 module's inputs while the "leds[0]" wire is connected to the module's output.
-    * Verify the truth table shown in step 3 by toggling the SW0 and SW1 buttons, and viewing the corresponding output on LED0.
+   * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
+   * Recall from step 5 that wires "sws[0]" and "sws[1]" are connected to the OR2X1 module's inputs while the "leds[0]" wire is connected to the module's output.
+   * Verify the truth table shown in step 3 by toggling the SW0 and SW1 buttons, and viewing the corresponding output on LED0.
 
 9. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
