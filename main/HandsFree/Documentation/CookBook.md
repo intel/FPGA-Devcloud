@@ -238,7 +238,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
   <img src="CookBook/TutorialToolkit.PNG" >
 </p>
 
-     Toggle the slide switches to validate the odd parity function has been satisfied. 
+   * Toggle the slide switches to validate the odd parity function has been satisfied. 
 
    * Closing the System Console window will move the compilation progress to 100%.
 
