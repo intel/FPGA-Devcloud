@@ -6,11 +6,11 @@ This package provides a cookbook for creating hands free FPGA labs. Using the pr
 
 
 
-<img src="CookBook/TopLevel.png" style="zoom:5%;" />
+<img src="CookBook/TopLevel.png" />
 
 
 
-This documentation provides resources for [IT](#2 IT Resources), [instructors](#3 Instructor Resources), and [users](#4 User Resources) (students). The  [IT](#2 IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](#3 Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](#4 User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
+This documentation provides resources for [IT](#IT Resources), [instructors](#Instructor Resources), and [users](#User Resources) (students). The  [IT](#IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](#Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](#User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
 
 # 2 IT Resources
 
@@ -95,7 +95,7 @@ Configuration and verification steps must be completed before a given lab is dis
 
 
 
-<img src="CookBook/IntructorFlow-1592861839464.png" style="zoom:15%;" />
+![](CookBook/TopLevel.png)
 
 
 
@@ -129,15 +129,15 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 3. **Adjust the pin IP**  to accommodate the additional slide switches needed for the example described above. In this case six additional slide switches are required, so the slide-switch PIO IP needs to be made six bits wider, and it's instantiation in the "pin_IP.v" file must be adjusted. 
 
-   * First, navigate to IP components in the Quartus Prime project navigator, an click on the "internal_pin_if" IP:
+   * First, navigate to IP components in the Quartus Prime project navigator, an click on the "internal_pin_if" IP.
 
    
 
-   <img src="CookBook/IP_Components.PNG" style="zoom:75%;" />
+   <img src="CookBook/IP_Components.PNG" />
 
    
 
-   * With Qsys open double click the slide switch IP:
+   * With Qsys open double click the slide switch IP.
 
    
 
@@ -149,13 +149,13 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
    
 
-   ![](CookBook/PIO_width_adjustment-1592862335442.PNG)
+   ![](CookBook/PIO_width_adjustment.PNG)
 
    
 
    * To save, click "Generate IP". In the Generation window select "Generate". After completion, select "Finish".
 
-   * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below:
+   * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below.
 
      
      
@@ -197,7 +197,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 5. **Perform a test** of the updated system by completing the lab prompt and validating functionality. 
 
-   * The user design provided in the package must be changed to the 16-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following:
+   * The user design provided in the package must be changed to the 16-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
 
      
 
@@ -212,7 +212,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
      
 
-   * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows:
+   * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows.
 
      
 
@@ -236,19 +236,19 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
      
 
-   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program:
+   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
 
      
 
-     ![](CookBook/SelectDevkit-1592863471114.PNG)
+     ![](CookBook/SelectDevkit.PNG)
 
      
 
-   * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs:
+   * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
 
      
 
-     <img src="CookBook/TutorialToolkit.PNG" style="zoom:45%;" />
+     <img src="CookBook/TutorialToolkit.PNG"/>
 
      
 
@@ -258,11 +258,11 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 6. **Archive the project for distribution to users** by removing the completed prompt sections. If it is desired to have students gain experience with instantiating modules, it may be useful to remove the instantiated solution from the "top.v" file as well.
 
-   * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below:
+   * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
      
 
-     <img src="CookBook/ArchiveProject.PNG" style="zoom:60%;" />
+     <img src="CookBook/ArchiveProject.PNG" />
 
      
 
@@ -298,7 +298,7 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 
    
 
-   <img src="CookBook/AllFiles-1592872591429.PNG" style="zoom:65%;" />
+   ![](CookBook/AllFiles.PNG)
 
    
 
@@ -402,7 +402,7 @@ The project unarchived in the previous section implements no digital logic desig
 
    
 
-   <img src="CookBook/UserTutorialGUI.PNG" style="zoom:60%;" />
+   <img src="CookBook/UserTutorialGUI.PNG"/>
 
    
 
