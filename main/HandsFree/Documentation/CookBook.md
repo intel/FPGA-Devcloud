@@ -163,8 +163,8 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      		if(reset_count != (reset_timeout))
      			reset_count = reset_count + 8'd1;
          
-     	//Connect to QSys IP
-     	internal_pin_if 	i1	(	.clk_clk(clock),
+      //Connect to QSys IP
+      internal_pin_if 	i1	( .clk_clk(clock),
                               .led_export(leds),   
                               .reset_reset_n(reset_count == reset_timeout), 	
                               .sws_export(sws)   );							
