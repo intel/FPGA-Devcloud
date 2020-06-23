@@ -6,7 +6,7 @@ This package provides a cookbook for creating hands free FPGA labs. Using the pr
 
 
 
-<img src="CookBook/TopLevel.png" style="zoom:10%;" />
+<img src="CookBook/TopLevel.png" style="zoom:5%;" />
 
 
 
