@@ -280,9 +280,9 @@ This section is intended for users who will perform virtual labs using remote In
 
 ## 4.1 Unarchiving Quartus Project
 
-A Quartus Archive File (.qaf) contains a compressed version of a Quartus Prime project. A good starting point for all remote labs is to download and unarchive the "RemoteLab.qaf" Quartus archive file. The project within the archive provides facilities for a user to interact with remote Intel FPGA development kits, and to implement and test arbitrary digital designs. In order to recover the archived Quartus Prime project, perform the following steps:
+A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime project. A good starting point for all remote labs is to download and unarchive the "RemoteLab.qar" Quartus archive file. The project within the archive provides facilities for a user to interact with remote Intel FPGA development kits, and to implement and test arbitrary digital designs. In order to recover the archived Quartus Prime project, perform the following steps:
 
-1. Download the "RemoteLab.qaf" Quartus archive file.
+1. Download the "RemoteLab.qar" Quartus archive file.
 
 2. Open Quartus Prime.
 
@@ -302,7 +302,7 @@ A Quartus Archive File (.qaf) contains a compressed version of a Quartus Prime p
 
    
 
-5. Navigate to the .qaf file downloaded in Step 1, select it, and then select Open.
+5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
 
 6. Name the destination directory, and select okay.
 
