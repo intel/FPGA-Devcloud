@@ -11,7 +11,7 @@ tools_setup -t A10DS
 [ ! -d ~/A10_OPENCL_AFU/v1.2.1 ] && mkdir -p ~/A10_OPENCL_AFU/v1.2.1 || exit 0
 
 # Copy Over sample design
-cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
+cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world
 cd A10_OPENCL_AFU/v1.2.1
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
