@@ -27,6 +27,7 @@ tools_setup -t A10DS
 
 # Copy Over sample design
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU/v1.2.1
+#cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world
 cd A10_OPENCL_AFU/v1.2.1
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
@@ -54,11 +55,18 @@ error_check
 # Get device name
 aocl diagnose
 error_check
+
 # Converting to an unsigned .aocx file
-cd bin
-printf "Y\nY\n" | source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
-error_check
-# Programmming PAC Card
-aocl program acl0 hello_world_fpga_unsigned.aocx
-./host
-error_check
+##############################################################################################
+##### In development. For now please run the following manually to successfully convert to an
+##### unsigned .aocx file, program the PAC card, and run the host code.
+#devcloud_login -I A10PAC 1.2.1
+#tools_setup -t A10DS
+#cd A10_OPENCL_AFU/v1.2.1/hello_world/bin
+#source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
+##### Type Y to the following to accept an unsigned bitstream
+#       No root key specified. Generate unsigned bitstream? Y = yes, N = no: Y
+#       No CSK specified. Generate unsigned bitstream? Y = yes, N = no: Y
+##### Programmming PAC Card
+#aocl program acl0 hello_world_fpga_unsigned.aocx
+#./host

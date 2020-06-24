@@ -58,12 +58,21 @@ Make working directory
 mkdir A10_OPENCL_AFU
 ```
 
-We will then copy the example folder into this project folder. Type this into the terminal:
+We will then copy the example folder into this project folder. 
 
-```bash
+For version 1.2, you need to type this into the terminal:
+
+```
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
 cd A10_OPENCL_AFU
 tar xvf exm_opencl_hello_world_x64_linux.tgz
+```
+
+For version 1.2.1, you need to type this into the terminal:
+
+```bash
+cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world
+cd A10_OPENCL_AFU
 ```
 
 Check to make sure connectivity to the Arria 10 PAC card looks ok:
