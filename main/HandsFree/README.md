@@ -5,7 +5,8 @@
 This package provides a cookbook for creating hands free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
 <p align="center">
-![image](https://user-images.githubusercontent.com/22804500/85790940-ef7e0180-b6e5-11ea-9631-1bfa59ba8f61.png)
+![image](https://user-images.githubusercontent.com/67120855/85798102-8658b700-b702-11ea-90da-b4e36053a454.png)
+
 </p>
 
 This documentation provides resources for IT, instructors, and users (students). The  IT section provides instructions for setting up a Quartus Prime JTAG server. The instructors section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The users section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
@@ -113,7 +114,6 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 2. **Configure network settings** by adjusting the  JTAG server host's external IP address and JTAG server password variables in the post_script.tcl file found in the Source/ directory. These parameters should be available from the systems administrator that configured the JTAG server.
 
-   
 
    ```bash
    #JTAG server configuration data
@@ -146,8 +146,8 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
   * To save, click "Generate IP". In the Generation window select "Generate". After completion, select "Finish".
   * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below.
 
-     
-    
+      
+
      ```verilog
      module pin_ip(clock, sws, leds);
      	
@@ -169,11 +169,10 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      endmodule
      ```
 
-   
+
 
 4. **Adjust the toolkit .tcl file** to include six more slide-switch widgets by editing the "total_ssws" variable in the "SysConsoleToolkit.tcl" file found in the Source/ directory.
 
-   
 
    ```bash
    set total_leds 10
@@ -186,7 +185,6 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * The user design provided in the package must be changed to the 16-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
 
-     
 
      ```verilog
      module parity16b(  input  [15:0] ins,
@@ -197,11 +195,10 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      endmodule
      ```
 
-     
+​     
 
   * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows.
 
-     
 
      ```verilog
      `include "../Verilog/pin_ip.v"
@@ -218,7 +215,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      endmodule
      ```
 
-     
+​     
 
   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
 
@@ -271,7 +268,7 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 </p> 
 
 4. Allow all files to be visible as shown below.
-   
+
 <p align="center">
   <img src="CookBook/AllFiles.PNG" >
 </p> 
@@ -294,7 +291,6 @@ The project unarchived in the previous section implements no digital logic desig
 
 3. In this file replace the comment "// User design goes here!" with the following Verilog code.
 
-   
 
    ```verilog
    module OR2X1( input  A, input  B, output Y );
@@ -304,7 +300,7 @@ The project unarchived in the previous section implements no digital logic desig
    endmodule
    ```
 
-   
+
   * This code represents a simple 2-input OR logic gate, where the output Y represents the OR of the single-bit inputs A and B  
   * The truth table for the function is shown below.
 
@@ -323,7 +319,6 @@ The project unarchived in the previous section implements no digital logic desig
 
 5. Instantiation is the action of including a defined Hardware Description Language (HDL) module in a higher level HDL module. In the top file opened in the previous step, instantiate the OR2X1 module defined in step 3 as shown below.
 
-   
 
    ```verilog
    `include "../Verilog/pin_ip.v"
