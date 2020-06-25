@@ -229,7 +229,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
- <img src="https://user-images.githubusercontent.com/67120855/85800762-29abcb00-b707-11ea-8a1c-6456294b4709.png" width=60% height 40% />
+ <img src="https://user-images.githubusercontent.com/67120855/85800762-29abcb00-b707-11ea-8a1c-6456294b4709.png" width=60% />
 
 
   * The archive tool does not recognize .toolkit files, so they must be added to the list of files included in the archive.  To do this, in the archive window, select Advanced, then select Add, and then add the .toolkit file found in the Source/ directory of the package, then press OK.
@@ -254,12 +254,12 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 
 3. At the home screen navigate to File $ \rarr $ Open as shown below.
 
-<img src="https://user-images.githubusercontent.com/67120855/85800829-47793000-b707-11ea-80fb-971d6b15bb19.png" width=60% height 40% />
+<img src="https://user-images.githubusercontent.com/67120855/85800829-47793000-b707-11ea-80fb-971d6b15bb19.png" width=60% />
 
 
 4. Allow all files to be visible as shown below.
 
-<img src="https://user-images.githubusercontent.com/67120855/85800927-72fc1a80-b707-11ea-96c8-9f79d04aca8a.png" width=60% height 40% />
+<img src="https://user-images.githubusercontent.com/67120855/85800927-72fc1a80-b707-11ea-96c8-9f79d04aca8a.png" width=60% />
 
 
 5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
@@ -272,7 +272,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 1. Navigate to Files in the "Project Navigator" pane as shown below.
 
- <img src="https://user-images.githubusercontent.com/67120855/85801589-cf136e80-b708-11ea-8fb6-df4f4639c8bc.png" width=60% height 40% />
+ <img src="https://user-images.githubusercontent.com/67120855/85801589-cf136e80-b708-11ea-8fb6-df4f4639c8bc.png" width=60% />
 
 
 2. Double click on the file named ""../Verilog/UserDesign.v".
@@ -344,7 +344,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 8. After a short delay the selected Intel FPGA development kit will connect to the local Quartus Prime installation, and the  Graphical User Interface (GUI) shown below will appear.
 
-  <img src="https://user-images.githubusercontent.com/67120855/85801872-65479480-b709-11ea-9260-ea534a01039c.png" width=60% height 40% />
+  <img src="https://user-images.githubusercontent.com/67120855/85801872-65479480-b709-11ea-9260-ea534a01039c.png" width=60% />
 
 
   * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
