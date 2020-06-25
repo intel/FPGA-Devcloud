@@ -5,7 +5,7 @@
 This package provides a cookbook for creating hands free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
 <p align="center">
-  <img src="CookBook/TopLevel.png" >
+![TopLevel](https://user-images.githubusercontent.com/22804500/85790940-ef7e0180-b6e5-11ea-9631-1bfa59ba8f61.png)
 </p>
 
 This documentation provides resources for IT, instructors, and users (students). The  IT section provides instructions for setting up a Quartus Prime JTAG server. The instructors section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The users section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
@@ -138,7 +138,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 </p>
 
   * Finally, change the PIO width to 16 bits. 
-   
+
 <p align="center">
   <img src="CookBook/PIO_width_adjustment.PNG" >
 </p>
@@ -147,7 +147,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
   * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below.
 
      
-     
+    
      ```verilog
      module pin_ip(clock, sws, leds);
      	
@@ -221,13 +221,13 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
      
 
   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
- 
+
 <p align="center">
   <img src="CookBook/SelectDevkit.PNG" >
 </p>
 
   * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
-  
+
 <p align="center">
   <img src="CookBook/TutorialToolkit.PNG" >
 </p>
@@ -318,6 +318,7 @@ The project unarchived in the previous section implements no digital logic desig
 
    
 
+
 4. The logic function now must be added to the top-level of the project. Once again, go to the Files section of the Project Navigator pane. This time select "../Verilog/top.v".
 
 5. Instantiation is the action of including a defined Hardware Description Language (HDL) module in a higher level HDL module. In the top file opened in the previous step, instantiate the OR2X1 module defined in step 3 as shown below.
@@ -356,9 +357,9 @@ The project unarchived in the previous section implements no digital logic desig
 <p align="center">
   <img src="CookBook/AvailFPGADevKits.PNG" >
 </p>  
-   
+
   * These are available Intel FPGA Development Kits. Select one and proceed.
-   
+
 8. After a short delay the selected Intel FPGA development kit will connect to the local Quartus Prime installation, and the  Graphical User Interface (GUI) shown below will appear.
 
 <p align="center">
