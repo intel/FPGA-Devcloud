@@ -129,11 +129,11 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 
 
-<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=40% height=40% />
+<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=50% height=40% />
 
   * Finally, change the PIO width to 16 bits. 
 
-  ![image](https://user-images.githubusercontent.com/67120855/85800437-97a3c280-b706-11ea-8454-6448ac9f6415.png)
+  <img src="https://user-images.githubusercontent.com/67120855/85800437-97a3c280-b706-11ea-8454-6448ac9f6415.png" width = 50% />
 
 
 
@@ -213,7 +213,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85800606-e3ef0280-b706-11ea-91d1-e6948d87927b.png)
+  <img src="https://user-images.githubusercontent.com/67120855/85800606-e3ef0280-b706-11ea-91d1-e6948d87927b.png" width=40% height=40% />
 
 
   * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
@@ -337,7 +337,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 7. After a couple minutes, an icon similar to the one shown below should appear.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85801816-49dc8980-b709-11ea-9ab7-959dd53aa3a3.png)
+  <img src="https://user-images.githubusercontent.com/67120855/85801816-49dc8980-b709-11ea-9ab7-959dd53aa3a3.png" width=40% height=40% />
 
 
   * These are available Intel FPGA Development Kits. Select one and proceed.
