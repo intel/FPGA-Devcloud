@@ -353,5 +353,5 @@ The project unarchived in the previous section implements no digital logic desig
 
 9. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
- <img src="https://user-images.githubusercontent.com/67120855/85801976-932cd900-b709-11ea-8799-912a21e0e6a7.png" width=60% height 40% />
+ <img src="https://user-images.githubusercontent.com/67120855/85801976-932cd900-b709-11ea-8799-912a21e0e6a7.png" width=60% />
 
