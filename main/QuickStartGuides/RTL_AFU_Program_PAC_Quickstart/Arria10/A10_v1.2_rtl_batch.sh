@@ -13,30 +13,42 @@
 # CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-###########################################################################################################
-# The following flow assumes A10_ONEAPI directory doesn't exist and sample design hasn't been copied over
+##########################################################################################################
+# The following flow assumes A10_RTL_AFU directory doesn't exist and sample design hasn't been copied over
+# Arria 10 Devstack version 1.2
 # **Adjust commands to your own needs.**
-###########################################################################################################
+##########################################################################################################
 
 # Initial Setup
 source /data/intel_fpga/devcloudLoginToolSetup.sh
-tools_setup -t A10OAPI
+tools_setup -t A10DS
 # Job will exit if directory already exists; no overwrite. No error message.
-[ ! -d ~/A10_ONEAPI/vector-add ] && mkdir -p ~/A10_ONEAPI/vector-add || exit 0
+[ ! -d ~/A10_RTL_AFU/v1.2 ] && mkdir -p ~/A10_RTL_AFU/v1.2 || exit 0
 
 # Copy Over sample design
-cd ~/A10_ONEAPI/vector-add
-wget -N https://raw.githubusercontent.com/intel/FPGA-Devcloud/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart/Arria%2010/download-file-list.txt
-wget -i download-file-list.txt
-mkdir src
-mv *.cpp *.hpp src/
+cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu A10_RTL_AFU/v1.2
 
-# Running project in Emulation mode
-printf "\n%s" "Running in Emulation Mode:"
-make run_emu -f Makefile.fpga
+# Compile RTL code into FPGA bitstream
+cd A10_RTL_AFU/v1.2/dma_afu
+printf "\n%s" "Compiling FPGA bitstream:"
+afu_synth_setup --source hw/rtl/filelist.txt build_synth
+error_check
+# Run compilation command (this takes approximately 40 minutes)
+cd build_synth
+$OPAE_PLATFORM_ROOT/bin/run.sh
 error_check
 
-# Running project in FPGA Hardware Mode (this takes approximately 1 hour)
-printf "\n%s" "Running in FPGA Hardware Mode:"
-make run_hw -f Makefile.fpga
+# Availavility of PCI Accelerator cards
+lspci | grep accel
+error_check
+
+# Download bitstream into PAC Card
+printf "\n%s" "Downloading bitstream:"
+fpgaconf -B 0x3b dma_afu.gbs
+error_check
+# Compile host software (this takes approximately 10 minutes)
+cd ../sw
+make clean
+make
+./fpga_dma_test 0
 error_check

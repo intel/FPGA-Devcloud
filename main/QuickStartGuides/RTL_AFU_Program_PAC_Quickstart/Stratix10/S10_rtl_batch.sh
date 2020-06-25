@@ -13,46 +13,41 @@
 # CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-###########################################################################################################
-# The following flow assumes S10_OPENCL_AFU directory doesn't exist and sample design hasn't been copied over
+##########################################################################################################
+# The following flow assumes S10_RTL_AFU directory doesn't exist and sample design hasn't been copied over
 # **Adjust commands to your own needs.**
-###########################################################################################################
+##########################################################################################################
 
 # Initial Setup
 source /data/intel_fpga/devcloudLoginToolSetup.sh
 tools_setup -t S10DS
 # Job will exit if directory already exists; no overwrite. No error message.
-[ ! -d ~/S10_OPENCL_AFU ] && mkdir -p ~/S10_OPENCL_AFU || exit 0
+[ ! -d ~/S10_RTL_AFU ] && mkdir -p ~/S10_RTL_AFU || exit 0
 
 # Copy Over sample design
-cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz S10_OPENCL_AFU
-cd S10_OPENCL_AFU
-printf "\n%s" "Extracting tarfiles:"
-tar xvf exm_opencl_hello_world_x64_linux.tgz
+cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu S10_RTL_AFU
 
-# Check Stratix 10 PAC card connectivity
-aocl diagnose
+# Compile RTL code into FPGA bitstream
+cd S10_RTL_AFU/dma_afu
+printf "\n%s" "Compiling FPGA bitstream:"
+afu_synth_setup --source hw/rtl/filelist.txt build_synth
+error_check
+# Run compilation command (this takes approximately 1 hour)
+cd build_synth
+$OPAE_PLATFORM_ROOT/bin/run.sh
 error_check
 
-#Compile for emulation
-cd hello_world
-printf "\n%s" "Running in Emulation Mode:"
-aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_emulation.aocx
-# Creating symbolic link to emulation .aocx
-ln -sf hello_world_emulation.aocx bin/hello_world.aocx
+# Availavility of PCI Accelerator cards
+lspci | grep accel
+error_check
+
+# Download bitstream into PAC Card
+printf "\n%s" "Downloading bitstream:"
+fpgasupdate dma_afu.gbs 3b:00.0
+error_check
 # Compile host software
+cd ../sw
+make clean
 make
-# Run in emulation mode
-CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
-error_check
-
-# Compile for FPGA hardware (this takes approximately 1 hour)
-printf "\n%s" "Running in FPGA Hardware Mode:"
-aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
-# Relink to hardware .aocx
-ln -sf hello_world_fpga.aocx bin/hello_world.aocx
-# Program PAC Card
-aocl program acl0 bin/hello_world.aocx
-# Run host code
-./bin/host
+./fpga_dma_test -s 104857600 -p 1048576 -r mtom
 error_check
