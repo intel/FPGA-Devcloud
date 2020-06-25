@@ -26,10 +26,9 @@ tools_setup -t A10DS
 [ ! -d ~/A10_OPENCL_AFU/v1.2.1 ] && mkdir -p ~/A10_OPENCL_AFU/v1.2.1 || exit 0
 
 # Copy Over sample design
-cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU/v1.2.1
-#cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world
+cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world A10_OPENCL_AFU/v1.2.1
+cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/common A10_OPENCL_AFU/v1.2.1
 cd A10_OPENCL_AFU/v1.2.1
-tar xvf exm_opencl_hello_world_x64_linux.tgz
 
 # Check Arria 10 PAC card connectivity
 aocl diagnose
@@ -37,6 +36,7 @@ error_check
 
 # Running project in Emulation mode
 cd hello_world
+printf "\n%s" "Running in Emulation Mode:"
 aoc -march=emulator -v device/hello_world.cl -o bin/hello_world_emulation.aocx
 # Creating symbolic link to emulation .aocx
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
@@ -46,6 +46,7 @@ make
 error_check
 
 # Running project in FPGA Hardware Mode (this takes approximately 1 hour)
+printf "\n%s" "Running in FPGA Hardware Mode:"
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
 # Relink to hardware .aocx
 ln -sf hello_world_fpga.aocx bin/hello_world.aocx

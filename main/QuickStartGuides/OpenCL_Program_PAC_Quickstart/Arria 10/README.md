@@ -71,7 +71,8 @@ tar xvf exm_opencl_hello_world_x64_linux.tgz
 For version 1.2.1, you need to type this into the terminal:
 
 ```bash
-cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world
+cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world A10_OPENCL_AFU
+cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/common A10_OPENCL_AFU
 cd A10_OPENCL_AFU
 ```
 

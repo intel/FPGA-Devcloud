@@ -28,6 +28,7 @@ tools_setup -t A10DS
 # Copy Over sample design
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU/v1.2
 cd A10_OPENCL_AFU/v1.2
+printf "\n%s" "Extracting tarfiles:"
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
 # Check Arria 10 PAC card connectivity
@@ -36,6 +37,7 @@ error_check
 
 # Running project in Emulation mode
 cd hello_world
+printf "\n%s" "Running in Emulation Mode:"
 aoc -march=emulator -v device/hello_world.cl -o bin/hello_world_emulation.aocx
 # Creating symbolic link to emulation .aocx
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
@@ -45,6 +47,7 @@ CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
 error_check
 
 # Running project in FPGA Hardware Mode (this takes approximately 1 hour)
+printf "\n%s" "Running in FPGA Hardware Mode:"
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
 # Relink to hardware .aocx
 ln -sf hello_world_fpga.aocx bin/hello_world.aocx

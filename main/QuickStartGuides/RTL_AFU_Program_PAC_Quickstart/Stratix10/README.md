@@ -163,5 +163,3 @@ List the revision history for the application note.
 | Larry Landis     | 3/17/2020 | Fixed Stratix 10 specific steps                           |
 | Larry Landis     | 4/1/2020  | New pic for devcloud_login, typos.                        |
 | Damaris Renteria | 6/8/2020  | Added Batch script                                        |
-
-
