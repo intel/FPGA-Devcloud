@@ -4,7 +4,7 @@
 
 This package provides a cookbook for creating hands free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
-<img src="https://user-images.githubusercontent.com/67120855/85798102-8658b700-b702-11ea-90da-b4e36053a454.png" width=20% />
+<img src="https://user-images.githubusercontent.com/67120855/85798102-8658b700-b702-11ea-90da-b4e36053a454.png" width=67% />
 
 This documentation provides resources for IT, instructors, and users (students). The  IT section provides instructions for setting up a Quartus Prime JTAG server. The instructors section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The users section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
 
@@ -122,13 +122,14 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * First, navigate to IP components in the Quartus Prime project navigator, an click on the "internal_pin_if" IP.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85800248-3aa80c80-b706-11ea-8d1f-368cddcd431c.png)
+  <img src="https://user-images.githubusercontent.com/67120855/85800248-3aa80c80-b706-11ea-8d1f-368cddcd431c.png" width=40% />
 
 
   * With Qsys open double click the slide switch IP.
 
-![image](https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png)
 
+
+<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=40% />
 
   * Finally, change the PIO width to 16 bits. 
 
