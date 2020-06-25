@@ -122,14 +122,14 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * First, navigate to IP components in the Quartus Prime project navigator, an click on the "internal_pin_if" IP.
 
-  <img src="https://user-images.githubusercontent.com/67120855/85800248-3aa80c80-b706-11ea-8d1f-368cddcd431c.png" width=40% />
+  <img src="https://user-images.githubusercontent.com/67120855/85800248-3aa80c80-b706-11ea-8d1f-368cddcd431c.png" width=50% />
 
 
   * With Qsys open double click the slide switch IP.
 
 
 
-<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=50% height=40% />
+<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=50% height=35% />
 
   * Finally, change the PIO width to 16 bits. 
 
@@ -218,7 +218,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
 
-![image](https://user-images.githubusercontent.com/67120855/85800712-0ed95680-b707-11ea-972d-fbc332554d4e.png)
+<img src="https://user-images.githubusercontent.com/67120855/85800712-0ed95680-b707-11ea-972d-fbc332554d4e.png" width=60% />
 
 
   * Toggle the slide switches to validate the odd parity function has been satisfied. 
@@ -229,7 +229,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
   * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85800762-29abcb00-b707-11ea-8a1c-6456294b4709.png)
+ <img src="https://user-images.githubusercontent.com/67120855/85800762-29abcb00-b707-11ea-8a1c-6456294b4709.png" width=60% height 40% />
 
 
   * The archive tool does not recognize .toolkit files, so they must be added to the list of files included in the archive.  To do this, in the archive window, select Advanced, then select Add, and then add the .toolkit file found in the Source/ directory of the package, then press OK.
@@ -254,12 +254,12 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 
 3. At the home screen navigate to File $ \rarr $ Open as shown below.
 
-![image](https://user-images.githubusercontent.com/67120855/85800829-47793000-b707-11ea-80fb-971d6b15bb19.png)
+<img src="https://user-images.githubusercontent.com/67120855/85800829-47793000-b707-11ea-80fb-971d6b15bb19.png" width=60% height 40% />
 
 
 4. Allow all files to be visible as shown below.
 
-![image](https://user-images.githubusercontent.com/67120855/85800927-72fc1a80-b707-11ea-96c8-9f79d04aca8a.png)
+<img src="https://user-images.githubusercontent.com/67120855/85800927-72fc1a80-b707-11ea-96c8-9f79d04aca8a.png" width=60% height 40% />
 
 
 5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
@@ -272,7 +272,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 1. Navigate to Files in the "Project Navigator" pane as shown below.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85801589-cf136e80-b708-11ea-8fb6-df4f4639c8bc.png)
+ <img src="https://user-images.githubusercontent.com/67120855/85801589-cf136e80-b708-11ea-8fb6-df4f4639c8bc.png" width=60% height 40% />
 
 
 2. Double click on the file named ""../Verilog/UserDesign.v".
@@ -344,7 +344,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 8. After a short delay the selected Intel FPGA development kit will connect to the local Quartus Prime installation, and the  Graphical User Interface (GUI) shown below will appear.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85801872-65479480-b709-11ea-9260-ea534a01039c.png)
+  <img src="https://user-images.githubusercontent.com/67120855/85801872-65479480-b709-11ea-9260-ea534a01039c.png" width=60% height 40% />
 
 
   * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
@@ -353,5 +353,5 @@ The project unarchived in the previous section implements no digital logic desig
 
 9. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
-  ![image](https://user-images.githubusercontent.com/67120855/85801976-932cd900-b709-11ea-8799-912a21e0e6a7.png)
+ <img src="https://user-images.githubusercontent.com/67120855/85801976-932cd900-b709-11ea-8799-912a21e0e6a7.png" width=60% height 40% />
 
