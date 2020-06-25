@@ -129,7 +129,7 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
 
 
 
-<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=40% />
+<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=40% height=40% />
 
   * Finally, change the PIO width to 16 bits. 
 
