@@ -32,11 +32,11 @@ mkdir src
 mv *.cpp *.hpp src/
 
 # Running project in Emulation mode
-printf "\n%s" "Running in Emulation Mode:"
+printf "\\n%s\\n" "Running in Emulation Mode:"
 make run_emu -f Makefile.fpga
 error_check
 
 # Running project in FPGA Hardware Mode (this takes approximately 1 hour)
-printf "\n%s" "Running in FPGA Hardware Mode:"
+printf "\\n%s\\n" "Running in FPGA Hardware Mode:"
 make run_hw -f Makefile.fpga
 error_check

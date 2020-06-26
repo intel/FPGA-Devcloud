@@ -27,7 +27,7 @@ tools_setup -t S10DS
 # Copy Over sample design
 cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz S10_OPENCL_AFU
 cd S10_OPENCL_AFU
-printf "\n%s" "Extracting tarfiles:"
+printf "\\n%s\\n" "Extracting tarfiles:"
 tar xvf exm_opencl_hello_world_x64_linux.tgz
 
 # Check Stratix 10 PAC card connectivity
@@ -36,7 +36,7 @@ error_check
 
 #Compile for emulation
 cd hello_world
-printf "\n%s" "Running in Emulation Mode:"
+printf "\\n%s\\n" "Running in Emulation Mode:"
 aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_emulation.aocx
 # Creating symbolic link to emulation .aocx
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
@@ -47,7 +47,7 @@ CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
 error_check
 
 # Compile for FPGA hardware (this takes approximately 1 hour)
-printf "\n%s" "Running in FPGA Hardware Mode:"
+printf "\\n%s\\n" "Running in FPGA Hardware Mode:"
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_s10_dc
 # Relink to hardware .aocx
 ln -sf hello_world_fpga.aocx bin/hello_world.aocx

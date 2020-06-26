@@ -30,9 +30,8 @@ cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu A10_RTL_AFU/v1.2
 
 # Compile RTL code into FPGA bitstream
 cd A10_RTL_AFU/v1.2/dma_afu
-printf "\n%s" "Compiling FPGA bitstream:"
+printf "\\n%s\\n" "Compiling FPGA bitstream:"
 afu_synth_setup --source hw/rtl/filelist.txt build_synth
-error_check
 # Run compilation command (this takes approximately 40 minutes)
 cd build_synth
 $OPAE_PLATFORM_ROOT/bin/run.sh
@@ -40,10 +39,9 @@ error_check
 
 # Availavility of PCI Accelerator cards
 lspci | grep accel
-error_check
 
 # Download bitstream into PAC Card
-printf "\n%s" "Downloading bitstream:"
+printf "\\n%s\\n" "Downloading bitstream:"
 fpgaconf -B 0x3b dma_afu.gbs
 error_check
 # Compile host software (this takes approximately 10 minutes)

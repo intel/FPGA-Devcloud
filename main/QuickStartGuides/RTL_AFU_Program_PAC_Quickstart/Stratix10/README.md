@@ -94,7 +94,7 @@ We will then download the green bit stream on to the acceleration card, in this 
 Note if you did not compile your own gbs, then the precompiled gbs will be located in the bin directory ( ../bin/dma_afu_unsigned.gbs ). 
 
 ```bash
-fpgasupdate dma_afu.gbs 3b:00.0
+fpgasupdate dma_afu_S10.gbs 3b:00.0
 ```
 
 This step will take about 15 seconds. 

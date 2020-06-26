@@ -30,31 +30,29 @@ cp -r $OPAE_PLATFORM_ROOT/hw/samples/dma_afu A10_RTL_AFU/v1.2.1
 
 # Compile RTL code into FPGA bitstream
 cd A10_RTL_AFU/v1.2.1/dma_afu
-printf "\n%s" "Compiling FPGA bitstream:"
+printf "\\n%s\\n" "Compiling FPGA bitstream:"
 afu_synth_setup --source hw/rtl/filelist.txt build_synth
-error_check
 # Run compilation command (this takes approximately 40 minutes)
 cd build_synth
 $OPAE_PLATFORM_ROOT/bin/run.sh
 error_check
 
 # Convert .gbs file to an unsigned .gbs
-##############################################################################################
-##### In development. For now please run the following manually to successfully convert to an
-##### unsigned .gbs file, download bitstream into the PAC card, and run the host code.
-#devcloud_login -I A10PAC 1.2.1
-#tools_setup -t A10DS
-#cd A10__RTL_AFU/v1.2.1/dma_afu/build_synth
-#PACSign PR -t UPDATE -H openssl_manager -i dma_afu.gbs -o dma_afu_compile_unsigned.gbs
-##### Type Y to the following to accept an unsigned bitstream
-#       No root key specified. Generate unsigned bitstream? Y = yes, N = no: Y
-#       No CSK specified. Generate unsigned bitstream? Y = yes, N = no: Y
-##### Availavility of PCI Accelerator cards
-#lspci | grep accel
-##### Download bitstream into PAC Card
-#fpgasupdate dma_afu_compile_unsigned.gbs
-##### Compile host software (this takes approximately 10 minutes)
-#cd ../sw
-#make clean
-#make
-#./fpga_dma_test 0
+printf "\\n%s\\n" "Converting to unsigned .gbs:"
+printf "Y\\nY\\n" | PACSign PR -t UPDATE -H openssl_manager -i dma_afu.gbs -o dma_afu_compile_unsigned.gbs
+error_check
+
+# Availavility of PCI Accelerator cards
+printf "\\n%s\\n" "Accelerator Cards:"
+lspci | grep accel
+
+# Download bitstream into PAC Card
+printf "\\n%s\\n" "Downloading bitstream:"
+fpgasupdate dma_afu_compile_unsigned.gbs
+error_check
+# Compile host software (this takes approximately 10 minutes)
+cd ../sw
+make clean
+make
+./fpga_dma_test 0
+error_check

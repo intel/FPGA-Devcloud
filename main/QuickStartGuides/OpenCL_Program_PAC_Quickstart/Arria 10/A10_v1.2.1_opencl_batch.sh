@@ -36,7 +36,7 @@ error_check
 
 # Running project in Emulation mode
 cd hello_world
-printf "\n%s" "Running in Emulation Mode:"
+printf "\\n%s\\n" "Running in Emulation Mode:"
 aoc -march=emulator -v device/hello_world.cl -o bin/hello_world_emulation.aocx
 # Creating symbolic link to emulation .aocx
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
@@ -46,7 +46,7 @@ make
 error_check
 
 # Running project in FPGA Hardware Mode (this takes approximately 1 hour)
-printf "\n%s" "Running in FPGA Hardware Mode:"
+printf "\\n%s\\n" "Running in FPGA Hardware Mode:"
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
 # Relink to hardware .aocx
 ln -sf hello_world_fpga.aocx bin/hello_world.aocx
@@ -58,16 +58,11 @@ aocl diagnose
 error_check
 
 # Converting to an unsigned .aocx file
-##############################################################################################
-##### In development. For now please run the following manually to successfully convert to an
-##### unsigned .aocx file, program the PAC card, and run the host code.
-#devcloud_login -I A10PAC 1.2.1
-#tools_setup -t A10DS
-#cd A10_OPENCL_AFU/v1.2.1/hello_world/bin
-#source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
-##### Type Y to the following to accept an unsigned bitstream
-#       No root key specified. Generate unsigned bitstream? Y = yes, N = no: Y
-#       No CSK specified. Generate unsigned bitstream? Y = yes, N = no: Y
-##### Programmming PAC Card
-#aocl program acl0 hello_world_fpga_unsigned.aocx
-#./host
+cd bin
+printf "\\n%s\\n" "Converting to unsigned .aocx:"
+printf "Y\\nY\\n" | source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
+error_check
+# Programmming PAC Card
+aocl program acl0 hello_world_fpga_unsigned.aocx
+./host
+error_check
