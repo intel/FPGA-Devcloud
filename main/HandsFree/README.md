@@ -18,7 +18,7 @@ Once the network is setup, ensure that the Intel FPGA development kits are conne
 
 ## 2.2 Setup  Tutorial
 
-### Host a JTAG server on a Windows machine
+### Host a JTAG server on a Windows machine from Quartus Prime GUI
 
 1. Before configuring, ensure that the  [Quartus Prime  Programmer tool](https://fpgasoftware.intel.com/19.1/?edition=lite) is installed on the host machine.
 2. Open a local installation of Quartus Prime
@@ -28,6 +28,34 @@ Once the network is setup, ensure that the Intel FPGA development kits are conne
 6. Press Configure Local JTAG Server
 7. Check the "Enable remote clients to connect to the local JTAG server" box
 8. Enter a JTAG server access password and press OK
+
+### Host a JTAG server on a Windows machine from Command Prompt
+
+1. Open command prompt as an administrator
+
+2. Change directory (cd) to the Quartus Prime installation directory (i.e.`cd C:\intelFPGA_lite\19.1\quartus\`)
+
+3. Halt any outstanding JTAG server by typing the following
+
+   `jtagserver --stop`
+
+4. Install any updates needed to run the JTAG server on current Quartus version
+
+   `jtagserver --install`
+
+5. Configure the JTAG server to enable remote clients and set a password
+
+   `jtagconfig --enableremote <password>`
+
+6. Start the JTAG server
+
+   `jtagserver --start`
+
+7. Check the JTAG server status
+
+   `jtagserver --status`
+
+8. Ensure remote clients are enabled and server is running by reading the status output
 
 ### Host a JTAG server on a Linux machine
 
