@@ -121,6 +121,8 @@ Configuration and verification steps must be completed before a given lab is dis
 
 This tutorial describes how to adjust the provided package materials to generate customized, virtual, Intel FPGA development kit labs. This tutorial assumes an instructor has an existing lab which performs a 10-bit parity check on 10 slide switch inputs and displays the result to an led. The instructor will use a provided project to implement and test their lab before distribution. Once validated the instructor will remove the solution to the lab, and archive the project for distribution. Before beginning the tutorial, ensure Quartus Prime is installed on the machine being used to create the lab.
 
+Be sure to have any VPN that might block the JTAG server connection turned off before attempting the hands free labs.
+
 1. Download the provided blank project Quartus archive file (.qar),  `blankProject.qar`
 
 2. Open the downloaded archive in Quartus Prime
