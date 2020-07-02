@@ -153,13 +153,12 @@ This tutorial describes how to adjust the provided package materials to generate
    * The user design file provided in the project must be changed to the 10-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
 
      ```verilog
-   module parity10b(	input  [9:0] ins,
+       module parity10b(	input  [9:0] ins,
      					output parity);
      						
-     	assign parity = ^ins;
-     	
-     endmodule
-     ```
+            assign parity = ^ins;
+      endmodule
+      ```
      
    * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows
 
