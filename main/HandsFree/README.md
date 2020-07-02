@@ -4,11 +4,7 @@
 
 This package provides a cookbook for creating hands free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
-
-
 <img src="CookBook/TopLevel.png" />
-
-
 
 This documentation provides resources for [IT](#IT Resources), [instructors](#Instructor Resources), and [users](#User Resources) (students). The  [IT](#IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](#Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](#User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
 
@@ -153,10 +149,9 @@ This tutorial describes how to adjust the provided package materials to generate
    * The user design file provided in the project must be changed to the 10-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
 
      ```verilog
-       module parity10b(	input  [9:0] ins,
-     					output parity);
-     						
-            assign parity = ^ins;
+       module parity10b(   input  [9:0] ins,
+                           output parity);
+         assign parity = ^ins;
       endmodule
       ```
      
@@ -192,46 +187,36 @@ This tutorial describes how to adjust the provided package materials to generate
      		** translated to widgets on the GUI
      		*/
      		
-     		parity10b parityCheckInstance(	.ins(sws[9:0]),
-     										.parity(leds[0]));
+     		parity10b parityCheckInstance(   .ins(sws[9:0]),
+                                          .parity(leds[0]));
      									
      	// IP to allow simple user design interfacing with developent kit					
      		
-     		pin_ip			platform_designer_pin_ip(	.clock(clock),
-     													.leds(leds),
-     													.seg7_0(seg7_0), 
-     													.seg7_1(seg7_1), 
-     													.seg7_2(seg7_2),
-     													.seg7_3(seg7_3), 
-     													.seg7_4(seg7_4), 
-     													.seg7_5(seg7_5),
-     													.sws(sws),
-     													.pbs(pbs),
-     													.param1(param1),
-     													.param2(param2),
-     													.param3(param3));
-     	
-     endmodule
-     
+     		pin_ip			platform_designer_pin_ip(  .clock(clock),
+                                                   .leds(leds),
+                                                   .seg7_0(seg7_0), 
+                                                   .seg7_1(seg7_1), 
+                                                   .seg7_2(seg7_2),
+                                                   .seg7_3(seg7_3), 
+                                                   .seg7_4(seg7_4), 
+                                                   .seg7_5(seg7_5),
+                                                   .sws(sws),
+                                                   .pbs(pbs),
+                                                   .param1(param1),
+                                                   .param2(param2),
+                                                   .param3(param3));
+     endmodule 
      ```
 
    * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, the GUI should appear as shown below
 
-     
-
      <img src="CookBook/GUI1.PNG" style="zoom:100%;" />
-
-     
 
    * Selecting the Board Select menu in the top left will show boards available for programming on the remote server. Select an available board. If the board is unavailable, after the programming attempt has failed, the board option will be greyed out.
 
    * Once an available board has been programmed, the GUI may be interacted with. Clicking the slide switches toggles the input to the 10-bit parity check programmed on the FPGA. The result of the parity check will be displayed on LED0 as shown below
 
-     
-
      ![](CookBook/parity10b.PNG)
-
-     
 
    * Closing the System Console window will move the compilation progress to 100%.
 
@@ -239,11 +224,7 @@ This tutorial describes how to adjust the provided package materials to generate
 
    * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
-     
-
      <img src="CookBook/ArchiveProject.PNG" />
-
-     
 
    * The archive tool does not recognize that the images required to create the GUI are part of the project. Add these to the archive by selecting Advanced. In the "Advance Archive Settings" pane select Add. Navigate to `tcl/Image`. In this folder select all images by pressing `ctrl+a` then select Open. Select Okay.
 
@@ -269,19 +250,11 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 
 3. At the home screen navigate to File $ \rarr $ Open as shown below.
 
-   
-
    ![](CookBook/QuartusFileOpen.PNG)
-
-   
 
 4. Allow all files to be visible as shown below.
 
-   
-
    ![](CookBook/AllFiles.PNG)
-
-   
 
 5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
 
@@ -293,27 +266,19 @@ The project unarchived in the previous section implements no digital logic desig
 
 1. Navigate to Files in the "Project Navigator" pane as shown below.
 
-   
-
    ![](CookBook/FilesUserTutorial.PNG)
-
-   
 
 2. Double click on the file named `../hdl/UserDesign.v`.
 
 3. In this file replace the comment "// User design goes here!" with the following Verilog code.
 
-   
-
    ```verilog
-   module OR2X1(	input  A,
+   module OR2X1(  input  A,
                   input  B,
                   output Y  );
       assign Y = A|B;
    endmodule
    ```
-
-   
 
    * This code represents a simple 2-input OR logic gate, where the output Y represents the OR of the single-bit inputs A and B
 
@@ -333,8 +298,6 @@ The project unarchived in the previous section implements no digital logic desig
 4. The logic function now must be added to the top-level of the project. Once again, go to the Files section of the Project Navigator pane. This time select `../hdl/top.v`.
 
 5. Instantiation is the action of including a defined Hardware Description Language (HDL) module in a higher level HDL module. In the top file opened in the previous step, instantiate the OR2X1 module defined in step 3 as shown below.
-
-   
 
    ```verilog
    // Include the top-level pin ip file
@@ -375,7 +338,7 @@ The project unarchived in the previous section implements no digital logic desig
    	// IP to allow simple user design interfacing with developent kit					
    		
       pin_ip   platform_designer_pin_ip( .clock(clock),
-   												  .leds(leds),
+                                         .leds(leds),
                                          .seg7_0(seg7_0), 
                                          .seg7_1(seg7_1), 
                                          .seg7_2(seg7_2),
@@ -391,9 +354,7 @@ The project unarchived in the previous section implements no digital logic desig
    endmodule
    
    ```
-
    
-
    * The "." indicates a port name. For example, ".A(sws[0])" can be read as port A of the OR2X1 module is connected to the wire sws[0]. 
    * To allow multiple OR2X1 modules to be instantiated, the instance name "i0" is placed before the port connections are defined.
 
@@ -404,12 +365,8 @@ The project unarchived in the previous section implements no digital logic desig
 
 7. After a couple minutes, the graphical user interface to communicate with a remote development kit will appear as follows
 
-   
-   
    <img src="CookBook/GUI1.PNG" style="zoom:100%;" />
-   
-   
-   
+
 8. Select the Board Select option in the top left to view available boards.
 
    * These are available Intel FPGA Development Kits. Select one and proceed.
@@ -422,7 +379,4 @@ The project unarchived in the previous section implements no digital logic desig
 
 10. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
-   
-
    ![](CookBook/UserTutorialCompilation.PNG)
-
