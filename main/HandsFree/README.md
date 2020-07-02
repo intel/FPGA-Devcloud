@@ -4,9 +4,13 @@
 
 This package provides a cookbook for creating hands free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
-<img src="https://user-images.githubusercontent.com/67120855/85798102-8658b700-b702-11ea-90da-b4e36053a454.png" width=67% />
 
-This documentation provides resources for IT, instructors, and users (students). The  IT section provides instructions for setting up a Quartus Prime JTAG server. The instructors section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The users section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
+
+<img src="CookBook/TopLevel.png" />
+
+
+
+This documentation provides resources for [IT](#IT Resources), [instructors](#Instructor Resources), and [users](#User Resources) (students). The  [IT](#IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](#Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](#User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
 
 # 2 IT Resources
 
@@ -106,7 +110,7 @@ Coming soon, please contact support for issues, and common resolutions will be p
 
 # 3 Instructor Resources
 
-With a JTAG server setup and proper network adjustment completed, lab materials may now be created for remote users to perform on the hosted development kits. Currently, only labs that utilize slide-switches and LEDs are supported. 7-segment displays and push buttons are expected soon, and more advanced peripherals (such as VGA and audio) are under development.
+With a JTAG server setup and proper network adjustment completed, lab materials may now be created for remote users to perform on the hosted development kits. Currently, only labs that utilize slide-switches, LEDs, 7-segment displays, and push-buttons are supported directly, although instructors are free to adjust the scripts in the `tcl/` folder of the provided Quartus archive files to add custom widgets to their own GUIs.
 
 The purpose of a given remote lab is to create an environment as close as possible to programming and interacting with a physical FPGA development kit. Accordingly, the user is not expected to configure complex modules, network connections, or create GUIs. The user is only responsible for providing a design, and connecting the design instantiation to the top level. The provided package accommodates this by automatically performing a script after the standard compilation flow completes. This script automatically performs the following operations:
 
@@ -115,28 +119,26 @@ The purpose of a given remote lab is to create an environment as close as possib
 3. Attempt to program the selected development kit.
 4. If successful, open a GUI so that the user may interact with the programmed FPGA development kit.
 
-Configuration and verification steps must be completed before a given lab is distributed to a user. The following block diagram shows the flow for instructors to convert their existing labs to a virtual lab using the provided package contents:
-
-  ![image](https://user-images.githubusercontent.com/67120855/85800028-dc7b2980-b705-11ea-934f-4efab7a477ee.png)
-
-The next section provides an implementation example instructors may use to add peripherals, and test lab functionality before distributing to users.
+Configuration and verification steps must be completed before a given lab is distributed to a user. The next section provides an implementation example instructors may use to implement and perform an existing lab. After the lab is validated the instructor may remove the solution portion of the lab, and archive the project for distribution.
 
 ## 3.1 Lab Creation Tutorial
 
-This tutorial describes how to adjust the provided package materials to generate customized virtual Intel FPGA development kit labs. 
+This tutorial describes how to adjust the provided package materials to generate customized, virtual, Intel FPGA development kit labs. This tutorial assumes an instructor has an existing lab which performs a 10-bit parity check on 10 slide switch inputs and displays the result to an led. The instructor will use a provided project to implement and test their lab before distribution. Once validated the instructor will remove the solution to the lab, and archive the project for distribution. Before beginning the tutorial, ensure Quartus Prime is installed on the machine being used to create the lab.
 
-This tutorial assumes an instructor has an existing lab which performs a 16-bit parity check on 16 slide switch inputs and displays the result to an led. The peripherals needed for this lab are 16 slide switches and 1 LED.
+1. Download the provided blank project Quartus archive file (.qar),  `blankProject.qar`
 
-The provided package only includes 10 slide switches, so the instructor must adjust the package contents to add six additional slide-switch peripherals to the Qsys IP and adjust the "pin_IP.v". Additionally, the instructor must add six additional slide switch widgets to the system console toolkit GUI by adjusting the "total_ssws" parameter in the "SysConsoleToolkit.tcl" file.
+2. Open the downloaded archive in Quartus Prime
 
-**Note: If your target lab uses less than or equal to 10 Slide-switches and/or 10 LEDs, then the provided peripherals are sufficient to virtualize your lab and steps 3 through 4 may be skipped.**
+   * This can be done in one of the following ways:
+     * Double click on the .qar file
+     * Right-click and open with Quartus Prime Lite
+     * With Quartus Prime open navigate to File  $ \rarr $ Open, then navigate to the folder the .qar was downloaded, filter Quartus Prime Archive Files, select the .qar, and select Open.
+   * Once unarchived a directory should be created with the following three subdirectories
+     * `hdl/` : This directory contains all HDL files necessary to design a GUI-compatible, hands free lab
+     * `tcl/` : This directory contains all the scripts necessary to automate the GUI deployment, connection, and termination
+     * `quartus/` : This directory contains the typical Quartus Prime project files (i.e. compilation data, and project settings)
 
-Before beginning the tutorial, ensure Quartus Prime is installed on the machine being used to create the lab.
-
-1. Download the provided package and open the project in Quartus. This may be done by opening the Quartus Project File (.qpf) found in the Quartus/ directory with Quartus Prime.
-
-2. **Configure network settings** by adjusting the  JTAG server host's external IP address and JTAG server password variables in the post_script.tcl file found in the Source/ directory. These parameters should be available from the systems administrator that configured the JTAG server.
-
+3.  **Configure network settings** by adjusting the  JTAG server host's external IP address and JTAG server password variables in the `post_script.tcl` file found in the `tcl/` directory. These parameters should be available from the systems administrator that configured the JTAG server.
 
    ```bash
    #JTAG server configuration data
@@ -144,125 +146,111 @@ Before beginning the tutorial, ensure Quartus Prime is installed on the machine 
    set ip_FPGA   "xx.xxx.xxx.xxx"
    ```
 
-   
+4. Ensure the project is opened in Quartus
 
-3. **Adjust the pin IP**  to accommodate the additional slide switches needed for the example described above. In this case six additional slide switches are required, so the slide-switch PIO IP needs to be made six bits wider, and it's instantiation in the "pin_IP.v" file must be adjusted. 
+5. **Perform a test** of the project by completing the lab prompt and validating functionality. 
 
-  * First, navigate to IP components in the Quartus Prime project navigator, an click on the "internal_pin_if" IP.
-
-  <img src="https://user-images.githubusercontent.com/67120855/85800248-3aa80c80-b706-11ea-8d1f-368cddcd431c.png" width=50% />
-
-
-  * With Qsys open double click the slide switch IP.
-
-
-
-<img src="https://user-images.githubusercontent.com/67120855/85800321-5d3a2580-b706-11ea-8c21-86e97e2abf95.png" width=50% height=35% />
-
-  * Finally, change the PIO width to 16 bits. 
-
-  <img src="https://user-images.githubusercontent.com/67120855/85800437-97a3c280-b706-11ea-8454-6448ac9f6415.png" width = 50% />
-
-
-
-  * To save, click "Generate IP". In the Generation window select "Generate". After completion, select "Finish".
-  * Now that the Qsys IP component of the pin IP is adjusted, the top-level module must be adjusted. This module simply instantiates the Qsys IP and performs an initialization reset. To accommodate the updated Qsys IP the "sws" output bus width must be expanded to 16 bits as shown below.
-
-      
+   * The user design file provided in the project must be changed to the 10-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
 
      ```verilog
-     module pin_ip(clock, sws, leds);
-     	
-     	input clock;
-     	output [15:0] sws;
-     	input  [9:0]  leds;
-     	
-     	//Reset makes time to connect to JTAG lower
-     	parameter reset_timeout = 2**8-1;
-     	reg [7:0] reset_count = 8'b0;
-     	//Allow device reset to be active for many clock cycles			
-     	always@(posedge clock)
-     		if(reset_count != (reset_timeout))
-     			reset_count = reset_count + 8'd1;
-         
-      //Connect to QSys IP
-      internal_pin_if 	i1	( .clk_clk(clock), .led_export(leds), .reset_reset_n(reset_count == reset_timeout), .sws_export(sws));
-      
-     endmodule
-     ```
-
-
-
-4. **Adjust the toolkit .tcl file** to include six more slide-switch widgets by editing the "total_ssws" variable in the "SysConsoleToolkit.tcl" file found in the Source/ directory.
-
-
-   ```bash
-   set total_leds 10
-   set total_ssws 16
-   ```
-
-   
-
-5. **Perform a test** of the updated system by completing the lab prompt and validating functionality. 
-
-  * The user design provided in the package must be changed to the 16-bit parity check from the prompt. To change the design navigate to the "UserDesign.v" file in the project and replace the design with a solution to the prompt such as the following.
-
-
-     ```verilog
-     module parity16b(  input  [15:0] ins,
-                        output parity);
+   module parity10b(	input  [9:0] ins,
+     					output parity);
      						
      	assign parity = ^ins;
      	
      endmodule
      ```
-
-​     
-
-  * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows.
-
+     
+   * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows
 
      ```verilog
-     `include "../Verilog/pin_ip.v"
+     // Include the top-level pin ip file
+     `include "../hdl/pin_ip.v"
+     
      module top( input clock );
      	
-     	wire [9:0]  leds;
-     	wire [15:0] sws;
-     							
-     	parity16b 				i0( .ins(sws), .parity(leds[0]));
+     	// Peripheral interconnect wires
+     		
+     		// Use these wires to feed outputs to LED widgets
+     		wire [9:0] 	leds;
+     		// Use these wires as 8-bit active-low 7-segment
+     		// outputs, where the 8th bit is the decimal point
+     		wire [7:0] 	seg7_0, seg7_1, seg7_2,
+     						seg7_3, seg7_4, seg7_5;
+     		// Use these wires as slide switch inputs
+     		wire [9:0] 	sws;
+     		// Use these wires as active low, push-button inputs
+     		wire [1:0]	pbs;
+     		// These function as programmable register inputs to a
+     		// design, useful for adjusting inputs using a keyboard
+     		wire [31:0] param1, param2, param3;
      	
-     	// Provided to Student/Profs Don't Touch!
-     	pin_ip					i1( .clock(clock), .sws(sws), .leds(leds));
+     	// User instantiates design below
+     	
+     		/*
+     		** Instantiated design connects to pin_ip connected wires
+     		** these wires function as memory-mapped i/o which is
+     		** translated to widgets on the GUI
+     		*/
+     		
+     		parity10b parityCheckInstance(	.ins(sws[9:0]),
+     										.parity(leds[0]));
+     									
+     	// IP to allow simple user design interfacing with developent kit					
+     		
+     		pin_ip			platform_designer_pin_ip(	.clock(clock),
+     													.leds(leds),
+     													.seg7_0(seg7_0), 
+     													.seg7_1(seg7_1), 
+     													.seg7_2(seg7_2),
+     													.seg7_3(seg7_3), 
+     													.seg7_4(seg7_4), 
+     													.seg7_5(seg7_5),
+     													.sws(sws),
+     													.pbs(pbs),
+     													.param1(param1),
+     													.param2(param2),
+     													.param3(param3));
      	
      endmodule
+     
      ```
 
-​     
+   * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, the GUI should appear as shown below
 
-  * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, a prompt similar to the following should be displayed asking which FPGA development kit to program.
+     
 
-  <img src="https://user-images.githubusercontent.com/67120855/85800606-e3ef0280-b706-11ea-91d1-e6948d87927b.png" width=40% height=40% />
+     <img src="CookBook/GUI1.PNG" style="zoom:100%;" />
 
+     
 
-  * Selecting any of the available devices should bring up the System Console Quartus Prime tool, and, after a small delay, bring up the following toolkit with widgets corresponding to slide switches and output LEDs.
+   * Selecting the Board Select menu in the top left will show boards available for programming on the remote server. Select an available board. If the board is unavailable, after the programming attempt has failed, the board option will be greyed out.
 
-<img src="https://user-images.githubusercontent.com/67120855/85800712-0ed95680-b707-11ea-972d-fbc332554d4e.png" width=60% />
+   * Once an available board has been programmed, the GUI may be interacted with. Clicking the slide switches toggles the input to the 10-bit parity check programmed on the FPGA. The result of the parity check will be displayed on LED0 as shown below
 
+     
 
-  * Toggle the slide switches to validate the odd parity function has been satisfied. 
+     ![](CookBook/parity10b.PNG)
 
-  * Closing the System Console window will move the compilation progress to 100%.
+     
+
+   * Closing the System Console window will move the compilation progress to 100%.
 
 6. **Archive the project for distribution to users** by removing the completed prompt sections. If it is desired to have students gain experience with instantiating modules, it may be useful to remove the instantiated solution from the "top.v" file as well.
 
-  * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
+   * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
- <img src="https://user-images.githubusercontent.com/67120855/85800762-29abcb00-b707-11ea-8a1c-6456294b4709.png" width=60% />
+     
 
+     <img src="CookBook/ArchiveProject.PNG" />
 
-  * The archive tool does not recognize .toolkit files, so they must be added to the list of files included in the archive.  To do this, in the archive window, select Advanced, then select Add, and then add the .toolkit file found in the Source/ directory of the package, then press OK.
+     
 
-  * Finally, select Archive. The generated archive can be shared, and users may be directed to the User Resources section of this documentation for support in unarchiving and running their labs.
+   * The archive tool does not recognize that the images required to create the GUI are part of the project. Add these to the archive by selecting Advanced. In the "Advance Archive Settings" pane select Add. Navigate to `tcl/Image`. In this folder select all images by pressing `ctrl+a` then select Open. Select Okay.
+
+   * To complete the archiving process make a Quartus Archive file name, and press Archive.
+
+   * The archive file will appear in the `quartus/` directory.
 
 ## 3.2 Additional Material
 
@@ -276,19 +264,25 @@ This section is intended for users who will perform virtual labs using remote In
 
 A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime project. A good starting point for all remote labs is to download and unarchive the "RemoteLab.qar" Quartus archive file. The project within the archive provides facilities for a user to interact with remote Intel FPGA development kits, and to implement and test arbitrary digital designs. In order to recover the archived Quartus Prime project, perform the following steps:
 
-1. Download the "RemoteLab.qar" Quartus archive file.
+1. Download the "blankProject.qar" Quartus archive file.
 
 2. Open Quartus Prime.
 
 3. At the home screen navigate to File $ \rarr $ Open as shown below.
 
-<img src="https://user-images.githubusercontent.com/67120855/85800829-47793000-b707-11ea-80fb-971d6b15bb19.png" width=60% />
+   
 
+   ![](CookBook/QuartusFileOpen.PNG)
+
+   
 
 4. Allow all files to be visible as shown below.
 
-<img src="https://user-images.githubusercontent.com/67120855/85800927-72fc1a80-b707-11ea-96c8-9f79d04aca8a.png" width=60% />
+   
 
+   ![](CookBook/AllFiles.PNG)
+
+   
 
 5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
 
@@ -300,26 +294,36 @@ The project unarchived in the previous section implements no digital logic desig
 
 1. Navigate to Files in the "Project Navigator" pane as shown below.
 
- <img src="https://user-images.githubusercontent.com/67120855/85801589-cf136e80-b708-11ea-8fb6-df4f4639c8bc.png" width=60% />
+   
 
+   ![](CookBook/FilesUserTutorial.PNG)
 
-2. Double click on the file named ""../Verilog/UserDesign.v".
+   
+
+2. Double click on the file named `../hdl/UserDesign.v`.
 
 3. In this file replace the comment "// User design goes here!" with the following Verilog code.
 
+   
 
    ```verilog
-   module OR2X1( input  A, input  B, output Y );
+   module OR2X1(	input  A,
+   					input  B,
+   					output Y  );
    					
    	assign Y = A|B;
    
    endmodule
+   
    ```
 
+   
 
-  * This code represents a simple 2-input OR logic gate, where the output Y represents the OR of the single-bit inputs A and B  
-  * The truth table for the function is shown below.
+   * This code represents a simple 2-input OR logic gate, where the output Y represents the OR of the single-bit inputs A and B
 
+   * The truth table for the function is shown below.
+
+     
 
      | Input-A | Input-B | Output-Y |
      | :-----: | :-----: | :------: |
@@ -330,56 +334,99 @@ The project unarchived in the previous section implements no digital logic desig
 
    
 
-
-4. The logic function now must be added to the top-level of the project. Once again, go to the Files section of the Project Navigator pane. This time select "../Verilog/top.v".
+4. The logic function now must be added to the top-level of the project. Once again, go to the Files section of the Project Navigator pane. This time select `../hdl/top.v`.
 
 5. Instantiation is the action of including a defined Hardware Description Language (HDL) module in a higher level HDL module. In the top file opened in the previous step, instantiate the OR2X1 module defined in step 3 as shown below.
 
+   
 
    ```verilog
-   `include "../Verilog/pin_ip.v"
+   // Include the top-level pin ip file
+   `include "../hdl/pin_ip.v"
+   
    module top( input clock );
    	
-   	wire [9:0] 	leds; 
-   	wire [9:0]	sws;
+   	// Peripheral interconnect wires
+   		
+   		// Use these wires to feed outputs to LED widgets
+   		wire [9:0] 	leds;
+   		// Use these wires as 8-bit active-low 7-segment
+   		// outputs, where the 8th bit is the decimal point
+   		wire [7:0] 	seg7_0, seg7_1, seg7_2,
+   				seg7_3, seg7_4, seg7_5;
+   		// Use these wires as slide switch inputs
+   		wire [9:0] 	sws;
+   		// Use these wires as active low, push-button inputs
+   		wire [1:0]	pbs;
+   		// These function as programmable register inputs to a
+   		// design, useful for adjusting inputs using a keyboard
+   		wire [31:0] param1, param2, param3;
    	
    	// User instantiates design below
    	
-   	OR2X1            		i0	(	.A(sws[0]), .B(sws[1]), .Y(leds[0]));
-   	
-   	// Remote Pin IP Do not touch below!
-   	pin_ip					    i1	(	.clock(clock), .sws(sws), .leds(leds));
+   		/*
+   		**
+   		**	Instantiated design connects to pin_ip connected wires
+   		** these wires function as memory-mapped i/o which is
+   		** translated to widgets on the GUI
+   		**
+   		*/
+   		
+   		OR2X1 or_instance(	.A(sws[0]),
+   									.B(sws[1]),
+   									.Y(leds[0]));
+   									
+   	// IP to allow simple user design interfacing with developent kit					
+   		
+   		pin_ip			platform_designer_pin_ip(	.clock(clock),
+   																.leds(leds),
+   																.seg7_0(seg7_0), 
+   																.seg7_1(seg7_1), 
+   																.seg7_2(seg7_2),
+   																.seg7_3(seg7_3), 
+   																.seg7_4(seg7_4), 
+   																.seg7_5(seg7_5),
+   																.sws(sws),
+   																.pbs(pbs),
+   																.param1(param1),
+   																.param2(param2),
+   																.param3(param3));
    	
    endmodule
+   
    ```
 
    
 
-  * The "." indicates a port name. For example, ".A(sws[0])" can be read as port A of the OR2X1 module is connected to the wire sws[0]. 
-  * To allow multiple OR2X1 modules to be instantiated, the instance name "i0" is placed before the port connections are defined.
+   * The "." indicates a port name. For example, ".A(sws[0])" can be read as port A of the OR2X1 module is connected to the wire sws[0]. 
+   * To allow multiple OR2X1 modules to be instantiated, the instance name "i0" is placed before the port connections are defined.
 
 6. With the design OR2X1 module instantiated, the design is now ready to be compiled. In Quartus Prime, project compilation is a multi-stage process that translates a user's project to a format capable of being programmed to an Intel FPGA. To compile this project perform the following steps. 
 
-  * Select File $ \rarr $ Save Project
-  * Select Processing $ \rarr $ Start Compilation
+   * Select File $ \rarr $ Save Project
+   * Select Processing $ \rarr $ Start Compilation
 
-7. After a couple minutes, an icon similar to the one shown below should appear.
+7. After a couple minutes, the graphical user interface to communicate with a remote development kit will appear as follows
 
-  <img src="https://user-images.githubusercontent.com/67120855/85801816-49dc8980-b709-11ea-9ab7-959dd53aa3a3.png" width=40% height=40% />
+   
+   
+   <img src="CookBook/GUI1.PNG" style="zoom:100%;" />
+   
+   
+   
+8. Select the Board Select option in the top left to view available boards.
 
+   * These are available Intel FPGA Development Kits. Select one and proceed.
 
-  * These are available Intel FPGA Development Kits. Select one and proceed.
+9. Interact with the GUI to explore the following concepts
 
-8. After a short delay the selected Intel FPGA development kit will connect to the local Quartus Prime installation, and the  Graphical User Interface (GUI) shown below will appear.
+   * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
+   * Recall from step 5 that wires "sws[0]" and "sws[1]" are connected to the OR2X1 module's inputs while the "leds[0]" wire is connected to the module's output.
+   * Verify the truth table shown in step 3 by toggling the SW0 and SW1 buttons (the switches farthest to the right), and validate the corresponding output on LED0 (the LED farthest to the right).
 
-  <img src="https://user-images.githubusercontent.com/67120855/85801872-65479480-b709-11ea-9260-ea534a01039c.png" width=60% />
+10. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
+   
 
-  * This GUI allows a user to interact directly with the connected Intel FPGA development kit. 
-  * Recall from step 5 that wires "sws[0]" and "sws[1]" are connected to the OR2X1 module's inputs while the "leds[0]" wire is connected to the module's output.
-  * Verify the truth table shown in step 3 by toggling the SW0 and SW1 buttons, and viewing the corresponding output on LED0.
-
-9. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
-
- <img src="https://user-images.githubusercontent.com/67120855/85801976-932cd900-b709-11ea-8799-912a21e0e6a7.png" width=60% />
+   ![](CookBook/UserTutorialCompilation.PNG)
 
