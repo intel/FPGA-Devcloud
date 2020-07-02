@@ -307,13 +307,10 @@ The project unarchived in the previous section implements no digital logic desig
 
    ```verilog
    module OR2X1(	input  A,
-   					input  B,
-   					output Y  );
-   					
-   	assign Y = A|B;
-   
+                  input  B,
+                  output Y  );
+      assign Y = A|B;
    endmodule
-   
    ```
 
    
@@ -372,24 +369,24 @@ The project unarchived in the previous section implements no digital logic desig
    		*/
    		
    		OR2X1 or_instance(	.A(sws[0]),
-   									.B(sws[1]),
-   									.Y(leds[0]));
+                              .B(sws[1]),
+                              .Y(leds[0]));
    									
    	// IP to allow simple user design interfacing with developent kit					
    		
-   		pin_ip			platform_designer_pin_ip(	.clock(clock),
-   																.leds(leds),
-   																.seg7_0(seg7_0), 
-   																.seg7_1(seg7_1), 
-   																.seg7_2(seg7_2),
-   																.seg7_3(seg7_3), 
-   																.seg7_4(seg7_4), 
-   																.seg7_5(seg7_5),
-   																.sws(sws),
-   																.pbs(pbs),
-   																.param1(param1),
-   																.param2(param2),
-   																.param3(param3));
+      pin_ip   platform_designer_pin_ip( .clock(clock),
+   												  .leds(leds),
+                                         .seg7_0(seg7_0), 
+                                         .seg7_1(seg7_1), 
+                                         .seg7_2(seg7_2),
+                                         .seg7_3(seg7_3), 
+                                         .seg7_4(seg7_4), 
+                                         .seg7_5(seg7_5),
+                                         .sws(sws),
+                                         .pbs(pbs),
+                                         .param1(param1),
+                                         .param2(param2),
+                                         .param3(param3));
    	
    endmodule
    
