@@ -714,7 +714,7 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 ### 7.1 Transferring Files to and from the Devcloud with SCP 
 
-Refer to the login instructions welcome page on file transfer to/from devcloud. **Use the local terminal on your PC to transfer files. Note: If on Intel firewall, replace devcloud with colfax-intel.**
+**You can only use the local terminal on your PC to transfer files. Note: If on Intel firewall, replace devcloud with colfax-intel.**
 
 Transferring Files from your localnode terminal. Your prompt on mobaxterm would be of the form: /home/mobaxterm (localnode)
 
@@ -727,8 +727,6 @@ From headnode or computenode to the localnode.
 ```
 scp devcloud:/path/to/remote/file /path/to/local/directory
 ```
-
-If the path to the local directory is simply "." you will find the file on your PC in the following location:
 
 Here is an example:
 
