@@ -3,12 +3,25 @@
 #                           #
 #      Latest Edit          #
 #                           #
-# -Jun 19 2020 Version 2    #
-# Added new A10 v1.2.1      #
+# -July 6 2020 Version 2    #
+# Fixed script design       #
 #                           #
 #############################
 
-#Add Intel Confidentiality Message
+# Copyright 2020 Intel Corporation
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+# documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions
+# of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+# TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+# CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
 
 
 
@@ -27,10 +40,9 @@ arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085
 stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
-x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n005")
 
 
-login_Help() {
+login_usage() {
     echo
     echo "Usage: "
     echo "------"
@@ -76,18 +88,86 @@ login_Help() {
 
 x2go_msg()
 {
-    echo
-    echo --------------------------------------------------------------------------------------
-    printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-    echo
-    printf  "%s\n" "${blu}ssh -L 4002:"$1":22 colfax-intel${end} "
-    echo
-    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
-    echo
-    printf  "%s\n" "${blu}ssh -L 4002:"$1":22 devcloud${end} "
-    echo
-    echo --------------------------------------------------------------------------------------
-    echo
+    qsubmit=`qsub -q batch@v-qsvr-fpga -I -l nodes="$1":ppn=2`
+    x2go_checker=`systemctl status x2goserver`
+    if [ $? -eq 0 ]; then  # If argument node is x2go available then...
+	echo
+    	echo --------------------------------------------------------------------------------------
+    	printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+    	echo
+    	printf  "%s\n" "${blu}ssh -L 4002:"$1":22 colfax-intel${end} "
+    	echo
+    	printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+    	echo
+    	printf  "%s\n" "${blu}ssh -L 4002:"$1":22 devcloud${end} "
+    	echo
+    	echo --------------------------------------------------------------------------------------
+    	echo
+    else
+	:  #do nothing
+    fi
+
+    echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$1":ppn=2"
+    echo $qsubmit
+}
+
+
+avail_nodes()
+{
+    if [ $1 -eq 1 ]; then
+	IFS="|"
+        readarray availableNodesNohardware < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+	#readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
+        readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
+        readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
+        readarray availableNodesArria12 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
+        readarray availableNodesArria12_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
+        readarray availableNodesArria121 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
+        readarray availableNodesArria121_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
+        readarray availableNodesArria10_oneAPI_Nodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
+        readarray availableNodesArria10_oneAPI_Nodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
+        readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+        readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+        unset IFS
+        let number_of_available_no_hardware_nodes=${#availableNodesNohardware[@]}
+        let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
+        let number_of_available_arria10_oneAPI_nodes=${#availableNodesArria10_oneAPI_Nodes[@]}+${#availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}
+        let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
+
+        availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" \
+             "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}" "${availableNodesArria10_oneAPI_Nodes[@]}" \
+	     "${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}")
+    else
+	echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)"
+    	echo --------------------------------------------------------------------------------------
+    	printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)"
+    	node_no_hardware_str=$(echo ${availableNodesNohardware[@]})
+    	printf "${red}$node_no_hardware_str${end}"
+    	echo 
+    	echo --------------------------------------------------------------------------------------
+    	printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
+    	node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
+    	printf "${red}$node_arria10_oneAPI_str${end}"
+    	echo 
+    	echo --------------------------------------------------------------------------------------
+    	printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)"
+    	#node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
+    	#printf "${red}$node_arria10_str${end}"
+    	echo "Release 1.2:"
+    	node_arria10_12str=$(echo ${availableNodesArria12[@]} ${availableNodesArria12_on_temp_server[@]})
+    	printf "${red}$node_arria10_12str${end}"
+    	echo
+    	echo "Release 1.2.1:"
+    	node_arria10_121str=$(echo ${availableNodesArria121[@]} ${availableNodesArria121_on_temp_server[@]})
+    	printf "${red}$node_arria10_121str${end}"
+    	echo
+    	echo --------------------------------------------------------------------------------------
+    	printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
+    	node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+    	printf "${red}$node_stratix_str${end}"
+    	echo
+	echo --------------------------------------------------------------------------------------
+    fi
 }
 
 
@@ -98,7 +178,7 @@ devcloud_login()
  
     if [[ $1 =~ "-h" ]]; then
 	# Display help message
-	login_Help
+	login_usage
 	return 0
     elif [[ $1 == "-l" && -z $2 ]]; then
 	# Display node availability list
@@ -208,11 +288,7 @@ devcloud_login()
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 -l $argv3 $argv4
 	    else
                 node=(${availableNodes[0]})
-		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    x2go_msg $node
-		fi
-                echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
-                qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
+                x2go_msg $node
             fi
         else
             printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
@@ -225,8 +301,7 @@ devcloud_login()
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
-            if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
-            then
+            if [ ${#availableNodes[@]} == 0 ]; then #if length of availableNodes is empty then no nodes are available
                 echo
                 echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
@@ -240,9 +315,7 @@ devcloud_login()
 		qsub -l nodes="$node":ppn=2 -l $argv2 $argv3
             else
                 node=(${availableNodes[0]})
-		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    x2go_msg $node
-		fi
+		x2go_msg $node
                 echo "running: qsub -I -l nodes="$node":ppn=2"
                 qsub -I -l nodes="$node":ppn=2
             fi
@@ -257,8 +330,7 @@ devcloud_login()
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
             unset IFS
-            if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
-            then
+            if [ ${#availableNodes[@]} == 0 ]; then #if length of availableNodes is empty then no nodes are available
                 echo
                 echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
@@ -272,9 +344,7 @@ devcloud_login()
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 -l $argv2 $argv3
             else
                 node=(${availableNodes[0]})
-		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    x2go_msg $node
-		fi
+		x2go_msg $node
                 echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                 qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
             fi
@@ -304,9 +374,7 @@ devcloud_login()
 		qsub -l nodes="$node":ppn=2 -l $argv2 $argv3
             else
                 node=(${availableNodes[0]})
-		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    x2go_msg $node
-		fi
+		x2go_msg $node
                 echo "running: qsub -I -l nodes="$node":ppn=2"
                 qsub -I -l nodes="$node":ppn=2
             fi
@@ -316,29 +384,8 @@ devcloud_login()
     # Specific Node Number Login Selection
     elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
         if [ -z $currentNode ]; then  # If not currently logged into a compute node then...
-            IFS="|"
-            readarray availableNodesNohardware < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-	    # readarray availableNodesNohardware_on_temp_server < <(pbsnodes | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
-            readarray availableNodesArria < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
-            readarray availableNodesArria_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes[*]}")
-            readarray availableNodesArria12 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
-            readarray availableNodesArria12_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes12[*]}")
-            readarray availableNodesArria121 < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
-            readarray availableNodesArria121_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
-            readarray availableNodesArria10_oneAPI_Nodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
-            readarray availableNodesArria10_oneAPI_Nodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
-            readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
-            readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
-            unset IFS
-            let number_of_available_no_hardware_nodes=${#availableNodesNohardware[@]}
-            let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
-            let number_of_available_arria10_oneAPI_nodes=${#availableNodesArria10_oneAPI_Nodes[@]}+${#availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}
-            let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
-
-            availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" \
-                "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}" "${availableNodesArria10_oneAPI_Nodes[@]}" \
-		"${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}")
-
+            avail_nodes 1
+############# need to receive available nodes and read available nodes from function
             if [ ${#availableNodes[@]} == 0 ]; then
                 echo
                 printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
@@ -354,9 +401,7 @@ devcloud_login()
 	    	    elif [[ -n "$argv3" && $argv3 =~ "walltime=" && $argv4 =~ ".sh" ]]; then
 			qsub -l nodes="$node":ppn=2 -l $argv3 $argv4
 		    else
-			if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                            x2go_msg $node
-			fi
+			x2go_msg $node
                         echo "running: qsub -I -l nodes="$node":ppn=2"
                         qsub -I -l nodes="$node":ppn=2
 		    fi
@@ -366,9 +411,7 @@ devcloud_login()
 	    	    elif [[ -n "$argv3" && $argv3 =~ "walltime=" && $argv4 =~ ".sh" ]]; then
 			qsub -l nodes="$node":ppn=2 -l $argv3 $argv4
 		    else
-			if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                            x2go_msg $node
-			fi
+			x2go_msg $node
                         echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                         qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
 		    fi
@@ -376,66 +419,9 @@ devcloud_login()
 	    elif [[ -n "$argv2" ]]; then
 		printf "%s\n%s\n" "${red}Invalid Entry. Available nodes are: ${availableNodes[*]}" "eg: devcloud_login -b SNN ${availableNodes[0]}${end}"
 	    elif [[ -n "$argv1" && -z "$argv2" ]]; then
-                echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)"
-                node_no_hardware_str=$(echo ${availableNodesNohardware[@]})
-                printf "${red}$node_no_hardware_str${end}"
-                echo 
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
-                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
-                printf "${red}$node_arria10_oneAPI_str${end}"
-                echo 
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)"
-		#node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
-                #printf "${red}$node_arria10_str${end}"
-                echo "Release 1.2:"
-		node_arria10_12str=$(echo ${availableNodesArria12[@]} ${availableNodesArria12_on_temp_server[@]})
-                printf "${red}$node_arria10_12str${end}"
-                echo
-                echo "Release 1.2.1:"
-		node_arria10_121str=$(echo ${availableNodesArria121[@]} ${availableNodesArria121_on_temp_server[@]})
-                printf "${red}$node_arria10_121str${end}"
-                echo
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
-                node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
-                printf "${red}$node_stratix_str${end}"
-                echo
-                echo --------------------------------------------------------------------------------------
+                avail_nodes
             else
-                echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)"
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)"
-                #node_no_hardware_str=$(echo ${availableNodesNohardware[@]} ${availableNodesNohardware_on_temp_server[@]})
-                node_no_hardware_str=$(echo ${availableNodesNohardware[@]})
-                printf "${red}$node_no_hardware_str${end}"
-                echo 
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
-                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
-                printf "${red}$node_arria10_oneAPI_str${end}"
-                echo 
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)"
-		#node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
-                #printf "${red}$node_arria10_str${end}"
-                echo "Release 1.2:"
-		node_arria10_12str=$(echo ${availableNodesArria12[@]} ${availableNodesArria12_on_temp_server[@]})
-                printf "${red}$node_arria10_12str${end}"
-                echo
-                echo "Release 1.2.1:"
-		node_arria10_121str=$(echo ${availableNodesArria121[@]} ${availableNodesArria121_on_temp_server[@]})
-                printf "${red}$node_arria10_121str${end}"
-                echo
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
-                node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
-                printf "${red}$node_stratix_str${end}"
-                echo
-                echo --------------------------------------------------------------------------------------
+                avail_nodes
                 echo
                 echo "What node would you like to use?"
                 echo
@@ -450,17 +436,12 @@ devcloud_login()
 
                 # find out if the nodeNumber is on the fpga queue to know which qsub command to call
                 is_in_fpga_queue="$(pbsnodes -s v-qsvr-fpga | grep -B 4 fpga | grep -o $node )"
-                if [ -z $is_in_fpga_queue ];  # if is_in_fpga_queue is empty then it is not on the fpga queue
-                then
-		    if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    	x2go_msg $node
-		    fi
+                if [ -z $is_in_fpga_queue ]; then # if is_in_fpga_queue is empty then it is not on the fpga queue
+		    x2go_msg $node
                     echo "running: qsub -I -l nodes="$node":ppn=2"
                     qsub -I -l nodes="$node":ppn=2
                 else		
-		    if [[ ${x2goNodes[*]} =~ "$node" ]]; then
-                    	x2go_msg $node
-		    fi
+		    x2go_msg $node
                     echo "running: qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2"
                     qsub -q batch@v-qsvr-fpga -I -l nodes="$node":ppn=2
                 fi
@@ -474,7 +455,7 @@ devcloud_login()
 }
 
 
-tool_Help() {
+tool_usage() {
     echo
     echo "Usage: "
     echo "------"
@@ -523,7 +504,7 @@ tools_setup()
 
     if [[ $1 =~ "-h" ]]; then
 	# display Help
-	tool_Help ${QUARTUS_LITE_RELEASE[@]} ${QUARTUS_STANDARD_RELEASE[@]} ${QUARTUS_PRO_RELEASE[@]}
+	tool_usage ${QUARTUS_LITE_RELEASE[@]} ${QUARTUS_STANDARD_RELEASE[@]} ${QUARTUS_PRO_RELEASE[@]}
 	return 0
     elif [[ $1 == "-t" && -n $2 ]]; then
 	argv1="$2"
@@ -692,7 +673,7 @@ tools_setup()
 	    echo "eg: tools_setup -t HLS QL ${QUARTUS_LITE_RELEASE[0]} ${end}"
 	    return 0
 	elif [ -n "$argv2" ]; then
-	    :  # do nothing
+	    :  #do nothing
 	else
             #ask which quartus release
             echo "${blu}Which Quartus edition would you like?${end}"
