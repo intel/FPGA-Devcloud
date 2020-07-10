@@ -4,7 +4,7 @@
 
 This package provides a cookbook for creating hands-free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
-<img src="CookBook/TopLevel.png" />
+![image](https://user-images.githubusercontent.com/67120855/87181159-71a22480-c2a7-11ea-9d4a-e61dad86d480.png)
 
 This documentation provides resources for [IT](#IT Resources), [instructors](#Instructor Resources), and [users](#User Resources) (students). The  [IT](#IT Resources) section provides instructions for setting up a Quartus Prime JTAG server. The [instructors](#Instructor Resources) section describes how an instructor can adapt the provided package to convert existing or new labs to a hands free format. The [users](#User Resources) section provides a tutorial for users to run an example project.  For more assistance or to report a bug please contact the Intel FPGA University Program.
 
@@ -156,13 +156,13 @@ Be sure to have any VPN that might block the JTAG server connection turned off b
          assign parity = ^ins;
       endmodule
      ```
-     
+
    * Next, the solution must be instantiated at the top level, and connected to the Qsys IP. This adjustment must be made to the "top.v" file of the project as follows
 
      ```verilog
      // Include the top-level pin ip file
      `include "../hdl/pin_ip.v"
-     
+
      module top( input clock );
      	
      	// Peripheral interconnect wires
@@ -212,13 +212,13 @@ Be sure to have any VPN that might block the JTAG server connection turned off b
 
    * To complete the test, press the compile icon (play button). After 80% of the compilation has  completed, the GUI should appear as shown below
 
-     <img src="CookBook/GUI1.PNG" style="zoom:100%;" />
+     ![image](https://user-images.githubusercontent.com/67120855/87181286-ab732b00-c2a7-11ea-9319-018a0bb16dc9.png)
 
    * Selecting the Board Select menu in the top left will show boards available for programming on the remote server. Select an available board. If the board is unavailable, after the programming attempt has failed, the board option will be greyed out.
 
    * Once an available board has been programmed, the GUI may be interacted with. Clicking the slide switches toggles the input to the 10-bit parity check programmed on the FPGA. The result of the parity check will be displayed on LED0 as shown below
 
-     ![](CookBook/parity10b.PNG)
+     ![image](https://user-images.githubusercontent.com/67120855/87181333-c180eb80-c2a7-11ea-8279-0aea0b8c26a4.png)
 
    * Closing the System Console window will move the compilation progress to 100%.
 
@@ -226,7 +226,7 @@ Be sure to have any VPN that might block the JTAG server connection turned off b
 
    * To archive the project for distribution navigate to Project $ \rarr $ Archive Project as shown below.
 
-     <img src="CookBook/ArchiveProject.PNG" />
+     ![image](https://user-images.githubusercontent.com/67120855/87181376-d65d7f00-c2a7-11ea-8c82-902d19cbc21c.png)
 
    * The archive tool does not recognize that the images required to create the GUI are part of the project. Add these to the archive by selecting Advanced. In the "Advance Archive Settings" pane select Add. Navigate to `tcl/Image`. In this folder select all images by pressing `ctrl+a` then select Open. Select Okay.
 
@@ -252,11 +252,11 @@ A Quartus Archive File (.qar) contains a compressed version of a Quartus Prime p
 
 3. At the home screen navigate to File $ \rarr $ Open as shown below.
 
-   ![](CookBook/QuartusFileOpen.PNG)
+   ![image](https://user-images.githubusercontent.com/67120855/87181563-263c4600-c2a8-11ea-8858-b0fd177efe12.png)
 
 4. Allow all files to be visible as shown below.
 
-   ![](CookBook/AllFiles.PNG)
+   ![image](https://user-images.githubusercontent.com/67120855/87181617-3a804300-c2a8-11ea-814e-52119a8f4a05.png)
 
 5. Navigate to the .qar file downloaded in Step 1, select it, and then select Open.
 
@@ -268,7 +268,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 1. Navigate to Files in the "Project Navigator" pane as shown below.
 
-   ![](CookBook/FilesUserTutorial.PNG)
+   ![image](https://user-images.githubusercontent.com/67120855/87181803-8fbc5480-c2a8-11ea-8733-27e210ea8a62.png)
 
 2. Double click on the file named `../hdl/UserDesign.v`.
 
@@ -286,7 +286,6 @@ The project unarchived in the previous section implements no digital logic desig
 
    * The truth table for the function is shown below.
 
-     
 
      | Input-A | Input-B | Output-Y |
      | :-----: | :-----: | :------: |
@@ -304,7 +303,7 @@ The project unarchived in the previous section implements no digital logic desig
    ```verilog
    // Include the top-level pin ip file
    `include "../hdl/pin_ip.v"
-   
+
    module top( input clock );
    	
    	// Peripheral interconnect wires
@@ -354,9 +353,9 @@ The project unarchived in the previous section implements no digital logic desig
                                          .param3(param3));
    	
    endmodule
-   
+
    ```
-   
+
    * The "." indicates a port name. For example, ".A(sws[0])" can be read as port A of the OR2X1 module is connected to the wire sws[0]. 
    * To allow multiple OR2X1 modules to be instantiated, the instance name "i0" is placed before the port connections are defined.
 
@@ -367,7 +366,7 @@ The project unarchived in the previous section implements no digital logic desig
 
 7. After a couple minutes, the graphical user interface to communicate with a remote development kit will appear as follows
 
-   <img src="CookBook/GUI1.PNG" style="zoom:100%;" />
+   ![image](https://user-images.githubusercontent.com/67120855/87182022-efb2fb00-c2a8-11ea-89ce-46a7eaa0ba08.png)
 
 8. Select the Board Select option in the top left to view available boards.
 
@@ -381,4 +380,4 @@ The project unarchived in the previous section implements no digital logic desig
 
 10. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
-   ![](CookBook/UserTutorialCompilation.PNG)
+  ![image](https://user-images.githubusercontent.com/67120855/87182215-50423800-c2a9-11ea-88be-398f58b0d987.png)
