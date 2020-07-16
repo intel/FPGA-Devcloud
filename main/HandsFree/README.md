@@ -390,8 +390,8 @@ The project unarchived in the previous section implements no digital logic desig
    2. Open Quartus Prime
    3. Ensure the Tasks pane is visible by navigating to view then click UTility Windows &rarr; Tasks
    4. Create a new task by clicking the Tasks pane's menu icon and selecting Customize as shown below
-   
-   ![image](main/HandsFree/Figures/runHFnorecompile.PNG)
+
+   ![image](./Figures/runHFnorecompile.PNG)
    
    5. Create a new task by selecting New
    6. Add a Custom flow name, and set "Based on existing flow" to None
