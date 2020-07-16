@@ -381,3 +381,24 @@ The project unarchived in the previous section implements no digital logic desig
 10. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
   ![image](https://user-images.githubusercontent.com/67120855/87182215-50423800-c2a9-11ea-88be-398f58b0d987.png)
+  
+# Run Hands Free Project without Recompile
+
+   Often, a user or instructor may want to run a previously compiled hands free lab without having to perform all of the compilation steps again. To run the hands free GUI without recompiling, a reliable option is to assign a Quartus task to run the `runHFnorecompile.tcl`. To create this Quartus task perform the following steps:
+   
+   1. Download `runHFnorecompile.tcl`, and save to a location that is unlikely to be renamed or moved
+   2. Open Quartus Prime
+   3. Ensure the Tasks pane is visible by navigating to view then click UTility Windows &rarr; Tasks
+   4. Create a new task by clicking the Tasks pane's menu icon and selecting Customize as shown below
+   
+   ![image](main/HandsFree/Figures/runHFnorecompile.PNG)
+   
+   5. Create a new task by selecting New
+   6. Add a Custom flow name, and set "Based on existing flow" to None
+   7. Press OK
+   8. At the bottom left of the Edit Flow window, select "TCL Scripts..."
+   9. Add a task name such as "Hands Free GUI Launch" 
+   10. Set the Tcl Script File Name as the path to the `runHFnorecompile.tcl`, and press OK
+   11. Press okay to finish adding the task
+
+Now, as long as a project has been generated, you may launch the Hands Free GUI and program a remote board without recompiling.
