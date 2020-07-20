@@ -2,7 +2,9 @@
 
 # 1 Introduction
 
-This package provides a cookbook for creating hands-free FPGA labs. Using the provided resources, a user's project may be programed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
+This package provides a cookbook for creating hands-free FPGA labs. This 3 minute quick video describes how it works: https://www.youtube.com/watch?v=j9lykx3NTF0.
+
+Using the provided resources, a user's project may be programmed to remote Intel FPGA development kits using a local Quartus installation connected to a remote server hosting one or more development kits. The input/output (slide-switches/LEDs) of the connected development kit is streamed to a GUI providing flexible remote lab development capabilities. An advanced user may develop their own GUIs to suit their project's specific needs. The connection to the hosted development kit, remote board programming and GUI configuration are all automated away from the user, enabling even the most inexperienced user to connect, program, and validate remotely programmed Intel FPGA development kits. A high-level overview of the system is shown below.
 
 ![image](https://user-images.githubusercontent.com/67120855/87181159-71a22480-c2a7-11ea-9d4a-e61dad86d480.png)
 
@@ -296,6 +298,7 @@ The project unarchived in the previous section implements no digital logic desig
 
    
 
+
 4. The logic function now must be added to the top-level of the project. Once again, go to the Files section of the Project Navigator pane. This time select `../hdl/top.v`.
 
 5. Instantiation is the action of including a defined Hardware Description Language (HDL) module in a higher level HDL module. In the top file opened in the previous step, instantiate the OR2X1 module defined in step 3 as shown below.
@@ -381,18 +384,18 @@ The project unarchived in the previous section implements no digital logic desig
 10. Close the window and verify the compilation has completed without error by viewing the tasks pane as shown below.
 
   ![image](https://user-images.githubusercontent.com/67120855/87182215-50423800-c2a9-11ea-88be-398f58b0d987.png)
-  
+
 # Run Hands Free Project without Recompile
 
    Often, a user or instructor may want to run a previously compiled hands free lab without having to perform all of the compilation steps again. To run the hands free GUI without recompiling, a reliable option is to assign a Quartus task to run the `runHFnorecompile.tcl`. To create this Quartus task perform the following steps:
-   
+
    1. Download `runHFnorecompile.tcl`, and save to a location that is unlikely to be renamed or moved
    2. Open Quartus Prime
    3. Ensure the Tasks pane is visible by navigating to view then click UTility Windows &rarr; Tasks
    4. Create a new task by clicking the Tasks pane's menu icon and selecting Customize as shown below
 
    ![image](./Figures/runHFnorecompile.PNG)
-   
+
    5. Create a new task by selecting New
    6. Add a Custom flow name, and set "Based on existing flow" to None
    7. Press OK
