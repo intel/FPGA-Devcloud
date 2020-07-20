@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Jun 19 2020 Version 1    #
-# Added new A10 v1.2.1      #
+# -Jul 19 2020 Version 1    #
+# Added OpenVINO	    #
 #                           #
 #                           #
 #                           #
@@ -28,7 +28,7 @@ arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085
 stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
-x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n005")
+x2goNodes=("s001-n137" "s001-n138" "s001-n139")
 
 
 devcloud_login()
@@ -75,7 +75,7 @@ devcloud_login()
 	printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
 	echo
 	echo "1) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-	echo "2) Arria 10 OneAPI"
+	echo "2) Arria 10 - OneAPI, OpenVINO"
 	echo "3) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
 	echo "4) Compilation (Command Line) Only"
 	echo "5) Enter Specific Node Number"
@@ -554,7 +554,7 @@ tools_setup()
 	echo "3) Quartus Prime Pro"
 	echo "4) HLS"
     	echo "5) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-    	echo "6) Arria 10 OneAPI"
+    	echo "6) Arria 10 - OneAPI, OpenVINO"
     	echo "7) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
     	echo
     	echo -n "Number: "
@@ -937,6 +937,10 @@ tools_setup()
             #source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
             echo "sourcing /opt/intel/inteloneapi/setvars.sh"
 	    source /opt/intel/inteloneapi/setvars.sh
+	    ### OpenVINO Setup
+	    export IE_INSTALL="/glob/development-tools/versions/oneapi/beta07/openvino/deployment_tools"
+	    source $IE_INSTALL/../bin/setupvars.sh
+	    alias mo="python3.5 $IE_INSTALL/model_optimizer/mo.py"
         else
             echo "Not on an Arria10 OneAPI node. You need to be on an Arria10 OneAPI node."
         fi
@@ -995,7 +999,7 @@ dev_Help() {
     echo "-----------------"
     echo
     echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2)         Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI"
+    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI, OpenVINO"
     echo "S10PAC  (eg. devcloud_login -I S10PAC)	           Stratix 10 PAC"
     echo "CO      (eg. devcloud_login -I CO)                 Compilation Only"
     echo "SNN     (eg. devcloud_login -I SNN s001-n139)      Specific Node Name"
@@ -1005,7 +1009,7 @@ dev_Help() {
     echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours for machines running RTL AFU/OpenCL and 24 hours for machines running OneAPI."
     echo
     echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI"
+    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI, OpenVINO"
     echo "S10PAC  (eg. devcloud_login -b S10PAC [walttime=12:00:00] job.sh)	   Stratix 10 PAC"
     echo "CO      (eg. devcloud_login -b CO [walttime=12:00:00] job.sh)              Compilation Only"
     echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walttime=12:00:00] job.sh)   Specific Node Name"
@@ -1041,7 +1045,7 @@ tool_Help() {
     echo "QP      (eg. tools_setup -t QP 18.1)	      Quartus Pro; ${*:3}"
     echo "HLS     (eg. tools_setup -t HLS QL 18.1)      High-Level Synthesis"
     echo "A10DS   (eg. tools_setup -t A10DS 1.2)        Arria 10 Development Stack"
-    echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 One API"
+    echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 OneAPI, OpenVINO"
     echo "S10DS   (eg. tools_setup -t S10DS)	      Stratix 10 Development Stack"
     echo
 }
