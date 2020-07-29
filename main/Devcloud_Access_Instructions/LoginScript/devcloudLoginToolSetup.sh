@@ -22,7 +22,7 @@ ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 noHardwareNodes=("s001-n145" "s001-n146" "s001-n147" "s001-n148" "s001-n149" "s001-n150" "s001-n151" "s001-n152" "s001-n153" "s001-n154" "s001-n155" "s001-n156")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
 arria10Nodes12=("s005-n006" "s001-n137" "s001-n138" "s001-n139")
-arria10Nodes121=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007")
+arria10Nodes121=("s005-n001" "s005-n003" "s005-n004" "s005-n005" "s005-n007" "s005-n002")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 # 1 more stratix10Nodes expected date TBD
 stratix10Nodes=("s005-n008" "s001-n189")
