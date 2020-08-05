@@ -99,7 +99,7 @@ This set of instructions superscedes the instructions on the OneAPI login instru
 
 Perform steps through section 5.3 and you will be able to run various workflows found in our Quickstart guides. Information after this section is useful for topics such as batch flows (recommended), graphics, and job control.
 
-**Note:** Please allow 60-90 mins to complete the entire setup. 
+**Note:** Please allow 60-90 mins to complete the entire setup. Also note the default account duration is 90 days. You will get reminders to renew your account if you need access for more than 90 days. If you allow your account to expire, you will lose the data in your account. We recommend copying source files back to your local machine for safe keeping.
 
 ## 2.0 Getting an Account
 
@@ -151,7 +151,7 @@ There are different methods of terminal connections. Listed below are a few opti
 
 ### 3.1 Install MobaXterm
 
-1. Download the MobaXterm free edition: https://mobaxterm.mobatek.net/download-home-edition.html Note: Get the **installer edition**, not the portable edition. (The installer edition will enable you to save login profiles.) . Download zipfile, open it and click on the msi file to install Mobaxterm.
+1. Download the MobaXterm free edition: https://mobaxterm.mobatek.net/download-home-edition.html Note: Get the **installer edition**, not the portable edition. (The installer edition will enable you to save login profiles.) . Download zipfile, extract it and click on the msi file to install Mobaxterm.
 
    ![mobaxterm_edition](https://user-images.githubusercontent.com/56968566/67715527-3fee6500-f987-11e9-8961-6c0a38163bfc.png)
 
@@ -262,7 +262,7 @@ You cannot log into the Intel Devcloud through the above steps if you are within
 
 ### 4.2  Preparing Configuration file for Intel firewall users
 
-1. Replace additional entries into your config file: 
+1. Add additional entries into your config file: 
 
    ```
    Host colfax-intel-proxy
@@ -296,11 +296,15 @@ X11 forwarding request failed on channel 0
 
 is expected behavior.
 
+Note you can also connect outside of the firewall using ssh devcloud, but make sure your VPN is off. This will not work when at an Intel facility unless you connect to the outside network.
+
 ## 5.0 Connecting to Servers Running FPGA Development Software
 
 ### 5.1 Understanding available resources
 
 You are now logged into machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.
+
+launch Mobaxterm (your PC) --> ssh devcloud (login-2) --> devcloud_login (interactive compute_node) or devcloud_login -b (batch processing on a compute node)
 
 Some nodes can run Quartus, OpenCL emulation and compile and HLS emulation, simulation and compile. The node capacity grows with additional servers periodically added.
 
@@ -315,7 +319,7 @@ There are a series of detailed Linux commands shown below should you want to kno
 
 ### 5.2 Login Script
 
-To facilitate connectivity without understanding some of the details on the Linux OS, we offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Source the script in your ~/.bashrc by including these two lines inside the .bashrc:
+To facilitate connectivity without understanding some of the details on the Linux OS, we offer a script that simplifies connectivity called devcloudLoginToolSetup.sh located under /data/intel_fpga/devcloudLoginToolSetup.sh . Source the script in your ~/.bashrc by including these three lines inside the .bashrc:
 
 ```
 if [ -f /data/intel_fpga/devcloudLoginToolSetup.sh ]; then
@@ -710,7 +714,7 @@ Under the Tools tab on the Main Bar, select Options. In the General Category, se
 
 3. [WinSCP Application (7.3)](#73-using-winscp-to-transfer-files)
 
-4. [MobaXterm Command Line to Transfer URLs (7.4)](#74-using-mobaxterm-command-line-to-transfer-urls-github)
+4. [MobaXterm Command Line to Transfer URLs (7.4)](#74-using-mobaxterm-command-line-to-transfer-urls-github) (recommended)
 
 ### 7.1 Transferring Files to and from the Devcloud with SCP 
 
@@ -826,7 +830,7 @@ Then, use one of the following:
 #### 1. WGET Command
 
 **Wget** command retrieves content from web servers.\
-Use the wget command in command line providing one or more URLs as arguments to download the file(-s).
+Use the wget command in command line providing one or more URLs as arguments to download the file(-s). Note use wget -N to replace a file that already exists with the same name.
 
 ```bash
 wget http://www.example.com/
