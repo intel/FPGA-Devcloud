@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Jul 22 2020 Version 1    #
-# Added new X2GO nodes	    #
+# -Aug 06 2020 Version 1    #
+# Modified help msg	    #
 #                           #
 #                           #
 #                           #
@@ -1009,10 +1009,10 @@ dev_Help() {
     echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours for machines running RTL AFU/OpenCL and 24 hours for machines running OneAPI."
     echo
     echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI, OpenVINO"
-    echo "S10PAC  (eg. devcloud_login -b S10PAC [walttime=12:00:00] job.sh)	   Stratix 10 PAC"
-    echo "CO      (eg. devcloud_login -b CO [walttime=12:00:00] job.sh)              Compilation Only"
-    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walttime=12:00:00] job.sh)   Specific Node Name"
+    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walltime=12:00:00] job.sh)         Arria 10 OneAPI, OpenVINO"
+    echo "S10PAC  (eg. devcloud_login -b S10PAC [walltime=12:00:00] job.sh)	   Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -b CO [walltime=12:00:00] job.sh)              Compilation Only"
+    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walltime=12:00:00] job.sh)   Specific Node Name"
     echo
     echo "See Also: "
     echo "---------"
