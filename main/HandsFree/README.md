@@ -125,7 +125,7 @@ This tutorial describes how to adjust the provided package materials to generate
 
 Be sure to have any VPN that might block the JTAG server connection turned off before attempting the hands free labs.
 
-1. Download the provided blank project Quartus archive file (.qar),  `blankProject.qar`
+1. Download the provided blank project Quartus archive file (.qar),  https://github.com/intel/FPGA-Devcloud/tree/master/main/HandsFree/Devkits/DE10-Lite/BlankProject
 
 2. Open the downloaded archive in Quartus Prime
 
@@ -297,6 +297,7 @@ The project unarchived in the previous section implements no digital logic desig
      |  True   |  True   |   True   |
 
    
+
 
 
 4. The logic function now must be added to the top-level of the project. Once again, go to the Files section of the Project Navigator pane. This time select `../hdl/top.v`.
