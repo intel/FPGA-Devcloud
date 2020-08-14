@@ -1,0 +1,77 @@
+cd C:/Users/llandis/Documents/Workshops/HandsFreeLabs/Simulation/DESim/DESim/knight_rider/ModelSim
+do testbench.tcl
+# ** Warning: (vlib-34) Library already exists at "work".
+# Start time: 10:53:59 on Aug 13,2020
+# vlog ../knight_rider.v ../knight_rider_modified.v ../top.v 
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# -- Compiling module knight_rider
+# -- Compiling module clock_divider
+# ** Warning: ../knight_rider_modified.v(1): (vlog-2275) 'knight_rider' already exists and will be overwritten.
+# -- Compiling module knight_rider
+# ** Warning: ../knight_rider_modified.v(43): (vlog-2275) 'clock_divider' already exists and will be overwritten.
+# -- Compiling module clock_divider
+# -- Compiling module top
+# 
+# Top level modules:
+# 	top
+# End time: 10:53:59 on Aug 13,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+# Start time: 10:53:59 on Aug 13,2020
+# vlog keyboard_interface.v testbench.v vga_interface.v 
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# -- Compiling module keyboard_interface
+# ** Warning: keyboard_interface.v(129): (vlog-2182) 'buffer_length' might be read before written in always_comb or always @* block.
+# ** Warning: keyboard_interface.v(150): (vlog-2182) 'disable_control' might be read before written in always_comb or always @* block.
+# ** Warning: keyboard_interface.v(187): (vlog-2182) 'command_to_process' might be read before written in always_comb or always @* block.
+# ** Warning: keyboard_interface.v(160): (vlog-2182) 'keyboard_buffer' might be read before written in always_comb or always @* block.
+# ** Warning: keyboard_interface.v(150): (vlog-2182) 'buffer_length' might be read before written in always_comb or always @* block.
+# -- Compiling module PS2_Command_In
+# -- Compiling module PS2_Data_Out
+# -- Compiling module testbench
+# -- Compiling module vga_interface
+# -- Compiling module address_translator
+# 
+# Top level modules:
+# 	testbench
+# End time: 10:54:00 on Aug 13,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 5
+# vsim work.testbench 
+# Start time: 10:54:00 on Aug 13,2020
+# Loading work.testbench
+# Loading work.top
+# Loading work.knight_rider
+# Loading work.clock_divider
+# Loading work.keyboard_interface
+# Loading work.PS2_Data_Out
+# Loading work.PS2_Command_In
+# Loading work.vga_interface
+# Loading work.address_translator
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: llandis  Hostname: LLANDIS-MOBL  ProcessID: 372
+#           Attempting to use alternate WLF file "./wlftyzyvay".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftyzyvay
+# wave activecursor not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# configure wave not supported in batch mode
+# l
+# h
+# p
+# 0
+# zz
+# zz
+# zz
+# zz
+# zz
+# zz
