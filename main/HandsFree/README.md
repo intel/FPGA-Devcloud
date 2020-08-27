@@ -4,8 +4,6 @@
   <img src="Remote_Console_Guide/DE2115_HEADER.PNG">
 </p>
 
-![DE2115_HEADER](Remote_Console_Guide/DE2115_HEADER.PNG)
-
 ## 1 Overview
 
 The Remote Console framework is an application that uses Quartus Prime Lite to allow instructors to develop remote GPIO-based labs on Intel FPGA development kits. These labs can be performed remotely given a user has been provided credentials to access a development kit, and has VPN capabilities to connect to the network hosting the development kits. This guide is divided into three sections: Student, Instructor, and Systems Administrator. The Student section provides instructions for students to write the HDL code for Remote Console-compatible labs starting with a provided project. The section also details how to program/connect to a development kit, and interface with the development kit GUI. The Instructor section details how instructors can easily migrate existing GPIO-based labs to Remote Console compatible labs in a few simple steps. The Systems Administrator section details different scenarios to setup development kits on a university's network.
@@ -26,7 +24,9 @@ The Remote Console GUI can be launched from a command line interface (CLI), but 
 2. Open Quartus Prime Lite.
 3. In the Tasks pane, click the icon with three lines and press "Customize..." as shown below.
 
-![Make_Task1](Remote_Console_Guide/Make_Task1.PNG)
+<p align="center">
+  <img src="Remote_Console_Guide/Make_Task1.PNG">
+</p>
 
 4. Click "New...".
 
@@ -38,7 +38,9 @@ The Remote Console GUI can be launched from a command line interface (CLI), but 
 
 8. In the next window name the task the script will perform by clicking `<<new>>` under "Task Name (Shown In Tree)". Next, provide a path to the ``launch.tcl`` script in the top directory of the folder extracted from ``RemoteConsole[DevKitName].zip`` by clicking `<<new>>` under "Tcl Script File Name" as shown below.
 
-   ![Make_Task2](Remote_Console_Guide/Make_Task2.PNG)
+<p align="center">
+  <img src="Remote_Console_Guide/Make_Task2.PNG">
+</p>
 
 9. Press OK until all windows are closed.
 
@@ -64,7 +66,9 @@ or
 
 The image below shows the structure of Remote Console-compatible Quartus projects. The user's design is made up of at least one HDL module. The inputs and outputs of a user's design are routed through the Pin IP Module which communicates these signals to the Remote Console GUI. If a clock signal is needed in the user design it does not come from the Pin IP Module like the other signals, but rather from the top-level clock signal. Everything in the Top Module box is realized in hardware on the FPGA of an Intel FPGA development kit, and the clock signal comes from another piece of hardware also on the development kit. However, the Remote Console GUI is a piece of software running on a student's computer that allows a student to communicate with a remote development kit through an interactive GUI.
 
-![](Remote_Console_Guide/Module_Hierarchy.png)
+<p align="center">
+  <img src="Remote_Console_Guide/Module_Hierarchy.png">
+</p>
 
 After setting up the Remote Console GUI launch task and unarchiving blankProject.qar, any given lab that requires simple GPIO-connected peripherals may now be completed. As a simple example, assume an instructor's lab requires students to perform a basic OR function on the state of two slide switches and display the output to an LED. **Ensure you are connected to the host network either locally or via a VPN connection and you have been given a board's IP address and password before performing the example lab.**
 
@@ -82,7 +86,9 @@ The lab can be performed as follows. Note that the solution to this lab is also 
 
    4. After Quartus Prime Lite successfully opens the project, something similar to the following screen will be displayed.
 
-      ![BlankProject1](Remote_Console_Guide/BlankProject1.PNG)
+<p align="center">
+  <img src="Remote_Console_Guide/BlankProject1.PNG">
+</p>
 
    5. The first line on the Hierarchy page in the Project Navigator panel will change depending on the type of Development Kit you are using. To view all of the design files included in this project, change the drop-down menu in the Project Navigator panel from Hierarchy to Files.
 
@@ -131,11 +137,9 @@ The lab can be performed as follows. Note that the solution to this lab is also 
 
       1. You can edit this path by clicking the three lined icon shown in 2-1-1, selecting "Customize...", then select the flow name, and finally, select "Tcl Scripts...". Update the path and select OK until all windows are closed.
 
-         
-
-         ![Login_Page](Remote_Console_Guide/Login_Page-1598311006101.PNG)
-
-         
+<p align="center">
+  <img src="Remote_Console_Guide/Login_Page-1598311006101.PNG">
+</p>
 
    3. To identify a development kit on the host network, the IPv4 of the kit's host machine and a password is required. These credentials should be available to the systems administrator who manages the Remote Console framework. After typing an IPv4 it will be logged. To clear the list of logged IPv4s, click "Clear IPv4s".
 
@@ -155,7 +159,9 @@ The lab can be performed as follows. Note that the solution to this lab is also 
    1. If any status window items are missing check 4.1.1 to 4.1.5 to ensure no configuration errors occurred.
    2. When the session times out the GUI will automatically terminate.
 
-   <img src="Remote_Console_Guide/Example_Kit_Connection.PNG" alt="Example_Kit_Connection" style="zoom: 100%;" />
+<p align="center">
+  <img src="Remote_Console_Guide/Example_Kit_Connection.PNG">
+</p>
 
    2. Note that the speed at which outputs can be updated is dependent on the Ping. The farther a user's geographic  location from the development kit host, the longer packets containing the state of development kit peripherals takes to transmit and receive. If a ping is 100 ms, then the max number of updates in one second would be 10. If a project requires a fast I/O response time, then a locally connected board is preferred. *** 
       1. For example, if a lab simply blinks a single LED every 100 ms, and there is a ping of 150 ms, there will be a reduction in resolution (most blinks will not be visible). However, if the lab is adjusted to support the lower response time, and the LED is adjusted to blink every 300 ms, there will be no loss in resolution.
@@ -192,11 +198,9 @@ The Remote Console framework allows clients (students) to access remote Intel FP
 
 This solution is the most scalable, allowing multiple development kits to be hosted on a single physical machine. One virtual machine (VM) is required per development kit. In this section a detailed example is provided to implement this solution using VirtualBox and Ubuntu 18.04 VMs. Each VM is capped at 1 processor core, 1GB system memory, and 10GB dynamically allocated storage space. **Note that Virtual Box has a facility to clone virtual machines, so a system administrator need only setup two virtual machines, while the rest may be cloned**.
 
-
-
-![IT_Diagram](Remote_Console_Guide/IT_Diagram.png)
-
-
+<p align="center">
+  <img src="Remote_Console_Guide/IT_Diagram.png">
+</p>
 
 The diagram above shows the layout of the solution for a single physical machine. One VM functions as a landing server for all of the development kits connected to the machine, and the USB/IP software is used to broadcast the development kit connections to the other VMs. The USB/IP Server VM provides a more robust connection solution that supports the use of USB-hub connected development kits. The remaining JTAG Server VMs host a service that connects incoming clients to a development kit. Clients are enabled to access their assigned JTAG Server VMs by connecting via VPN to the host network. The software running on each VM has low performance needs, which keeps processor utilization low, however each VM requires up to 1GB of memory and 10GB of dynamically allocated storage. Assuming a physical machine has enough resources to host 8 virtual machines, it can host 7 development kits (1 USB/IP Server VM and 7 JTAG Server VMs). 
 
