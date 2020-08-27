@@ -1,5 +1,9 @@
 # Remote Console Guide
 
+<p align="center">
+  <img src="Remote_Console_Guide/DE2115_HEADER.PNG">
+</p>
+
 ![DE2115_HEADER](Remote_Console_Guide/DE2115_HEADER.PNG)
 
 ## 1 Overview
