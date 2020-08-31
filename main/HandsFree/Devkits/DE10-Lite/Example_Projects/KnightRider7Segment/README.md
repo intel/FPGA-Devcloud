@@ -1,6 +1,6 @@
 # KnightRider7Segment
 
-If you have not previously worked on the part 5 of the [Intro to Quartus](https://github.com/intel/FPGA-Devcloud/blob/master/main/HandsFree/Devkits/DE10-Lite/Example_Projects/Intro_to_Quartus/Intro_to_Quartus_Remote_Lab.pdf) lab, you can use this project as an example of how the program is supposed to run. Compared to the Intro to Quartus lab, you do not have to do any coding for this project. Once you download the project, compile to look at the LED sequence and the 7 segment display(s) count.
+If you have not previously worked on the part 5 of the [Intro to Quartus](https://github.com/intel/FPGA-Devcloud/blob/master/main/HandsFree/Devkits/DE10-Lite/Example_Projects/Intro_to_Quartus/Intro_to_Quartus_Remote_Lab.pdf) lab, you can use this project as an example of how the program is supposed to run. Compared to the Intro to Quartus lab, you do not have to do any coding for this project. Once you download the project, compile to look at the LED sequence and the 7 segment display(s) count. 
 
 ![image](https://user-images.githubusercontent.com/67120855/91612037-89fafb00-e94a-11ea-9607-4ee09bfe1eef.png)
 
