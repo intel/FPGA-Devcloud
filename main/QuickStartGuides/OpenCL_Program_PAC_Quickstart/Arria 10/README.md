@@ -128,6 +128,8 @@ ln -sf hello_world_fpga.aocx bin/hello_world.aocx
 
 #### 3.4 Downloading the bit stream into the PAC card
 
+The executable that you run on the FPGA on the PAC card is called an .aocx file (Altera OpenCL executable).
+
 Next we will be looking for an available acceleration card, convert .aocx to unsigned (v1.2.1), program it, compile the host C code, and run the software program to display on the terminal.
 
 To see what FPGA accelerator cards are available, we type the following into the terminal. 
@@ -165,13 +167,19 @@ Because no root key or code signing key is provided, the script asks if you woul
 
 Next, you will program the PAC card with hello_world.aocx (version 1.2) or hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
+v1.2:
+
 ```
 aocl program acl0 bin/hello_world.aocx
 ```
 
+V1.2.1:
+
 ```
 aocl program acl0 hello_world_fpga_unsigned.aocx
 ```
+
+
 
 #### 3.5 Running the host code 
 
@@ -221,4 +229,7 @@ List the revision history for the application note.
 | Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
 | Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
 | Damaris Renteria | 5/29/2020 | Added batch script                       |
+| Larry Landis     | 8/5/2020  | Misc edits per Ruben feedback            |
+
+
 

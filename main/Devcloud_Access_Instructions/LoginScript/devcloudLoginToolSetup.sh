@@ -3,8 +3,8 @@
 #                           #
 #      Latest Edit          #
 #                           #
-# -July 6 2020 Version 2    #
-# Fixed script design       #
+# -Sept 8 2020 Version 2    #
+# Added new HW nodes	    #
 #                           #
 #############################
 
@@ -32,7 +32,7 @@ end=$'\e[0m'
 ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 #noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
 #Replaced with fpga_compile
-noHardwareNodes=("s001-n145" "s001-n146" "s001-n147" "s001-n148" "s001-n149" "s001-n150" "s001-n151" "s001-n152" "s001-n153" "s001-n154" "s001-n155" "s001-n156")
+noHardwareNodes=("s001-n045" "s001-n046" "s001-n047" "s001-n048" "s001-n049" "s001-n050" "s001-n051" "s001-n052" "s001-n053" "s001-n054" "s001-n055" "s001-n056" "s001-n057" "s001-n058" "s001-n059" "s001-n060" "s001-n061" "s001-n062" "s001-n063" "s001-n064" "s001-n065" "s001-n066" "s001-n067" "s001-n068" "s001-n069" "s001-n070" "s001-n072" "s001-n073" "s001-n074" "s001-n075" "s001-n076" "s001-n077" "s001-n078" "s001-n079" "s001-n080")
 arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
 arria10Nodes12=("s005-n006" "s001-n137" "s001-n138" "s001-n139")
 arria10Nodes121=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007")
@@ -40,6 +40,7 @@ arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085
 stratix10Nodes=("s005-n008" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
+x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007")
 
 
 login_usage() {
@@ -63,7 +64,7 @@ login_usage() {
     echo "-----------------"
     echo
     echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2)         Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI"
+    echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI, OpenVINO"
     echo "S10PAC  (eg. devcloud_login -I S10PAC)	           Stratix 10 PAC"
     echo "CO      (eg. devcloud_login -I CO)                 Compilation Only"
     echo "SNN     (eg. devcloud_login -I SNN s001-n139)      Specific Node Name"
@@ -73,10 +74,10 @@ login_usage() {
     echo "Walltime is optional; use if batch job needs more than 6 hours. Maximum Walltime is 48 hours for machines running RTL AFU/OpenCL and 24 hours for machines running OneAPI."
     echo
     echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
-    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walttime=12:00:00] job.sh)         Arria 10 OneAPI"
-    echo "S10PAC  (eg. devcloud_login -b S10PAC [walttime=12:00:00] job.sh)	   Stratix 10 PAC"
-    echo "CO      (eg. devcloud_login -b CO [walttime=12:00:00] job.sh)              Compilation Only"
-    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walttime=12:00:00] job.sh)   Specific Node Name"
+    echo "A10OAPI (eg. devcloud_login -b A10OAPI [walltime=12:00:00] job.sh)         Arria 10 OneAPI, OpenVINO"
+    echo "S10PAC  (eg. devcloud_login -b S10PAC [walltime=12:00:00] job.sh)	   Stratix 10 PAC"
+    echo "CO      (eg. devcloud_login -b CO [walltime=12:00:00] job.sh)              Compilation Only"
+    echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walltime=12:00:00] job.sh)   Specific Node Name"
     echo
     echo "See Also: "
     echo "---------"
@@ -213,7 +214,7 @@ devcloud_login()
 	printf "%s\n" "${blu}What are you trying to use the Devcloud for? ${end}"
 	echo
 	echo "1) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-	echo "2) Arria 10 OneAPI"
+	echo "2) Arria 10 - OneAPI, OpenVINO"
 	echo "3) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
 	echo "4) Compilation (Command Line) Only"
 	echo "5) Enter Specific Node Number"
@@ -287,7 +288,7 @@ devcloud_login()
 		node=(${availableNodes[0]})
 		qsub -q batch@v-qsvr-fpga -l nodes="$node":ppn=2 -l $argv3 $argv4
 	    else
-                node=(${availableNodes[0]})
+                node=(${availableNodes[-1]})
                 x2go_msg $node
             fi
         else
@@ -478,7 +479,7 @@ tool_usage() {
     echo "QP      (eg. tools_setup -t QP 18.1)	      Quartus Pro; ${*:3}"
     echo "HLS     (eg. tools_setup -t HLS QL 18.1)      High-Level Synthesis"
     echo "A10DS   (eg. tools_setup -t A10DS 1.2)        Arria 10 Development Stack"
-    echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 One API"
+    echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 OneAPI, OpenVINO"
     echo "S10DS   (eg. tools_setup -t S10DS)	      Stratix 10 Development Stack"
     echo
 }
@@ -525,7 +526,7 @@ tools_setup()
 	echo "3) Quartus Prime Pro"
 	echo "4) HLS"
     	echo "5) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-    	echo "6) Arria 10 OneAPI"
+    	echo "6) Arria 10 - OneAPI, OpenVINO"
     	echo "7) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
     	echo
     	echo -n "Number: "
@@ -908,6 +909,10 @@ tools_setup()
             #source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
             echo "sourcing /opt/intel/inteloneapi/setvars.sh"
 	    source /opt/intel/inteloneapi/setvars.sh
+	    ### OpenVINO Setup
+	    export IE_INSTALL="/glob/development-tools/versions/oneapi/beta07/openvino/deployment_tools"
+	    source $IE_INSTALL/../bin/setupvars.sh
+	    alias mo="python3.5 $IE_INSTALL/model_optimizer/mo.py"
         else
             echo "Not on an Arria10 OneAPI node. You need to be on an Arria10 OneAPI node."
         fi

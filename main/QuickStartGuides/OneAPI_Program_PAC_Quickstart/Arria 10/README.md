@@ -125,6 +125,12 @@ success
 
 The batch script attached above (in this case A10_oneapi_batch.sh) can be use to launch the OneAPI emulation flow, followed by the compilation and FPGA board programming flow using make commands. **Adjust commands within the script to your own needs.**
 
+Use wget to copy the batch script locally:
+
+```
+wget -N https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart/Arria%2010/A10_oneapi_batch.sh
+```
+
 From the headnode login-2, run this command:
 
 ```
@@ -150,6 +156,7 @@ List the revision history for the application note.
 | Larry Landis     | 4/29/2020 | Batch Command flow                    |
 | Larry Landis     | 5/15/2020 | Add OneAPI github link for vector-add |
 | Damaris Renteria | 5/28/2020 | Relocated Batch Commands              |
+| Larry Landis     | 8/5/2020  | wget                                  |
 
 
 
