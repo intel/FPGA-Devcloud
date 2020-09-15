@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Aug 18 2020 Version 1    #
-# Added new HW nodes	    #
+# -Sep 14 2020 Version 1    #
+# Modified tools	    #
 #                           #
 #                           #
 #                           #
@@ -929,10 +929,10 @@ tools_setup()
         fi
 
     elif [[ $number -eq 6 || ( -n $argv1 && $argv1 == "A10OAPI" ) ]]; then  # case for Arria 10 OneAPI
-        IFS="|"
-        temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
-        unset IFS
-        if [[ ${arria10_oneAPI_Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks if user is currently on correct node and node name has length of 9
+        #IFS="|"
+        #temp_string="$(echo $HOSTNAME | grep -o -E "${arria10_oneAPI_Nodes[*]}")"
+        #unset IFS
+        #if [[ ${arria10_oneAPI_Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks if user is currently on correct node and node name has length of 9
             #echo "sourcing $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh"
             #source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
             echo "sourcing /opt/intel/inteloneapi/setvars.sh"
@@ -941,15 +941,15 @@ tools_setup()
 	    export IE_INSTALL="/glob/development-tools/versions/oneapi/beta07/openvino/deployment_tools"
 	    source $IE_INSTALL/../bin/setupvars.sh
 	    alias mo="python3.5 $IE_INSTALL/model_optimizer/mo.py"
-        else
-            echo "Not on an Arria10 OneAPI node. You need to be on an Arria10 OneAPI node."
-        fi
+        #else
+            #echo "Not on an Arria10 OneAPI node. You need to be on an Arria10 OneAPI node."
+        #fi
 
     elif [[ $number -eq 7 || ( -n $argv1 && $argv1 == "S10DS" ) ]]; then  # case for Stratix 10 Development Stack
-        IFS="|"
-        temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10Nodes[*]}")"
-        unset IFS
-        if [[ ${stratix10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then
+        #IFS="|"
+        #temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10Nodes[*]}")"
+        #unset IFS
+        #if [[ ${stratix10Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then
             echo "sourcing $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh"
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/init_env.sh
             echo
@@ -963,9 +963,9 @@ tools_setup()
 	    echo
             echo "Putting python2 in the search path - required for Stratix 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
-        else
-            echo "Not on a stratix10 node. You need to be on a stratix 10 node to run Stratix 10 Development Stack"
-        fi
+        #else
+            #echo "Not on a stratix10 node. You need to be on a stratix 10 node to run Stratix 10 Development Stack"
+        #fi
 
     else
 	if [ -z "argv1" ]; then
