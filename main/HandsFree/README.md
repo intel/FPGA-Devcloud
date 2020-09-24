@@ -35,7 +35,7 @@ The Remote Console application provides a means for university students to perfo
 
   or
 
-* A group of VDI capable-machines hosting Quartus Prime LIte 18.1 and above, and the Remote Console application.
+* A group of VDI capable-machines, each hosting Quartus Prime Lite 18.1 and above, and the Remote Console application.
 
 Student
 -----------
@@ -272,28 +272,9 @@ A client will be instructed to perform the following steps to connect to a devel
 5. Validate assignment using the Remote Console GUI interface.
 6. Disconnect from VDI.
 
-The following sections detail the supported setup approaches, their bennefits, and 
+The following sections detail the supported host setups, their pros/cons, and 
 
-### Setting up Development Kit Host Machine VPN approach
-
-#### Description
-
-In this setup approach the 
-
-#### Pros
-
-* Least resource hungry approach for the host. 
-  * Requires 1 machine to host a number of development kits (10 kits/machine tested).
-
-#### Cons
-
-* The worst response time for a client.
-  * Large delay imposed by running Remote Console on a machine separate from a development kit.
-  * Requires client install Quartus Prime Lite, or use a separate machine hosting the tool.
-
-#### Setup
-
-### Setting up Development Kit Host Machine VDI approach w/ Quartus Prime Lite
+### Setting up Development Kit Host Machine with a VPN
 
 #### Description
 
@@ -312,7 +293,26 @@ In this setup approach the
 
 #### Setup
 
-### Setting up Development Kit Host Machine VDI approach w/ Quartus Programmer and Tools
+### Setting up Development Kit Host Machine w/ VDI and Quartus Prime Lite
+
+#### Description
+
+In this setup approach the 
+
+#### Pros
+
+* Least resource hungry approach for the host. 
+  * Requires 1 machine to host a number of development kits (10 kits/machine tested).
+
+#### Cons
+
+* The worst response time for a client.
+  * Large delay imposed by running Remote Console on a machine separate from a development kit.
+  * Requires client install Quartus Prime Lite, or use a separate machine hosting the tool.
+
+#### Setup
+
+### Setting up Development Kit Host Machine w/ VDI and Quartus Programmer and Tools
 
 #### Description
 
