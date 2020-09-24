@@ -31,7 +31,11 @@ The Remote Console application provides a means for university students to perfo
 
 **Remote Console host requirements:**
 
--   Linux machine (Ubuntu 18.04 tested) with Quartus Programmer and Tools 18.1 and above.
+- Linux machine (Ubuntu 18.04 tested) with Quartus Programmer and Tools 18.1 and above.
+
+  or
+
+* A group of VDI capable-machines hosting Quartus Prime LIte 18.1 and above, and the Remote Console application.
 
 Student
 -----------
@@ -61,7 +65,7 @@ The Remote Console GUI can be launched from a command line interface (CLI), but 
 <p align="center">
 	<img src="Remote_Console_Guide/Make_Task1.PNG">
 	</p>
-	
+
 4.  Click "New...".
 
 5.  Provide a name for the GUI launch flow in "Custom flow name", and be sure to specify the development kit type (i.e. GUILaunchDE10Lite).
@@ -85,7 +89,7 @@ The Remote Console GUI can be launched from a command line interface (CLI), but 
 1. Extract the `RemoteConsole[DevKitName].zip` file to a directory that will not be cleared or moved (i.e. documents).
 2. Download and open the `run_GUI.bat` batch script.
 3. Set the `path_to_main` variable to contain the path to `main.tcl` in the Remote Console `Source` directory.
-4. Set the `quartus_bin` variable to contain the path to `bin64` directory of the `quartus` install directory.
+4. Set the `quartus_bin` variable to contain the path to the `bin64` directory of the `quartus` install directory.
 
 ####  Unarchive a Quartus Archive File
 
@@ -182,6 +186,7 @@ The lab can be performed as follows. Note that the solution to this lab is also 
    2. Alternatively, if the Remote Console application is being run on a machine that is not running Quartus Prime Lite, then launch the Remote Console GUI by right clicking the batch file setup in the beginning of the section and click "Run as Administrator".
          1. Administrator privileges are only needed because the batch script terminates any idle Quartus Shell or System Console processes that run the backed of the GUI.
 2. Once launched, a login GUI should appear as shown below. If this GUI does not show up, check that the path to ``launch.tcl`` is correct, or, if using a batch script, check that the paths to the `main.tcl` and the `quartus` directory's bin are correct. 
+      
       1. In Quartus you can edit the task's path by clicking the three lined icon in the Task pane, then selecting "Customize...". Select the flow name and, finally, select "Tcl Scripts...". Update the path and select OK until all windows are closed.
 
 <p align="center">
@@ -192,13 +197,13 @@ The lab can be performed as follows. Note that the solution to this lab is also 
    3. To identify a development kit on the host network, the IPv4 of the kit's host machine and a password is required. These credentials should be available to the systems administrator who manages the Remote Console framework. After typing an IPv4 it will be logged. To clear the list of logged IPv4s, click "Clear IPv4s".
 
       1. A client may also run the remote console using a development kit physically connected to the student machine by typing or selecting "local" in the IPv4 drop-down menu. No password is required if a local development kit is connected.
-   4. After entering a password (or no password if local is selected), the path to Quartus project's output .sof must be provided.
+   4. After entering a password (or no password if local is selected), the path to the Quartus project's output .sof must be provided.
 
          1. Click the "Select .sof"
          2. Navigate to .sof folder
 
                1. If .sof is generated on a separate computer, then it will need to be downloaded to the computer Remote Console is hosted on.
-               2. If the .sof file is generated from a local Quartus Prime installation, it will typically be stored in the output_files folder of the project's root directory.
+               2. If the .sof file is generated from a local Quartus Prime installation, it will typically be stored in the "output_files" folder of the project's root directory.
       5. After the proper credentials are entered, click "Link". After pressing "Link" the remote development kit at the provided IPv4 will be connected to, the design will be programmed, and, finally a communication link will be established to the development kit.
 
       1. If a failure occurs, you may be able to try again depending on the type of failure. Typical sources of failure are:
@@ -216,7 +221,7 @@ The lab can be performed as follows. Note that the solution to this lab is also 
   <img src="Remote_Console_Guide/Example_Kit_Connection.PNG">
 </p>
 
-   2. Note that the speed at which outputs can be updated is dependent on the Ping. The farther a user's geographic  location from the development kit host, the longer packets containing the state of development kit peripherals takes to transmit and receive. If a ping is 100 ms, then the max number of updates in one second would be 10. If a project requires a fast I/O response time, then a locally connected board is preferred.
+   2. Note that the speed at which outputs can be updated is dependent on the "Ping" field. Although, if using a VDI implementation this field is inaccurate, and may be ignored. The farther a user's geographic  location from the development kit host, the longer packets containing the state of development kit peripherals takes to transmit and receive. If a ping is 100 ms, then the max number of updates in one second would be 10. If a project requires a fast I/O response time, then a locally connected board is preferred.
       1. For example, if a lab simply blinks a single LED every 100 ms, and there is a ping of 150 ms, there will be a reduction in resolution (most blinks will not be visible). However, if the lab is adjusted to support the lower response time, and the LED is adjusted to blink every 300 ms, there will be no loss in resolution.
 
 5. Validate the functionality of the OR2X1 module using the Remote Console interactive GUI.
@@ -243,7 +248,7 @@ The Remote Console framework allows clients (students) to access remote Intel FP
 A client will be instructed to perform the following steps to connect to a development kit if a VPN is being used:
 
 1. Connect via VPN to the host network.
-2. Perform a lab assignment either on their local machine.
+2. Perform a lab assignment on their local machine.
 3. Run the Remote Console application on their local machine.
 4. Connect, program and link to a development kit using an assigned IPv4 and password.
 5. Validate assignment using the Remote Console GUI interface.
@@ -267,25 +272,64 @@ A client will be instructed to perform the following steps to connect to a devel
 5. Validate assignment using the Remote Console GUI interface.
 6. Disconnect from VDI.
 
-### Setting up Development Kit Host Machine 
+The following sections detail the supported setup approaches, their bennefits, and 
 
-### VPN approach
+### Setting up Development Kit Host Machine VPN approach
 
+#### Description
 
+In this setup approach the 
 
-### Setting up Development Kit Host Machine 
+#### Pros
 
-### VDI approach w/ Quartus Prime Lite
+* Least resource hungry approach for the host. 
+  * Requires 1 machine to host a number of development kits (10 kits/machine tested).
 
+#### Cons
 
+* The worst response time for a client.
+  * Large delay imposed by running Remote Console on a machine separate from a development kit.
+  * Requires client install Quartus Prime Lite, or use a separate machine hosting the tool.
 
+#### Setup
 
+### Setting up Development Kit Host Machine VDI approach w/ Quartus Prime Lite
 
-### Setting up Development Kit Host Machine 
+#### Description
 
-### VDI approach w/ Quartus Programmer and Tools
+In this setup approach the 
 
+#### Pros
 
+* Least resource hungry approach for the host. 
+  * Requires 1 machine to host a number of development kits (10 kits/machine tested).
+
+#### Cons
+
+* The worst response time for a client.
+  * Large delay imposed by running Remote Console on a machine separate from a development kit.
+  * Requires client install Quartus Prime Lite, or use a separate machine hosting the tool.
+
+#### Setup
+
+### Setting up Development Kit Host Machine VDI approach w/ Quartus Programmer and Tools
+
+#### Description
+
+In this setup approach the 
+
+#### Pros
+
+* Least resource hungry approach for the host. 
+  * Requires 1 machine to host a number of development kits (10 kits/machine tested).
+
+#### Cons
+
+* The worst response time for a client.
+  * Large delay imposed by running Remote Console on a machine separate from a development kit.
+  * Requires client install Quartus Prime Lite, or use a separate machine hosting the tool.
+
+#### Setup
 
 ## Instructors
 
@@ -296,8 +340,8 @@ An instructors existing FPGA curriculum can be easily modified and converted int
 * Push-button switches
 * Slide switches
 
-Several example labs are available on this GitHub site to serve as references for students and instructors. To create or port an existing lab, it is recommended to begin with the blankProject.qar for a target development kit. More Intel FPGA development kit GUI interfaces are planned to be released in Fall 2020.
+Several example labs are available on this GitHub site to serve as references for students and instructors. To create or port an existing lab, it is recommended to begin with the `blankProject.qar` for a target development kit. More Intel FPGA development kit GUI interfaces are planned to be released in Fall 2020, however there is nothing requiring a particular development kit GUI be hosted on that development kit. All I/O widgets in the GUI are simply data in a memory map. In the example provided in the "Using Supported GUI on Non-Supported Development Kits" section a DE10-Lite GUI is and hosted on a DE2-115 development kit by editing the provided `blankProject` Quartus project.
 
 ### Standard to Remote Console Lab Conversion
 
-### Using Supported GUI Interfaces on Non-Supported Development Kits
+### Using Supported GUI on Non-Supported Development Kits
