@@ -11,7 +11,7 @@
       - [1.2.1.3 Unarchive a Quartus Archive File](#1213-unarchive-a-quartus-archive-file)
       - [1.2.1.4 Connection Scenarios](#1214-connection-scenarios)
       - [1.2.1.5 Simple Remote Console Lab Tutorial](#1215-simple-remote-console-lab-tutorial)
-  * [1.3 Systems Administrator](#13-system-administrator)
+  * [1.3 Systems Administrator](#13-systems-administrator)
     + [1.3.1 Setting up Development Kit Host Machine with a VPN](#131-setting-up-development-kit-host-machine-with-a-vpn)
     + [1.3.2 Setting up Development Kit Host Machine w/ VDI and Quartus Prime Lite](#132-setting-up-development-kit-host-machine-w--vdi-and-quartus-prime-lite)
     + [1.3.3 Setting up Development Kit Host Machine w/ VDI and Quartus Programmer and Tools](#133-setting-up-development-kit-host-machine-w--vdi-and-quartus-programmer-and-tools)
