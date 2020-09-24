@@ -13,20 +13,8 @@
       - [1.2.1.5 Simple Remote Console Lab Tutorial](#1215-simple-remote-console-lab-tutorial)
   * [1.3 System Administrator](#13-system-administrator)
     + [1.3.1 Setting up Development Kit Host Machine with a VPN](#131-setting-up-development-kit-host-machine-with-a-vpn)
-      - [1.3.1.1 Description](#1311-description)
-      - [1.3.1.2 Pros](#1312-pros)
-      - [1.3.1.3 Cons](#1313-cons)
-      - [1.3.1.4 Setup](#1314-setup)
     + [1.3.2 Setting up Development Kit Host Machine w/ VDI and Quartus Prime Lite](#132-setting-up-development-kit-host-machine-w--vdi-and-quartus-prime-lite)
-      - [1.3.2.1 Description](#1321-description)
-      - [1.3.2.2 Pros](#1322-pros)
-      - [1.3.2.3 Cons](#1323-cons)
-      - [1.3.2.4 Setup](#1324-setup)
     + [1.3.3 Setting up Development Kit Host Machine w/ VDI and Quartus Programmer and Tools](#133-setting-up-development-kit-host-machine-w--vdi-and-quartus-programmer-and-tools)
-      - [1.3.3.1 Description](#1331-description)
-      - [1.3.3.2 Pros](#1332-pros)
-      - [1.3.3.3 Cons](#1333-cons)
-      - [1.3.3.4 Setup](#1334-setup)
   * [1.4 Instructors](#14-instructors)
     + [1.4.1 Standard to Remote Console Lab Conversion](#141-standard-to-remote-console-lab-conversion)
     + [1.4.2 Using Supported GUI on Non-Supported Development Kits](#142-using-supported-gui-on-non-supported-development-kits)
@@ -210,9 +198,11 @@ endmodule
     1. Once compilation is complete, launch the Remote Console GUI using one of the following methods.
     
     2.  If running the Remote Console application from the Quartus Prime Lite GUI, navigate to the tasks panel and select the task created at the beginning of this section. Under Tcl Scripts, right-click the text next to the feather icon and select "Start".
+        
         1.  Depending on network speed and the previous connection settings it may take a few minutes to clear the previous Quartus Prime programmer settings and start the GUI.
         
     3.  Alternatively, if the Remote Console application is being run on a machine that is not running Quartus Prime Lite, then launch the Remote Console GUI by right clicking the batch file setup in the beginning of the section and click "Run as Administrator".
+        
         1.  Administrator privileges are only needed because the batch script terminates any idle Quartus Shell or System Console processes that run the backed of the GUI.
         
     4. Once launched, a login GUI should appear as shown below. If this GUI does not show up, check that the path to `launch.tcl` is correct, or, if using a batch script, check that the paths to the `main.tcl` and the `quartus` directory's bin are correct.
