@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Sep 14 2020 Version 1    #
-# Modified tools	    #
+# -Oct 05 2020 Version 1    #
+# Added S10 nodes	    #
 #                           #
 #                           #
 #                           #
@@ -20,12 +20,11 @@ ARRIA10DEVSTACK_RELEASE=("1.2" "1.2.1")
 #noHardwareNodes=("s001-n039" "s001-n040" "s001-n041" "s001-n042" "s001-n043" "s001-n044" "s001-n045")
 #Replaced with fpga_compile
 noHardwareNodes=("s001-n045" "s001-n046" "s001-n047" "s001-n048" "s001-n049" "s001-n050" "s001-n051" "s001-n052" "s001-n053" "s001-n054" "s001-n055" "s001-n056" "s001-n057" "s001-n058" "s001-n059" "s001-n060" "s001-n061" "s001-n062" "s001-n063" "s001-n064" "s001-n065" "s001-n066" "s001-n067" "s001-n068" "s001-n069" "s001-n070" "s001-n072" "s001-n073" "s001-n074" "s001-n075" "s001-n076" "s001-n077" "s001-n078" "s001-n079" "s001-n080")
-arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
-arria10Nodes12=("s005-n006" "s001-n137" "s001-n138" "s001-n139")
-arria10Nodes121=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007")
+arria10Nodes=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n007" "s001-n137" "s001-n138" "s001-n139")
+arria10Nodes12=("s001-n137" "s001-n138" "s001-n139")
+arria10Nodes121=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
-# 1 more stratix10Nodes expected date TBD
-stratix10Nodes=("s005-n008" "s001-n189")
+stratix10Nodes=("s005-n005" "s005-n006" "s005-n008" "s005-n009" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
 x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007")
