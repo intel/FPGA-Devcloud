@@ -214,9 +214,11 @@ devcloud_login()
     elif [[ $number -eq 3 || ( -n $argv1 && $argv1 == "S10PAC" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
-            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
+            #readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodes_no_darby_tag < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
-            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
+            #availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
+            availableNodes=( "${availableNodes_on_temp_server[@]}" "${availableNodes_no_darby_tag[@]}" )
             unset IFS
             if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
             then
@@ -307,17 +309,19 @@ devcloud_login()
             readarray availableNodesArria121_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 1 "state = free" | grep -o -E "${arria10Nodes121[*]}")
             readarray availableNodesArria10_oneAPI_Nodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
             readarray availableNodesArria10_oneAPI_Nodes_on_temp_server < <(pbsnodes | grep -B 4 'arria10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${arria10_oneAPI_Nodes[*]}")
-            readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            #readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodes_no_darby_tag < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             unset IFS
             let number_of_available_no_hardware_nodes=${#availableNodesNohardware[@]}
             let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
             let number_of_available_arria10_oneAPI_nodes=${#availableNodesArria10_oneAPI_Nodes[@]}+${#availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}
-            let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
+            #let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
+            let number_of_available_stratix10_nodes=${#availableNodesStratix_on_temp_server[@]}+${#availableNodes_no_darby_tag[@]}
 
-            availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" "${availableNodesStratix[@]}" \
+            availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" \ #"${availableNodesStratix[@]}" \
                 "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}" "${availableNodesArria10_oneAPI_Nodes[@]}" \
-		"${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}")
+		"${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}" "${availableNodes_no_darby_tag[@]}")
 
             if [ ${#availableNodes[@]} == 0 ]; then
                 echo
@@ -402,7 +406,8 @@ devcloud_login()
                 echo
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
-                node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+                #node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+                node_stratix_str=$(echo ${availableNodesStratix_on_temp_server[@]} ${availableNodes_no_darby_tag[@]})
                 printf "${red}$node_stratix_str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
@@ -433,7 +438,8 @@ devcloud_login()
                 echo
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
-                node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+                #node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
+                node_stratix_str=$(echo ${availableNodesStratix_on_temp_server[@]} ${availableNodes_no_darby_tag[@]})
                 printf "${red}$node_stratix_str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
