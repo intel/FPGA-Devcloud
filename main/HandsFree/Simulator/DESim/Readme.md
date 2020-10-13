@@ -3,28 +3,26 @@ DESim is a virtual FPGA interface that runs on top of ModelSim simulator. It all
 
 ## 2 Installation
 ### 2.1 Software requirements
-1. Install the Mentor ModelSim simulator. You can get a free copy of Modelsim when you install the Intel FPGA Quartus Prime Lite software. The download link is here: https://fpgasoftware.intel.com/19.1/?edition=lite&platform=windows) . Note go to individual files and you can download Modelsim separately. No libraries are needed. The simulator will simulate RTL - if references to underlying FPGA primitives, these libraries will need to be manually referenced.
-2. Install Java OpenJDK 11 or later (https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot). Java is used to run the underlying application.
-3. Install the Java GUI library package OpenJFX 11 or later (https://gluonhq.com/products/javafx/). You can install wherever you please, but take note of the installation path. No environment variable setting is needed for this, however you will be required to edit a path in the run batch script.
+1. ModelSim (Intel FPGA starter edition 10.5b, available at https://fpgasoftware.intel.com/19.1/?edition=lite&platform=windows) . Note go to individual files and you can download Modelsim separately. No libraries are needed.
+2. OpenJDK 11 or later (https://jdk.java.net/archive/) You can install anywhere, however you will need to setup your system variables to access. Go to your windows search bar and search for environment variables. Click on the app to edit the system properties. Left click environment variables. Under System variables, set JAVA_HOME to the full Windows path to jdk-14.0.1 . For the Path variable, set the path to <your_path>/bin for the jdk-14.0.1 installation.
+3. OpenJFX 11 or later (https://gluonhq.com/products/javafx/) . No environment variable setting is needed for this, however you will be required to edit a path in the run batch script.
 
 ### 2.2 Setup on Windows
-1. If you haven't done so download the installation zip file from this location: https://github.com/intel/FPGA-Devcloud/tree/master/main/HandsFree/Simulator/DESim
-2. Extract the zip file.
-3. Open `Simulator_jar/DESim_run.bat` with a simulator and change the path for `java --module-path` to `"[path-to-openJFX-sdk]\lib"` . Note that because the statement is in double quotes you don't need to escape the spaces in the path.
-4. Startup a DOS command console (cmd). Change directory to the <install_location>/SimConsoleFPGA/DESim:  Run `DESim_run.bat` to start the DESim GUI interface .
-5. Make sure that `vsim -c` (ModelSim command-line version) runs successfully in a Windows cmd console
-6. In a second command console, Run `<install_location>/demo/led_demo/sim/demo.bat` to connect the interface to ModelSim simulator.
+1. Download DESim, install OpenJDK and OpenJFX
+2. Open `Simulator_jar/DESim_run.bat`, modify the arguments for `java --module-path` to `"[path-to-openJFX-sdk]\lib"`
+3. Run `DESim_run.bat` to start the DESim GUI interface 
+4. Make sure that `vsim -c` (ModelSim command-line version) runs successfully in a Windows cmd console
+5. Run `demo/led_demo/sim/demo.bat` to connect the interface to ModelSim simulator.
 
 ### 2.3 Setup on Linux
 Coming soon.
 
 ## 3 Running Projects on the DESim console
-### 3.1 Run sample projects
-1. The demo directory directory contains a number of projects. Change directory to the demo of interest and launch demo.bat . You can interact with the console GUI by viewing LEDs, seven segments, VGA output and changing the values of switches and LEDs. The simulator will initialize the reg values to logic zero upon startup.
-2. Run `DESim_run.bat` to start DESim interface.
-3. Run `demo/led_demo/sim/demo.bat` to connect the interface to ModelSim and start simulation.
-4. Click the checkboxes for switches and observe the LED lights changing.
-5. Click `Stop` button in the tool bar to stop the simulation.
+### 3.1 Run a sample project
+1. Run `DESim_run.bat` to start DESim interface.
+2. Run `demo/led_demo/sim/demo.bat` to connect the interface to ModelSim and start simulation.
+3. Click the checkboxes for switches and observe the LED lights changing.
+4. Click `Stop` button in the tool bar to stop the simulation.
 
  
 
@@ -34,6 +32,12 @@ Coming soon.
 3. Save `hello.v` and associated submodules, and you can now run your project.  
 
 Note: Please set the default nettype of all project files to none. (i.e. add "`default_nettype none" to all project files)
+
+4. Keep in mind that the state of signals and registers are unknown using the simulator. If you dont get the results you are expecting, consider adding an initial block in your RTL block to set registers to a known reset state, or add a reset signal.
+
+
+
+
 
 ## 4 Testbench Considerations
 
