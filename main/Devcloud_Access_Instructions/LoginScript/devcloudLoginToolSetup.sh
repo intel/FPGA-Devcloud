@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Oct 05 2020 Version 1    #
-# Added S10 nodes	    #
+# -Oct 23 2020 Version 1    #
+# Modified tools-setup	    #
 #                           #
 #                           #
 #                           #
@@ -540,6 +540,10 @@ tools_setup()
 	# display Help
 	tool_Help ${QUARTUS_LITE_RELEASE[@]} ${QUARTUS_STANDARD_RELEASE[@]} ${QUARTUS_PRO_RELEASE[@]}
 	return 0
+    elif [ $HOSTNAME == "login-2" ]; then
+	# check to see if user is logged into headnode
+	echo "Your hostname is login-2. Please login to a compute node to be able to use 'tools_setup' command"
+        return 1
     elif [[ $1 == "-t" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
