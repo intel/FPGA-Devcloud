@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Oct 05 2020 Version 1    #
-# Added S10 nodes	    #
+# -Nov 02 2020 Version 1    #
+# Added new X2GO node	    #
 #                           #
 #                           #
 #                           #
@@ -27,7 +27,7 @@ arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085
 stratix10Nodes=("s005-n005" "s005-n006" "s005-n008" "s005-n009" "s001-n189")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
 
-x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007")
+x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n007" "s005-n008")
 
 
 devcloud_login()
@@ -540,6 +540,10 @@ tools_setup()
 	# display Help
 	tool_Help ${QUARTUS_LITE_RELEASE[@]} ${QUARTUS_STANDARD_RELEASE[@]} ${QUARTUS_PRO_RELEASE[@]}
 	return 0
+    elif [ $HOSTNAME == "login-2" ]; then
+	# check to see if user is logged into headnode
+	echo "Your hostname is login-2. Please login to a compute node to be able to use 'tools_setup' command"
+        return 1
     elif [[ $1 == "-t" && -n $2 ]]; then
 	argv1="$2"
 	argv2="$3"
