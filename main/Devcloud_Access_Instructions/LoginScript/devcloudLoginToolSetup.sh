@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Nov 02 2020 Version 1    #
-# Added new X2GO node	    #
+# -Nov 06 2020 Version 1    #
+# Fixed OpenVINO path       #
 #                           #
 #                           #
 #                           #
@@ -947,7 +947,7 @@ tools_setup()
             echo "sourcing /opt/intel/inteloneapi/setvars.sh"
 	    source /opt/intel/inteloneapi/setvars.sh
 	    ### OpenVINO Setup
-	    export IE_INSTALL="/glob/development-tools/versions/oneapi/beta07/openvino/deployment_tools"
+	    export IE_INSTALL="/opt/intel/openvino/deployment_tools"
 	    source $IE_INSTALL/../bin/setupvars.sh
 	    alias mo="python3.5 $IE_INSTALL/model_optimizer/mo.py"
         #else
