@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Nov 09 2020 Version 1    #
+# -Nov 10 2020 Version 1    #
 # Added BBB path            #
 #                           #
 #                           #
@@ -931,7 +931,7 @@ tools_setup()
             #export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
 	    #export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
 	    # BBB installed in s005-n004 & s005-n007 nodes only
-	    export FPGA_BBB_CCI_SRC=~/usr/local/intel-fpga-bbb
+	    export FPGA_BBB_CCI_SRC=/usr/local/intel-fpga-bbb
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
@@ -972,7 +972,7 @@ tools_setup()
             #export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
 	    #export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
 	    # BBB installed in s005-n008 node only
-	    export FPGA_BBB_CCI_SRC=~/usr/local/intel-fpga-bbb
+	    export FPGA_BBB_CCI_SRC=/usr/local/intel-fpga-bbb
 	    echo
             echo "Putting python2 in the search path - required for Stratix 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
