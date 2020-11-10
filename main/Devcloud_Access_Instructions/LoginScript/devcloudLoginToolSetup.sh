@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Nov 06 2020 Version 1    #
-# Fixed OpenVINO path       #
+# -Nov 09 2020 Version 1    #
+# Added BBB path            #
 #                           #
 #                           #
 #                           #
@@ -927,9 +927,11 @@ tools_setup()
             source $GLOB_FPGASUPPORTSTACK/a10/${ARRIA10DEVSTACK_RELEASE[1]}/intelFPGA_pro/hld/init_opencl.sh
 	    echo
             echo "exporting basic building blocks env-variable settings"
-	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
-            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
-	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    #export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            #export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
+	    #export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    # BBB installed in s005-n004 & s005-n007 nodes only
+	    export FPGA_BBB_CCI_SRC=~/usr/local/intel-fpga-bbb
 	    echo
             echo "Putting python2 in the search path - required for Arria 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
@@ -966,9 +968,11 @@ tools_setup()
             source $GLOB_FPGASUPPORTSTACK/d5005/2.0.1/inteldevstack/hld/init_opencl.sh
 	    echo
             echo "exporting basic building blocks env-variable settings"
-	    export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
-            export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
-	    export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    #export FPGA_BBB_CCI_SRC=~/intel-fpga-bbb
+            #export LD_LIBRARY_PATH=:~/usr/local:$LD_LIBRARY_PATH
+	    #export LIBRARY_PATH=~/usr/local/lib:$LIBRARY_PATH
+	    # BBB installed in s005-n008 node only
+	    export FPGA_BBB_CCI_SRC=~/usr/local/intel-fpga-bbb
 	    echo
             echo "Putting python2 in the search path - required for Stratix 10 development stack"
             export PATH=/glob/intel-python/python2/bin:${PATH}
