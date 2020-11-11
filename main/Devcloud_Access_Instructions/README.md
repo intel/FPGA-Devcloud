@@ -107,7 +107,7 @@ If you already have a Devcloud account, click [here](#connection-methods) to ski
 
 **Please use this cloud website landing page to submit a request to access the FPGA Cloud:**
 
-**https://intelsoftwaresites.secure.force.com/fpgadevcloud **
+**https://intelsoftwaresites.secure.force.com/fpgadevcloud**
 
 Once you've signed up, you should get an immidate screen response with your new user ID and instructions on how to set up your account. You will also receive a follow up email from Intel Devcloud which can take **1 hr** giving you a record of your user ID and your user ID key for login. This is an example of the resulting email which will be sent to you:
 
