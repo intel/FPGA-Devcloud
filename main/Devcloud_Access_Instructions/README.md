@@ -107,32 +107,30 @@ If you already have a Devcloud account, click [here](#connection-methods) to ski
 
 **Please use this cloud website landing page to submit a request to access the FPGA Cloud:**
 
-**https://software.intel.com/en-us/devcloud/FPGA/sign-up**
+**https://intelsoftwaresites.secure.force.com/fpgadevcloud **
 
-Once signed up,  look for an email from Intel AI Devcloud which can take **24 to 48 hrs** to respond.  Info for all configuration and license acquisition methods are in the instruction link provided. This is an example of the resulting email which will be sent to you:
+Once you've signed up, you should get an immidate screen response with your new user ID and instructions on how to set up your account. You will also receive a follow up email from Intel Devcloud which can take **1 hr** giving you a record of your user ID and your user ID key for login. This is an example of the resulting email which will be sent to you:
 
 ```
-Dear "user name",
+Welcome "user name",
 
-Welcome to the Intel® AI Devcloud!
+We are excited that you chose Intel® FPGA Cloud.  Free access. No downloads. No installations. No maintenance. 
 
-This computing resource is equipped with Intel processors and software optimized for Intel architecture for your high-performance computing and machine learning needs.
+Your account should already be activated. Below are your credentials for your reference. 
+Unique Access URL: https://devcloud.intel.com/fpga/?uuid=cd1d...
 
-Please find the instructions to access the DevCloud at:
+User ID: u12345
+UUID Key: cd1d...
 
-https://access.colfaxresearch.com/?uuid=2953c785-0ce5-40bd-8eda-86d6a80ab6ff
+Access to Intel® FPGA DevCloud typically expires after 120 days. However, longer access times are granted based on user request. To extend this access, please email fpgauniversity@intel.com and give the extension time needed to complete your project.
 
-User name: u12345 - (you will be assigned a new User name)
+Getting started with FPGA Cloud:
+1. Access detailed instructions for environment setup: https://github.com/intel/FPGA-Devcloud/tree/master/main/Devcloud_Access_Instructions#devcloud-access-instructions
+2. If you have technical questions or recommendations, please post them to our FPGA forum: https://forums.intel.com/s/topic/0TO0P000000MWKFWA4/application-acceleration-with-fpgas
+3. If you have unresolved issues, email fpgauniversity@intel.com and give us a detailed description of your problem.
+It's all about you and your code. We look forward to the innovations you'll create.
 
-Node name: c009 - (you will be assigned a new Node name)
-
-Your account has been activated, and it will expire on May 20 2020 23:01:32 UTC. If you or your project requires an extended access to the DevCloud, please submit your project and relevant details to Intel DevMesh at https://devmesh.intel.com/. Once verified, your account will be extended an additional 90 days from the above expiration date. Please note that your account and data will be deleted on the expiration date, so transfer any data you wish to preserve before that date.
-
-If you have technical questions about the Intel optimized frameworks and tools available in the DevCloud please post them to the Intel discussion forum at https://communities.intel.com/community/tech/intel-ai-academy
-
-Sincerely,
-
-Intel AI DevCloud Team
+- Your friendly Intel DevCloud Team 
 ```
 
 ### Connection Methods
@@ -173,15 +171,11 @@ There are different methods of terminal connections. Listed below are a few opti
 
 To start the process:
 
-1. Click on the following link to access the Connect website: https://devcloud.intel.com/oneapi/connect/.
+1. Click on the following link to access the Connect website: https://devcloud.intel.com/fpga/connect/#.
 
-2. The following page will then be displayed. Click on the button “Linux* or MAC OS” under Connect with a Terminal.
+2. Once you sign in, the following page will then be displayed. Click on the "SSH key for Linux/macOS/Cygwin" blue button under Step 3: Get SSH Key to download your key.
 
-   ![image](https://user-images.githubusercontent.com/22804500/84552893-2c4dff80-acc7-11ea-81f6-8a21bd696a9b.png)
-
-3. Once you click on the "Linux* or macOS" link, you will see two different connection options. You will **only** need to download the key that is under Option 2: Manual Configuration.
-
-4. To download the access key, click on the "SSH key for Linux/macOS/Cygwin" blue button under Direct SSH Connection.
+   ![image](https://user-images.githubusercontent.com/59750149/98843165-d1e8d480-2407-11eb-8ef2-79db18d04428.png)
 
 5. Once you have downloaded the SSH key, return to these GitHub Instructions.
 
@@ -287,7 +281,7 @@ You cannot log into the Intel Devcloud through the above steps if you are within
 
    You will now be logged in:
 
-   ![image](https://user-images.githubusercontent.com/56968566/69987680-e54fa800-14f4-11ea-8b03-9da4de9381c7.png)
+   <img src="https://user-images.githubusercontent.com/59750149/98844931-415fc380-240a-11eb-8cd9-0908a16f2bc8.png" alt="image" width=75% />
 
 Note that the following response:
 
