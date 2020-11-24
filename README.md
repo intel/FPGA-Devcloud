@@ -38,7 +38,7 @@
 ------
 
 <div align="center">
-    <h3><strong>Welcome to the Intel FPGA Devcloud GitHub!
+    <h3><strong>Welcome to the Intel FPGA Devcloud GitHub!!
         </strong>
         </h3>
 </div>
