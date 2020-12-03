@@ -1,4 +1,4 @@
-
+.cl
 
 # Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2 / 1.2.1
 
