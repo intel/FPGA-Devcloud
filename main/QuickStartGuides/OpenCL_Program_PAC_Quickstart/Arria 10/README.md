@@ -1,4 +1,4 @@
-
+.cl
 
 # Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2 / 1.2.1
 
@@ -71,8 +71,8 @@ tar xvf exm_opencl_hello_world_x64_linux.tgz
 For version 1.2.1, you need to type this into the terminal:
 
 ```bash
-cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world A10_OPENCL_AFU
-cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/common A10_OPENCL_AFU
+cp -r $INTELFPGAOCLSDKROOT/examples_aoc/hello_world A10_OPENCL_AFU
+cp -r $INTELFPGAOCLSDKROOTls/examples_aoc/common A10_OPENCL_AFU
 cd A10_OPENCL_AFU
 ```
 
@@ -89,7 +89,7 @@ Look for DIAGNOSTIC_PASSED.
 The first step of the OpenCL flow is to compile and execute the design for emulation mode. This step allows you to quickly verify the functionality of your code on the CPU without performing the conversion from OpenCL to RTL and from RTL to an FPGA executable, which takes up to an hour.
 
 ```
-cd hello_world
+./cd hello_world
 aoc -march=emulator -v device/hello_world.cl -o bin/hello_world_emulation.aocx
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
 ```
@@ -223,13 +223,16 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 
 List the revision history for the application note.
 
-| Name             | Date      | Changes                                  |
-| ---------------- | --------- | ---------------------------------------- |
-| Larry Landis     | 4/2/2020  | Initial Release                          |
-| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
-| Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
-| Damaris Renteria | 5/29/2020 | Added batch script                       |
-| Larry Landis     | 8/5/2020  | Misc edits per Ruben feedback            |
+| Name             | Date       | Changes                                       |
+| ---------------- | ---------- | --------------------------------------------- |
+| Larry Landis     | 4/2/2020   | Initial Release                               |
+| Larry Landis     | 4/28/2020  | Added sign_aocx.sh for v1.2.1                 |
+| Larry Landis     | 5/8/2020   | ./bin/host -emulator argument for v1.2.1      |
+| Damaris Renteria | 5/29/2020  | Added batch script                            |
+| Larry Landis     | 8/5/2020   | Misc edits per Ruben feedback                 |
+| Larry Landis     | 11/20/2020 | Change hardcoded path to $INTELFPGAOCLSDKROOT |
+
+
 
 
 
