@@ -90,7 +90,7 @@ aoc -march=emulator -legacy-emulator device/hello_world.cl -o bin/hello_world_em
 ln -sf hello_world_emulation.aocx bin/hello_world.aocx
 ```
 
-The next step is to compile the host code. 
+The next step is to compile the host code. Note: use make clean followed by make to force a recompile.
 
 ```
 make
