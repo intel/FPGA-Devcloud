@@ -3,8 +3,8 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Dec 07 2020 Version 1    #
-# New X2Go nodes            #
+# -Jan 27 2021 Version 1    #
+# New S10 nodes             #
 #                           #
 #                           #
 #                           #
@@ -25,7 +25,8 @@ arria10Nodes12=("s001-n137" "s001-n138" "s001-n139")
 arria10Nodes121=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 stratix10Nodes=("s005-n005" "s005-n006" "s005-n008" "s005-n009" "s001-n189")
-allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" )
+stratix10_oneAPI_Nodes=()
+allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" "${stratix10_oneAPI_Nodes[@]}" )
 
 x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s005-n008")
 
@@ -76,12 +77,13 @@ devcloud_login()
 	echo "1) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
 	echo "2) Arria 10 - OneAPI, OpenVINO"
 	echo "3) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-	echo "4) Compilation (Command Line) Only"
-	echo "5) Enter Specific Node Number"
+	echo "4) Stratix 10 - OneAPI, OpenVINO"
+	echo "5) Compilation (Command Line) Only"
+	echo "6) Enter Specific Node Number"
 	echo
 	echo -n "Number: "
 	read -e number
-	until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ] || [ "$number" -eq 5 ];
+	until [ "$number" -eq 1 ] || [ "$number" -eq 2 ] || [ "$number" -eq 3 ] || [ "$number" -eq 4 ] || [ "$number" -eq 5 ] || [ "$number" -eq 6 ];
 	do
 	    printf "%s\n" "${red}Invalid Entry. Please input a correct number from the list above. ${end} "
 	    echo -n "Number: "
@@ -255,7 +257,50 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a node. Please exit the current node and try again.${end}"
         fi
-    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 == "CO" ) ]]; then
+    elif [[ $number -eq 4 || ( -n $argv1 && $argv1 == "S10OAPI" ) ]]; then
+        if [ -z $currentNode ]; then  #if current node is empty
+            IFS="|"
+            readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'stratix10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${stratix10_oneAPI_Nodes[*]}")
+            readarray availableNodes_on_temp_server < <(pbsnodes | grep -B 4 'stratix10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${stratix10_oneAPI_Nodes[*]}")
+            availableNodes=( "${availableNodes[@]}" "${availableNodes_on_temp_server[@]}" )
+            unset IFS
+            if [ ${#availableNodes[@]} == 0 ]; #if length of availableNodes is empty then no nodes are available
+            then
+                echo
+                echo
+                printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
+                printf "%s\n" "${red}No available nodes for this hardware. Please select a new node. ${end} "
+                printf "%s\n" "${red}--------------------------------------------------------------- ${end} "
+                devcloud_login
+	    elif [[ -n "$argv2" && $argv2 =~ ".sh" ]]; then
+		node=(${availableNodes[0]})
+		qsub -l nodes="$node":ppn=2 $argv2
+	    elif [[ -n "$argv2" && $argv2 =~ "walltime=" && $argv3 =~ ".sh" ]]; then
+		node=(${availableNodes[0]})
+		qsub -l nodes="$node":ppn=2 -l $argv2 $argv3
+            else
+                node=(${availableNodes[0]})
+		if [[ ${x2goNodes[*]} =~ "$node" ]]; then
+                    echo
+                    echo --------------------------------------------------------------------------------------
+                    printf "%s\n" "${blu}For X2GO tunneling access. For users connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 colfax-intel${end} "
+                    echo
+                    printf "%s\n" "${blu}For X2GO tunneling access. For users NOT connected to intel firewall, copy and paste the following text in a new mobaxterm terminal: ${end} "
+                    echo
+                    printf  "%s\n" "${blu}ssh -L 4002:"$node":22 devcloud${end} "
+                    echo
+                    echo --------------------------------------------------------------------------------------
+                    echo
+		fi
+                echo "running: qsub -I -l nodes="$node":ppn=2"
+                qsub -I -l nodes="$node":ppn=2
+            fi
+        else
+            printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
+        fi
+    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "CO" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
             # readarray availableNodes < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -297,7 +342,7 @@ devcloud_login()
         else
             printf "%s\n" "${red}You are currently on a compute node. Please exit node and try again.${end}"
         fi
-    elif [[ $number -eq 5 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
+    elif [[ $number -eq 6 || ( -n $argv1 && $argv1 == "SNN" ) ]]; then
         if [ -z $currentNode ]; then
             IFS="|"
             readarray availableNodesNohardware < <(pbsnodes -a | grep -B 4 'fpga_compile' | grep -B 1 "state = free" | grep -o -E "${noHardwareNodes[*]}")
@@ -312,16 +357,20 @@ devcloud_login()
             #readarray availableNodesStratix < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodes_no_darby_tag < <(pbsnodes -s v-qsvr-fpga | grep -B 1 "state = free" | grep -o -E "${stratix10Nodes[*]}")
             readarray availableNodesStratix_on_temp_server < <(pbsnodes | grep -B 4 'darby' | grep -B 1 "state = free"  | grep -o -E "${stratix10Nodes[*]}")
+            readarray availableNodesStratix10_oneAPI_Nodes < <(pbsnodes -s v-qsvr-fpga | grep -B 4 'stratix10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${stratix10_oneAPI_Nodes[*]}")
+            readarray availableNodesStratix10_oneAPI_Nodes_on_temp_server < <(pbsnodes | grep -B 4 'stratix10' | grep -B 4 'fpga_runtime' | grep -B 1 "state = free" | grep -o -E "${stratix10_oneAPI_Nodes[*]}")
             unset IFS
             let number_of_available_no_hardware_nodes=${#availableNodesNohardware[@]}
             let number_of_available_arria10_nodes=${#availableNodesArria[@]}+${#availableNodesArria_on_temp_server[@]}
             let number_of_available_arria10_oneAPI_nodes=${#availableNodesArria10_oneAPI_Nodes[@]}+${#availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}
             #let number_of_available_stratix10_nodes=${#availableNodesStratix[@]}+${#availableNodesStratix_on_temp_server[@]}
             let number_of_available_stratix10_nodes=${#availableNodesStratix_on_temp_server[@]}+${#availableNodes_no_darby_tag[@]}
+            let number_of_available_stratix10_oneAPI_nodes=${#availableNodesStratix10_oneAPI_Nodes[@]}+${#availableNodesStratix10_oneAPI_Nodes_on_temp_server[@]}
 
             availableNodes=( "${availableNodesNohardware[@]}" "${availableNodesArria[@]}" \ #"${availableNodesStratix[@]}" \
                 "${availableNodesArria_on_temp_server[@]}" "${availableNodesStratix_on_temp_server[@]}" "${availableNodesArria10_oneAPI_Nodes[@]}" \
-		"${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}" "${availableNodes_no_darby_tag[@]}")
+		"${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]}" "${availableNodes_no_darby_tag[@]}" "${availableNodesStratix10_oneAPI_Nodes[@]}" \
+		"${availableNodesStratix10_oneAPI_Nodes_on_temp_server[@]}" )
 
             if [ ${#availableNodes[@]} == 0 ]; then
                 echo
@@ -381,16 +430,11 @@ devcloud_login()
 	    elif [[ -n "$argv2" ]]; then
 		printf "%s\n%s\n" "${red}Invalid Entry. Available nodes are: ${availableNodes[*]}" "eg: devcloud_login -b SNN ${availableNodes[0]}${end}"
 	    elif [[ -n "$argv1" && -z "$argv2" ]]; then
-                echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)       "
+                echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)"
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with no attached hardware:${end} (${number_of_available_no_hardware_nodes} available/${#noHardwareNodes[@]} total)"
                 node_no_hardware_str=$(echo ${availableNodesNohardware[@]})
                 printf "${red}$node_no_hardware_str${end}"
-                echo 
-                echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
-                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
-                printf "${red}$node_arria10_oneAPI_str${end}"
                 echo 
                 echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)"
@@ -405,11 +449,21 @@ devcloud_login()
                 printf "${red}$node_arria10_121str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
+                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
+                printf "${red}$node_arria10_oneAPI_str${end}"
+                echo 
+                echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
                 #node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
                 node_stratix_str=$(echo ${availableNodesStratix_on_temp_server[@]} ${availableNodes_no_darby_tag[@]})
                 printf "${red}$node_stratix_str${end}"
                 echo
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Stratix 10 OneAPI:${end} (${number_of_available_stratix10_oneAPI_nodes} available/${#stratix10_oneAPI_Nodes[@]} total)"
+                node_stratix10_oneAPI_str=$(echo ${availableNodesStratix10_oneAPI_Nodes[@]} ${availableNodesStratix10_oneAPI_Nodes_on_temp_server[@]})
+                printf "${red}$node_stratix10_oneAPI_str${end}"
+                echo 
                 echo --------------------------------------------------------------------------------------
             else
                 echo "Showing available nodes below: (${#availableNodes[@]} available/${#allNodes[@]} total)"
@@ -420,11 +474,6 @@ devcloud_login()
                 printf "${red}$node_no_hardware_str${end}"
                 echo 
                 echo --------------------------------------------------------------------------------------
-                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
-                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
-                printf "${red}$node_arria10_oneAPI_str${end}"
-                echo 
-                echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Arria 10:${end} (${number_of_available_arria10_nodes} available/${#arria10Nodes[@]} total)"
 		#node_arria10_str=$(echo ${availableNodesArria[@]} ${availableNodesArria_on_temp_server[@]})
                 #printf "${red}$node_arria10_str${end}"
@@ -437,11 +486,21 @@ devcloud_login()
                 printf "${red}$node_arria10_121str${end}"
                 echo
                 echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Arria 10 OneAPI:${end} (${number_of_available_arria10_oneAPI_nodes} available/${#arria10_oneAPI_Nodes[@]} total)"
+                node_arria10_oneAPI_str=$(echo ${availableNodesArria10_oneAPI_Nodes[@]} ${availableNodesArria10_oneAPI_Nodes_on_temp_server[@]})
+                printf "${red}$node_arria10_oneAPI_str${end}"
+                echo 
+                echo --------------------------------------------------------------------------------------
                 printf "%s\n" "${blu}Nodes with Stratix 10:${end} (${number_of_available_stratix10_nodes} available/${#stratix10Nodes[@]} total)"
                 #node_stratix_str=$(echo ${availableNodesStratix[@]} ${availableNodesStratix_on_temp_server[@]})
                 node_stratix_str=$(echo ${availableNodesStratix_on_temp_server[@]} ${availableNodes_no_darby_tag[@]})
                 printf "${red}$node_stratix_str${end}"
                 echo
+                echo --------------------------------------------------------------------------------------
+                printf "%s\n" "${blu}Nodes with Stratix 10 OneAPI:${end} (${number_of_available_stratix10_oneAPI_nodes} available/${#stratix10_oneAPI_Nodes[@]} total)"
+                node_stratix10_oneAPI_str=$(echo ${availableNodesStratix10_oneAPI_Nodes[@]} ${availableNodesStratix10_oneAPI_Nodes_on_temp_server[@]})
+                printf "${red}$node_stratix10_oneAPI_str${end}"
+                echo 
                 echo --------------------------------------------------------------------------------------
                 echo
                 echo "What node would you like to use?"
@@ -565,6 +624,7 @@ tools_setup()
     	echo "5) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
     	echo "6) Arria 10 - OneAPI, OpenVINO"
     	echo "7) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
+    	echo "8) Arria 10 - OneAPI, OpenVINO"
     	echo
     	echo -n "Number: "
     	read -e number
@@ -980,6 +1040,23 @@ tools_setup()
             #echo "Not on a stratix10 node. You need to be on a stratix 10 node to run Stratix 10 Development Stack"
         #fi
 
+    elif [[ $number -eq 8 || ( -n $argv1 && $argv1 == "S10OAPI" ) ]]; then  # case for Stratix 10 OneAPI
+        #IFS="|"
+        #temp_string="$(echo $HOSTNAME | grep -o -E "${stratix10_oneAPI_Nodes[*]}")"
+        #unset IFS
+        #if [[ ${stratix10_oneAPI_Nodes[@]} =~ ${temp_string} && ${#temp_string} -eq 9 ]]; then  # checks if user is currently on correct node and node name has length of 9
+            #echo "sourcing $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh"
+            #source $GLOB_ONEAPI/beta05/inteloneapi/setvars.sh
+            echo "sourcing /opt/intel/inteloneapi/setvars.sh"
+	    source /opt/intel/inteloneapi/setvars.sh
+	    ### OpenVINO Setup
+	    export IE_INSTALL="/opt/intel/openvino/deployment_tools"
+	    source $IE_INSTALL/../bin/setupvars.sh
+	    alias mo="python3.5 $IE_INSTALL/model_optimizer/mo.py"
+        #else
+            #echo "Not on an Stratix10 OneAPI node. You need to be on an Stratix10 OneAPI node."
+        #fi
+
     else
 	if [ -z "argv1" ]; then
 	    echo "printing else statement for sourcing cases"
@@ -1014,6 +1091,7 @@ dev_Help() {
     echo "A10PAC  (eg. devcloud_login -I A10PAC 1.2)         Arria 10 PAC; 1.2  1.2.1"
     echo "A10OAPI (eg. devcloud_login -I A10OAPI)            Arria 10 OneAPI, OpenVINO"
     echo "S10PAC  (eg. devcloud_login -I S10PAC)	           Stratix 10 PAC"
+    echo "S10OAPI (eg. devcloud_login -I S10OAPI)            Stratix 10 OneAPI, OpenVINO"
     echo "CO      (eg. devcloud_login -I CO)                 Compilation Only"
     echo "SNN     (eg. devcloud_login -I SNN s001-n139)      Specific Node Name"
     echo
@@ -1024,6 +1102,7 @@ dev_Help() {
     echo "A10PAC  (eg. devcloud_login -b A10PAC 1.2 [walltime=12:00:00] job.sh)      Arria 10 PAC; 1.2  1.2.1"
     echo "A10OAPI (eg. devcloud_login -b A10OAPI [walltime=12:00:00] job.sh)         Arria 10 OneAPI, OpenVINO"
     echo "S10PAC  (eg. devcloud_login -b S10PAC [walltime=12:00:00] job.sh)	   Stratix 10 PAC"
+    echo "S10OAPI (eg. devcloud_login -b S10OAPI [walltime=12:00:00] job.sh)         Stratix 10 OneAPI, OpenVINO"
     echo "CO      (eg. devcloud_login -b CO [walltime=12:00:00] job.sh)              Compilation Only"
     echo "SNN     (eg. devcloud_login -b SNN s001-n139 [walltime=12:00:00] job.sh)   Specific Node Name"
     echo
@@ -1060,5 +1139,6 @@ tool_Help() {
     echo "A10DS   (eg. tools_setup -t A10DS 1.2)        Arria 10 Development Stack"
     echo "A10OAPI (eg. tools_setup -t A10OAPI)          Arria 10 OneAPI, OpenVINO"
     echo "S10DS   (eg. tools_setup -t S10DS)	      Stratix 10 Development Stack"
+    echo "S10OAPI (eg. tools_setup -t S10OAPI)          Stratix 10 OneAPI, OpenVINO"
     echo
 }
