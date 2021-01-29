@@ -624,7 +624,7 @@ tools_setup()
     	echo "5) Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL"
     	echo "6) Arria 10 - OneAPI, OpenVINO"
     	echo "7) Stratix 10 PAC Compilation and Programming - RTL AFU, OpenCL"
-    	echo "8) Arria 10 - OneAPI, OpenVINO"
+    	echo "8) Stratix 10 - OneAPI, OpenVINO"
     	echo
     	echo -n "Number: "
     	read -e number
