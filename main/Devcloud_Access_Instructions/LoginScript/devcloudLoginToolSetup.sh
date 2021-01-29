@@ -3,7 +3,7 @@
 #                           #
 #   Latest Edit             #
 #                           #
-# -Jan 27 2021 Version 1    #
+# -Jan 29 2021 Version 1    #
 # New S10 nodes             #
 #                           #
 #                           #
@@ -25,7 +25,7 @@ arria10Nodes12=("s001-n137" "s001-n138" "s001-n139")
 arria10Nodes121=("s005-n001" "s005-n002" "s005-n003" "s005-n004" "s005-n007")
 arria10_oneAPI_Nodes=("s001-n081" "s001-n082" "s001-n083" "s001-n084" "s001-n085" "s001-n086" "s001-n087" "s001-n088" "s001-n089" "s001-n090" "s001-n091" "s001-n092")
 stratix10Nodes=("s005-n005" "s005-n006" "s005-n008" "s005-n009" "s001-n189")
-stratix10_oneAPI_Nodes=()
+stratix10_oneAPI_Nodes=("s001-n142" "s001-n143" "s001-n144")
 allNodes=( "${noHardwareNodes[@]}" "${arria10Nodes[@]}" "${arria10_oneAPI_Nodes[@]}" "${stratix10Nodes[@]}" "${stratix10_oneAPI_Nodes[@]}" )
 
 x2goNodes=("s001-n137" "s001-n138" "s001-n139" "s005-n002" "s005-n003" "s005-n004" "s005-n005" "s005-n006" "s005-n007" "s005-n008")
