@@ -95,11 +95,10 @@ proc board_canvas_rel {		PBs SWs sw_img_width sw_img_height sw_locs_x sw_locs_y
 
 			if { ($x > $sw_loc_x0) &&  ($x < $sw_loc_x1) && ($y > $sw_loc_y0) &&  ($y < $sw_loc_y1) } {
 
-				set SWs [ expr " ( 0x1 << $tag ) ^ $SWs " ]
+				set SWs [ expr " ( 0x1 << $i) ^ $SWs " ]
 				return [list $PBs $SWs]
 
 			}
-
 		}
 
 		for { set i 0 } { $i < $pb_num_obj } { incr i } {

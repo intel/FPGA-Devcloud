@@ -1,4 +1,4 @@
-gproc file_search { fn } {
+proc file_search { fn } {
 	##### Looks for a file with extension .n in pwd
 	##### If not in this directory, looks in pwd/alt_directory
 
