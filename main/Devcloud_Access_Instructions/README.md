@@ -41,51 +41,11 @@
 
 # Devcloud Access Instructions
 
-[Devcloud Access Instructions](#devcloud-access-instructions)\
-[1.0 Introduction](#10-introduction)\
-[2.0 Getting an Account](#20-getting-an-account)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Connection Methods](#connection-methods)\
-[3.0 Access from your PC via MobaXterm or from Linux Terminal](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.1 Install MobaXterm](#31-install-mobaxterm)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.2 Open Local Terminal](#32-open-local-terminal)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3.3 Downloading an SSH key](#33-downloading-an-ssh-key)\
-[4.0 Connection to Devcloud](#40-connection-to-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Public User - Anyone not working at Intel](#public-user---anyone-not-working-at-intel)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[User Inside Intel Firewall](#user-inside-intel-firewall)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.1 Add SOcket CAT Package](#41-add-socat-package)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.2  Preparing Configuration file for Intel firewall users](#42--preparing-configuration-file-for-intel-firewall-users)\
-[5.0 Connecting to Servers Running FPGA Development Software](#50-connecting-to-servers-running-fpga-development-software)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.1 Understanding available resources](#51-understanding-available-resources)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.2 Login Script](#52-login-script)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.3 Development Tool Access and Setup](#53-development-tool-access-and-setup)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.4 Submitting Batch Jobs](#54-submitting-batch-jobs)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.5 Submitting Jobs for a Specified Walltime](#55-submitting-jobs-for-a-specified-walltime)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.6 Report Status for Jobs Running on the Devcloud](#56-report-status-for-jobs-running-on-the-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.7 Deleting Jobs on the Devcloud](#57-deleting-jobs-on-the-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.8 Querying Device Availability](#58-querying-device-availability)\
-[6.0 Graphics Usage on the FPGA Devcloud](#60-graphics-usage-on-the-fpga-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[6.1 Opening Port for Graphics Usage in X2Go](#61-opening-port-for-graphics-usage-in-x2go)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[6.2 Quartus Font Setup](#62-quartus-font-setup)\
-[7.0 Transferring Files to and from the Devcloud](#70-transferring-files-to-and-from-the-devcloud)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.1 Transferring Files to and from the Devcloud with SCP](#71-transferring-files-to-and-from-the-devcloud-with-scp)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.2 Using MobaXterm to Transfer Files](#72-using-mobaxterm-to-transfer-files)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.3 Using WinSCP to Transfer Files](#73-using-winscp-to-transfer-files)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7.4 Using MobaXterm Command Line to Transfer URLs (Github)](#74-using-mobaxterm-command-line-to-transfer-urls-github)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1. WGET Command](#1-wget-command)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2. CURL Command](#2-curl-command)\
-[8.0 Launching Development Tools](#80-launching-development-tools)\
-[9.0 Downloading an .sof to the Devcloud connected DE10-Lite Board](#90-downloading-an-sof-to-the-devcloud-connected-de10-lite-board)\
-[10.0 Compiling on the Devcloud and Downloading to a Local PC connected DE10-Lite board](#100-compiling-on-the-devcloud-and-downloading-to-a-local-pc-connected-de10-lite-board)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10.1 Setting up USB Tunneling from Devcloud to Local PC USB Blaster](#101-setting-up-usb-tunneling-from-devcloud-to-local-pc-usb-blaster)\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[10.2 Programming a Design from the Devcloud to a Local PC Connected FPGA](#102-programming-a-design-from-the-devcloud-to-a-local-pc-connected-fpga)\
-[11.0 Timeouts and Disk Space](#110-timeouts-and-disk-space)\
-[12.0 Determining and Allocating Memory Availability and CPU Count and Speed](#120-determining-and-allocating-memory-availability-and-cpu-count-and-speed)\
-[13.0 Devcloud Text Editors](#130-devcloud-text-editors)\
-[14.0 Determining which machine & version of the OS is running on a Node](#140-determining-which-machine-and-version-of-the-os-is-running-on-a-node)\
-[15.0 Security](#150-security)\
-[16.0 Debug Notes - Tips and Tricks](#160-debug-notes---tips-and-tricks)
 
-<br/>
+
+[TOC]
+
+[br/>
 
 ## 1.0 Introduction
 
@@ -142,6 +102,7 @@ There are different methods of terminal connections. Listed below are a few opti
 1. [Windows with Mobaxterm (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) (recommended)
 2. [Windows with Cygwin](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows-cygwin/)
 3. [Windows with PuTTy](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows/)
+4. Access through Jupyter Notebooks
 
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
@@ -1018,7 +979,23 @@ https://devcloud.intel.com/datacenter/static/docs/terms/Intel-DevCloud-Access-an
 
 https://devcloud.intel.com/datacenter/static/docs/terms/Colfax_Cloud_Service_Terms_v1.3.pdf
 
-## 16.0 Debug Notes - Tips and Tricks
+
+
+## 16.0 Jupyter Notebook Access
+
+Some OneAPI labs run through a Jupyter notebook. To access, you need to reference your welcome email. You will see a line in the email of the form:
+
+ in
+
+Please find the instructions to access the DevCloud at:
+
+https://access.colfaxresearch.com/?uuid=2953c785-0de5-40bd-8edh-86d6a70ab6ff
+
+Access this web page: https://devcloud.intel.com/oneapi/get_started/
+
+In the top of this web page you are asked to enter your uuid, and enter everything after the = symbol in your welcome email. Once logged in, follow the instructions on the Jupyter OneAPI web page.
+
+## 17.0 Debug Notes - Tips and Tricks
 
 Don't forget to check the Intel Forum(s), your issue and solution might be documented there:\
 https://forums.intel.com/s/topic/0TO0P000000MWKFWA4/application-acceleration-with-fpgas?language=en_US
