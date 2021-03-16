@@ -576,12 +576,14 @@ Go through the install steps for the mswin X2Go Client and accept all.
 
 Repoen the MobaXterm window, open a second session tab by clicking on the "+" as shown below:![image](https://user-images.githubusercontent.com/56968566/69987433-5b074400-14f4-11ea-9046-eb3d39ca0f69.png)
 
-This tab will a launch terminal running UNIX commands on your local (PC) machine. You should have two tabs open. The first tab should be logged into login-2. The second tab will be logged in to your PC. Recall when you ran devcloud_login you see a message that needs to be pasted into the PC tab as described in the next section. To open the port for graphics usage, use the devcloud_login function (sec 5.1) and copy and paste the appropriate ssh command shown as an output from this function into the tab that is logged into your PC. Examples of this command are shown below based on inside and outside the Intel firewall.
+This tab will a launch terminal running UNIX commands on your local (PC) machine. You should have two tabs open. The first tab should be logged into login-2. The second tab will be logged in to your PC. Recall when you ran devcloud_login you see a message that needs to be pasted into the PC tab as described in the next section. **To open the port for graphics usage, use the devcloud_login function (sec 5.1) and copy and paste the appropriate ssh command shown as an output from this function into the tab that is logged into your PC**. 
+
+Examples of this command are shown below based on inside and outside the Intel firewall. 
 
 ```
-ssh -L 4002:s001-n137:22 devcloud			# Public User Example
+ssh -L 4002:<s00X-nXXX>:22 devcloud			# Public User Example
 
-ssh -L 4002:s001-n137:22 colfax-intel		# Inside Intel Firewall Example
+ssh -L 4002:<s00X-nXXX>:22 colfax-intel		# Inside Intel Firewall Example
 ```
 
 ![image](https://user-images.githubusercontent.com/56968566/69987632-c7824300-14f4-11ea-84c7-682490dc19f8.png)
