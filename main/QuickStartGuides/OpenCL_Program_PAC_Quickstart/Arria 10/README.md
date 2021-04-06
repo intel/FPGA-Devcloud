@@ -1,6 +1,6 @@
 
 
-# Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2 / 1.2.1
+# Arria 10 PAC: OpenCL Compilation and Programming on the FPGA devcloud using Arria 10 Devstack version 1.2.1
 
  <br/>
 
@@ -8,6 +8,8 @@
 
 If you are new to the Arria 10 GX PAC card with OpenCL, check out this quick start guide:\
 https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug-qs-ias-opencl-a10.pdf
+
+Note: As of March 30, 2021, the prior version of Arria 10 PAC v1.2 is no longer supported.
 
 This demonstration will step the user through the following steps:
 
@@ -50,7 +52,7 @@ Once on this node, run tools_setup.
 tools_setup
 ```
 
-Select the Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL option.
+Select the Arria 10 PAC Compilation and Programming - RTL AFU, OpenCL option version 1.2.1.
 
 Make working directory
 
@@ -60,15 +62,7 @@ mkdir A10_OPENCL_AFU
 
 We will then copy the example folder into this project folder. 
 
-For version 1.2, you need to type this into the terminal:
-
-```
-cp $OPAE_PLATFORM_ROOT/opencl/exm_opencl_hello_world_x64_linux.tgz A10_OPENCL_AFU
-cd A10_OPENCL_AFU
-tar xvf exm_opencl_hello_world_x64_linux.tgz
-```
-
-For version 1.2.1, you need to type this into the terminal:
+Type this into the terminal:
 
 ```bash
 cp -r /opt/intelFPGA_pro/quartus_19.2.0b57/hld/examples_aoc/hello_world A10_OPENCL_AFU
@@ -100,14 +94,8 @@ The next step is to compile the host code. Note: use make clean followed by make
 make
 ```
 
-Now run for the host code binary.\
+Now run for the host code binary.
 Note that the with the environment setting shown, the host code knows the .aocx file is for emulation execution on the CPU and not on the FPGA card.
-
-For version 1.2, you need to run emulation with this command:
-
-```
-CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host
-```
 
 For version 1.2.1, you need to run emulation with this command:
 
@@ -146,9 +134,9 @@ aocl diagnose
 
 Observe that the device name is acl0.
 
-For version **1.2.1 only**, you need to create the unsigned version of the .aocx file. If you use version 1.2, skip this next step.
+Next, you need to create the unsigned version of the .aocx file. 
 
-#### 3.4.1 Converting the 1.2.1 version to an unsigned .aocx file
+#### 3.4.1 Converting the 1.2.1 version of .aocx to an unsigned .aocx file
 
 ```
 cd bin
@@ -165,15 +153,7 @@ Because no root key or code signing key is provided, the script asks if you woul
 
 #### 3.4.2 Programming the Arria 10 GX PAC Card
 
-Next, you will program the PAC card with hello_world.aocx (version 1.2) or hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
-
-v1.2:
-
-```
-aocl program acl0 bin/hello_world.aocx
-```
-
-V1.2.1:
+Next, you will program the PAC card with hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
 ```
 aocl program acl0 hello_world_fpga_unsigned.aocx
@@ -186,27 +166,18 @@ aocl program acl0 hello_world_fpga_unsigned.aocx
 You have already run `make` to build the CPU host executable in the prior section, so it's not necessary to compile the host code again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
 
 ```bash
-./bin/host					#version 1.2
+./host
 ```
 
-```bash
-./host						#version 1.2.1
-```
 
-Note the differences in results from: CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 ./bin/host vs ./bin/host (for version 1.2)\
-Note the differences in results from: ./bin/host -emulator vs ./host (for version 1.2.1)
-
-<br/>
 
 ## 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Batch Submission
 
-The batch scripts attached above (in this case A10_v1.2[.1]_opencl_batch.sh) can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
+The batch script attached above  can be use to launch the OpenCL emulation flow, followed by the compilation and FPGA board programming flow using aocl commands. **Adjust commands within the script to your own needs.**
 
-From the headnode login-2, run one of the following two commands:
+From the headnode login-2, run this command:
 
 ```
-devcloud_login -b A10PAC 1.2 A10_v1.2_opencl_batch.sh
-	or
 devcloud_login -b A10PAC 1.2.1 A10_v1.2.1_opencl_batch.sh
 ```
 
@@ -223,13 +194,16 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 
 List the revision history for the application note.
 
-| Name             | Date      | Changes                                  |
-| ---------------- | --------- | ---------------------------------------- |
-| Larry Landis     | 4/2/2020  | Initial Release                          |
-| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1            |
-| Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1 |
-| Damaris Renteria | 5/29/2020 | Added batch script                       |
-| Larry Landis     | 8/5/2020  | Misc edits per Ruben feedback            |
+| Name             | Date      | Changes                                      |
+| ---------------- | --------- | -------------------------------------------- |
+| Larry Landis     | 4/2/2020  | Initial Release                              |
+| Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1                |
+| Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1     |
+| Damaris Renteria | 5/29/2020 | Added batch script                           |
+| Larry Landis     | 8/5/2020  | Misc edits per Ruben feedback                |
+| Larry Landis     | 4/6/2021  | Remove 1.2 commands as we only support 1.2.1 |
+
+
 
 
 
