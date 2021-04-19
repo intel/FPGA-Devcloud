@@ -1,0 +1,12 @@
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/src/dpc_common.hpp
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/src/vector-add-buffers.cpp
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/src/vector-add-usm.cpp
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/License.txt
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/Makefile
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/Makefile.fpga
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/Makefile.win
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/Makefile.win.fpga
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/README.md
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/sample.json
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/vector-add-usm.vcxproj
+https://raw.githubusercontent.com/intel/BaseKit-code-samples/master/DPC%2B%2BCompiler/vector-add/vector-add.sln
