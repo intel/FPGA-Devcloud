@@ -1,6 +1,6 @@
 module Counter (
     input clock, 
-    input resetn, 
+    input reset, 
     output reg [6:0] Ones_Display,
 	 output reg [6:0] Tens_Display
     );
@@ -12,7 +12,7 @@ module Counter (
 	
     always @(posedge clock)
     begin
-	      if(resetn == 1'b0) //if resetn set variables to 0
+	      if(reset == 1'b0) //if reset set variables to 0
 			begin
            Ones_Counter <= 0;
 		   delay <=0;
