@@ -1,6 +1,8 @@
 ## 1 Introduction (v0.1)
 DESim is a virtual FPGA interface that runs on top of ModelSim simulator. It allows a designer to run a simulation of a Verilog/VHDL digital design and display the results on a console representing an FPGA development kit. This step can be used in lieu of programming actual hardware or in addition to programming FPGA hardware.
 
+Note for access to an open source release of DESim please visit: https://github.com/fpgacademy/DESim .
+
 ## 2 Installation
 ### 2.1 Software requirements
 1. ModelSim (Intel FPGA starter edition 10.5b, available at https://fpgasoftware.intel.com/19.1/?edition=lite&platform=windows) . Note go to individual files and you can download Modelsim separately. No libraries are needed.
