@@ -128,7 +128,7 @@ The batch script attached above (in this case A10_oneapi_batch.sh) can be use to
 Use wget to copy the batch script locally:
 
 ```
-wget -N https://github.com/intel/FPGA-Devcloud/blob/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart/Arria%2010/A10_oneapi_batch.sh
+wget -N https://raw.githubusercontent.com/intel/FPGA-Devcloud/master/main/QuickStartGuides/OneAPI_Program_PAC_Quickstart/Arria%2010/A10_oneapi_batch.sh
 ```
 
 From the headnode login-2, run this command:

@@ -257,7 +257,7 @@ Note you can also connect outside of the firewall using ssh devcloud, but make s
 
 ### 5.1 Understanding available resources
 
-You are now logged into machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server.
+You are now logged into machine called login-2 (headnode). You cannot run compute jobs here. You need to run compute jobs on a powerful compute node server. Note that if there is no activity when connected to Intel Devcloud for ten minutes your connection will be terminated. Simply ssh back in if that happens. Note for longer running jobs, run in the background with the Linux & option.
 
 launch Mobaxterm (your PC) --> ssh devcloud (login-2) --> devcloud_login (interactive compute_node) or devcloud_login -b (batch processing on a compute node)
 

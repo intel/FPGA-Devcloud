@@ -111,14 +111,28 @@ Now that you have emulated your design, you can run the steps to convert OpenCL 
 
 ```
 aoc device/hello_world.cl -o bin/hello_world_fpga.aocx -board=pac_a10
-ln -sf hello_world_fpga.aocx bin/hello_world.aocx
 ```
 
-#### 3.4 Downloading the bit stream into the PAC card
+
+
+#### 3.4 Converting the 1.2.1 version of .aocx to an unsigned .aocx file
+
+```
+cd bin
+```
+
+```
+source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
+```
+
+Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No root key specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
+
+#### 3.5 Downloading the bit stream into the PAC card
 
 The executable that you run on the FPGA on the PAC card is called an .aocx file (Altera OpenCL executable).
-
-Next we will be looking for an available acceleration card, convert .aocx to unsigned (v1.2.1), program it, compile the host C code, and run the software program to display on the terminal.
 
 To see what FPGA accelerator cards are available, we type the following into the terminal. 
 
@@ -136,22 +150,7 @@ Observe that the device name is acl0.
 
 Next, you need to create the unsigned version of the .aocx file. 
 
-#### 3.4.1 Converting the 1.2.1 version of .aocx to an unsigned .aocx file
-
-```
-cd bin
-```
-
-```
-source $AOCL_BOARD_PACKAGE_ROOT/linux64/libexec/sign_aocx.sh -H openssl_manager -i hello_world_fpga.aocx -r NULL -k NULL -o hello_world_fpga_unsigned.aocx
-```
-
-Because no root key or code signing key is provided, the script asks if you would like to create an unsigned bitstream, as shown below. Type Y to accept an unsigned bitstream.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No root key specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No CSK specified.  Generate unsigned bitstream? Y = yes, N = no: **Y**
-
-#### 3.4.2 Programming the Arria 10 GX PAC Card
+#### 3.6 Programming the Arria 10 GX PAC Card
 
 Next, you will program the PAC card with hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
@@ -161,7 +160,7 @@ aocl program acl0 hello_world_fpga_unsigned.aocx
 
 
 
-#### 3.5 Running the host code 
+#### 3.7 Running the host code 
 
 You have already run `make` to build the CPU host executable in the prior section, so it's not necessary to compile the host code again. Simply run the following command to run a heterogeneous workload that combines CPU and FPGA execution to utilizing the CPU and FPGA working in tandem.
 
@@ -183,10 +182,10 @@ devcloud_login -b A10PAC 1.2.1 A10_v1.2.1_opencl_batch.sh
 
 To see the resulting terminal output, consult the files:
 
-A10_v1.2[.1] _opencl_batch.sh.exxxxxx\
-A10_v1.2[.1] _opencl_batch.sh.oxxxxxx
+A10_v1.2.1_opencl_batch.sh.exxxxxx\
+A10_v1.2.1_opencl_batch.sh.oxxxxxx
 
-xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined.
+xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx file is the terminal log where success or failure of the commands can be determined. Note that log files dont get updated until the end of the job.
 
 <br/>
 
@@ -195,13 +194,14 @@ xxxxxxx is a unique job ID. The .exxxxxx file is the error log and the .oxxxxxx 
 List the revision history for the application note.
 
 | Name             | Date      | Changes                                      |
-| ---------------- | --------- | -------------------------------------------- |
+| ---------------- | --------- | :------------------------------------------- |
 | Larry Landis     | 4/2/2020  | Initial Release                              |
 | Larry Landis     | 4/28/2020 | Added sign_aocx.sh for v1.2.1                |
 | Larry Landis     | 5/8/2020  | ./bin/host -emulator argument for v1.2.1     |
 | Damaris Renteria | 5/29/2020 | Added batch script                           |
 | Larry Landis     | 8/5/2020  | Misc edits per Ruben feedback                |
 | Larry Landis     | 4/6/2021  | Remove 1.2 commands as we only support 1.2.1 |
+| Larry Landis     | 4/30/2021 | Clarify flow for v1.2.1                      |
 
 
 
