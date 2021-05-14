@@ -1,0 +1,4 @@
+The software, tutorial and any accompanying documentation (“Materials”) are provided “as is” with no warranties of any kind, whether written, oral, implied or statutory, including warranties of merchantability or fitness for a particular purpose, non-infringement or arising from course of dealing or usage in trade.
+
+These Materials contain the general insights and opinions of Intel Corporation (“Intel”). The information in these Materials are provided for information only and are not to be relied upon for any other purpose than educational. Intel makes no representations or warranties regarding the accuracy or completeness of the information in this Material. Intel accepts no duty to update this Material based on more current information. Intel is not liable for any damages, direct or indirect, consequential or otherwise, that may arise, directly or indirectly, from the use or misuse of the information in this Material.
+
