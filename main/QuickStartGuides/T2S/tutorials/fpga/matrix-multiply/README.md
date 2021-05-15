@@ -35,17 +35,17 @@ T2S expresses a compute using UREs (Uniform Recursive Equations).  For matrix mu
 
 This compute has 3 loops `i, j, k`. A dataflow of the compute is shown below:
 
-<img src="basic/figures/matrix-multiply-dataflow.gif" />
+<img src="basic/figures/matrix-multiply-dataflow.png" />
 
 This dataflow can be expressed recursively as follows:
 
-<img src="basic/figures/matrix-multiply-UREs.gif" />
+<img src="basic/figures/matrix-multiply-UREs.png" />
 
 These equations are **uniform recurrence equations** : any iteration `ijk` depends on 3 neighbor iterations: `i(j-1)k`  for `A`, `(i-1)jk` for `B`, and `ij(k-1)`for `C`. In other words, uniformly across the entire iteration space, there are 3 kinds of dependences, whose distance vectors are constant: <0, 1, 0>, <1, 0, 0>, and <0, 0, 1>.  
 
 The above UREs can be translated into a T2S specification straightforward:
 
-<img src="basic/figures/matrix-multiply-spec-part1.gif" />
+<img src="basic/figures/matrix-multiply-spec-part1.png" />
 
 The above specification tells the T2S compiler to build a loop nest like this:
 
@@ -71,7 +71,7 @@ Also note that
 
 Now that the UREs are defined, specify the input data and execution:
 
-<img src="basic/figures/matrix-multiply-spec-part2.gif" />
+<img src="basic/figures/matrix-multiply-spec-part2.png" />
 
 The complete specification can be seen [here](basic/main.cpp).
 
