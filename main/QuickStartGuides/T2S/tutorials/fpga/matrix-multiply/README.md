@@ -75,7 +75,9 @@ Now that the UREs are defined, specify the input data and execution:
 
 The complete specification can be seen [here](basic/main.cpp).
 
-Let us test the design for correctness. First, follow [the instructions](../../../README.md)  to set up the environment. Choose an A10 FGPA for the experiments in this tutorial. Second, emulate the design:
+Let us test the design for correctness. First, follow [the instructions](../../../README.md)  to set up the environment. Choose an A10 or S10 FGPA for the experiments in this tutorial. The performance data below are all for A10. 
+
+Second, emulate the design:
 
 ```
 /data/t2s/tutorials/fpga/matrix-multiply/run.sh basic emulator
@@ -120,10 +122,10 @@ Although we can handle `A` similarly, in this design, we simply propagate`A` fro
 Now we can rewrite the previous UREs straightforward:
 
 <a name="tiling-spec-part1">
-<img src="tiling/figures/tiling-spec-part1.png" alt="tiling-spec-part1" style="zoom:35%;" />
+![tiling-spec-part1](tiling/figures/tiling-spec-part1.png)
 </a>
 
-<img src="tiling/figures/tiling-spec-part2.png" alt="tiling-spec-part2" style="zoom:35%;" />
+![tiling-spec-part2](tiling/figures/tiling-spec-part2.png)
 
 The complete specification can be seen [here](tiling/main.cpp).
 
@@ -135,7 +137,7 @@ Quickly test the correctness with two tiny (64 * 64) input matrices on an emulat
 
 Tiling has opened the opportunity to fit a tile of the input and output data to the finite memory/registers of an FPGA. However, this opportunity has not been taken yet. Look at the generated OpenCL file (`tutorials/a.cl`), we easily spot some issue:
 
-<img src="tiling/figures/issues.png" alt="cki=akibjk" style="zoom:35%;" />
+![issues](tiling/figures/issues.png)
 
 There is no parallelism, and it is certainly very inefficient using global memory for intermediate results of function `A, B`, and `C` . Besides, the compiler does not optimize the memory sizes, and simply allocate for each of them a space with the size of  `KKK * JJJ * III * KK * JJ * II * K * J * I `, i. e. the product of the extents of all the loops. When the input sizes are big, these intermediate results can waste a huge amount of memory. For example, if we test the same design with two input matrices whose sizes are 2K * 4K and 4K * 2K, respectively: 
 
@@ -195,17 +197,18 @@ Let us generate RTL and estimated performance:
 /data/t2s/tutorials/fpga/matrix-multiply/run.sh stt-vectorize small rtl
 ```
 A report is generated in `tutorials/a/reports/report.html`. Open the file in a web browser. First, look at the `fMAX II Report` under `Throughput Analysis`: 
-<img src="stt-vectorize/figures/fmax-II-report.png" alt="cki=akibjk" style="zoom:90%;" />
+
+![stt-vectorize-fmax-II-report](stt-vectorize/figures/fmax-II-report.png)
 
 The II (Initiation Interval) of every basic block in the generated OpenCL code is 1 except block B10, which has an II=15. That is, the hardware for B10 initiates once very 15 cycles, which is very inefficient. To get good performance, we always want an II to be as small as possible. Ideally, all IIs should equal 1.  
 
 Now let us see why B10 has such a big II. The `Throughput Analysis / Loops Analysis` tells that  the loop at line 123, which is loop `kk`, cannot be scheduled with a smaller II due to dependences on variables `_65_`, `_74_`, and `_C_shreg`:
 
-<img src="stt-vectorize/figures/loop-analysis-BB10.png" alt="cki=akibjk" style="zoom:90%;" />
+<img src="stt-vectorize/figures/loop-analysis-BB10.png" />
 
 Look at the generated OpenCL file `tutorials/a.cl` (Skip everything but keep the 3 variables):
 
-<img src="stt-vectorize/figures/code.png" alt="cki=akibjk" style="zoom:30%;" />
+<img src="stt-vectorize/figures/code.png" />
 
 Apparently, loop `kk`  carries two dependence cycles. One `kk` iteration has to wait for the previous `kk` iteration to finish, because both `kk` iterations write/read the same register `_C_shreg[0][_A_s0_jjj][_A_s0_iii]` (Note that the registers are rotated before loop `kk`, and then stay put during the entire execution of loop `kk`). As a result, the `kk` iterations have to be initiated sequentially, 15 cycles apart.
 
@@ -223,7 +226,7 @@ So how to reduce II? We need move loop `jj` and `ii`  inside loop`kk`. In  that 
 
 Let us move loop `kk` outside of `jj` and `ii`:
 
-<img src="reorder/figures/reorder.png" alt="cki=akibjk" style="zoom:60%;" />
+<img src="reorder/figures/reorder.png" />
 
 The complete specification is [here](reorder/main.cpp).
 
@@ -241,21 +244,21 @@ Generate RTL and estimate performance:
 
 An OpenCL file is generated as well. Look at the generated OpenCL file `tutorials/a.cl`:
 
-<img src="reorder/figures/code.png" alt="cki=akibjk" style="zoom:25%;" />
+<img src="reorder/figures/code.png" />
 
 Look at the report in `tutorials/a/reports/report.html`:
 
-<img src="reorder/figures/fmax-II-report.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="reorder/figures/fmax-II-report.png" />
 
 Oops! We get a even bigger II. But our previous code change is the right move ... So why? Look at the loop analysis:
 
-<img src="reorder/figures/loop-analysis-mem-dependence.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="reorder/figures/loop-analysis-mem-dependence.png" />
 
 This time, the report says there is a write-write memory dependence cycle from line 261 to itself regarding variable `_c`, which is our output function. So our previous dependences for function `C` is no longer a problem. That confirms our code change. This dependence cycle for variable `_c` might have always existed, but is exposed to be a problem now.
 
 Look at the generated OpenCL file `tutorials/a.cl`:
 
-<img src="reorder/figures/issue.png" alt="cki=akibjk" style="zoom:25%;" />
+<img src="reorder/figures/issue.png" />
 
 To remove the dependence cycle from this kernel, we can isolate the memory write out of the kernel. Writing to memory by every PE is a bad practice anyway.  
 
@@ -289,23 +292,23 @@ Generate static performance report with small inputs:
 
 Look at the report in `tutorials/a/reports/report.html`:
 
-<img src="isolate/figures/isolate-drainer-systolic-array-fmax-II.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-drainer-systolic-array-fmax-II.png" />
 
 All the basic blocks of the systolic array (`kernel_c`) now have achieved an ideal II, 1. 
 
 However, the drainer has a big II now: 
 
-<img src="isolate/figures/isolate-drainer-fmax-II.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-drainer-fmax-II.png" />
 
 Here is the loop analysis:
 
-<img src="isolate/figures/isolate-drainer-loop-analysis.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-drainer-loop-analysis.png" />
 
 That is, there is a write-write dependence from line 294 to itself. However, the address of the write is actually changing every time. So why is there still a dependence? Let us look at the code:
 
-<img src="isolate/figures/isolate-drainer-array-and-drainer-code.png" alt="cki=akibjk" style="zoom:30%;" />
+<img src="isolate/figures/isolate-drainer-array-and-drainer-code.png" />
 
-<img src="isolate/figures/isolate-drainer-drainer-code.png" alt="cki=akibjk" style="zoom:30%;" />
+<img src="isolate/figures/isolate-drainer-drainer-code.png" />
 
 So the complex address in the drainer has led to a big II. **In general, the memory access patterns of  the FPGA device should be as simple as possible --- ideally, the access patterns are just sequential, or almost sequential**.  
 
@@ -338,7 +341,7 @@ Generate a static performance report with small inputs:
 
 Look at the report in `tutorials/a/reports/report.html`:
 
-<img src="isolate/figures/isolate-drainer-deserializer-fmax-II.png" alt="cki=akibjk" style="zoom:360%;" /> 
+<img src="isolate/figures/isolate-drainer-deserializer-fmax-II.png" /> 
 
 It looks much better! The compiler needs a little more improvement to make the writing completely sequential. We are working on that.
 
@@ -383,7 +386,7 @@ Generate performance estimate:
 
 Look at the report in `tutorials/a/reports/report.html`:
 
-### <img src="isolate/figures/isolate-all-fmax-II.png" alt="cki=akibjk" style="zoom:100%;" />
+### <img src="isolate/figures/isolate-all-fmax-II.png" />
 
 All the basic blocks of all the kernels on the FPGA device have II = 1, and also a FMax = 240 MHZ (for an A10 FPGA whose board frequency is 500 MHZ). Both numbers are good. 
 
@@ -396,6 +399,7 @@ Synthesize a bitstream with instrumentation (It takes about 1 hour. Or skip this
 ```
 /data/t2s/tutorials/fpga/matrix-multiply/run.sh isolate full-IO small bits
 ```
++ Note:  If you lose connection to DevCloud during the execution of the above command, do the following: Wait until the synthesis is done (Synthesis is underway even when the connection is lost) and an `a.aocx` file would appear under the `tutorials` directory; Then log onto a compute node with the same FPGA model as before (A10 or S10). Set up the environment again (`cd tutorials` and `source /data/t2s/setenv.sh a10 (or s10)`), and type `/data/t2s/tutorials/fpga/matrix-multiply/run.sh unsign`.  
 
 Offload the bitstream to run on an FPGA hardware:
 
@@ -423,9 +427,9 @@ See the dynamic profile (assume you are accessing DevCloud using a GUI such as X
 ```
 
 <a name="loaders-stall">
-<img src="isolate/figures/isolate-all-dynamic-profile-part1.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-all-dynamic-profile-part1.png" />
 
-<img src="isolate/figures/isolate-all-dynamic-profile-part2.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-all-dynamic-profile-part2.png" />
 </a>
 
 Two performance bottlenecks have been identified by the dynamic profiling. The first bottleneck (line 383) indicates that readings of the output channels from the systolic array almost always cause pipeline stalls (The stall% is very high: 99.92%) . The second bottleneck indicates that readings of the drainer channels have the same behavior.
@@ -462,14 +466,14 @@ The throughput is 3X bigger. Now let us look at the profile for details and more
 ```
 /data/t2s/tutorials/fpga/matrix-multiply/run.sh isolate full-IO medium show-profile
 ```
-<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-execution-time.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-execution-time.png" />
 
 We see stalls appearing at the input paths now: the loadings of matrix `a` and `b` from the device's global memory stall most of the time:
 
 <a name="loaders-stall">
-<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-dynamic-profile-part1.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-dynamic-profile-part1.png" />
 
-<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-dynamic-profile-part3.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-dynamic-profile-part3.png" />
 </a>
 
 The above profile also shows that the memory bandwidth consumed by the loadings of the input matrices is totally 10685.5 + 10685.7 MB/s = <a name="loaders-bandwidth">~21 GB/s.</a>
@@ -477,7 +481,7 @@ The above profile also shows that the memory bandwidth consumed by the loadings 
 And `bFeeder` stalls a lot when reading from `bLoader`.
 
 <a name="bloader-feeder-stall">
-<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-dynamic-profile-part4.png" alt="cki=akibjk" style="zoom:100%;" />
+<img src="isolate/figures/isolate-all-8-8-16-32-32-32-8-8-8-dynamic-profile-part4.png" />
 </a>
 
 These stalls indicate that with a bigger array, the input paths become a bottleneck, which makes the design memory-bound. There are other stalls in other parts of the design as well. But let us first address the input paths: we need turn this design compute-bound in order to take full advantage of the computing power of the FPGA. We will achieve this purpose by trying to save memory bandwidth as much as possible.
@@ -511,7 +515,7 @@ Finally, we see from the [previous profile](#bloader-feeder-stall) that `bLoader
 
 All together, we can add the following code to the specification:
 
-<img src="opt-input/figures/spec.png" style="zoom: 25%;" />
+<img src="opt-input/figures/spec.png" />
 
 The complete specification is [here](opt-input/main.cpp).
 
