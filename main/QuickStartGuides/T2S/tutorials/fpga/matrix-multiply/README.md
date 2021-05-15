@@ -6,7 +6,7 @@
 
 Give matrix `a` and `b`, matrix multiply is to compute a matrix `c = a * b`. Below we show how to use T2S to intuitively, and incrementally build up a high-performance matrix multiplier on an FPGA like this:
 <a name="final-design-animation">
-<img src="final/figures/matrix-multiply-final-design-animation.gif" alt="final-design-animation" style="zoom:80%;" /> 
+<img src="final/figures/matrix-multiply-final-design-animation.gif" /> 
 </a>
 This design is certainly not the only one for matrix multiply. It was derived step by step, each step to address a visible performance bottleneck. This incremental design process is a power of T2S. 
 
@@ -35,17 +35,17 @@ T2S expresses a compute using UREs (Uniform Recursive Equations).  For matrix mu
 
 This compute has 3 loops `i, j, k`. A dataflow of the compute is shown below:
 
-<img src="basic/figures/matrix-multiply-dataflow.gif" alt="cki=akibjk" style="zoom:50%;" />
+<img src="basic/figures/matrix-multiply-dataflow.gif" />
 
 This dataflow can be expressed recursively as follows:
 
-<img src="basic/figures/matrix-multiply-UREs.gif" alt="cki=akibjk" style="zoom:50%;" />
+<img src="basic/figures/matrix-multiply-UREs.gif" />
 
 These equations are **uniform recurrence equations** : any iteration `ijk` depends on 3 neighbor iterations: `i(j-1)k`  for `A`, `(i-1)jk` for `B`, and `ij(k-1)`for `C`. In other words, uniformly across the entire iteration space, there are 3 kinds of dependences, whose distance vectors are constant: <0, 1, 0>, <1, 0, 0>, and <0, 0, 1>.  
 
 The above UREs can be translated into a T2S specification straightforward:
 
-<img src="basic/figures/matrix-multiply-spec-part1.gif" alt="cki=akibjk" style="zoom:70%;" />
+<img src="basic/figures/matrix-multiply-spec-part1.gif" />
 
 The above specification tells the T2S compiler to build a loop nest like this:
 
@@ -71,7 +71,7 @@ Also note that
 
 Now that the UREs are defined, specify the input data and execution:
 
-<img src="basic/figures/matrix-multiply-spec-part2.gif" alt="cki=akibjk" style="zoom:70%;" />
+<img src="basic/figures/matrix-multiply-spec-part2.gif" />
 
 The complete specification can be seen [here](basic/main.cpp).
 
@@ -91,7 +91,7 @@ The basic design accepts only fixed-sized input matrices, and computes the entir
 
 To compute the output matrix, we can partition it into tiles, and compute the tiles one by one, every time invoking a systolic array, which contains multiple Processing Elements (PEs). 
 
-<img src="tiling/figures/tiling.gif" alt="cki=akibjk" style="zoom:50%;" />
+<img src="tiling/figures/tiling.gif" />
 
 So for the original 3 loops `k, j, i`, we tile each of them twice, once for dividing the output into tiles -- one tile is to be computed by a systolic array, and the other for further dividing a tile into sub-tiles -- one sub-tile is to be computed by a PE. Thus the original 3-deep loop nest becomes a 9-deep loop nest:
 
