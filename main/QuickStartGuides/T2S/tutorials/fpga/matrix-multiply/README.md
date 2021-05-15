@@ -195,7 +195,7 @@ Let us generate RTL and estimated performance:
 /data/t2s/tutorials/fpga/matrix-multiply/run.sh stt-vectorize small rtl
 ```
 A report is generated in `tutorials/a/reports/report.html`. Open the file in a web browser. First, look at the `fMAX II Report` under `Throughput Analysis`: 
-<img src="stt-vectorize/figures/fmax-ii-report.png" alt="cki=akibjk" style="zoom:90%;" />
+<img src="stt-vectorize/figures/fmax-II-report.png" alt="cki=akibjk" style="zoom:90%;" />
 
 The II (Initiation Interval) of every basic block in the generated OpenCL code is 1 except block B10, which has an II=15. That is, the hardware for B10 initiates once very 15 cycles, which is very inefficient. To get good performance, we always want an II to be as small as possible. Ideally, all IIs should equal 1.  
 
