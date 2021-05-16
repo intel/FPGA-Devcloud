@@ -24,15 +24,17 @@ T2S enables software programmers to build systolic arrays on Intel FPGAs for bot
 
 ##  Use tutorials
 
-+ Create a directory and set up environment there:
++ Create a directory.
+  This directory will contain all temporary files (e.g. OpenCL files, bitstreams) generated when running any command in a tutorial. For example,
+  ```
+  mkdir tutorials
+  ```
++ Set up environment
 
   ```
-  mkdir tutorials # Any other name is fine
   cd tutorials
-  source /data/t2s/setenv.sh a10  # s10 if you chose a node with Stratix 10.
+  source /data/t2s/setenv.sh a10  # s10 if you chose a node with Stratix 10. 
   ```
-
-  When running any command in a tutorial, all generated files (e.g. OpenCL files, bitstreams) will be put under this directory. Note that these files are temporary, and might be overwritten as new commands run.
 
 + Play with a tutorial.
 

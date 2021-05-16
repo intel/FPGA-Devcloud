@@ -75,7 +75,7 @@ Now that the UREs are defined, specify the input data and execution:
 
 The complete specification can be seen [here](basic/main.cpp).
 
-Let us test the design for correctness. First, follow [the instructions](../../../README.md)  to set up the environment. Choose an A10 or S10 FGPA for the experiments in this tutorial. The performance data below are all for A10. 
+Let us test the design for correctness. First, follow [the instructions](../../../README.md)  to set up the environment. Choose an A10 or S10 FGPA for the experiments in this tutorial, although the analyses below use A10 as an example. 
 
 Second, emulate the design:
 
@@ -399,8 +399,6 @@ Synthesize a bitstream with instrumentation (It takes about 1 hour. Or skip this
 ```
 /data/t2s/tutorials/fpga/matrix-multiply/run.sh isolate full-IO small bits
 ```
-+ Note:  If you lose connection to DevCloud during the execution of the above command, do the following: Wait until the synthesis is done (Synthesis is underway even when the connection is lost) and an `a.aocx` file would appear under the `tutorials` directory; Then log onto a compute node with the same FPGA model as before (A10 or S10). Set up the environment again (`cd tutorials` and `source /data/t2s/setenv.sh a10 (or s10)`), and type `/data/t2s/tutorials/fpga/matrix-multiply/run.sh unsign`.  
-
 Offload the bitstream to run on an FPGA hardware:
 
 ```
