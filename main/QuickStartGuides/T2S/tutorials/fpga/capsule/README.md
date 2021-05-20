@@ -16,6 +16,10 @@ where the P and W are matrix. Actually, the P and W are six-dimensional arrays:
 
 Paul and Michael find it not easy to implement Capsule kernel in existing frameworks, like Tensor Comprehension or PlaidML, and the easiest and best-performing way is to target existing high-level operations, i.e., converting the convolution into matrix multiply, at the cost of data duplication and re-layout. Besides, this approach prevents the fusion of related operations.
 
+## Set up the environment according to [instructions]().
+
+Basically, enter a working directory, and `source /data/t2s/setenv.sh a10 (or s10)` to set up the environment. The environment is determined based on the specific FPGA model (a10 or s10), and the version of the Intel FPGA SDK for OpenCL compiler (i.e. version of aoc).
+
 ## How to design a systolic array?
 
 ![](basic/figures/dataflow.gif)
@@ -84,17 +88,16 @@ Pose.merge_ures(Weight, Vote, Out)
 where some details are omitted for simplicity. The URE `Vote` performs five reductions. Try to compile the `basic/main.cpp` file now:
 
 ```
-rm -rf ~/tmp/a*
-g++ 01-basic.cpp -g -I ../util -I ../../../../Halide/include -L ../../../../Halide/bin -lHalide -lz -lpthread -ldl -std=c++11
-env CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 AOC_OPTION="-march=emulator" HL_DEBUG_CODEGEN=4 PRAGMAUNROLL=1 ./a.out >& b
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/basic/main.cpp $CXX_FLAGS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$EMULATOR_PLATFORM_NAME"  CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 BITSTREAM=./a.aocx AOC_OPTION="$EMULATOR_AOC_OPTION -board=$FPGA_BOARD" ./a.out
 ```
 
-Please remember to clean the generated file in the directory `~/tmp`, otherwise you may encounter some errors. The emulation should throw a "Success" message. Now compile it to RTL, then open the report:
+The last command runs the X86 executable on CPU.  It should throw a "Success" message. Now compile it to RTL, then open the report:
 
 ```
-cd ~/tmp
-aoc -rtl a.cl
-open ~/tmp/a/reports/report.html
+aoc -rtl -report -board=$FPGA_BOARD ./a.cl
+open a/reports/report.html
 switch to Throughput Analysis -> Fmax II
 ```
 
@@ -106,19 +109,26 @@ Oops! We expect all kernels can be scheduled to maximal frequency (240MHz for A1
 
 "The launch frequency of a new loop iteration is called the initiation interval (II). II refers to the number of hardware clock cycles for which the pipeline must wait before it can process the next loop iteration. An optimally unrolled loop has an II value of 1 because one loop iteration is processed every clock cycle." (Intel FPGA SDK for OpenCL Pro Edition: Best Practices Guide)
 
-The basic design has five sequential reduction loops. The previous iteration writes a value into a register that is immediately read by the next iteration. It is hard for an HLS compiler to pipeline such a small dependence distance. The basic idea is to move the independent dimensions inward; we choose the dimensions `w, h` that extend the distance to W*H=49, and other dimensions would be OK. Compile the `02-reorder.cpp` file and generate the static analysis report:
+The basic design has five sequential reduction loops. The previous iteration writes a value into a register that is immediately read by the next iteration. It is hard for an HLS compiler to pipeline such a small dependence distance. The basic idea is to move the independent dimensions inward; we choose the dimensions `w, h` that extend the distance to W*H=49, and other dimensions would be OK. Compile the `reorder.cpp` file and generate the static analysis report:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/basic/main.cpp $CXX_FLAGS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$EMULATOR_PLATFORM_NAME"  CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 BITSTREAM=./a.aocx AOC_OPTION="$EMULATOR_AOC_OPTION -board=$FPGA_BOARD" ./a.out
+aoc -rtl -report -board=$FPGA_BOARD ./a.cl
+```
 
 ![](reorder/figures/report.png)
 
 Great! The loop iterations are fully pipelined. Now we can synthesis the design:
 
 ```
-source ~/t2s-os/setenv.sh devcloud run pac_s10
-cd ~/tmp
-aoc -v -fpc -fp-relaxed -profile -llc-arg=-set-dspba-feature=maxFilenamePrefixLength,integer,220 a.cl
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/reorder/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
 ```
 
-The `-llc-arg` option is a workaround for the "undefined entity" issue solved in the latest AOC release, but up to now, DevCloud still deploys AOC 19.2/ 19.4.  The synthesis will take about three hours to complete. We suggest you save the above commands as a script and submit it as a batch job. At the end of synthesis, there is a message "aoc: Hardware generation completed successfully" and a generated `a.aocx` file.
+The synthesis will take about three hours to complete. We suggest you save the above commands as a script and submit it as a batch job. At the end of synthesis, there is a message "aoc: Hardware generation completed successfully" and a generated `a.aocx` file.
 
 Before running the program on the actual FPGA hardware, let us glance at the synthesis report.  Open the file `acl_quartus_report.txt`
 
@@ -133,7 +143,6 @@ Peak Performance = #DSPs * #OPs per DSP per cycle * frequency = 16 * 2 * 272Mhz 
 Can we approach this terrible peak performance? Now profile the program with the following instructions:
 
 ```
-env BITSTREAM=a.aocx HL_DEBUG_CODEGEN=4 PRAGMAUNROLL=1  /path/to/a.out >& b
 aocl report a.aocx a.source profile.mon
 ```
 
@@ -156,7 +165,7 @@ We expect the stall percentage is 0%, occupancy percentage is 100%, and bandwidt
 
 The performance is bounded by memory access. As shown in the following figure, we need to build an I/O network to run in parallel with the compute PE array. Thus the memory access and computation are fully pipelined, significantly boost up the performance.
 
-<img src="ionet/figures/ionet.png" style="zoom:70%;" />
+![](ionet/figures/ionet.png)
 
 Our compiler can simplify the process of building an I/O network:
 
@@ -169,7 +178,15 @@ drainer.space_time_transform(coimw, bi);
 drainer.isolate_consumer_chain(collector, unloader, outDeserializer);
 ```
 
-You can find out several kernels communicated with channels, which is responsible for loading data from memory and storing results to memory. After synthesis and profiling, the results is shown below:
+You can find out several kernels communicated with channels, which is responsible for loading data from memory and storing results to memory. Now synthesis with the commands:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/ionet/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
+```
+
+After synthesis and profiling, the results is shown below:
 
 ![](ionet/figures/profile-time.png)
 
@@ -186,7 +203,15 @@ An important optimization is to load/store multiple data at once, which is calle
 .vectorize(r_cii);
 ```
 
-Please remember to add the `-fpc`, `-fp-relaxed` options to the `aoc` command; otherwise, you may find out the frequency is lower to 100Mhz. These options instruct the HLS compiler to generate more efficient hardware, even though it may introduce a minor variance in the MAC results.
+Now synthesis with the commands:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/vectorize/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -fpc -fp-relaxed -profile" ./a.out
+```
+
+Please add the `-fpc`, `-fp-relaxed` options to the `aoc` command; otherwise, you may find out the frequency is lower to 100Mhz. These options instruct the HLS compiler to generate more efficient hardware, even though it may introduce a minor variance in the MAC results.
 
 ![](vectorize/figures/profile.png)
 
@@ -224,7 +249,17 @@ For P: READS = COO * W = 112, WRITES = BI * W = 28
 For W: READS = COO * W = 112, WRITES = COIMW*COO = 64
 ```
 
+Now synthesis with the commands and show the report:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/buffer/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -fpc -fp-relaxed -profile" ./a.out
+```
+
 A great improvement can be seen after profiling the design:
+
+
 
 ![](buffer/figures/profile.png)
 
@@ -242,6 +277,14 @@ Peak Performance = 292M * 256 * 2 = 150GFlops
 
 The previous design shows that only about 4% of DSPs are used, and more than 90% of on-chip resources remain idle. It is simple to adjust the systolic array size with the tiling factor, but it requires several trial-and-error attempts to determine the maximal size a specific board can realize. Let us scale up the previous design to the size 16x8x11 (`cii x coimw x bi`).
 
+Now synthesis with the commands:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/capsule/scaleup/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -fpc -fp-relaxed -profile" ./a.out
+```
+
 ![](scaleup/figures/profile-time.png)
 
 It runs only 11.28ms where a large portion of time consumes on warm-up. We can enlarge the batch size to 264 to extend the execution time to 38.99ms. The peak performance can be computed as 453GFlops and we achieved 389GFlops, nearly 86% efficiency.
@@ -249,8 +292,6 @@ It runs only 11.28ms where a large portion of time consumes on warm-up. We can e
 ![](scaleup/figures/profile-code.png)
 
 The `pLoader` and `pFeeder` becomes a bottleneck again.  Note that we change the tiling factor `coi` from one to two to get a medium-sized systolic array, but the outer loop `coo` is also decreased, which lower the ratio between READS and WRITES as analyzed above. Under the fixed setting (`CO`= 32),  the design seems limited by this issue. 
-
-We also synthesis this design on A10 with the size 16x8x10, it consumes 84% of DSP blocks.
 
 
 

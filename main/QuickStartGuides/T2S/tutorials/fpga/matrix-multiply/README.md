@@ -119,11 +119,9 @@ We need rewrite previous UREs in terms of the new loop nest.  Since an original 
 
 Although we can handle `A` similarly, in this design, we simply propagate`A` from  `(kkk, jjj - 1, iii, kk, jj, ii, k, j, i)` when `jjj` is not zero, and re-load it from memory otherwise. `B` can be handled likely.
 
-Now we can rewrite the previous UREs straightforward:
+Now we can rewrite the previous UREs straightforward to <a name="tiling-spec-part1"> tiled UREs: </a>
 
-<a name="tiling-spec-part1">
 ![tiling-spec-part1](tiling/figures/tiling-spec-part1.png)
-</a>
 
 ![tiling-spec-part2](tiling/figures/tiling-spec-part2.png)
 
