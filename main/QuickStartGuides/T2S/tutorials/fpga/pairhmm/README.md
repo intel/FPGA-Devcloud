@@ -45,6 +45,10 @@ Result = sum of M(m, j) + I(m, j) j in [1, n]
 
 For implementing the PairHMM algorithm, the above equations are all we need, and we do not have to understand the biological background.
 
+## Set up the environment according to [instructions]().
+
+Basically, enter a working directory, and `source /data/t2s/setenv.sh a10 (or s10)` to set up the environment. The environment is determined based on the specific FPGA model (a10 or s10), and the version of the Intel FPGA SDK for OpenCL compiler (i.e. version of aoc).
+
 ## How to design a systolic array?
 
 ![](tiling/figures/dataflow.gif)
@@ -114,18 +118,16 @@ Result(rrr, hhh, rr, hh) = select(i_is_last(A) && j_is_last(A), Sum(A));
 Next compile the `tiling/main.cpp` file:
 
 ```
-rm -rf ~/tmp/a*
-cd /path/to/tutorials/tiling
-g++ main.cpp -g -I ../util -I ../../../../Halide/include -L ../../../../Halide/bin -lHalide -lz -lpthread -ldl -std=c++11
-env CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 AOC_OPTION="-march=emulator" HL_DEBUG_CODEGEN=4 PRAGMAUNROLL=1 ./a.out >& b
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/tiling/main.cpp $CXX_FLAGS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$EMULATOR_PLATFORM_NAME"  CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 BITSTREAM=./a.aocx AOC_OPTION="$EMULATOR_AOC_OPTION -board=$FPGA_BOARD" ./a.out
 ```
 
-Please remember to clean the generated file in the directory `~/tmp`, otherwise you may encounter some errors. The emulation should throw a "Success" message. Now compile it to RTL, then open the report:
+Please remember to clean the generated file in your directory, otherwise you may encounter some errors. The emulation should throw a "Success" message. Now compile it to RTL, then open the report:
 
 ```
-cd ~/tmp
-aoc -rtl a.cl
-open ~/tmp/a/reports/report.html
+aoc -rtl -report -board=$FPGA_BOARD ./a.cl
+open a/reports/report.html
 switch to Throughput Analysis -> Fmax II
 ```
 
@@ -137,22 +139,28 @@ Oops! We expect all kernels can be scheduled to maximal frequency (240MHz for A1
 
 "The launch frequency of a new loop iteration is called the initiation interval (II). II refers to the number of hardware clock cycles for which the pipeline must wait before it can process the next loop iteration. An optimally unrolled loop has an II value of 1 because one loop iteration is processed every clock cycle." (Intel FPGA SDK for OpenCL Pro Edition: Best Practices Guide)
 
-In short, the value computed at previous iterations will suddenly be used by the next iteration. The OpenCL compiler is hard to pipeline such a small dependence distance. A basic idea is to move the independent dimensions inward; we choose to tile the dimension `R, H` into `RR, HH` and `RRR, HHH` and move `RRR, HHH` inward, which extend the distance to RRR*HHH=40. Compile the `reorder/main.cpp` file and generate the static analysis report:
+In short, the value computed at previous iterations will suddenly be used by the next iteration. The OpenCL compiler is hard to pipeline such a small dependence distance. A basic idea is to move the independent dimensions inward; we choose to tile the dimension `R, H` into `RR, HH` and `RRR, HHH` and move `RRR, HHH` inward, which extend the distance to RRR*HHH=40. First compile the file and generate the static analysis report:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/reorder/main.cpp $CXX_FLAGS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$EMULATOR_PLATFORM_NAME"  CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1 BITSTREAM=./a.aocx AOC_OPTION="$EMULATOR_AOC_OPTION -board=$FPGA_BOARD" ./a.out
+aoc -rtl -report -board=$FPGA_BOARD ./a.cl
+```
 
 ![](reorder/figures/report.png)
 
 Great! The loop iterations are fully pipelined. Now we can synthesis the design:
 
 ```
-source ~/t2s-os/setenv.sh devcloud run pac_s10
-cd ~/tmp
-aoc -v -fpc -fp-relaxed -profile -llc-arg=-set-dspba-feature=maxFilenamePrefixLength,integer,220 a.cl
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/reorder/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
 ```
 
-Next profile the program with the following instructions:
+Next see the profiling report with the following instructions:
 
 ```
-env DISABLE_AUTORUN=1 BITSTREAM=a.aocx HL_DEBUG_CODEGEN=4 DELAYUNROLL=1 ./a.out >& b
 aocl report a.aocx a.source profile.mon
 ```
 
@@ -174,7 +182,23 @@ Alpha(A) = select(Read(A) == Hap(A), AlphaMatch(A), AlphaGap(A));
 Beta(A)  = select(Read(A) == Hap(A), BetaMatch(A), BetaGap(A));
 ```
 
-How to calculate the `*Match, *Gap` is omitted. The generated hardware now only needs to select appropriate data according to the incoming strings. The preprocessing overhead is relatively small compared with the on-the-fly processing.
+How to calculate the `*Match, *Gap` is omitted. The generated hardware now only needs to select appropriate data according to the incoming strings. 
+
+Now synthesis the design with the following commands:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/preprocess/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
+```
+
+Next see the profiling report with the following instructions:
+
+```
+aocl report a.aocx a.source profile.mon
+```
+
+The preprocessing overhead is relatively small compared with the on-the-fly processing.
 
 ![](preprocess/figures/profile.png)
 
@@ -182,7 +206,7 @@ However, the results are not what we are expected. The execution time nearly dou
 
 ## Design 4: Build I/O Network
 
-<img src="ionet/figures/ionet.png" style="zoom: 70%;" />
+<img src="ionet/figures/ionet.png"  />
 
 We need to build an I/O network to run in parallel with the PE array, as shown in the above figure, namely isolate access to buffers allocated in the device memory into separate kernels `hLoader, rLoader, unloader`.  Add the below code:
 
@@ -192,30 +216,88 @@ Hap.isolate_producer_chain(H, HSerializer, HLoader, HFeeder)
 Result.isolate_consumer_chain(Unloader, Deserializer);
 ```
 
-It is a simple I/O network since the isolated kernels just perform memory access, not involving other operations. From the profiling results, we see that though the loader kernels stalls on writing data into its channels, the systolic array do not stall on reading data, indicating a pipelined execution.
+Until now, we do not have any idea about what an optimized I/O network should be. So we just start from a simple I/O network, where isolated kernels just perform memory access. Synthesis the design with the following commands:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/ionet/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
+```
+
+Next see the profiling report with the following instructions:
+
+```
+aocl report a.aocx a.source profile.mon
+```
+
+ From the profiling results, we see that though the loader kernels stalls on writing data into its channels, the systolic array do not stall on reading data, indicating a pipelined execution.
 
 ![](ionet/figures/profile-code.png)
 
-The occupancy ratio is still lower than what we expected (bigger is better). The systolic array runs too slow to catch up with the memory access. To boost it up, next, we scale up the current design to a bigger size, which would consume more data at once.
+It seems the systolic array runs too slow to catch up with the memory access. To boost it up, next, we scale up the current design to a bigger size, which would consume more data at once.
 
 ## Design 5: Scaling up
 
 The previous design shows that only about 2% of DSPs are used, and almost 98% of on-chip resources remain idle. It is simple to adjust the systolic array size with the tiling factor, but it requires several trial-and-error attempts to determine the maximal size a specific board can realize. Let us scale up the previous design to the size 24x8.
 
-We use `GCups` instead of `GFlops` to measure the performance since the update of `lamda` depends on the input sequences. The `GCups` is defined as:
+We use GCups instead of GFlops to measure the performance since the update of `lamda` depends on the input sequences. The `GCups` is defined as:
 
 ```
 (read length × haplotype length) ÷ PairHMM time
 That is: (RRR * RR * OI * II * HHH * HH * OJ * JJ) ÷ PairHMM time
 ```
 
-From the synthesis results, we can see the design consumes 24% DSP blocks and run at 349Mhz, a good result.
+Now synthesis the design with the following commands:
 
-<img src="scaleup/figures/synthesis.png" style="zoom:70%;" />
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/scaleup/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
+```
 
-Our kernel executes 69.51ms and achieved 46`GCups`. Not a bad result. The profiling results also shows a higher occupancy and bandwidth.
+Open the file `acl_quartus_report.txt`we can see the design consumes 24% DSP blocks and run at 302Mhz, a good result.
+
+![](scaleup/figures/synthesis.png)
+
+Next see the profiling report with the following instructions:
+
+```
+aocl report a.aocx a.source profile.mon
+```
+
+Our kernel executes 250ms, only about 14 GCups. The profiling results shows the memory bandwidth is sufficiently high:
 
 ![](scaleup/figures/profile.png)
+
+![](scaleup/figures/profile-1.png)
+
+However, the channels stalls on the PE side. The speed of memory access lags behind the PE array significantly.
+
+## Design 6: Buffer
+
+Note that some reuse loops in `RLoader`, like `hhh`, `oj` and `hh`, waste most of the memory bandwidth to load the same data volume. We can insert an on-chip buffer to store the data from memory. When the PE array executes at reuse loops, it loads data from the on-chip buffer rather than memory:
+
+```
+RSerializer.remove(jj, hhh, oj, hh);
+RLoader.remove(jj, hhh, oj).min_depth(128);
+RFeeder.scatter(RLoader, ii).buffer(RLoader, rr).min_depth(64);
+HSerializer.remove(ii, rrr, oi, rr);
+HLoader.remove(ii, rrr, oi).min_depth(128);
+HFeeder.scatter(HLoader, jj).buffer(HLoader, rr).min_depth(64);
+```
+
+We also apply the `scatter` optimization, which construct a daisy chain between the PE of `RLoader` and `RFeeder` since the high-fanout connection is inefficient. Next synthesis and profile the design:
+
+```
+rm -rf a.a* a
+g++ /data/t2s/tutorials/fpga/pairhmm/buffer/main.cpp $CXX_FLAGS $AOCL_LIBS -o ./a.out
+env INTEL_FPGA_OCL_PLATFORM_NAME="$HW_RUN_PLATFORM_NAME" BITSTREAM=./a.aocx AOC_OPTION="-board=$FPGA_BOARD -profile" ./a.out
+aocl report a.aocx a.source profile.mon
+```
+
+![](buffer/figures/profile.png)
+
+Great! The systolic array never stalls on reading channels and spend the most of time on data access. We achieved 57 GCups, a good result.
 
 
 

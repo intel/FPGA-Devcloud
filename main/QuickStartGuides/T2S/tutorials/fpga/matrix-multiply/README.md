@@ -121,9 +121,8 @@ Although we can handle `A` similarly, in this design, we simply propagate`A` fro
 
 Now we can rewrite the previous UREs straightforward:
 
-<a name="tiling-spec-part1">
+<a name="tiling-spec-part1"> Tiled UREs: </a>
 ![tiling-spec-part1](tiling/figures/tiling-spec-part1.png)
-</a>
 
 ![tiling-spec-part2](tiling/figures/tiling-spec-part2.png)
 
