@@ -33,7 +33,7 @@ T2S enables software programmers to build systolic arrays on Intel FPGAs for bot
 
   ```
   cd tutorials
-  source /data/t2s/setenv.sh a10  # s10 if you chose a node with Stratix 10. 
+  source /data/t2s/setenv.sh 
   ```
 
 + Play with a tutorial.

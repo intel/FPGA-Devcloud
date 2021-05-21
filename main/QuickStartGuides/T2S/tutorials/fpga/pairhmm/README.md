@@ -47,7 +47,7 @@ For implementing the PairHMM algorithm, the above equations are all we need, and
 
 ## Set up the environment according to [instructions]().
 
-Basically, enter a working directory, and `source /data/t2s/setenv.sh a10 (or s10)` to set up the environment. The environment is determined based on the specific FPGA model (a10 or s10), and the version of the Intel FPGA SDK for OpenCL compiler (i.e. version of aoc).
+Basically, enter a working directory, and `source /data/t2s/setenv.sh` to set up the environment. The environment is determined based on the specific FPGA model (a10 or s10), and the version of the Intel FPGA SDK for OpenCL compiler (i.e. version of aoc).
 
 ## How to design a systolic array?
 
