@@ -1,4 +1,4 @@
-`timescale 1ns/10ps //Time precision
+	`timescale 1ns/10ps //Time precision
 	
 	module testbench();
 	

@@ -154,7 +154,7 @@ To start the process:
    #replace with your own user name
    User u12345
    IdentityFile ~/.ssh/devcloud-access-key-12345.txt
-   ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-12345.txt guest@devcloud.intel.com
+   ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-12345.txt guest@ssh.devcloud.intel.com
    ```
 
    If you saved your key in a location other than /drives/c/Users/<user>/Downloads, insert the correct path and the correct user number that was provided to you in the email. 
