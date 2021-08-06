@@ -99,10 +99,17 @@ Once you have an account / email received you are ready to start the process to 
 
 There are different methods of terminal connections. Listed below are a few options you can select in choosing which Terminal application tool you would like to use. This guide focuses on the recommended method 1.
 
-1. [Windows with Mobaxterm (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) (recommended)
-2. [Windows with Cygwin](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows-cygwin/)
-3. [Windows with PuTTy](https://devcloud.intel.com/datacenter/learn/connect-with-ssh-windows/)
-4. Access through Jupyter Notebooks
+1. [Windows with Mobaxterm (SSH client)](#30-access-from-your-pc-via-mobaxterm-or-from-linux-terminal) (recommended, see instructions below)
+
+2. [Windows with Cygwin](https://devcloud.intel.com/oneapi/documentation/connect-with-ssh-windows-cygwin/)
+
+3. [Windows with PuTTy](https://devcloud.intel.com/oneapi/documentation/connect-with-ssh-linux-macos/)
+
+4. [Jupyter Lab](https://jupyter.oneapi.devcloud.intel.com/hub/login?next=/lab/tree/Welcome.ipynb?reset) (For FPGA devcloud connectivity ssh login-2 to access the head node and follow login script instructions)
+
+   
+
+   
 
 ## 3.0 Access from your PC via MobaXterm or from Linux Terminal
 
