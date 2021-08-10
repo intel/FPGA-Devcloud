@@ -32,17 +32,22 @@ grid [entry .pw_ent -background white -foreground black  -relief ridge -width 17
 grid [label .sof_lab  -text "SOF File" -background white -font {Courier -17} ] -padx 10 -pady 6 -column 1 -row 3 -columnspan 1 -sticky "snew"
 grid [entry .sof_ent -background white -foreground black  -relief ridge -width 17 \
 	-font {Courier -17} -textvariable sof_file -justify left -state disabled ] -padx 10 -pady 6 -column 2 -row 3 -columnspan 2 -sticky "snew"
+grid [label .pgm_label  -text "Program Device?" -background white -font {Courier -17}] -padx 5 -pady 6 -column 1 -row 4 -columnspan 2 -sticky "snew"
+grid [checkbutton .chk_pgm  -background white -foreground black  -variable pgm_device]  -padx 1 -pady 6 -column 3 -row 4 -columnspan 1 -sticky "snew"
+
+
+grid [text .msg -background white -height 3 -width 30 -foreground green -relief ridge \
+	-borderwidth 3 -font {Courier -17} -state disabled -wrap word -yscrollcommand {.scroll set} ] -padx 10 -pady 10 -column 1 -row 5 -columnspan 3
+grid [scrollbar .scroll -command {.msg yview}] -padx 10 -pady 2 -column 4 -row 5 -columnspan 1
+
 # grid [ ttk::combobox .sof_entry -textvariable sof_file -values "" -background white \
 	-font {Courier -17 } -foreground black -justify left -state disabled -width 15] -padx 10 -pady 6 -column 2 -row 3 -columnspan 2 -sticky "snew"
 grid [button .link_button -text "Link"  -height 1 -width 12 \
-	-command {set mode [link_press $ips $credential_fh $ip_address $password $sof_file $pws] } -state disabled ] -padx 10 -pady 6 -column 3 -row 5 -columnspan 1
+	-command {set mode [link_press $ips $credential_fh $ip_address $password $sof_file $pws $pgm_device] } -state disabled ] -padx 10 -pady 6 -column 3 -row 6 -columnspan 1
 grid [button .rm_ips_button -text "Clear IPv4s" -height 1 -width 12 \
-	-command {lassign [remove_ips] ips credential_fh ip_address password sof_file mode pws; .ip_address configure -values $ips} -state normal ] -padx 10 -pady 6 -column 1 -row 5 -columnspan 1
+	-command {lassign [remove_ips] ips credential_fh ip_address password sof_file mode pws; .ip_address configure -values $ips} -state normal ] -padx 10 -pady 6 -column 1 -row 6 -columnspan 1
 grid [button .sof_select_button -text "Select .sof" -height 1 -width 12 \
-	-command {set sof_file [tk_getOpenFile]; .sof_ent xview moveto 1.0; .sof_ent icursor end} -state normal ] -padx 10 -pady 6 -column 2 -row 5 -columnspan 1
-grid [text .msg -background white -height 3 -width 30 -foreground green -relief ridge \
-	-borderwidth 3 -font {Courier -17} -state disabled -wrap word -yscrollcommand {.scroll set} ] -padx 10 -pady 10 -column 1 -row 4 -columnspan 3
-grid [scrollbar .scroll -command {.msg yview}] -padx 10 -pady 2 -column 4 -row 4 -columnspan 1
+	-command {set sof_file [tk_getOpenFile]; .sof_ent xview moveto 1.0; .sof_ent icursor end} -state normal ] -padx 10 -pady 6 -column 2 -row 6 -columnspan 1
 
 ##### Initialize the message window
 status_message "Initializing..."

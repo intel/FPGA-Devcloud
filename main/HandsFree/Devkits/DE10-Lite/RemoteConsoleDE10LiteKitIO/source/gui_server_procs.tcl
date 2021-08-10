@@ -84,7 +84,7 @@ proc create_entry {entry_name textvariable} {
 
 }
 
-proc link_press { ips credential_fh ip_address password sof_file pws} {
+proc link_press { ips credential_fh ip_address password sof_file pws pgm_device} {
 
 	lappend ips $ip_address
 	lappend pws $password
@@ -116,7 +116,7 @@ proc link_press { ips credential_fh ip_address password sof_file pws} {
 	puts $password
 	set  sof_file [file normalize $sof_file]
 	puts "${sof_file}"
-
+	puts $pgm_device
 	return "connecting"
 
 }
@@ -131,6 +131,7 @@ proc main_loop { } {
 	global ip_address
 	global sof_file
 	global ip_address_old
+	global pgm_device
 
 	set main_msg [gets stdin]
 
@@ -205,23 +206,27 @@ proc main_loop { } {
 		if { $main_msg == "connection started" } {
 
 			.link_button configure -state disabled
-			status_message "Connecting to server..."
+			.chk_pgm configure -state disabled
+			status_message "Connecting to device..."
 
 		} elseif { $main_msg == "connect success" } {
 
 			.link_button configure -state disabled
+			.chk_pgm configure -state disabled
 			status_message "Found device!"
 			set mode "programming"
 
 		} elseif { $main_msg == "connect fail" } {
 
 			.link_button configure -state disabled
+			.chk_pgm configure -state disabled
 			error_message "Failed to connect!"
 			set mode "initialize"
 
 		} else {
 
 			.link_button configure -state normal
+			.chk_pgm configure -state normal
 
 		}
 
@@ -229,20 +234,30 @@ proc main_loop { } {
 
 		.link_button configure -state disabled
 
-		if { $main_msg == "pgm started" } {
+		if { $pgm_device } {
 
-			status_message "Programming device..."
-		
-		} elseif { $main_msg == "pgm success" } {
+			if { $main_msg == "pgm started" } {
 
-			status_message "Programming successful!"
+				status_message "Programming device..."
+			
+			} elseif { $main_msg == "pgm success" } {
+
+				status_message "Programming successful!"
+				status_message "System Console starting..."
+				set mode "linking"
+
+			} elseif { $main_msg == "pgm fail" } {
+
+				error_message "Failed to program!"
+				.chk_pgm configure -state normal
+				set mode "initialize"
+
+			}
+
+		} else {
+
 			status_message "System Console starting..."
 			set mode "linking"
-
-		} elseif { $main_msg == "pgm fail" } {
-
-			error_message "Failed to program!"
-			set mode "initialize"
 
 		}
 

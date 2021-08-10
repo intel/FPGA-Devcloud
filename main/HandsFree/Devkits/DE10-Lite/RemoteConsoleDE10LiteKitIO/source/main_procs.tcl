@@ -27,7 +27,7 @@ proc connect_pgm_link  {main_location cons_script_path gui_connect_path} {
 		if { [pipe_wait $gui_connect_pipe "connect"] == 0 } {
 
 			##### Get server credentials
-			set server_credentials [pipe_get $gui_connect_pipe 3 1]
+			set server_credentials [pipe_get $gui_connect_pipe 4 1]
 
 			if { $server_credentials != 1 } {
 
@@ -35,11 +35,13 @@ proc connect_pgm_link  {main_location cons_script_path gui_connect_path} {
 				set ip_address       	[lindex $server_credentials 0]
 				set password_pre_cut 	[lindex $server_credentials 1]
 				set sof_path 	        [lindex $server_credentials 2]
+				set pgm_device 	        [lindex $server_credentials 3]
 				puts $sof_path
 				set password_cut [split $password_pre_cut "|"]
 				set password [join [lrange $password_cut 0 end-2] "|"]
 				set port [lindex $password_cut end]
 				set bus [lindex $password_cut end-1]
+
 
 			} else {
 
@@ -110,14 +112,67 @@ proc connect_pgm_link  {main_location cons_script_path gui_connect_path} {
 
 		}
 
-		##### Program device with .sof
-		puts_gui $gui_connect_pipe "pgm started"
-		puts_gui $gui_connect_pipe $device
+		if { $pgm_device } {
 
-		if { [attempt_device_pgm $device $sof_path] == "success" } {
+			##### Program device with .sof
+			puts_gui $gui_connect_pipe "pgm started"
+			puts_gui $gui_connect_pipe $device
 
-			##### Tell GUI/Sys Cons device was successfully programmed
-			puts_gui $gui_connect_pipe "pgm success"
+			if { [attempt_device_pgm $device $sof_path] == "success" } {
+
+				##### Tell GUI/Sys Cons device was successfully programmed
+				puts_gui $gui_connect_pipe "pgm success"
+
+				##### Initialize System Console
+				set sys_cons_pipe [start_system_console $cons_script_path]
+
+				##### Make sure System Console didn't encounter an error
+				if { $sys_cons_pipe == 1 } {
+
+					puts_gui $gui_connect_pipe "System Console failed"
+					after 5000
+					puts_gui $gui_connect_pipe "finish"
+					return 1		
+
+				} else {
+
+					##### System Console doesn't support the following, so make sure
+					##### This file is in console.tcl directory
+					variable console_location [file normalize [info script]]
+
+					##### Get global variables
+					puts_sys_cons $sys_cons_pipe "${console_location}/../../setup.tcl"
+
+					##### Get GUI procedures
+					puts_sys_cons $sys_cons_pipe "${console_location}/../console_procs.tcl"
+
+					##### Send credentials
+					puts_sys_cons $sys_cons_pipe $sof_path
+					puts_sys_cons $sys_cons_pipe $cable_words
+
+
+					if { [gets $sys_cons_pipe] == "recieved params" } {
+
+						puts_gui $gui_connect_pipe "System Console started"
+
+					} else {
+
+						puts_gui $gui_connect_pipe "System Console failed"
+						continue
+
+					}
+				}
+
+			} else {
+
+				##### Tell GUI device program failed
+				puts_gui $gui_connect_pipe "pgm fail"
+				remove_server_credentials
+				continue
+
+			}
+
+		} else {
 
 			##### Initialize System Console
 			set sys_cons_pipe [start_system_console $cons_script_path]
@@ -158,13 +213,6 @@ proc connect_pgm_link  {main_location cons_script_path gui_connect_path} {
 
 				}
 			}
-
-		} else {
-
-			##### Tell GUI device program failed
-			puts_gui $gui_connect_pipe "pgm fail"
-			remove_server_credentials
-			continue
 
 		}
 
