@@ -990,21 +990,9 @@ https://devcloud.intel.com/datacenter/static/docs/terms/Colfax_Cloud_Service_Ter
 
 
 
-## 16.0 Jupyter Notebook Access
 
-Some OneAPI labs run through a Jupyter notebook. To access, you need to reference your welcome email. You will see a line in the email of the form:
 
- in
-
-Please find the instructions to access the DevCloud at:
-
-https://access.colfaxresearch.com/?uuid=2953c785-0de5-40bd-8edh-86d6a70ab6ff
-
-Access this web page: https://devcloud.intel.com/oneapi/get_started/
-
-In the top of this web page you are asked to enter your uuid, and enter everything after the = symbol in your welcome email. Once logged in, follow the instructions on the Jupyter OneAPI web page.
-
-## 17.0 Debug Notes - Tips and Tricks
+## 16.0 Debug Notes - Tips and Tricks
 
 Don't forget to check the Intel Forum(s), your issue and solution might be documented there:\
 https://forums.intel.com/s/topic/0TO0P000000MWKFWA4/application-acceleration-with-fpgas?language=en_US
