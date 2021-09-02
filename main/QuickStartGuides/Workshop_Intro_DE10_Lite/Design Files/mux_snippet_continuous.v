@@ -1,0 +1,1 @@
+assign M = (S==1) ? Y : X; // if S then M = Y else M = X; AlL signals are of type wire.
