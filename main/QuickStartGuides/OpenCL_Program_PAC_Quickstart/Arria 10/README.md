@@ -154,8 +154,11 @@ Next, you need to create the unsigned version of the .aocx file.
 
 Next, you will program the PAC card with hello_world_fpga_unsigned.aocx (version 1.2.1) FPGA executable with one of the following commands:
 
-```
+```bash
 aocl program acl0 hello_world_fpga_unsigned.aocx
+rm hello_world.aocx # note in section 3.3 we made softlink using emulation binary
+ln -s hello_world_fpga_unsigned.aocx hello_world.aocx
+# ln -s hello_world_fpga.aocx hello_world.aocx works too!
 ```
 
 
